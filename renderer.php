@@ -66,44 +66,33 @@ return $qt;
      $fieldname = $question->field($place);
      $currentanswer = $qa->get_last_qt_var($fieldname);
      $answer= $qa->get_last_qt_var('answer');
+     $answer=trim($answer);
 
-       $answer=trim($answer);
-       if($answer !=null){
+  if($currentanswer==null){
+     if($answer !=null){
        $answer_parts=explode(' ',$answer);  
-       }else{
-           $answer_parts=array();
-       }
+          $currentanswer=$answer_parts[$place];
+      }
+  }
    //$options->correctness is really about it being ready to mark,
-        if ($options->correctness) {
+  $feedbackimage="";
+    if ($options->correctness) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
             $fraction=0;
+            $feedbackimage = $this->feedback_image($fraction);
             if($response[$fieldname] == $question->get_right_choice_for($place)){
                 $fraction=1;
+             $feedbackimage = $this->feedback_image($fraction);
             }
+                
           
            }
           }     
      
-$value="";
+
 $qprefix=$qa->get_qt_field_name('');
-
-//$inputfield='<input type="text" name="'.$qprefix.'p'.$place.'" id='.$qprefix.'p'.$place ;
 $inputname=$qprefix.'p'.$place;
-//$currentanswer='';
-
-//if(sizeof($answer_parts)>0){
-  //  $currentanswer=$answer_parts[$place];
-//}
-
-
-//$inputfield.=$currentanswer.' />'.$this->feedback_image($fraction);
-//$inputfield.=$input = html_writer::empty_tag('input', $inputattributes) . $feedbackimg;
-// $currentanswer = $qa->get_last_qt_var($inputname);
-
-if($currentanswer==null){
-    $currentanswer=$question->get_right_choice_for($place);
-}
  $inputattributes = array(
             'type' => 'text',
             'name' => $inputname,
@@ -112,10 +101,8 @@ if($currentanswer==null){
             'size' => 20,
         );
 
+return  html_writer::empty_tag('input', $inputattributes).$feedbackimage;
 
-return  html_writer::empty_tag('input', $inputattributes).$this->feedback_image($fraction);
-
-return $inputfield;
 }
     public function specific_feedback(question_attempt $qa) {
         $question = $qa->get_question();
