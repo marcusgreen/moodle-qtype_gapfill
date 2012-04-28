@@ -1,5 +1,5 @@
 ==New question type template README file==
-v2
+v4
 Welcome to the new question type template.
 
 This blank skeleton is a good place to start if you want to implement your own Moodle question type

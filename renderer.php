@@ -26,7 +26,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
 /**
  * Generates the output for true-false questions.
  *
@@ -34,29 +33,12 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-//qtype_elements_embedded_in_question_text_renderer
-//qtype_renderer    
-    
-       public function formulation_and_controls(question_attempt $qa,
+  
+       public function formulation_and_controls(question_attempt $qa, 
             question_display_options $options) {
         $question = $qa->get_question();
         
-        $answer = $qa->get_last_qt_var('answer');
-         $fieldname = $question->field($place);
 
-        //$options->correctness is really about it being ready to mark,
-        if ($options->correctness) {
-            $response = $qa->get_last_qt_data();
-            if (array_key_exists($fieldname, $response)) {
-                    echo("1");
-            }
-          }
-       $answer=trim($answer);
-       if($answer !=null){
-       $answer_parts=explode(' ',$answer);  
-       }else{
-           $answer_parts=array();
-       }
        
 $fields=array();
 $qt="";
@@ -66,10 +48,10 @@ $counter=0;
 
 foreach ($question->textfragments as $place => $fragment) {
 $qt.=$fragment;
-//$options="";
+
     if($place<$fragment_count){
     
-        $qt.=$this->embedded_element($qa, $place,$answer_parts);
+        $qt.=$this->embedded_element($qa, $place,$options);
     }    
     $counter++;
 }
@@ -78,31 +60,76 @@ return $qt;
 }
 
 
- function embedded_element(question_attempt $qa, $place,$answer_parts) {
+ function embedded_element(question_attempt $qa, $place,question_display_options $options) {
+     $fraction=0;
+     $question = $qa->get_question();    
+     $fieldname = $question->field($place);
+     $currentanswer = $qa->get_last_qt_var($fieldname);
+     $answer= $qa->get_last_qt_var('answer');
+
+       $answer=trim($answer);
+       if($answer !=null){
+       $answer_parts=explode(' ',$answer);  
+       }else{
+           $answer_parts=array();
+       }
+   //$options->correctness is really about it being ready to mark,
+        if ($options->correctness) {
+            $response = $qa->get_last_qt_data();
+            if (array_key_exists($fieldname, $response)) {
+            $fraction=0;
+            if($response[$fieldname] == $question->get_right_choice_for($place)){
+                $fraction=1;
+            }
+          
+           }
+          }     
+     
 $value="";
 $qprefix=$qa->get_qt_field_name('');
 
-$inputfield='<input type="text" name="'.$qprefix.'q'.$place.'"id='.$qprefix.'q'.$place ;
+//$inputfield='<input type="text" name="'.$qprefix.'p'.$place.'" id='.$qprefix.'p'.$place ;
+$inputname=$qprefix.'p'.$place;
+//$currentanswer='';
 
-if(sizeof($answer_parts)>0){
-    $value=' value="'.$answer_parts[$place].'"';
+//if(sizeof($answer_parts)>0){
+  //  $currentanswer=$answer_parts[$place];
+//}
+
+
+//$inputfield.=$currentanswer.' />'.$this->feedback_image($fraction);
+//$inputfield.=$input = html_writer::empty_tag('input', $inputattributes) . $feedbackimg;
+// $currentanswer = $qa->get_last_qt_var($inputname);
+
+if($currentanswer==null){
+    $currentanswer=$question->get_right_choice_for($place);
 }
+ $inputattributes = array(
+            'type' => 'text',
+            'name' => $inputname,
+            'value' => $currentanswer,
+            'id' => $inputname,
+            'size' => 20,
+        );
 
-$inputfield.=$value.' />'.$this->feedback_image(0);
- 
+
+return  html_writer::empty_tag('input', $inputattributes).$this->feedback_image($fraction);
+
 return $inputfield;
 }
     public function specific_feedback(question_attempt $qa) {
         $question = $qa->get_question();
         $response = $qa->get_last_qt_var('answer', '');
 
-        if ($response) {
+        /*if ($response) {
             return $question->format_text($question->truefeedback, $question->truefeedbackformat,
                     $qa, 'question', 'answerfeedback', $question->trueanswerid);
         } else if ($response !== '') {
             return $question->format_text($question->falsefeedback, $question->falsefeedbackformat,
                     $qa, 'question', 'answerfeedback', $question->falseanswerid);
         }
+         * */
+         
     }
 
     public function correct_response(question_attempt $qa) {

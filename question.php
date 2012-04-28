@@ -81,18 +81,24 @@ class qtype_gapfill_question extends question_graded_automatically {
     }
 
     public function get_answers() {
-
-        return $this->answers;
+   return array("one","two");
+       // return $this->answers;
     }
 
     public function summarise_response(array $response) {
-        
-        foreach ($this->places as $key=>$value) {
+      $retval="";  
+        foreach($response as $key=>$value){
+            $retval.=" [".$value."]";
+            
+        }
+        return $retval;
+        /*foreach ($this->places as $key=>$value) {
             if (array_key_exists($this->field($key), $response)){
                 return $response['p'.$key];
             }
         }
-
+        */
+       // return array("one","two");
         /*if (isset($response['answer'])) {
             return $response['answer'];
         } else {
@@ -124,7 +130,7 @@ class qtype_gapfill_question extends question_graded_automatically {
         
     }
     public function is_same_response(array $prevresponse, array $newresponse) {
-        return false;
+
         //return question_utils::arrays_same_at_key_missing_is_blank(
         //              $prevresponse, $newresponse, 'answer');
     }
