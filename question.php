@@ -39,7 +39,6 @@ class qtype_gapfill_question extends question_graded_automatically {
     /** @var array of question_answer. */
     public $answers = array();
 
-    
     public $answerwords = array();
 
     public function __construct() {
@@ -81,7 +80,7 @@ class qtype_gapfill_question extends question_graded_automatically {
     }
 
     public function get_answers() {
-   return array("one","two");
+  // return array("one","two");
        // return $this->answers;
     }
 
@@ -199,7 +198,9 @@ class qtype_gapfill_question extends question_graded_automatically {
           
        // }
       //  $fraction = min(max(0, $fraction), 1.0);
-      return array($fraction, question_state::graded_state_for_fraction($fraction));
+      $grade= question_state::graded_state_for_fraction($fraction); 
+      return array($fraction,$grade);
+      //return array($fraction, question_state::graded_state_for_fraction($fraction));
   
     }
 
