@@ -8,11 +8,11 @@
  * @package YOURPACKAGENAME
  *//** */
 $string['addinggapfill']="Adding Gap Fill";
-$string['addingQTYPEID'] = 'Adding QTYPENAME.';
-$string['editinggapfill'] = 'Editing QTYPENAME.';
+$string['addingQTYPEID'] = 'Adding Gap Fill.';
+$string['editinggapfill'] = 'Editing Gap Fill.';
 $string['gapfill'] = 'Cloze Gapfill.';
-$string['gapfillsummary'] = 'Dummary of Gapfill.';
-$string['gapfill_help'] = 'heeeeelp';
+$string['gapfillsummary'] = 'Fill in the blanks style questions';
+$string['gapfill_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]';
 
 
 // TODO add any other requred strings.

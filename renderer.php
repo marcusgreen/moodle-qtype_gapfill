@@ -41,22 +41,24 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
        
 $fields=array();
-$qt="";
+$question_text="";
 $fragment_count=count($question->textfragments);
 $fragment_count=$fragment_count-1;
 $counter=0;
 
+$question_text=$question->get_shuffled_answers()."<br/>";
+
 foreach ($question->textfragments as $place => $fragment) {
-$qt.=$fragment;
+$question_text.=$fragment;
 
     if($place<$fragment_count){
     
-        $qt.=$this->embedded_element($qa, $place,$options);
+        $question_text.=$this->embedded_element($qa, $place,$options);
     }    
     $counter++;
 }
 
-return $qt;      
+return $question_text;      
 }
 
 
@@ -67,21 +69,25 @@ return $qt;
      $currentanswer = $qa->get_last_qt_var($fieldname);
      $answer= $qa->get_last_qt_var('answer');
      $answer=trim($answer);
-
+     $size="0";//width of the field to be filled in
   if($currentanswer==null){
      if($answer !=null){
        $answer_parts=explode(' ',$answer);  
           $currentanswer=$answer_parts[$place];
       }
   }
-   //$options->correctness is really about it being ready to mark,
+  
+  $rightanswer=$question->get_right_choice_for($place);
+  $size=strlen($rightanswer);
+  
+  //$options->correctness is really about it being ready to mark,
   $feedbackimage="";
     if ($options->correctness) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
             $fraction=0;
             $feedbackimage = $this->feedback_image($fraction);
-            if($response[$fieldname] == $question->get_right_choice_for($place)){
+            if($response[$fieldname] == $rightanswer){
                 $fraction=1;
              $feedbackimage = $this->feedback_image($fraction);
             }
@@ -98,7 +104,7 @@ $inputname=$qprefix.'p'.$place;
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size' => 20,
+            'size' => $size,
         );
 
 return  html_writer::empty_tag('input', $inputattributes).$feedbackimage;

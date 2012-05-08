@@ -36,6 +36,8 @@ class qtype_gapfill_question extends question_graded_automatically {
 
     public $answer;
 
+    public $showanswers;
+
     /** @var array of question_answer. */
     public $answers = array();
 
@@ -79,9 +81,10 @@ class qtype_gapfill_question extends question_graded_automatically {
         return $data;
     }
 
-    public function get_answers() {
-  // return array("one","two");
-       // return $this->answers;
+    public function get_shuffled_answers() {
+       $random_answers=$this->places;
+       shuffle($random_answers);
+       return implode(" ",$random_answers);
     }
 
     public function summarise_response(array $response) {
@@ -91,18 +94,7 @@ class qtype_gapfill_question extends question_graded_automatically {
             
         }
         return $retval;
-        /*foreach ($this->places as $key=>$value) {
-            if (array_key_exists($this->field($key), $response)){
-                return $response['p'.$key];
-            }
-        }
-        */
-       // return array("one","two");
-        /*if (isset($response['answer'])) {
-            return $response['answer'];
-        } else {
-            return null;
-        }*/
+
     }
 
     public function is_complete_response(array $response) {
@@ -117,17 +109,10 @@ class qtype_gapfill_question extends question_graded_automatically {
         return get_string('pleaseenterananswer', 'qtype_gapfill');
     }
    public function get_right_choice_for($place) {
-      
       return $this->places[$place];
-
-     //   $group = $this->places[$place];
-     //   foreach ($this->choiceorder[$group] as $choicekey => $choiceid) {
-     //       if ($this->rightchoices[$place] == $choiceid) {
-     //           return $choicekey;
-     //       }
-     //   }
-        
-    }
+}
+  
+    
     public function is_same_response(array $prevresponse, array $newresponse) {
 
         //return question_utils::arrays_same_at_key_missing_is_blank(
@@ -185,21 +170,17 @@ class qtype_gapfill_question extends question_graded_automatically {
 
     public function grade_response(array $response) {
      $fraction = 0;
-   
-       foreach ($this->answers as $key => $value) {
+     foreach ($this->answers as $key => $value) {
            $ans=array_shift($response);
            if($ans==$value->answer){
                $fraction++;
-           }
-          
-        //    if (!empty($response[$this->field($key)])) {
-          //      $fraction += $this->answers[$ansid]->fraction;
+           }          
          }
-          
-       // }
-      //  $fraction = min(max(0, $fraction), 1.0);
+      
+         //var_dump($this->defaultmark);
+         //        exit();
       $grade= question_state::graded_state_for_fraction($fraction); 
-      return array($fraction,$grade);
+      return array($fraction/$this->defaultmark,$grade);
       //return array($fraction, question_state::graded_state_for_fraction($fraction));
   
     }
@@ -211,7 +192,8 @@ class qtype_gapfill_question extends question_graded_automatically {
      * @return question_answer the matching answer.
      */
     public function get_matching_answer(array $response) {
-       // exit();
+      //var_dump($this->answers);
+      //exit();
    }
 
 }

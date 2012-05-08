@@ -41,7 +41,7 @@ require_once($CFG->dirroot . '/question/engine/simpletest/helpers.php');
  * @copyright  2008 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_shortanswer_question_test extends UnitTestCase {
+class qtype_gapfill_question_test extends UnitTestCase {
     
 public function test_something(){   
     //notice arse arse arse
@@ -51,7 +51,8 @@ public function test_something(){
             $expected_data=array('p0'=>'raw_trimmed','p1'=>'raw_trimmed');
             $this->assertEqual($question->get_expected_data(),$expected_data);
             $response=array('p0'=>'cat','p1'=>'dog');
-            $this->assertEqual($question->grade_response($response),1);
+            list($fraction, $state) = $question->grade_response($response);
+            $this->assertEqual($fraction,1);
             
             //grade_response(array $response) {
                     

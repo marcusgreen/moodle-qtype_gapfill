@@ -10,7 +10,7 @@
  *//** */
 
 /**
- * The QTYPENAME question class
+ * The gapfill question class
  *
  * TODO give an overview of how the class works here.
  */
@@ -48,31 +48,14 @@ protected function initialise_question_instance(question_definition $question, $
                 null, PREG_SPLIT_DELIM_CAPTURE);
   $question->textfragments = $bits;
  
-         
-         /*
-$i=0;
-foreach($question->answers as $answer){
-    $ans[$i]=array_shift($question->answers);
-    $i++;
-}
-$answer=array_shift($question->answers);
- $bits = preg_split('/\[.*?\]/', $question->questiontext,
-                null, PREG_SPLIT_DELIM_CAPTURE);
-  $i = 1; 
- $question->textfragments = $bits;
-            foreach($question->textfragments as $fragment){
-                $question->places[$i] = $i;
-                $i++;
-                }
-                  //    $question->places[$i] = $i;
-*/
+
     }    
  
-   
+     
  
     /**
      * Save the units and the answers associated with this question.
-     * @return boolean to indicate success of failure.
+     * @return boolean to indicate success or failure.
      */
     function save_question_options($question) {
         // TODO code to save the extra data to your database tables from the
@@ -116,7 +99,9 @@ $answer=array_shift($question->answers);
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback = '';
-            $options->id = $DB->insert_record('question_gapfill', $options);
+            
+           
+           $options->id = $DB->insert_record('question_gapfill', $options);
         }
         
         }
