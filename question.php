@@ -36,6 +36,7 @@ class qtype_gapfill_question extends question_graded_automatically {
 
     public $answer;
 
+	/* display answers as a hint */
     public $showanswers;
 
     /** @var array of question_answer. */
