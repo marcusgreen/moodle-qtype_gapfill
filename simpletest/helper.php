@@ -46,7 +46,10 @@ class qtype_gapfill_test_helper {
         $question->questiontext = 'The [cat] sat on the [mat]';
         $question->places[0]='cat';
         $question->places[1]='mat';
-
+        $answer1=new question_answer(43, 'cat',4, 1, 1);
+        $answer2=new question_answer(44, 'mat',4, 1, 1);
+        $question->answers=array($answer1,$answer2);
+        
        return $question;
         
     }       

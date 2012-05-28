@@ -18,34 +18,36 @@ require_once($CFG->dirroot . '/question/type/edit_question_form.php');
 class qtype_gapfill_edit_form extends question_edit_form {
 
     public $answer;
+    public $showanswers;
+    
 
     function definition_inner(&$mform) {
         $mform->addElement('hidden', 'reload', 1);
-        $mform->addElement('checkbox','showanswers',"Show Answers");
-        $mform->addElement('checkbox','shuffleanswers',"Shuffle Answers");
-        $mform->addElement('checkbox','shuffleletters',"Shuffle Letters");
-        
+        $mform->addElement('advcheckbox','showanswers',"Show Answers");
+        $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
+        $mform->removeelement('defaultmark');
+    
     }
 
     function set_data($question) {
-
-        $question->answer = $this->answer;
+          $question->answer = $this->answer;
+        $question->showanswers=$this->showanswers;
         parent::set_data($question);
     }
 
     protected function data_preprocessing($question) {
-        //if (!empty($question->options)) {
-         //   var_dump($question);
-          //              $question->showanswers = $question->options->showanswers;
-
-        //}
         $question = parent::data_preprocessing($question);
+        if (!empty($question->options)) {
+            $question->showanswers = $question->options->showanswers;
+        }
         return $question;
     }
 
     function definition_after_data() {
         parent::definition_after_data();
         global $CFG, $COURSE;
+        
+        
     }
 
     function validation($data) {

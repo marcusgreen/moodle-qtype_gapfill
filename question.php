@@ -16,26 +16,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * True-false question definition class.
+ * Gapfill question definition class.
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2009 The Open University
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Represents a gapfill question.
- *
- * @copyright  2009 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * http://docs.moodle.org/dev/Question_types
- */
-class qtype_gapfill_question extends question_graded_automatically {
+class qtype_gapfill_question extends question_graded_automatically_with_countback {
 
     public $answer;
-
 	/* display answers as a hint */
     public $showanswers;
 
@@ -73,8 +65,6 @@ class qtype_gapfill_question extends question_graded_automatically {
 
     public function get_expected_data() {
         /* it may make more sense to think of this as get expected data types */
-        
-        //return array('q0' => PARAM_RAW_TRIMMED,'q1' => PARAM_RAW_TRIMMED);
         $data = array();
         foreach ($this->places as $key => $value) {
             $data['p' . $key] = PARAM_RAW_TRIMMED;
@@ -82,35 +72,46 @@ class qtype_gapfill_question extends question_graded_automatically {
         return $data;
     }
 
+/* For displaying a list of correct answers randomly shuffled */
     public function get_shuffled_answers() {
        $random_answers=$this->places;
        shuffle($random_answers);
+       /* return a string of answers as a string with gaps */
        return implode(" ",$random_answers);
     }
 
+    /*
+     * Value returned will be written to responsesummary field of 
+     * the question_attempts table
+     */
     public function summarise_response(array $response) {
       $retval="";  
         foreach($response as $key=>$value){
-            $retval.=" [".$value."]";
-            
+            $retval.=" [".$value."]";            
         }
         return $retval;
-
     }
 
-    public function is_complete_response(array $response) {
-        return array_key_exists('answer', $response) &&
-                ($response['answer'] || $response['answer'] === '0');
+   public function is_complete_response(array $response) {
+/* checks that none of of the gaps is blanks */
+       foreach ($this->answers as $key => $value) {
+         $ans=array_shift($response);
+          if($ans==""){
+               return false;
+           }          
+         }
+       return true;
     }
 
     public function get_validation_error(array $response) {
         if ($this->is_gradable_response($response)) {
-            return '';
+           return 'xyz';
         }
         return get_string('pleaseenterananswer', 'qtype_gapfill');
     }
    public function get_right_choice_for($place) {
-      return $this->places[$place];
+       
+        return $this->places[$place];
 }
   
     
@@ -128,29 +129,29 @@ class qtype_gapfill_question extends question_graded_automatically {
         //                 $response['answer'], $answer->answer, !$this->usecase);
     }
 
-    public static function compare_string_with_wildcard($string, $pattern, $ignorecase) {
-        // Break the string on non-escaped asterisks.
-        $bits = preg_split('/(?<!\\\\)\*/', $pattern);
-        // Escape regexp special characters in the bits.
-        $excapedbits = array();
-        foreach ($bits as $bit) {
-            $excapedbits[] = preg_quote(str_replace('\*', '*', $bit));
-        }
-        // Put it back together to make the regexp.
-        $regexp = '|^' . implode('.*', $excapedbits) . '$|u';
-
-        // Make the match insensitive if requested to.
-        if ($ignorecase) {
-            $regexp .= 'i';
-        }
-
-        return preg_match($regexp, trim($string));
-    }
+//    public static function compare_string_with_wildcard($string, $pattern, $ignorecase) {
+//        // Break the string on non-escaped asterisks.
+//        $bits = preg_split('/(?<!\\\\)\*/', $pattern);
+//        // Escape regexp special characters in the bits.
+//        $excapedbits = array();
+//        foreach ($bits as $bit) {
+//            $excapedbits[] = preg_quote(str_replace('\*', '*', $bit));
+//        }
+//        // Put it back together to make the regexp.
+//        $regexp = '|^' . implode('.*', $excapedbits) . '$|u';
+//
+//        // Make the match insensitive if requested to.
+//        if ($ignorecase) {
+//            $regexp .= 'i';
+//        }
+//
+//        return preg_match($regexp, trim($string));
+//    }
 
     public function is_gradable_response(array $response) {
-        //  parent::is_gradable_response($response);
-        return true;
+         return   $this->is_complete_response($response);
     }
+
 
     public function get_correct_response() {
         $response = array();
@@ -170,21 +171,47 @@ class qtype_gapfill_question extends question_graded_automatically {
     }
 
     public function grade_response(array $response) {
-     $fraction = 0;
-     foreach ($this->answers as $key => $value) {
-           $ans=array_shift($response);
-           if($ans==$value->answer){
+/* only runs if is_complete_response has returned true */         
+//     var_dump($my_array);
+//         exit();
+
+        
+        $fraction = 0;
+      foreach ($this->answers as $key => $value) {
+          $ans=array_shift($response);
+          if($ans==$value->answer){
                $fraction++;
            }          
          }
-      
-         //var_dump($this->defaultmark);
-         //        exit();
-      $grade= question_state::graded_state_for_fraction($fraction); 
-      return array($fraction/$this->defaultmark,$grade);
-      //return array($fraction, question_state::graded_state_for_fraction($fraction));
-  
+         $fraction=$fraction/$this->defaultmark;
+    //  $grade= question_state::graded_state_for_fraction($fraction); 
+      //return array($fraction/$this->defaultmark,$grade);
+         
+      $my_array=array($fraction, question_state::graded_state_for_fraction($fraction));
+      return $my_array;
     }
+     public function compute_final_grade($responses, $totaltries) {
+//        $totalscore = 0;
+//        foreach ($this->places as $place => $notused) {
+//            $fieldname = $this->field($place);
+//
+//            $lastwrongindex = -1;
+//            $finallyright = false;
+//            foreach ($responses as $i => $response) {
+//                if (!array_key_exists($fieldname, $response) ||
+//                        $response[$fieldname] != $this->get_right_choice_for($place)) {
+//                    $lastwrongindex = $i;
+//                    $finallyright = false;
+//                } else {
+//                    $finallyright = true;
+//                }
+//            }
+//
+//            if ($finallyright) {
+//                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
+//            }
+        }
+
 
     /**
      * Get an answer that contains the feedback and fraction that should be

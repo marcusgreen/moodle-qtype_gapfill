@@ -43,15 +43,21 @@ require_once($CFG->dirroot . '/question/engine/simpletest/helpers.php');
  */
 class qtype_gapfill_question_test extends UnitTestCase {
     
-public function test_something(){   
+public function test_gapfill_qtype(){   
     //notice arse arse arse
             $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+            
             $this->assertEqual($question->field('1'),'p1');
             
             $expected_data=array('p0'=>'raw_trimmed','p1'=>'raw_trimmed');
+
             $this->assertEqual($question->get_expected_data(),$expected_data);
+            
+            $this->assertEqual(is_string($question->get_Shuffled_Answers()),true);
+            
             $response=array('p0'=>'cat','p1'=>'dog');
             list($fraction, $state) = $question->grade_response($response);
+            
             $this->assertEqual($fraction,1);
             
             //grade_response(array $response) {
@@ -150,8 +156,8 @@ public function test_something(){
 //        $this->assertTrue($question->is_gradable_response(array('answer' => 'x')));
 //    }
 
-    public function test_grading() {
-        $question = test_question_maker::make_a_shortanswer_question();
+ //   public function test_grading() {
+   //     $question = test_question_maker::make_a_shortanswer_question();
 
        // $this->assertEqual(array(0, question_state::$gradedwrong),
              //   $question->grade_response(array('answer' => 'x')));
@@ -159,42 +165,27 @@ public function test_something(){
            //     $question->grade_response(array('answer' => 'frog')));
        // $this->assertEqual(array(0.8, question_state::$gradedpartial),
          //       $question->grade_response(array('answer' => 'toad')));
-    }
+    //}
 
-    public function test_get_correct_response() {
-        $question = test_question_maker::make_a_shortanswer_question();
+   // public function test_get_correct_response() {
+     //   $question = test_question_maker::make_a_shortanswer_question();
 
-        $this->assertEqual(array('answer' => 'frog'),
-                $question->get_correct_response());
-    }
+       // $this->assertEqual(array('answer' => 'frog'),
+     //           $question->get_correct_response());
+   // }
 
-    public function test_get_question_summary() {
-        $sa = test_question_maker::make_a_shortanswer_question();
-        $qsummary = $sa->get_question_summary();
-        $this->assertEqual('Name an amphibian: __________', $qsummary);
-    }
+   // public function test_get_question_summary() {
+     //   $sa = test_question_maker::make_a_shortanswer_question();
+      //  $qsummary = $sa->get_question_summary();
+       // $this->assertEqual('Name an amphibian: __________', $qsummary);
+    //}
 
-    public function test_summarise_response() {
-        $sa = test_question_maker::make_a_shortanswer_question();
-        $summary = $sa->summarise_response(array('answer' => 'dog'));
-        $this->assertEqual('dog', $summary);
-    }
+    //public function test_summarise_response() {
+      //  $sa = test_question_maker::make_a_shortanswer_question();
+        //$summary = $sa->summarise_response(array('answer' => 'dog'));
+       // $this->assertEqual('dog', $summary);
+    //}
 
-    public function test_classify_response() {
-        $sa = test_question_maker::make_a_shortanswer_question();
-        $sa->start_attempt(new question_attempt_step(), 1);
-
-        $this->assertEqual(array(
-                new question_classified_response(13, 'frog', 1.0)),
-                $sa->classify_response(array('answer' => 'frog')));
-        $this->assertEqual(array(
-                new question_classified_response(14, 'toad', 0.8)),
-                $sa->classify_response(array('answer' => 'toad')));
-        $this->assertEqual(array(
-                new question_classified_response(15, 'cat', 0.0)),
-                $sa->classify_response(array('answer' => 'cat')));
-        $this->assertEqual(array(
-                question_classified_response::no_response()),
-                $sa->classify_response(array('answer' => '')));
-    }
+    
+    
 }

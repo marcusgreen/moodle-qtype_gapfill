@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/question/type/shortanswer/questiontype.php');
+require_once($CFG->dirroot . '/question/type/gapfill/questiontype.php');
 
 
 /**
@@ -36,51 +36,51 @@ require_once($CFG->dirroot . '/question/type/shortanswer/questiontype.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_test extends UnitTestCase {
-    public static $includecoverage = array(
-        'question/type/questiontypebase.php',
+   public static $includecoverage = array(
+//        'question/type/questiontypebase.php',
         'question/type/gapfill/questiontype.php',
     );
 
-    protected $qtype;
+//    protected $qtype;
 
     public function setUp() {
-        $this->qtype = new qtype_shortanswer();
+        $this->qtype = new qtype_gapfill();
     }
-
+//
     public function tearDown() {
         $this->qtype = null;
     }
-
-    protected function get_test_question_data() {
-        $q = new stdClass();
-        $q->id = 1;
-        $q->options->answers[1] = (object) array('answer' => 'frog', 'fraction' => 1);
-        $q->options->answers[2] = (object) array('answer' => '*', 'fraction' => 0.1);
-
-        return $q;
+//
+//    protected function get_test_question_data() {
+//        $q = new stdClass();
+//        $q->id = 1;
+//        $q->options->answers[1] = (object) array('answer' => 'frog', 'fraction' => 1);
+//        $q->options->answers[2] = (object) array('answer' => '*', 'fraction' => 0.1);
+//
+//        return $q;
+//    }
+//
+   public function test_name() {
+        $this->assertEqual($this->qtype->name(), 'gapfill');
     }
-
-    public function test_name() {
-        $this->assertEqual($this->qtype->name(), 'shortanswer');
-    }
-
-    public function test_can_analyse_responses() {
-        $this->assertTrue($this->qtype->can_analyse_responses());
-    }
-
-    public function test_get_random_guess_score() {
-        $q = $this->get_test_question_data();
-        $this->assertEqual(0.1, $this->qtype->get_random_guess_score($q));
-    }
-
-    public function test_get_possible_responses() {
-        $q = $this->get_test_question_data();
-
-        $this->assertEqual(array(
-            $q->id => array(
-                1 => new question_possible_response('frog', 1),
-                2 => new question_possible_response('*', 0.1),
-                null => question_possible_response::no_response()),
-        ), $this->qtype->get_possible_responses($q));
-    }
+//
+//    public function test_can_analyse_responses() {
+//        $this->assertTrue($this->qtype->can_analyse_responses());
+//    }
+//
+//    public function test_get_random_guess_score() {
+//        $q = $this->get_test_question_data();
+//        $this->assertEqual(0.1, $this->qtype->get_random_guess_score($q));
+//    }
+//
+//    public function test_get_possible_responses() {
+//        $q = $this->get_test_question_data();
+//
+//        $this->assertEqual(array(
+//            $q->id => array(
+//                1 => new question_possible_response('frog', 1),
+//                2 => new question_possible_response('*', 0.1),
+//                null => question_possible_response::no_response()),
+//        ), $this->qtype->get_possible_responses($q));
+//    }
 }

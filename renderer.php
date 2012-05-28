@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,8 +23,6 @@
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -33,110 +32,108 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-  
-       public function formulation_and_controls(question_attempt $qa, 
-            question_display_options $options) {
+
+    public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $question = $qa->get_question();
+
+        $fields = array();
+        $question_text = "";
+        //$fragment_count = count($question->textfragments);
+        $place_count=count($question->places);
         
-
-       
-$fields=array();
-$question_text="";
-$fragment_count=count($question->textfragments);
-$fragment_count=$fragment_count-1;
-$counter=0;
-
-$question_text=$question->get_shuffled_answers()."<br/>";
-
-foreach ($question->textfragments as $place => $fragment) {
-$question_text.=$fragment;
-
-    if($place<$fragment_count){
-    
-        $question_text.=$this->embedded_element($qa, $place,$options);
-    }    
-    $counter++;
-}
-
-return $question_text;      
-}
-
-
- function embedded_element(question_attempt $qa, $place,question_display_options $options) {
-     $fraction=0;
-     $question = $qa->get_question();    
-     $fieldname = $question->field($place);
-     $currentanswer = $qa->get_last_qt_var($fieldname);
-     $answer= $qa->get_last_qt_var('answer');
-     $answer=trim($answer);
-     $size="0";//width of the field to be filled in
-  if($currentanswer==null){
-     if($answer !=null){
-       $answer_parts=explode(' ',$answer);  
-          $currentanswer=$answer_parts[$place];
-      }
-  }
-  
-  $rightanswer=$question->get_right_choice_for($place);
-  $size=strlen($rightanswer);
-  
-  //$options->correctness is really about it being ready to mark,
-  $feedbackimage="";
-    if ($options->correctness) {
-            $response = $qa->get_last_qt_data();
-            if (array_key_exists($fieldname, $response)) {
-            $fraction=0;
-            $feedbackimage = $this->feedback_image($fraction);
-            if($response[$fieldname] == $rightanswer){
-                $fraction=1;
-             $feedbackimage = $this->feedback_image($fraction);
-            }
-                
-          
-           }
-          }     
+       // $fragment_count = $fragment_count;
+        $counter = 0;
+        if ($question->showanswers == true) {
+            $question_text = $question->get_shuffled_answers() . "<br/>";
+        }
      
 
-$qprefix=$qa->get_qt_field_name('');
-$inputname=$qprefix.'p'.$place;
- $inputattributes = array(
+        foreach ($question->textfragments as $place => $fragment) {
+            $question_text.=$fragment;
+
+            if ($place < $place_count) {
+
+                $question_text.=$this->embedded_element($qa, $place+1, $options);
+            }
+            $counter++;
+        }
+        if ($qa->get_state() == question_state::$invalid) {
+            $question_text .= html_writer::nonempty_tag('div',
+                             $question->get_validation_error(array('answer' => $question_text)),
+                            array('class' => 'validationerror'));
+        }
+
+
+        return $question_text;
+    }
+
+    function embedded_element(question_attempt $qa, $place, question_display_options $options) {
+        $fraction = 0;
+        $question = $qa->get_question();
+        $fieldname = $question->field($place);
+        $currentanswer = $qa->get_last_qt_var($fieldname);
+        $answer = $qa->get_last_qt_var('answer');
+        $answer = trim($answer);
+        $size = "0"; //width of the field to be filled in
+        if ($currentanswer == null) {
+            if ($answer != null) {
+                $answer_parts = explode(' ', $answer);
+                $currentanswer = $answer_parts[$place];
+            }
+        }
+
+        $rightanswer = $question->get_right_choice_for($place);
+        $size = strlen($rightanswer);
+
+        //$options->correctness is really about it being ready to mark,
+        $feedbackimage = "";
+        if ($options->correctness) {
+            $response = $qa->get_last_qt_data();
+            if (array_key_exists($fieldname, $response)) {
+                $fraction = 0;
+                $feedbackimage = $this->feedback_image($fraction);
+                if ($response[$fieldname] == $rightanswer) {
+                    $fraction = 1;
+                    $feedbackimage = $this->feedback_image($fraction);
+                }
+            }
+        }
+
+        $qprefix = $qa->get_qt_field_name('');
+        $inputname = $qprefix . 'p' . $place;
+        $inputattributes = array(
             'type' => 'text',
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
+            'maxlength' => $size
         );
 
-return  html_writer::empty_tag('input', $inputattributes).$feedbackimage;
+        return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
+    }
 
-}
     public function specific_feedback(question_attempt $qa) {
         $question = $qa->get_question();
         $response = $qa->get_last_qt_var('answer', '');
 
-        /*if ($response) {
-            return $question->format_text($question->truefeedback, $question->truefeedbackformat,
-                    $qa, 'question', 'answerfeedback', $question->trueanswerid);
-        } else if ($response !== '') {
-            return $question->format_text($question->falsefeedback, $question->falsefeedbackformat,
-                    $qa, 'question', 'answerfeedback', $question->falseanswerid);
-        }
+        /* if ($response) {
+          return $question->format_text($question->truefeedback, $question->truefeedbackformat,
+          $qa, 'question', 'answerfeedback', $question->trueanswerid);
+          } else if ($response !== '') {
+          return $question->format_text($question->falsefeedback, $question->falsefeedbackformat,
+          $qa, 'question', 'answerfeedback', $question->falseanswerid);
+          }
          * */
-         
     }
 
     public function correct_response(question_attempt $qa) {
-        //var_dump($qa);
-        //exit();
-      $question = $qa->get_question();
-       $answer = $question->get_matching_answer($question->get_correct_response());
+           $question = $qa->get_question();
+        $answer = $question->get_matching_answer($question->get_correct_response());
         if (!$answer) {
             return '';
         }
-
         return get_string('correctansweris', 'qtype_gapfill', s($answer->answer));
     }
 
-   
-     
 }
