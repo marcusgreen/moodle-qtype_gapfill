@@ -73,6 +73,7 @@ class qtype_gapfill extends question_type {
     /**
      * Save the units and the answers associated with this question.
      * @return boolean to indicate success or failure.
+     * 
      */
     function save_question_options($question) {
         // Save the extra data to your database tables from the
