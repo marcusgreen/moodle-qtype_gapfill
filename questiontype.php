@@ -1,19 +1,19 @@
 <?php
 
 /**
- * The question type class for the QTYPENAME question type.
+ * The question type class for the gapfill question type.
  *
- * @copyright &copy; 2006 YOURNAME
- * @author YOUREMAILADDRESS
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package questionbank
+ * @package  
  * @subpackage questiontypes
- *//** */
+ * @copyright &copy; 2012 Marcus Green
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+
+ */
 
 /**
  * The gapfill question class
- *
- * TODO give an overview of how the class works here.
+ * Load from database, and initialise class
+ * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
 

@@ -26,9 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-
+/* not actually using the countback bit at the moment, not sure what it does */
+    
     public $answer;
-	/* display answers as a hint */
+    /* boolean value display answers as a clue as to what to put in */
     public $showanswers;
 
     /** @var array of question_answer. */
@@ -149,7 +150,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 //    }
 
     public function is_gradable_response(array $response) {
-         return   $this->is_complete_response($response);
+/* are there any fields still left blank */
+        return   $this->is_complete_response($response);
     }
 
 
@@ -172,10 +174,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function grade_response(array $response) {
 /* only runs if is_complete_response has returned true */         
-//     var_dump($my_array);
-//         exit();
-
-        
         $fraction = 0;
       foreach ($this->answers as $key => $value) {
           $ans=array_shift($response);

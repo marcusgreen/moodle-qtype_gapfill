@@ -77,8 +77,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $size = "0"; //width of the field to be filled in
         if ($currentanswer == null) {
             if ($answer != null) {
+                /* if fill in correct answer is pressed during question preview */
                 $answer_parts = explode(' ', $answer);
-                $currentanswer = $answer_parts[$place];
+                /* minus 1 because explode creates array with offset 0, places has offset of 1 */
+                $currentanswer = $answer_parts[$place-1];
             }
         }
 
