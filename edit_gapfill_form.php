@@ -1,16 +1,15 @@
 <?php
 /**
  * The editing form code for this question type.
- *
- * @copyright &copy; 2006 YOURNAME
- * @author YOUREMAILADDRESS
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package YOURPACKAGENAME
- *//** */
+ * @package    qtype
+ * @subpackage gapfill
+ * @copyright  2012 Marcus Green
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
 
 /**
- * QTYPENAME editing form definition.
+ * gapfill editing form definition.
  * 
  * See http://docs.moodle.org/en/Development:lib/formslib.php for information
  * about the Moodle forms library, which is based on the HTML Quickform PEAR library.
@@ -52,13 +51,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     function validation($data) {
         $errors = array();
-
-        // TODO, do extra validation on the data that came back from the form. E.g.
-        // if (/* Some test on $data['customfield']*/) {
-        //     $errors['customfield'] = get_string( ... );
-        // }
-
-
         if ($errors) {
             return $errors;
         } else {
