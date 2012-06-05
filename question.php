@@ -37,9 +37,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public $answerwords = array();
 
-    public function __construct() {
-        // parent::__construct(new question_first_matching_answer_grading_strategy($this));
-    }
+//    public function __construct() {
+//        parent::__construct(new question_graded_automatically_with_countback($this));
+//    }
 
     /**
      * @var array place number => group number of the places in the question
@@ -94,16 +94,27 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
    public function is_complete_response(array $response) {
+      
 /* checks that none of of the gaps is blanks */
        foreach ($this->answers as $key => $value) {
          $ans=array_shift($response);
           if($ans==""){
+              
                return false;
            }          
          }
+        
        return true;
     }
 
+    
+    public function apply_attempt_state(question_attempt_step $step) {
+    //    qtype_calculated_question_helper::apply_attempt_state($this, $step);
+       
+         parent::apply_attempt_state($step);
+    }
+    
+    
     public function get_validation_error(array $response) {
         if ($this->is_gradable_response($response)) {
            return 'xyz';
@@ -111,46 +122,22 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return get_string('pleaseenterananswer', 'qtype_gapfill');
     }
    public function get_right_choice_for($place) {
-       
-        return $this->places[$place];
+          return $this->places[$place];
 }
   
     
     public function is_same_response(array $prevresponse, array $newresponse) {
-
-        //return question_utils::arrays_same_at_key_missing_is_blank(
-        //              $prevresponse, $newresponse, 'answer');
+    
     }
 
     public function compare_response_with_answer(array $response, question_answer $answer) {
+       
 
-       // var_dump($response);
-        //exit();
-        //   return self::compare_string_with_wildcard(
-        //                 $response['answer'], $answer->answer, !$this->usecase);
     }
-
-//    public static function compare_string_with_wildcard($string, $pattern, $ignorecase) {
-//        // Break the string on non-escaped asterisks.
-//        $bits = preg_split('/(?<!\\\\)\*/', $pattern);
-//        // Escape regexp special characters in the bits.
-//        $excapedbits = array();
-//        foreach ($bits as $bit) {
-//            $excapedbits[] = preg_quote(str_replace('\*', '*', $bit));
-//        }
-//        // Put it back together to make the regexp.
-//        $regexp = '|^' . implode('.*', $excapedbits) . '$|u';
-//
-//        // Make the match insensitive if requested to.
-//        if ($ignorecase) {
-//            $regexp .= 'i';
-//        }
-//
-//        return preg_match($regexp, trim($string));
-//    }
 
     public function is_gradable_response(array $response) {
 /* are there any fields still left blank */
+      
         return   $this->is_complete_response($response);
     }
 
@@ -172,44 +159,53 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $response;
     }
 
+   public function get_num_parts_right(array $response) {
+        $numright = 0;
+        foreach ($this->places as $place => $notused) {
+            if (!array_key_exists($this->field($place), $response)) {
+                continue;
+            }
+            if ($response[$this->field($place)] == $this->get_right_choice_for($place)) {
+                $numright += 1;
+            }
+        }
+        return array($numright, count($this->places));
+    }
+
     public function grade_response(array $response) {
-/* only runs if is_complete_response has returned true */         
-        $fraction = 0;
-      foreach ($this->answers as $key => $value) {
-          $ans=array_shift($response);
-          if($ans==$value->answer){
-               $fraction++;
-           }          
-         }
-         $fraction=$fraction/$this->defaultmark;
-    //  $grade= question_state::graded_state_for_fraction($fraction); 
-      //return array($fraction/$this->defaultmark,$grade);
-         
-      $my_array=array($fraction, question_state::graded_state_for_fraction($fraction));
+        
+        list($right, $total) = $this->get_num_parts_right($response);
+          $fraction = $right / $total;
+          $myarray= array($fraction, question_state::graded_state_for_fraction($fraction));
+        return $myarray;
+        
+//        return array($fraction, question_state::graded_state_for_fraction($fraction));
+
+///* only runs if is_complete_response has returned true */  
+//      $fraction = 0;
+//      foreach ($this->answers as $key => $value) {
+//          $ans=array_shift($response);
+//          if($ans==$value->answer){
+//               $fraction++;
+//           }          
+//         }
+//         $fraction=$fraction/$this->defaultmark;
+////      if($fraction>0){   
+//        $my_array=array($fraction, question_state::graded_state_for_fraction($fraction));
+//  ;
+//    
+//        }else{
+//      $my_array= array(0, question_state::$gradedwrong);
+//      }
+
+//$my_array=array($answer->fraction, question_state::graded_state_for_fraction($answer->fraction));
+
       return $my_array;
     }
-     public function compute_final_grade($responses, $totaltries) {
-//        $totalscore = 0;
-//        foreach ($this->places as $place => $notused) {
-//            $fieldname = $this->field($place);
-//
-//            $lastwrongindex = -1;
-//            $finallyright = false;
-//            foreach ($responses as $i => $response) {
-//                if (!array_key_exists($fieldname, $response) ||
-//                        $response[$fieldname] != $this->get_right_choice_for($place)) {
-//                    $lastwrongindex = $i;
-//                    $finallyright = false;
-//                } else {
-//                    $finallyright = true;
-//                }
-//            }
-//
-//            if ($finallyright) {
-//                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
-//            }
-        }
-
+    
+    public function compute_final_grade($responses, $totaltries) {
+        //required by the interface question_automatically_gradable_with_countback
+    }    
 
     /**
      * Get an answer that contains the feedback and fraction that should be

@@ -39,28 +39,25 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $fields = array();
         $question_text = "";
         //$fragment_count = count($question->textfragments);
-        $place_count=count($question->places);
-        
-       // $fragment_count = $fragment_count;
+        $place_count = count($question->places);
+
+
+        // $fragment_count = $fragment_count;
         $counter = 0;
         if ($question->showanswers == true) {
             $question_text = $question->get_shuffled_answers() . "<br/>";
         }
-     
+
 
         foreach ($question->textfragments as $place => $fragment) {
-            $question_text.=$fragment;
-
-            if ($place < $place_count) {
-
-                $question_text.=$this->embedded_element($qa, $place+1, $options);
+            if ($place >0) {
+                $question_text.=$this->embedded_element($qa, $place, $options);
             }
-            $counter++;
+          $question_text .= $fragment;
+
         }
         if ($qa->get_state() == question_state::$invalid) {
-            $question_text .= html_writer::nonempty_tag('div',
-                             $question->get_validation_error(array('answer' => $question_text)),
-                            array('class' => 'validationerror'));
+            $question_text .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $question_text)), array('class' => 'validationerror'));
         }
 
 
@@ -80,7 +77,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 /* if fill in correct answer is pressed during question preview */
                 $answer_parts = explode(' ', $answer);
                 /* minus 1 because explode creates array with offset 0, places has offset of 1 */
-                $currentanswer = $answer_parts[$place-1];
+                $currentanswer = $answer_parts[$place - 1];
             }
         }
 
@@ -89,14 +86,21 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         //$options->correctness is really about it being ready to mark,
         $feedbackimage = "";
+        $inputclass = "";
+
         if ($options->correctness) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
                 $fraction = 0;
                 $feedbackimage = $this->feedback_image($fraction);
+                /* sets the field background to a different colour if the answer is right */
+                $inputclass = $this->feedback_class($fraction);
+
                 if ($response[$fieldname] == $rightanswer) {
                     $fraction = 1;
                     $feedbackimage = $this->feedback_image($fraction);
+                    /* sets the field background to a different colour if the answer is wrong */
+                    $inputclass = $this->feedback_class($fraction);
                 }
             }
         }
@@ -109,28 +113,22 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'maxlength' => $size
+            'maxlength' => $size,
+            'class' => $inputclass
         );
 
         return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
     }
 
     public function specific_feedback(question_attempt $qa) {
+        /*I'm not sure if this is actually doing anything */
         $question = $qa->get_question();
         $response = $qa->get_last_qt_var('answer', '');
 
-        /* if ($response) {
-          return $question->format_text($question->truefeedback, $question->truefeedbackformat,
-          $qa, 'question', 'answerfeedback', $question->trueanswerid);
-          } else if ($response !== '') {
-          return $question->format_text($question->falsefeedback, $question->falsefeedbackformat,
-          $qa, 'question', 'answerfeedback', $question->falseanswerid);
-          }
-         * */
     }
 
     public function correct_response(question_attempt $qa) {
-           $question = $qa->get_question();
+      //  $question = $qa->get_question();
         $answer = $question->get_matching_answer($question->get_correct_response());
         if (!$answer) {
             return '';
