@@ -18,23 +18,53 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     public $answer;
     public $showanswers;
+    public $delimitchars;
     
 
     function definition_inner(&$mform) {
         $mform->addElement('hidden', 'reload', 1);
+        $mform->removeelement('generalfeedback');
+        
+        //default mark will be set to 1 * number of fields  
+         $mform->removeelement('defaultmark');
+        
+        //the delimiting characters around fields
+        $delimitchars= array("[]"=>"[ ]","{}"=>"{ }","<>"=>"< >");
+        $mform->addElement('select', 'delimitchars','delimiters', $delimitchars);
+        //$mform->addElement('advcheckbox','delim',"Show Answers");
+        
+         $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
+                array('rows' => 10), $this->editoroptions);
+       
+        $mform->setType('generalfeedback', PARAM_RAW);
+        $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
+
+        
         $mform->addElement('advcheckbox','showanswers',"Show Answers");
         $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
-        $mform->removeelement('defaultmark');
-    
+        
+       
+        //to add combined feedback (correct, partial and incorrect)
+        //$this->add_combined_feedback_fields(true);
+
+        //adds hinting features
+        $this->add_interactive_settings();
+//         $mform->addElement('select', 'penalty',
+//                get_string('penaltyforeachincorrecttry', 'question'), $penaltyoptions);
+      
+        
     }
 
     function set_data($question) {
           $question->answer = $this->answer;
         $question->showanswers=$this->showanswers;
+        $question->delimitchars=$this->delimitchars;
         parent::set_data($question);
     }
 
     protected function data_preprocessing($question) {
+                $question = $this->data_preprocessing_hints($question);
+
         $question = parent::data_preprocessing($question);
         if (!empty($question->options)) {
             $question->showanswers = $question->options->showanswers;

@@ -38,11 +38,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $fields = array();
         $question_text = "";
-        //$fragment_count = count($question->textfragments);
         $place_count = count($question->places);
 
-
-        // $fragment_count = $fragment_count;
         $counter = 0;
         if ($question->showanswers == true) {
             $question_text = $question->get_shuffled_answers() . "<br/>";
@@ -59,8 +56,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($qa->get_state() == question_state::$invalid) {
             $question_text .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $question_text)), array('class' => 'validationerror'));
         }
-
-
         return $question_text;
     }
 
@@ -117,18 +112,25 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'class' => $inputclass
         );
 
+       /* When pre */
+        if ($options->readonly) {
+            $inputattributes['readonly'] = 'readonly';
+        }
         return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
     }
 
+    
     public function specific_feedback(question_attempt $qa) {
+//       return $this->combined_feedback($qa);
+
         /*I'm not sure if this is actually doing anything */
-        $question = $qa->get_question();
-        $response = $qa->get_last_qt_var('answer', '');
+//        $question = $qa->get_question();
+//        $response = $qa->get_last_qt_var('answer', '');
 
     }
 
     public function correct_response(question_attempt $qa) {
-      //  $question = $qa->get_question();
+        $question = $qa->get_question();
         $answer = $question->get_matching_answer($question->get_correct_response());
         if (!$answer) {
             return '';
