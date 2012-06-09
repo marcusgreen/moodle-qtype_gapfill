@@ -108,7 +108,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'maxlength' => $size,
+           // 'maxlength' => $size,
             'class' => $inputclass
         );
 
@@ -116,16 +116,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($options->readonly) {
             $inputattributes['readonly'] = 'readonly';
         }
+        
         return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
+    
+        
     }
 
     
     public function specific_feedback(question_attempt $qa) {
-//       return $this->combined_feedback($qa);
-
-        /*I'm not sure if this is actually doing anything */
-//        $question = $qa->get_question();
-//        $response = $qa->get_last_qt_var('answer', '');
 
     }
 

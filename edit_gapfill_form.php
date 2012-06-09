@@ -29,19 +29,21 @@ class qtype_gapfill_edit_form extends question_edit_form {
          $mform->removeelement('defaultmark');
         
         //the delimiting characters around fields
-        $delimitchars= array("[]"=>"[ ]","{}"=>"{ }","<>"=>"< >");
-        $mform->addElement('select', 'delimitchars','delimiters', $delimitchars);
+        $delimitchars= array("[]"=>"[ ]","{}"=>"{ }","##"=>"##","@@"=>"@ @");
+        $mform->addElement('select', 'delimitchars','Delimit Characters', $delimitchars);
+        $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
+
         //$mform->addElement('advcheckbox','delim',"Show Answers");
+        $mform->addElement('advcheckbox','showanswers',"Show Answers");
+        $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
         
          $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
                 array('rows' => 10), $this->editoroptions);
-       
+        
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
 
         
-        $mform->addElement('advcheckbox','showanswers',"Show Answers");
-        $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
         
        
         //to add combined feedback (correct, partial and incorrect)
