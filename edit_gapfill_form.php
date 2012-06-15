@@ -21,7 +21,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $delimitchars;
     
 
-    function definition_inner(&$mform) {
+    function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->removeelement('generalfeedback');
         
@@ -81,7 +81,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         
     }
 
-    function validation($data) {
+    function validation($fromform, $data) {
         $errors = array();
         if ($errors) {
             return $errors;

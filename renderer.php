@@ -34,16 +34,16 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
+     
         $question = $qa->get_question();
-
-        $fields = array();
+       $fields = array();
         $question_text = "";
         $place_count = count($question->places);
 
         $counter = 0;
-        if ($question->showanswers == true) {
-            $question_text = $question->get_shuffled_answers() . "<br/>";
-        }
+      //  if ($question->showanswers == true) {
+     //       $question_text = $question->get_shuffled_answers() . "<br/>";
+       // }
 
 
         foreach ($question->textfragments as $place => $fragment) {
@@ -56,10 +56,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($qa->get_state() == question_state::$invalid) {
             $question_text .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $question_text)), array('class' => 'validationerror'));
         }
+     
         return $question_text;
     }
 
     function embedded_element(question_attempt $qa, $place, question_display_options $options) {
+     
         $fraction = 0;
         $question = $qa->get_question();
         $fieldname = $question->field($place);
@@ -102,23 +104,51 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
+        $style="";
+        if ($question->showanswers == true){
+        $type="select";   
+        $selectoptions=$question->places;
+        shuffle($selectoptions);
+        /*set the key to be the same as the value */
+        $selectoptions=array_combine($selectoptions,$selectoptions);
+        
         $inputattributes = array(
-            'type' => 'text',
+            'type' => $type,
+            'name' => $inputname,
+            'value' => $currentanswer,
+            'id' => $inputname,
+           // 'maxlength' => $size,
+            'style'=>'width: '.$style.'px;'
+            );
+  
+        $selecthtml = html_writer::select($selectoptions, $inputname,
+        $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
+
+        return $selecthtml;
+        }else{
+        
+       /* When pre */
+        if ($options->readonly) {
+            $inputattributes['readonly'] = 'readonly';
+        }
+        $type="input";   
+
+        $style=$size*10;
+        $inputattributes = array(
+            'type' => $type,
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
            // 'maxlength' => $size,
-            'class' => $inputclass
+            'class' => $inputclass,
+            'style'=>'width: '.$style.'px;'
         );
 
-       /* When pre */
-        if ($options->readonly) {
-            $inputattributes['readonly'] = 'readonly';
-        }
-        
         return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
     
+        }
+       
         
     }
 
@@ -128,6 +158,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     public function correct_response(question_attempt $qa) {
+     
         $question = $qa->get_question();
         $answer = $question->get_matching_answer($question->get_correct_response());
         if (!$answer) {

@@ -16,8 +16,8 @@ $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Cloze Gapfill.';
 //$string['gapfillsummary'] = 'Fill in the blanks style questions';
-$string['gapfill_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]';
 $string['pluginname']="Gapfill question type";
+$string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
 $string['delimitchars']='Delimiter Characters';
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';

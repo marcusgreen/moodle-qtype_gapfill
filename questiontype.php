@@ -35,7 +35,9 @@ class qtype_gapfill extends question_type {
         }
     }
 
-    /* called when previewing a question or when displayed in a quiz */
+    /*
+     *  Called when previewing a question or when displayed in a quiz 
+     */
     protected function initialise_question_instance(question_definition $question, $questiondata) {
        
         parent::initialise_question_instance($question, $questiondata);
@@ -69,8 +71,8 @@ class qtype_gapfill extends question_type {
 
     /**
      *
-     * @param type $question
-     * @param type $form
+     * @param type $question The current question
+     * @param type $form The question editing form
      * @return type object
      * Sets the default mark as 1* the number of gaps
      * Does not allow setting any other value per space at the moment
@@ -162,11 +164,8 @@ class qtype_gapfill extends question_type {
             $DB->update_record('question_gapfill', $options);
         }
         $this->save_hints($question);
-
-        
         return true;
     }
-
 
     public function questionid_column_name() {
         return 'question';

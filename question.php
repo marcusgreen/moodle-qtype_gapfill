@@ -35,7 +35,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /** @var array of question_answer. */
     public $answers = array();
 
-    public $answerwords = array();
+   // public $answerwords = array();
     
     public $delimitchars="[]";
 
@@ -80,16 +80,20 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
        return implode(" ",$random_answers);
     }
 
-    /*
+   
+    /**
+     * @param array $response  as might be passed to {@link grade_response()}
+     * @return string 
      * Value returned will be written to responsesummary field of 
      * the question_attempts table
      */
-    public function summarise_response(array $response) {
-      $retval="";  
+   public function summarise_response(array $response) {
+      $summary="";  
         foreach($response as $key=>$value){
-            $retval.=" [".$value."]";            
+           // $summary.=" [".$value."]";
+            $summary.=" ".$value." ";
         }
-        return $retval;
+        return $summary;
     }
 
    public function is_complete_response(array $response) {
@@ -104,9 +108,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     
-    public function apply_attempt_state(question_attempt_step $step) {
-         parent::apply_attempt_state($step);
-    }
+//    public function apply_attempt_state(question_attempt_step $step) {
+//         parent::apply_attempt_state($step);
+//    }
     
     
     public function get_validation_error(array $response) {
@@ -115,7 +119,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return get_string('pleaseenterananswer', 'qtype_gapfill');
     }
-   public function get_right_choice_for($place) {
+   
+    
+    /**
+     * What is the correct value for the field 
+     */
+    public function get_right_choice_for($place) {
             return $this->places[$place];
 }
   
@@ -134,28 +143,28 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
     
-    public function compare_response_with_answer(array $response, question_answer $answer) {
-    
-    }
+//    public function compare_response_with_answer(array $response, question_answer $answer) {
+//    
+//    }
 
     public function is_gradable_response(array $response) {
 /* are there any fields still left blank */
         return   $this->is_complete_response($response);
     }
 
-    public function get_correct_response() {
+    /**
+     * @return question_answer an answer that 
+     * contains the a response that would get full marks.
+     */
+    public function get_correct_response() {       
         $response = array();
         $string = "";
+        /* convert array of places into a single string with spaces between each word*/
         foreach ($this->places as $answer) {
             $string = $string . " " . $answer;
         }
        $response['answer'] = $string;
-        $i = 0;
-        foreach ($this->answers as $answer) {
-            $this->answerwords[$i] = $answer->answer;
-            $i++;
-        }
-        return $response;
+       return $response;
     }
 
    public function get_num_parts_right(array $response) {
