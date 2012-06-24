@@ -26,20 +26,32 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-/* not actually using the countback bit at the moment, not sure what it does */
-    
+    /* not actually using the countback bit at the moment, not sure what it does */
+
     public $answer;
     /* boolean value display answers as a clue as to what to put in */
     public $showanswers;
 
+    public $correctfeedback='';
+    public $partiallycorrectfeedback='';
+    public $incorrectfeedback='';
+    
+    public $correctfeedbackformat;
+    public $partiallycorrectfeedbackformat;
+    public $incorrectfeedbackformat;
+    
+    /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
+    public $casesensitive;
+
     /** @var array of question_answer. */
     public $answers = array();
+    // public $answerwords = array();
 
-   // public $answerwords = array();
-    
-    public $delimitchars="[]";
+/* the characters indicating a field to fill i.e. [cat] creates
+ * a field where the correct answer is cat
+ */
+    public $delimitchars = "[]";
 
- 
     /**
      * @var array place number => group number of the places in the question
      * text where choices can be put. Places are numbered from 1.
@@ -72,63 +84,56 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $data;
     }
 
-/* For displaying a list of correct answers randomly shuffled */
+    /* For displaying a list of correct answers randomly shuffled */
+
     public function get_shuffled_answers() {
-       $random_answers=$this->places;
-       shuffle($random_answers);
-       /* return a string of answers as a string with gaps */
-       return implode(" ",$random_answers);
+        $random_answers = $this->places;
+        shuffle($random_answers);
+        /* return a string of answers as a string with gaps */
+        return implode(" ", $random_answers);
     }
 
-   
     /**
      * @param array $response  as might be passed to {@link grade_response()}
      * @return string 
      * Value returned will be written to responsesummary field of 
      * the question_attempts table
      */
-   public function summarise_response(array $response) {
-      $summary="";  
-        foreach($response as $key=>$value){
-           // $summary.=" [".$value."]";
-            $summary.=" ".$value." ";
+    public function summarise_response(array $response) {
+        $summary = "";
+        foreach ($response as $key => $value) {
+            // $summary.=" [".$value."]";
+            $summary.=" " . $value . " ";
         }
         return $summary;
     }
 
-   public function is_complete_response(array $response) {
-/* checks that none of of the gaps is blanks */
-       foreach ($this->answers as $key => $value) {
-         $ans=array_shift($response);
-          if($ans==""){              
-               return false;
-           }          
-         }        
-       return true;
+    public function is_complete_response(array $response) {
+        /* checks that none of of the gaps is blanks */
+        foreach ($this->answers as $key => $value) {
+            $ans = array_shift($response);
+            if ($ans == "") {
+                return false;
+            }
+        }
+        return true;
     }
 
-    
-//    public function apply_attempt_state(question_attempt_step $step) {
-//         parent::apply_attempt_state($step);
-//    }
-    
-    
+
+
     public function get_validation_error(array $response) {
-        if ($this->is_gradable_response($response)) {
-           return 'xyz';
+        if (!$this->is_gradable_response($response)) {
+            return get_string('pleaseenterananswer', 'qtype_gapfill');
         }
-        return get_string('pleaseenterananswer', 'qtype_gapfill');
     }
-   
-    
+
     /**
      * What is the correct value for the field 
      */
     public function get_right_choice_for($place) {
-            return $this->places[$place];
-}
-  
-    
+        return $this->places[$place];
+    }
+
     public function is_same_response(array $prevresponse, array $newresponse) {
         /* if you are moving from viewing one question to another this will 
          * discard the processing if the answer has not changed. If you don't 
@@ -136,45 +141,69 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          * the question will be repeatedly set to incomplete. This is a comparison of
          * the equality of two arrays.
          */
-        if($prevresponse==$newresponse){
+        if ($prevresponse == $newresponse) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-//    public function compare_response_with_answer(array $response, question_answer $answer) {
-//    
-//    }
+
 
     public function is_gradable_response(array $response) {
-/* are there any fields still left blank */
-        return   $this->is_complete_response($response);
+        /* are there any fields still left blank */
+        return $this->is_complete_response($response);
     }
 
     /**
      * @return question_answer an answer that 
      * contains the a response that would get full marks.
      */
-    public function get_correct_response() {       
+    public function get_correct_response() {
         $response = array();
         $string = "";
-        /* convert array of places into a single string with spaces between each word*/
+        /* convert array of places into a single string with spaces between each word */
         foreach ($this->places as $answer) {
             $string = $string . " " . $answer;
         }
-       $response['answer'] = $string;
-       return $response;
+        $response['answer'] = $string;
+        return $response;
     }
 
-   public function get_num_parts_right(array $response) {
+    /* called from within renderer */
+
+    function is_correct_response($answergiven, $rightanswer) {
+        if (!$this->casesensitive == 1) {
+            $answergiven = strtolower($answergiven);
+            $rightanswer = strtolower($rightanswer);
+        }
+        if ($answergiven == $rightanswer) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+/**
+ *
+ * @param array $response Passed in from the submitted form
+ * @return array 
+ *
+ * Find count of correct answers, used for displaying marks
+ * for question. Compares answergiven with right/correct answer
+ */
+    public function get_num_parts_right(array $response) {
         $numright = 0;
         foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
             }
-            if ($response[$this->field($place)] == $this->get_right_choice_for($place)) {
-                $numright += 1;
+            $answergiven = $response[$this->field($place)];
+            $rightanswer = $this->get_right_choice_for($place);
+            if (!$this->casesensitive == 1) {
+                $answergiven = strtolower($answergiven);
+                $rightanswer = strtolower($rightanswer);
+            }
+            if ($answergiven == $rightanswer) {
+                $numright+=1;
             }
         }
         return array($numright, count($this->places));
@@ -182,18 +211,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function grade_response(array $response) {
         list($right, $total) = $this->get_num_parts_right($response);
-          $fraction = $right / $total;
-          $myarray= array($fraction, question_state::graded_state_for_fraction($fraction));
+        $fraction = $right / $total;
+        $myarray = array($fraction, question_state::graded_state_for_fraction($fraction));
         return $myarray;
-
     }
-    
-     
 
 //required by the interface question_automatically_gradable_with_countback
-        public function compute_final_grade($responses, $totaltries) {
-           //only applies in interactive mode.
-         $totalscore = 0;
+    public function compute_final_grade($responses, $totaltries) {
+
+//only applies in interactive mode.
+        $totalscore = 0;
         foreach ($this->places as $place => $notused) {
             $fieldname = $this->field($place);
 
@@ -216,15 +243,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
         return $totalscore / count($this->places);
     }
-    
-    /**
-     * Get an answer that contains the feedback and fraction that should be
-     * awarded for this resonse.
-     * @param array $response a response.
-     * @return question_answer the matching answer.
-     */
-    public function get_matching_answer(array $response) {
-      
-   }
 
+    
 }

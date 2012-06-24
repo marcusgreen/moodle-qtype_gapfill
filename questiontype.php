@@ -18,7 +18,15 @@
 class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
-        return array('question_gapfill', 'showanswers','delimitchars');
+        return array('question_gapfill', 'showanswers','delimitchars','casesensitive');
+    }
+    
+ /* populates fields such as combined feedback in the editing form */
+ public function get_question_options($question) {
+        global $DB, $OUTPUT;
+        $question->options = $DB->get_record('question_gapfill',
+                array('question' => $question->id), '*', MUST_EXIST);
+        parent::get_question_options($question);
     }
 
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
@@ -39,9 +47,10 @@ class qtype_gapfill extends question_type {
      *  Called when previewing a question or when displayed in a quiz 
      */
     protected function initialise_question_instance(question_definition $question, $questiondata) {
-       
+
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
+        $this->initialise_combined_feedback($question, $questiondata);
 
         $question->places = array();
         $counter = 1;
@@ -51,7 +60,6 @@ class qtype_gapfill extends question_type {
             $counter++;
         }
 
-        //$bits = preg_split('/\[.*?\]/', $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE
         // will put empty places '' where there is no text content
         $l=substr($question->delimitchars,0,1);
         $r=substr($question->delimitchars,1,1);
@@ -78,14 +86,12 @@ class qtype_gapfill extends question_type {
      * Does not allow setting any other value per space at the moment
      */
     function save_question($question, $form) {
-      
-   
         $l=substr($form->delimitchars,0,1);
         $r=substr($form->delimitchars,1,1);
                
         $left="[";
         $right="]";
-        //preg_match_all('/\[(.*?)\]/', $form->questiontext['text'], $bits);
+ 
         $fieldregex = '/\\'.$l.'(.*?)\\'.$r.'/';
         preg_match_all($fieldregex, $form->questiontext['text'], $bits);
 
@@ -136,6 +142,9 @@ class qtype_gapfill extends question_type {
                 $answer->question = $question->id;
                 $answer->answer = $word;
                 $answer->feedback = '';
+                $answer->correctfeedback='';
+                $answer->partiallycorrectfeedback='';
+                $answer->incorrectfeedback='';
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
             
@@ -146,22 +155,29 @@ class qtype_gapfill extends question_type {
             }
 
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
-         $options->delimitchars=$question->delimitchars;
+        $options->delimitchars=$question->delimitchars;
         
         $options->showanswers = $question->showanswers;
-
+        $options->casesensitive = $question->casesensitive;
+      
         if (!$options) {
             $options = new stdClass();
-            $options->question = $question->id;
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
-            $options->incorrectfeedback = '';
-
+            $options->incorrectfeedback ='';
+            $options->question = $question->id;
+            
             $options->id = $DB->insert_record('question_gapfill', $options);
         } else {
+           
             $parentresult = parent::save_question_options($question);
-            $options->id = $question->id;
-            $DB->update_record('question_gapfill', $options);
+            $options->correctfeedback = $question->correctfeedback;
+           
+            $options = $this->save_combined_feedback_helper($options, $question, $context, true);
+           
+           // $DB->update_record('question_gapfill', $options);
+         
+            
         }
         $this->save_hints($question);
         return true;
@@ -173,3 +189,4 @@ class qtype_gapfill extends question_type {
 
 }
 
+    

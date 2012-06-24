@@ -11,6 +11,9 @@
  */
 
 $string['addinggapfill']='Adding Gap Fill';
+$string['casesensitive']='Case Sensitive';
+$string['casesensitive_help']='When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';;
+//$string['delimitchars']='Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
@@ -19,10 +22,10 @@ $string['gapfill'] = 'Cloze Gapfill.';
 $string['pluginname']="Gapfill question type";
 $string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
-$string['delimitchars']='Delimiter Characters';
+//$string['delimitchars']='Delimit Characters';
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['showanswers']='Display Answers';
-$string['showanswers_help'] = 'If checked this will show a randomly shuffled list of the answers above the question.';
+$string['showanswers_help'] = 'If checked this will turn each field into a dropdown containing all answers for all fields';
 $string['pleaseenterananswer']='Please enter an answer.';
 
 ?>

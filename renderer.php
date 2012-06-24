@@ -20,32 +20,21 @@
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2009 The Open University
+ * @copyright &copy; 2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Generates the output for true-false questions.
- *
- * @copyright  2009 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
      
         $question = $qa->get_question();
-       $fields = array();
+        $fields = array();
         $question_text = "";
         $place_count = count($question->places);
-
         $counter = 0;
-      //  if ($question->showanswers == true) {
-     //       $question_text = $question->get_shuffled_answers() . "<br/>";
-       // }
-
-
+    
         foreach ($question->textfragments as $place => $fragment) {
             if ($place >0) {
                 $question_text.=$this->embedded_element($qa, $place, $options);
@@ -93,7 +82,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 /* sets the field background to a different colour if the answer is right */
                 $inputclass = $this->feedback_class($fraction);
 
-                if ($response[$fieldname] == $rightanswer) {
+               // if ($response[$fieldname] == $rightanswer) {
+                 if($question->is_correct_response($response[$fieldname],$rightanswer)){
                     $fraction = 1;
                     $feedbackimage = $this->feedback_image($fraction);
                     /* sets the field background to a different colour if the answer is wrong */
@@ -105,46 +95,38 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
         $style="";
+        $inputattributes = array(
+            'type' => "input",
+            'name' => $inputname,
+            'value' => $currentanswer,
+            'id' => $inputname,
+            'size'=>$size,
+           // 'maxlength' => $size,
+            'style'=>'width: '.$style.'px;'
+            );
+        
         if ($question->showanswers == true){
-        $type="select";   
+       // $type="select";   
+        $inputattributes['type']="select";
+        $inputattributes['size']="";
+        
         $selectoptions=$question->places;
         shuffle($selectoptions);
         /*set the key to be the same as the value */
         $selectoptions=array_combine($selectoptions,$selectoptions);
-        
-        $inputattributes = array(
-            'type' => $type,
-            'name' => $inputname,
-            'value' => $currentanswer,
-            'id' => $inputname,
-           // 'maxlength' => $size,
-            'style'=>'width: '.$style.'px;'
-            );
-  
+ 
         $selecthtml = html_writer::select($selectoptions, $inputname,
         $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
-
         return $selecthtml;
         }else{
-        
-       /* When pre */
+
+        /* When pre */
         if ($options->readonly) {
             $inputattributes['readonly'] = 'readonly';
         }
         $type="input";   
-
+        $inputattributes["type"]="input";
         $style=$size*10;
-        $inputattributes = array(
-            'type' => $type,
-            'name' => $inputname,
-            'value' => $currentanswer,
-            'id' => $inputname,
-            'size' => $size,
-           // 'maxlength' => $size,
-            'class' => $inputclass,
-            'style'=>'width: '.$style.'px;'
-        );
-
         return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
     
         }
@@ -154,17 +136,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     
     public function specific_feedback(question_attempt $qa) {
-
+        return $this->combined_feedback($qa);
     }
 
-    public function correct_response(question_attempt $qa) {
-     
-        $question = $qa->get_question();
-        $answer = $question->get_matching_answer($question->get_correct_response());
-        if (!$answer) {
-            return '';
-        }
-        return get_string('correctansweris', 'qtype_gapfill', s($answer->answer));
-    }
+
 
 }
