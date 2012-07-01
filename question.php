@@ -32,7 +32,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /* boolean value display answers as a clue as to what to put in */
     public $showanswers;
 
-    public $correctfeedback='';
+    public $correctfeedback;
     public $partiallycorrectfeedback='';
     public $incorrectfeedback='';
     
@@ -110,7 +110,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_complete_response(array $response) {
         /* checks that none of of the gaps is blanks */
-        foreach ($this->answers as $key => $value) {
+      foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
             if ($ans == "") {
                 return false;
@@ -131,7 +131,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * What is the correct value for the field 
      */
     public function get_right_choice_for($place) {
-        return $this->places[$place];
+          return $this->places[$place];
     }
 
     public function is_same_response(array $prevresponse, array $newresponse) {

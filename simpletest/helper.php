@@ -44,6 +44,11 @@ class qtype_gapfill_test_helper {
 
         $question->name = 'Gapfill Test Question';
         $question->questiontext = 'The [cat] sat on the [mat]';
+        
+        $question->displayanswers = '1';
+        $question->casesensitive = '1';
+        $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
+        
         $question->places[0]='cat';
         $question->places[1]='mat';
         $answer1=new question_answer(43, 'cat',4, 1, 1);

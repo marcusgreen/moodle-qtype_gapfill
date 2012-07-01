@@ -11,11 +11,11 @@
         <FIELD NAME="showanswers" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Display a shuffled list of answers true/false 1 or 0" PREVIOUS="question" NEXT="delimitchars"/>
         <FIELD NAME="delimitchars" TYPE="char" LENGTH="2" NOTNULL="false" DEFAULT="[]" SEQUENCE="false" COMMENT="The characters that define fields, generally defaults to [] i.e. The [cat] sat on the [mat] where the fields are [cat] and [mat]" PREVIOUS="showanswers" NEXT="casesensitive"/>
         <FIELD NAME="casesensitive" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="make marking case sensitive, e.g. if the answer is cat Cat will also be accepted as correct" PREVIOUS="delimitchars" NEXT="correctfeedback"/>
-        <FIELD NAME="correctfeedback" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" PREVIOUS="casesensitive" NEXT="correctfeedbackformat"/>
+        <FIELD NAME="correctfeedback" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="casesensitive" NEXT="correctfeedbackformat"/>
         <FIELD NAME="correctfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="correctfeedback" NEXT="partiallycorrectfeedback"/>
-        <FIELD NAME="partiallycorrectfeedback" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="correctfeedbackformat" NEXT="partiallycorrectfeedbackformat"/>
+        <FIELD NAME="partiallycorrectfeedback" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="correctfeedbackformat" NEXT="partiallycorrectfeedbackformat"/>
         <FIELD NAME="partiallycorrectfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="partiallycorrectfeedback" NEXT="incorrectfeedback"/>
-        <FIELD NAME="incorrectfeedback" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="partiallycorrectfeedbackformat" NEXT="incorrectfeedbackformat"/>
+        <FIELD NAME="incorrectfeedback" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="partiallycorrectfeedbackformat" NEXT="incorrectfeedbackformat"/>
         <FIELD NAME="incorrectfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="incorrectfeedback"/>
       </FIELDS>
       <KEYS>

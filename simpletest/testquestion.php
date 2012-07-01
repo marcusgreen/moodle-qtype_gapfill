@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,8 +23,6 @@
  * @copyright  2008 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/question/type/gapfill/simpletest/helper.php');
@@ -34,7 +33,6 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
 
 require_once($CFG->dirroot . '/question/engine/simpletest/helpers.php');
 
-
 /**
  * Unit tests for the short answer question definition class.
  *
@@ -42,150 +40,67 @@ require_once($CFG->dirroot . '/question/engine/simpletest/helpers.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_question_test extends UnitTestCase {
-    
-public function test_gapfill_qtype(){   
-    //notice arse arse arse
-            $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-            
-            $this->assertEqual($question->field('1'),'p1');
-            
-            $expected_data=array('p0'=>'raw_trimmed','p1'=>'raw_trimmed');
 
-            $this->assertEqual($question->get_expected_data(),$expected_data);
-            
-            $this->assertEqual(is_string($question->get_Shuffled_Answers()),true);
-            
-            $response=array('p0'=>'cat','p1'=>'dog');
-            list($fraction, $state) = $question->grade_response($response);
-            
-            $this->assertEqual($fraction,1);
-            
-            //grade_response(array $response) {
-                    
-}
+    public function test_gapfill_qtype() {
+        //notice arse arse arse
+        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $this->assertEqual($question->field('1'), 'p1');
+        $expected_data = array('p0' => 'raw_trimmed', 'p1' => 'raw_trimmed');
+        $this->assertEqual($question->get_expected_data(), $expected_data);
+        $this->assertEqual(is_string($question->get_Shuffled_Answers()), true);
 
-//    public function test_compare_string_with_wildcard() {
-//        // Test case sensitive literal matches.
-//        
-//        $this->assertTrue(qtype_gapfill_question::field('0','p0',true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog', 'Frog', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog', 'frog', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   Frog   ', 'Frog', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frogs', 'Frog', false));
-//
-//        // Test case insensitive literal matches.
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog', 'frog', true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   FROG   ', 'Frog', true));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frogs', 'Frog', true));
-//
-//        // Test case sensitive wildcard matches.
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog', 'F*og', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Fog', 'F*og', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   Fat dog   ', 'F*og', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frogs', 'F*og', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Fg', 'F*og', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'frog', 'F*og', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   fat dog   ', 'F*og', false));
-//
-//        // Test case insensitive wildcard matches.
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog', 'F*og', true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Fog', 'F*og', true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   Fat dog   ', 'F*og', true));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frogs', 'F*og', true));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Fg', 'F*og', true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'frog', 'F*og', true));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   fat dog   ', 'F*og', true));
-//
-//        // Test match using regexp special chars.
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '   *   ', '\*', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '*', '\*', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'Frog*toad', 'Frog\*toad', false));
-//        $this->assertFalse(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'a', '[a-z]', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '[a-z]', '[a-z]', false));
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                '\{}/', '\{}/', true));
-//
-//        // See http://moodle.org/mod/forum/discuss.php?d=120557
-//        $this->assertTrue(qtype_shortanswer_question::compare_string_with_wildcard(
-//                'ITÁLIE', 'Itálie', true));
-//    }
 
-//    public function test_is_complete_response() {
-//        $question = test_question_maker::make_a_shortanswer_question();
-//
-//        $this->assertFalse($question->is_complete_response(array()));
-//        $this->assertFalse($question->is_complete_response(array('answer' => '')));
-//        $this->assertTrue($question->is_complete_response(array('answer' => '0')));
-//        $this->assertTrue($question->is_complete_response(array('answer' => '0.0')));
-//        $this->assertTrue($question->is_complete_response(array('answer' => 'x')));
-//    }
+        $response = array('p0' => 'cat', 'p1' => 'dog');
+        list($fraction, $state) = $question->grade_response($response);
 
-//    public function test_is_gradable_response() {
-//        $question = test_question_maker::make_a_shortanswer_question();
-//
-//        $this->assertFalse($question->is_gradable_response(array()));
-//        $this->assertFalse($question->is_gradable_response(array('answer' => '')));
-//        $this->assertTrue($question->is_gradable_response(array('answer' => '0')));
-//        $this->assertTrue($question->is_gradable_response(array('answer' => '0.0')));
-//        $this->assertTrue($question->is_gradable_response(array('answer' => 'x')));
-//    }
+        //with two fields, if you have one wrong the score (fraction)
+        //will be .5. Fraction is always a a fractional part of one.
+        $this->assertEqual($fraction, .5);
 
- //   public function test_grading() {
-   //     $question = test_question_maker::make_a_shortanswer_question();
+        //grade_response(array $response) {
+    }
 
-       // $this->assertEqual(array(0, question_state::$gradedwrong),
-             //   $question->grade_response(array('answer' => 'x')));
-       // $this->assertEqual(array(1, question_state::$gradedright),
-           //     $question->grade_response(array('answer' => 'frog')));
-       // $this->assertEqual(array(0.8, question_state::$gradedpartial),
-         //       $question->grade_response(array('answer' => 'toad')));
-    //}
+    public function test_is_complete_response() {
+        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
 
-   // public function test_get_correct_response() {
-     //   $question = test_question_maker::make_a_shortanswer_question();
+        $response = array('p1' => 'cat', 'p2' => 'mat');
 
-       // $this->assertEqual(array('answer' => 'frog'),
-     //           $question->get_correct_response());
-   // }
+        $this->assertTrue($question->is_complete_response($response));
 
-   // public function test_get_question_summary() {
-     //   $sa = test_question_maker::make_a_shortanswer_question();
-      //  $qsummary = $sa->get_question_summary();
-       // $this->assertEqual('Name an amphibian: __________', $qsummary);
-    //}
+        $response = array('p1' => 'cat');
+        $this->assertFalse($question->is_complete_response($response));
 
-    //public function test_summarise_response() {
-      //  $sa = test_question_maker::make_a_shortanswer_question();
-        //$summary = $sa->summarise_response(array('answer' => 'dog'));
-       // $this->assertEqual('dog', $summary);
-    //}
+        $this->assertFalse($question->is_complete_response(array()));
+    }
 
-    
-    
+    public function test_is_correct_response() {
+        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question->casesensitive = 0;
+        $answergiven = 'CAT';
+        $rightanswer = 'cat';
+        $this->assertTrue($question->is_correct_response($answergiven, $rightanswer));
+
+        $question->casesensitive = 1;
+        $this->assertFalse($question->is_correct_response($answergiven, $rightanswer));
+
+        $answergiven = 'dog';
+        $this->assertFalse($question->is_correct_response($answergiven, $rightanswer));
+    }
+
+    public function test_get_right_choice_for_place() {
+        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $this->assertEqual($question->get_right_choice_for(0), 'cat');
+        $this->assertNotEqual($question->get_right_choice_for(1), 'cat');
+    }
+
+    public function test_is_same_response() {
+        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $prevresponse = array();
+        $newresponse = array('p1' => 'cat', 'p2' => 'mat');
+        $this->assertFalse($question->is_same_response($prevresponse, $newresponse));
+        $prevresponse = array('p1' => 'cat', 'p2' => 'mat');
+        $newresponse = array('p1' => 'cat', 'p2' => 'mat');
+        $this->assertTrue($question->is_same_response($prevresponse, $newresponse));
+    }
+
 }

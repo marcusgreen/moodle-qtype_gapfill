@@ -155,36 +155,69 @@ class qtype_gapfill extends question_type {
             }
 
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
-        $options->delimitchars=$question->delimitchars;
-        
-        $options->showanswers = $question->showanswers;
-        $options->casesensitive = $question->casesensitive;
-      
         if (!$options) {
             $options = new stdClass();
+            $options->question = $question->id;
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback ='';
-            $options->question = $question->id;
-            
+            $options->showanswers='';
+            $options->delimitchars = '';
+            $options->casesensitive = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
-        } else {
-           
-            $parentresult = parent::save_question_options($question);
-            $options->correctfeedback = $question->correctfeedback;
-           
+        }
+            //$parentresult = parent::save_question_options($question);
+            $options->delimitchars=$question->delimitchars;
+            $options->showanswers=$question->showanswers;
+            $options->casesensitive=$question->casesensitive;
             $options = $this->save_combined_feedback_helper($options, $question, $context, true);
-           
-           // $DB->update_record('question_gapfill', $options);
+            $DB->update_record('question_gapfill', $options);
          
             
-        }
+        
         $this->save_hints($question);
         return true;
     }
 
     public function questionid_column_name() {
         return 'question';
+    }
+
+public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
+    
+    if (!isset($data['@']['type']) || $data['@']['type'] != 'gapfill') {
+            return false;
+        }
+    $question=parent::import_from_xml($data, $question, $format,null);
+
+        $format->import_combined_feedback($question, $data, true);
+        $format->import_hints($question, $data, true, false,
+                $format->get_format($question->questiontextformat));
+
+
+
+        return $question;
+    }
+    
+    
+    public function export_to_xml($question,qformat_xml $format, $extra = null) {
+        $output= parent::export_to_xml($question,$format);
+
+
+        $output .= '    <delimitchars>' . $question->options->delimitchars .
+                "</delimitchars>\n";
+
+ $output .= '    <showanswers>' . $question->options->showanswers .
+                "</showanswers>\n";
+ 
+  $output .= '    <casesensitive>' . $question->options->casesensitive .
+                "</casesensitive>\n";
+
+
+   $output .= $format->write_combined_feedback($question->options,
+                                                    $question->id,
+                                                    $question->contextid);
+        return $output;
     }
 
 }

@@ -40,6 +40,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
         
+        
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
 
         $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'), array('rows' => 10), $this->editoroptions);
