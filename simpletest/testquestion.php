@@ -16,11 +16,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Unit tests for the short answer question definition class.
+ * Unit tests for the gapfill question definition class.
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2008 The Open University
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();

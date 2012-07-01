@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Unit tests for the shortanswer question type class.
+ * Unit tests for the gapfill question type class.
  *
  * @package    qtype
  * @subpackage shortanswer
- * @copyright  2007 The Open University
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

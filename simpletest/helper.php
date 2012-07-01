@@ -19,23 +19,15 @@
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2011 The Open University
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 
-
-/**
- * Test helper class for the select missing words question type.
- *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class qtype_gapfill_test_helper {
     /**
-     * @return qtype_gapselect_question
+     * @return qtype_gapfill_question
      */
     public static function make_a_gapfill_question() {
         question_bank::load_question_definition_classes('gapfill');
