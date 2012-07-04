@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -26,38 +25,40 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-
+/** updated file */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
-     
+
         $question = $qa->get_question();
         $fields = array();
-        $question_text = "";
+
         $place_count = count($question->places);
         $counter = 0;
-    
+        $output='';
         foreach ($question->textfragments as $place => $fragment) {
-            if ($place >0) {
-                $question_text.=$this->embedded_element($qa, $place, $options);
+            if ($place > 0) {
+                $output.=$this->embedded_element($qa, $place, $options);
             }
-          $question_text .= $fragment;
-
+            /* format the non entry field parts of the question text, this will also
+              ensure images get displayed */
+            $output .= $question->format_text($fragment, $question->questiontextformat, $qa,
+                    'question', 'questiontext', $question->id);
         }
         if ($qa->get_state() == question_state::$invalid) {
-            $question_text .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $question_text)), array('class' => 'validationerror'));
+            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $questiontext)),
+                    array('class' => 'validationerror'));
         }
-     
-        return $question_text;
+        return $output;
     }
 
-    function embedded_element(question_attempt $qa, $place, question_display_options $options) {
-     
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options) {
+
         $fraction = 0;
         $question = $qa->get_question();
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $answer = $qa->get_last_qt_var('answer');
         $answer = trim($answer);
-        $size = "0"; //width of the field to be filled in
+        $size = "0"; /* width of the field to be filled in */
         if ($currentanswer == null) {
             if ($answer != null) {
                 /* if fill in correct answer is pressed during question preview */
@@ -70,7 +71,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $rightanswer = $question->get_right_choice_for($place);
         $size = strlen($rightanswer);
 
-        //$options->correctness is really about it being ready to mark,
+        /* $options->correctness is really about it being ready to mark,*/
         $feedbackimage = "";
         $inputclass = "";
 
@@ -82,8 +83,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 /* sets the field background to a different colour if the answer is right */
                 $inputclass = $this->feedback_class($fraction);
 
-               // if ($response[$fieldname] == $rightanswer) {
-                 if($question->is_correct_response($response[$fieldname],$rightanswer)){
+                if ($question->is_correct_response($response[$fieldname], $rightanswer)) {
                     $fraction = 1;
                     $feedbackimage = $this->feedback_image($fraction);
                     /* sets the field background to a different colour if the answer is wrong */
@@ -94,51 +94,43 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
-        $style="";
+        $style = "";
         $inputattributes = array(
             'type' => "input",
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size'=>$size,
-           // 'maxlength' => $size,
-            'style'=>'width: '.$style.'px;'
-            );
-        
-        if ($question->showanswers == true){
-       // $type="select";   
-        $inputattributes['type']="select";
-        $inputattributes['size']="";
-        
-        $selectoptions=$question->places;
-        shuffle($selectoptions);
-        /*set the key to be the same as the value */
-        $selectoptions=array_combine($selectoptions,$selectoptions);
- 
-        $selecthtml = html_writer::select($selectoptions, $inputname,
-        $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
-        return $selecthtml;
-        }else{
+            'size' => $size,
+            'style' => 'width: ' . $style . 'px;'
+        );
 
-        /* When pre */
-        if ($options->readonly) {
-            $inputattributes['readonly'] = 'readonly';
+        if ($question->showanswers == true) {
+            $inputattributes['type'] = "select";
+            $inputattributes['size'] = "";
+
+            $selectoptions = $question->places;
+            shuffle($selectoptions);
+            /* set the key to be the same as the value */
+            $selectoptions = array_combine($selectoptions, $selectoptions);
+
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
+                    $inputattributes) . ' ' . $feedbackimage;
+            return $selecthtml;
+        } else {
+
+            /* When pre */
+            if ($options->readonly) {
+                $inputattributes['readonly'] = 'readonly';
+            }
+            $type = "input";
+            $inputattributes["type"] = "input";
+            $style = $size * 10;
+            return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
         }
-        $type="input";   
-        $inputattributes["type"]="input";
-        $style=$size*10;
-        return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
-    
-        }
-       
-        
     }
 
-    
     public function specific_feedback(question_attempt $qa) {
         return $this->combined_feedback($qa);
     }
-
-
 
 }

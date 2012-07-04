@@ -1,4 +1,18 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * The editing form code for this question type.
@@ -8,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * gapfill editing form definition.
@@ -20,46 +36,45 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answer;
     public $showanswers;
     public $delimitchars;
-   //public $correctfeedback;
 
-    function definition_inner($mform) {
+
+    protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->removeelement('generalfeedback');
 
-        //default mark will be set to 1 * number of fields  
+        // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        //the delimiting characters around fields
+        // The delimiting characters around fields.
         $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
-        //$mform->addElement('advcheckbox','delim',"Show Answers");
         $mform->addElement('advcheckbox', 'showanswers', get_string('showanswers', 'qtype_gapfill'));
         $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
-        
-        
+
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
 
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'), array('rows' => 10), $this->editoroptions);
+        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'), array('rows' => 10),
+                $this->editoroptions);
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
-      
-        //to add combined feedback (correct, partial and incorrect)
+
+        // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
 
-        //adds hinting features
+        // Adds hinting features.
         $this->add_interactive_settings();
     }
 
-    function set_data($question) {
+    public function set_data($question) {
         $question->answer = $this->answer;
         $question->showanswers = $this->showanswers;
         $question->delimitchars = $this->delimitchars;
-       
+
         parent::set_data($question);
     }
 
@@ -74,12 +89,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         return $question;
     }
 
-    function definition_after_data() {
-        parent::definition_after_data();
-        global $CFG, $COURSE;
-    }
-
-    function validation($fromform, $data) {
+    public function validation($fromform, $data) {
         $errors = array();
         if ($errors) {
             return $errors;
@@ -88,9 +98,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
     }
 
-    function qtype() {
+    public function qtype() {
         return 'gapfill';
     }
-}
 
-?>
+}

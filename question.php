@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -26,30 +25,28 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-    /* not actually using the countback bit at the moment, not sure what it does */
+
+    // Not actually using the countback bit at the moment, not sure what it does.
 
     public $answer;
     /* boolean value display answers as a clue as to what to put in */
     public $showanswers;
-
     public $correctfeedback;
-    public $partiallycorrectfeedback='';
-    public $incorrectfeedback='';
-    
+    public $partiallycorrectfeedback = '';
+    public $incorrectfeedback = '';
     public $correctfeedbackformat;
     public $partiallycorrectfeedbackformat;
     public $incorrectfeedbackformat;
-    
+
     /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
     public $casesensitive;
 
     /** @var array of question_answer. */
     public $answers = array();
-    // public $answerwords = array();
 
-/* the characters indicating a field to fill i.e. [cat] creates
- * a field where the correct answer is cat
- */
+    /* the characters indicating a field to fill i.e. [cat] creates
+     * a field where the correct answer is cat
+     */
     public $delimitchars = "[]";
 
     /**
@@ -102,7 +99,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function summarise_response(array $response) {
         $summary = "";
         foreach ($response as $key => $value) {
-            // $summary.=" [".$value."]";
             $summary.=" " . $value . " ";
         }
         return $summary;
@@ -110,7 +106,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_complete_response(array $response) {
         /* checks that none of of the gaps is blanks */
-      foreach ($this->answers as $key => $value) {
+        foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
             if ($ans == "") {
                 return false;
@@ -118,8 +114,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return true;
     }
-
-
 
     public function get_validation_error(array $response) {
         if (!$this->is_gradable_response($response)) {
@@ -131,13 +125,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * What is the correct value for the field 
      */
     public function get_right_choice_for($place) {
-          return $this->places[$place];
+        return $this->places[$place];
     }
 
     public function is_same_response(array $prevresponse, array $newresponse) {
-        /* if you are moving from viewing one question to another this will 
-         * discard the processing if the answer has not changed. If you don't 
-         * use this method it will constantantly generate new question steps and 
+        /* if you are moving from viewing one question to another this will
+         * discard the processing if the answer has not changed. If you don't
+         * use this method it will constantantly generate new question steps and
          * the question will be repeatedly set to incomplete. This is a comparison of
          * the equality of two arrays.
          */
@@ -147,7 +141,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
-
 
     public function is_gradable_response(array $response) {
         /* are there any fields still left blank */
@@ -171,7 +164,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /* called from within renderer */
 
-    function is_correct_response($answergiven, $rightanswer) {
+    public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = strtolower($answergiven);
             $rightanswer = strtolower($rightanswer);
@@ -182,14 +175,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
-/**
- *
- * @param array $response Passed in from the submitted form
- * @return array 
- *
- * Find count of correct answers, used for displaying marks
- * for question. Compares answergiven with right/correct answer
- */
+
+    /**
+     *
+     * @param array $response Passed in from the submitted form
+     * @return array 
+     *
+     * Find count of correct answers, used for displaying marks
+     * for question. Compares answergiven with right/correct answer
+     */
     public function get_num_parts_right(array $response) {
         $numright = 0;
         foreach ($this->places as $place => $notused) {
@@ -215,34 +209,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $myarray = array($fraction, question_state::graded_state_for_fraction($fraction));
         return $myarray;
     }
-
-//required by the interface question_automatically_gradable_with_countback
+    // Required by the interface question_automatically_gradable_with_countback.
     public function compute_final_grade($responses, $totaltries) {
-
-//only applies in interactive mode.
-        $totalscore = 0;
-        foreach ($this->places as $place => $notused) {
-            $fieldname = $this->field($place);
-
-            $lastwrongindex = -1;
-            $finallyright = false;
-            foreach ($responses as $i => $response) {
-                if (!array_key_exists($fieldname, $response) ||
-                        $response[$fieldname] != $this->get_right_choice_for($place)) {
-                    $lastwrongindex = $i;
-                    $finallyright = false;
-                } else {
-                    $finallyright = true;
-                }
-            }
-
-            if ($finallyright) {
-                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
-            }
-        }
-
-        return $totalscore / count($this->places);
     }
-
-    
 }
