@@ -46,6 +46,7 @@ class qtype_gapfill extends question_type {
     }
 
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
+        
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
@@ -55,15 +56,16 @@ class qtype_gapfill extends question_type {
                             $a->fraction, $a->feedback, $a->feedbackformat);
             if (!$forceplaintextanswers) {
                 $question->answers[$a->id]->answerformat = $a->answerformat;
-            }
+            }            
         }
+        
     }
 
     /*
      *  Called when previewing a question or when displayed in a quiz
      */
 
-    protected function initialise_question_instance(question_definition $question, $questiondata) {
+   protected function initialise_question_instance(question_definition $question, $questiondata) {
 
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
@@ -77,6 +79,7 @@ class qtype_gapfill extends question_type {
             $counter++;
         }
 
+
         // Will put empty places '' where there is no text content.
         $l = substr($question->delimitchars, 0, 1);
         $r = substr($question->delimitchars, 1, 1);
@@ -85,12 +88,16 @@ class qtype_gapfill extends question_type {
         $right = "]";
         $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
         $bits = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
+      
         $question->textfragments[0] = array_shift($bits);
         $i = 1;
+
         while (!empty($bits)) {
+
             $question->textfragments[$i] = array_shift($bits);
             $i += 1;
         }
+
     }
 
     /**

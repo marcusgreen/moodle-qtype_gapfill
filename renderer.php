@@ -28,6 +28,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 /** updated file */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
 
+        
         $question = $qa->get_question();
         $fields = array();
 
@@ -44,7 +45,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     'question', 'questiontext', $question->id);
         }
         if ($qa->get_state() == question_state::$invalid) {
-            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $questiontext)),
+            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
                     array('class' => 'validationerror'));
         }
         return $output;

@@ -42,7 +42,7 @@ class qtype_gapfill_question_test extends UnitTestCase {
     public function test_get_expected_data() {
 
         $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-        $expected_data = array('p0' => 'raw_trimmed', 'p1' => 'raw_trimmed');
+        $expected_data = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
         $this->assertEquals($question->get_expected_data(), $expected_data);
         $this->assertEquals(is_string($question->get_Shuffled_Answers()), true);
     }
@@ -54,21 +54,21 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_summarise_response_() {
          $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-         $response = array('p0' => 'cat', 'p1' => 'dog');
+         $response = array('p1' => 'cat', 'p2' => 'dog');
          $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
 
     public function test_grade_response() {
         $question = qtype_gapfill_test_helper::make_a_gapfill_question();
 
-        $response = array('p0' => 'cat', 'p1' => 'dog');
+        $response = array('p1' => 'cat', 'p2' => 'dog');
         list($fraction, $state) = $question->grade_response($response);
 
         /* with two fields, if you have one wrong the score (fraction)
          will be .5. Fraction is always a a fractional part of one.*/
         $this->assertEquals($fraction, .5);
 
-        $response = array('p0' => 'cat', 'p1' => 'mat');
+        $response = array('p1' => 'cat', 'p2' => 'mat');
         list($fraction, $state) = $question->grade_response($response);
 
         // If you have all correct score (fraction)
@@ -92,7 +92,17 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
         $this->assertFalse($question->is_complete_response(array()));
     }
-
+   public function test_get_correct_response(){
+       $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+      $this->assertEquals($question->get_correct_response(),array('answer'=>'cat mat'));
+   }
+   
+   public function test_get_validation_error(){
+       $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+      $this->assertTrue(is_string($question->get_validation_error( array("") ) ));
+   }
+   
+   
     public function test_is_correct_response() {
         $question = qtype_gapfill_test_helper::make_a_gapfill_question();
         $question->casesensitive = 0;
@@ -115,8 +125,8 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_get_right_choice_for_place() {
         $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-        $this->assertEqual($question->get_right_choice_for(0), 'cat');
-        $this->assertNotEqual($question->get_right_choice_for(1), 'cat');
+        $this->assertEqual($question->get_right_choice_for(1), 'cat');
+        $this->assertNotEqual($question->get_right_choice_for(2), 'cat');
     }
 
     public function test_is_same_response() {

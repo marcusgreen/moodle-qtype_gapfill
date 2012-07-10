@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>phpunit</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="highcharts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+          var classCoverageDistribution = new Highcharts.Chart({
+             chart: {
+                renderTo: 'classCoverageDistribution',
+                type: 'column'
+             },
+             title: {text: ''},
+             legend: {enabled: false},
+             credits: {enabled: false},
+             tooltip: {enabled: false},
+             xAxis: {
+                 labels: {style: {fontSize: '8px'}},
+                 categories: [
+                 '0%','0-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%','80-90%','90-100%','100%'
+                 ]
+            },
+            yAxis: {
+                title: '',
+                labels: {style: {fontSize: '8px'}},
+            },
+            series: [{
+                data: [6,1,1,0,0,0,0,0,0,0,0,0]
+            }],
+          });
+
+        var classComplexity = new Highcharts.Chart({
+            chart: {
+              renderTo: 'classComplexity',
+              type: 'scatter'
+            },
+            title: {text: ''},
+            legend: {enabled: false},
+            credits: {enabled: false},
+            xAxis: {
+               labels: {enabled: false},
+            },
+            yAxis: {
+              title: '',
+              labels: {enabled: false},
+            },
+            tooltip: {
+                formatter: function() {
+                    return this.point.config[2];
+                }
+            },
+            series: [{
+              data: [[0,8,"<a href=\"lib_phpunit_classes_arraydataset.php.html#36\">phpunit_ArrayDataSet<\/a>"],[0,4,"<a href=\"lib_phpunit_classes_basic_testcase.php.html#37\">basic_testcase<\/a>"],[0,14,"<a href=\"lib_phpunit_classes_block_generator.php.html#37\">phpunit_block_generator<\/a>"],[2.7027027027027,72,"<a href=\"lib_phpunit_classes_data_generator.php.html#36\">phpunit_data_generator<\/a>"],[0,14,"<a href=\"lib_phpunit_classes_database_driver_testcase.php.html#48\">database_driver_testcase<\/a>"],[0,9,"<a href=\"lib_phpunit_classes_hint_resultprinter.php.html#36\">Hint_ResultPrinter<\/a>"],[0,14,"<a href=\"lib_phpunit_classes_module_generator.php.html#37\">phpunit_module_generator<\/a>"],[10.016420361248,171,"<a href=\"lib_phpunit_classes_util.php.html#35\">phpunit_util<\/a>"]],
+              marker: {
+                  symbol: 'diamond'
+              }
+            }],
+        });
+    });
+    </script>
+  </head>
+
+  <body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr><td class="title">phpunit</td></tr>
+      <tr><td><div align="center"><p><a href="lib_phpunit.html">Back to Code Coverage report</a></p></div></td></tr>
+      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
+    </table>
+
+    <br />
+
+    <center>
+      <table width="90%" cellpadding="2" cellspacing="1" border="0">
+        <tr>
+          <td valign="top">
+            <h2>Class Coverage Distribution</h2>
+            <div id="classCoverageDistribution"></div>
+          </td>
+
+          <td valign="top">
+            <h2>Class Complexity</h2>
+            <div id="classComplexity"></div>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <h2>Top Project Risks</h2>
+            <ul>
+              <li><a href="lib_phpunit_classes_util.php.html#35">phpunit_util</a> (21476)</li>
+              <li><a href="lib_phpunit_classes_data_generator.php.html#36">phpunit_data_generator</a> (4846)</li>
+              <li><a href="lib_phpunit_classes_module_generator.php.html#37">phpunit_module_generator</a> (210)</li>
+              <li><a href="lib_phpunit_classes_block_generator.php.html#37">phpunit_block_generator</a> (210)</li>
+              <li><a href="lib_phpunit_classes_database_driver_testcase.php.html#48">database_driver_testcase</a> (210)</li>
+              <li><a href="lib_phpunit_classes_hint_resultprinter.php.html#36">Hint_ResultPrinter</a> (90)</li>
+              <li><a href="lib_phpunit_classes_arraydataset.php.html#36">phpunit_ArrayDataSet</a> (72)</li>
+              <li><a href="lib_phpunit_classes_basic_testcase.php.html#37">basic_testcase</a> (20)</li>
+
+            </ul>
+          </td>
+
+          <td valign="top">
+            <h2>Least Tested Methods</h2>
+            <ul>
+              <li><a href="lib_phpunit_classes_util.php.html#152">phpunit_util::get_tabledata</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#116">phpunit_util::initialise_cfg</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#177">phpunit_util::get_tablestructure</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#202">phpunit_util::get_sequencenames</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#230">phpunit_util::guess_unmodified_empty_tables</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#102">phpunit_util::release_test_lock</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_util.php.html#69">phpunit_util::acquire_test_lock</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_arraydataset.php.html#45">phpunit_ArrayDataSet::__construct</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_module_generator.php.html#62">phpunit_module_generator::get_modulename</a> (0%)</li>
+              <li><a href="lib_phpunit_classes_module_generator.php.html#80">phpunit_module_generator::precreate_course_module</a> (0%)</li>
+
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </center>
+
+    <br />
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.1.2</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.8</a> and PHPUnit 3.6.11 at Sat Jul 7 21:42:44 CEST 2012.</td></tr>
+    </table>
+
+    <br/>
+  </body>
+</html>

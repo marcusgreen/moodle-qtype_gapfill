@@ -34,7 +34,7 @@ $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Cloze Gapfill.';
 $string['pluginname']="Gapfill question type";
-$string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]';
+$string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]. [c*t] will match cat, cot cxt cxyzt etc';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['showanswers']='Display Answers';

@@ -17,7 +17,7 @@
 /**
  * Serve question type files
  *
- * @since      2.0
+ * @since      2.3
  * @package    qtype_gapfill
  * @copyright  Marcus Green 2012
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

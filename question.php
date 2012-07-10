@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -81,7 +82,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $data;
     }
 
-    /* For displaying a list of correct answers randomly shuffled */
+    /* For displaying a dropdown list of correct answers randomly shuffled */
 
     public function get_shuffled_answers() {
         $random_answers = $this->places;
@@ -158,18 +159,19 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         foreach ($this->places as $answer) {
             $string = $string . " " . $answer;
         }
-        $response['answer'] = $string;
+        /* trim of leading space */
+        $response['answer'] = trim($string);
         return $response;
     }
 
-    /* called from within renderer */
+    /* called from within renderer in interactive mode */
 
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = strtolower($answergiven);
             $rightanswer = strtolower($rightanswer);
         }
-        if ($answergiven == $rightanswer) {
+        if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
             return true;
         } else {
             return false;
@@ -196,7 +198,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $answergiven = strtolower($answergiven);
                 $rightanswer = strtolower($rightanswer);
             }
-            if ($answergiven == $rightanswer) {
+            if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
                 $numright+=1;
             }
         }
@@ -204,12 +206,70 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function grade_response(array $response) {
+
         list($right, $total) = $this->get_num_parts_right($response);
         $fraction = $right / $total;
-        $myarray = array($fraction, question_state::graded_state_for_fraction($fraction));
-        return $myarray;
+        $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
+        return $grade;
     }
-    // Required by the interface question_automatically_gradable_with_countback.
-    public function compute_final_grade($responses, $totaltries) {
+
+ // Required by the interface question_automatically_gradable_with_countback.
+ public function compute_final_grade($responses, $totaltries) {
+//only applies in interactive mode.
+        $totalscore = 0;
+        foreach ($this->places as $place => $notused) {
+            $fieldname = $this->field($place);
+
+            $lastwrongindex = -1;
+            $finallyright = false;
+            foreach ($responses as $i => $response) {
+                if (!array_key_exists($fieldname, $response) ||
+                        $response[$fieldname] != $this->get_right_choice_for($place)) {
+                    $lastwrongindex = $i;
+                    $finallyright = false;
+                } else {
+                    $finallyright = true;
+                }
+            }
+
+            if ($finallyright) {
+                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
+            }
+        }
+
+        return $totalscore / count($this->places);
     }
+
+    public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
+        if ($component == 'question' && in_array($filearea, array('correctfeedback', 'partiallycorrectfeedback', 'incorrectfeedback'))) {
+            return $this->check_combined_feedback_file_access($qa, $options, $filearea);
+        } else if ($component == 'question' && $filearea == 'hint') {
+            return $this->check_hint_file_access($qa, $options, $args);
+        } else {
+            return parent::check_file_access($qa, $options, $component, $filearea, $args, $forcedownload);
+        }
+    }
+
+    /* borrowed directly from the shortanswer question */
+
+    public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
+
+        // Break the string on non-escaped asterisks.
+        $bits = preg_split('/(?<!\\\\)\*/', $pattern);
+        // Escape regexp special characters in the bits.
+        $escapedbits = array();
+        foreach ($bits as $bit) {
+            $escapedbits[] = preg_quote(str_replace('\*', '*', $bit));
+        }
+        // Put it back together to make the regexp.
+        $regexp = '|^' . implode('.*', $escapedbits) . '$|u';
+
+        // Make the match insensitive if requested to.
+        if (!$casesensitive) {
+            $regexp .= 'i';
+        }
+
+        return preg_match($regexp, trim($string));
+    }
+
 }

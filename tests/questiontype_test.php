@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,7 +30,6 @@ global $CFG;
 require_once($CFG->dirroot . '/question/type/gapfill/questiontype.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
 
-
 /**
  * Unit tests for the shortanswer question type class.
  *
@@ -43,8 +43,38 @@ class qtype_gapfill_test extends UnitTestCase {
         'question/type/gapfill/questiontype.php',
     );
 
-    public function setUp() {
+    protected function setUp() {
         $this->qtype = new qtype_gapfill();
+    }
+
+    protected function get_test_question_data() {
+        global $USER;
+        $q = new stdClass();
+        $q->id = 0;
+        $q->name = 'Gapfill Question';
+        $q->category = 0;
+        $q->contextid = 0;
+        $q->parent = 0;
+        $q->questiontext = 'The [cat] sat on the [mat]';
+        $q->questiontextformat = FORMAT_HTML;
+        $q->generalfeedback = 'General feedback.';
+        $q->generalfeedbackformat = FORMAT_HTML;
+        $q->defaultmark = 1;
+        $q->penalty = 0.3333333;
+        $q->length = 1;
+        $q->stamp = make_unique_id_code();
+        $q->version = make_unique_id_code();
+        $q->hidden = 0;
+        $q->timecreated = time();
+        $q->timemodified = time();
+        $q->createdby = $USER->id;
+        $q->modifiedby = $USER->id;
+        $q->options = new stdClass();
+        test_question_maker::set_standard_combined_feedback_fields($q->options);
+        $q->options->displayanswers = 0;
+        $q->options->delimitchars = "[]";
+
+        return $q;
     }
 
     public function tearDown() {
@@ -63,4 +93,10 @@ class qtype_gapfill_test extends UnitTestCase {
         $this->assertTrue($this->qtype->questionid_column_name(), 'question');
     }
 
+    public function test_extra_question_fields() {
+        $extra_question_fields = array('question_gapfill', 'showanswers', 'delimitchars', 'casesensitive');
+        $this->assertEquals($this->qtype->extra_question_fields(), $extra_question_fields);
+    }
+
 }
+
