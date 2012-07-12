@@ -25,10 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-/** updated file */
+    /** updated file */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
 
-        
         $question = $qa->get_question();
         $fields = array();
 
@@ -109,12 +108,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
 
-            $selectoptions = $question->places;
-            shuffle($selectoptions);
-            /* set the key to be the same as the value */
-            $selectoptions = array_combine($selectoptions, $selectoptions);
-
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
+            $selectoptions=$question->get_shuffled_answers();
+               $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
                     $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {

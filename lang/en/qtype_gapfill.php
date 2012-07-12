@@ -40,3 +40,7 @@ $string['delimitchars_help']='Change the characters that delimit a field from th
 $string['showanswers']='Display Answers';
 $string['showanswers_help'] = 'If checked this will turn each field into a dropdown containing all answers for all fields';
 $string['pleaseenterananswer']='Please enter an answer.';
+$string['wronganswers']='Wrong answers.';
+$string['wronganswers_help']='List of incorrect words separated by commas, only applies in showanswers/dropdowns mode';
+
+

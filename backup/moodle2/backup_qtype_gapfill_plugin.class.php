@@ -26,9 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Provides the information to backup gapselect questions
+ * Provides the information to backup gapfill questions
  *
- * @copyright  2011 The Open University
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
@@ -40,37 +40,34 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
      * Returns the qtype information to attach to question element
      */
     protected function define_question_plugin_structure() {
-
-       
-    
-        // Define the virtual plugin element with the condition to fulfill
+        // Define the virtual plugin element with the condition to fulfill.
         $plugin = $this->get_plugin_element(null, '../../qtype', 'gapfill');
 
-        // Create one standard named plugin element (the visible container)
+        // Create one standard named plugin element (the visible container).
         $pluginwrapper = new backup_nested_element($this->get_recommended_name());
 
-        // connect the visible container ASAP
+        // Connect the visible container ASAP.
         $plugin->add_child($pluginwrapper);
 
-        // This qtype uses standard question_answers, add them here
-        // to the tree before any other information that will use them
-        $this->add_question_question_answers($pluginwrapper);
+        /* This qtype uses standard question_answers, add them here
+         to the tree before any other information that will use them
+         $this->add_question_question_answers($pluginwrapper);*/
 
-        // Now create the qtype own structures
+        // Now create the qtype own structures.
         $gapfill = new backup_nested_element('gapfill', array('id'), array(
-            'showanswers', 'delimitchars','casesensitive','correctfeedback', 
-            'correctfeedbackformat','partiallycorrectfeedback', 
-            'partiallycorrectfeedbackformat', 'incorrectfeedback', 
+            'showanswers', 'delimitchars', 'casesensitive', 'wronganswers', 'correctfeedback',
+            'correctfeedbackformat', 'partiallycorrectfeedback',
+            'partiallycorrectfeedbackformat', 'incorrectfeedback',
             'incorrectfeedbackformat'));
 
-        // Now the own qtype tree
+        // Now the own qtype tree.
         $pluginwrapper->add_child($gapfill);
 
-        // set source to populate the data
+        // Set source to populate the data.
         $gapfill->set_source_table('question_gapfill',
                 array('question' => backup::VAR_PARENTID));
 
-        // don't need to annotate ids nor files
+        // Don't need to annotate ids nor files.
 
         return $plugin;
     }

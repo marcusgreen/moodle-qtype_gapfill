@@ -34,7 +34,7 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
-        return array('question_gapfill', 'showanswers', 'delimitchars', 'casesensitive');
+        return array('question_gapfill', 'showanswers', 'delimitchars', 'casesensitive', 'wronganswers');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -46,7 +46,7 @@ class qtype_gapfill extends question_type {
     }
 
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
-        
+
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
@@ -56,16 +56,16 @@ class qtype_gapfill extends question_type {
                             $a->fraction, $a->feedback, $a->feedbackformat);
             if (!$forceplaintextanswers) {
                 $question->answers[$a->id]->answerformat = $a->answerformat;
-            }            
+            }
         }
-        
+
     }
 
     /*
      *  Called when previewing a question or when displayed in a quiz
      */
 
-   protected function initialise_question_instance(question_definition $question, $questiondata) {
+    protected function initialise_question_instance(question_definition $question, $questiondata) {
 
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
@@ -78,8 +78,6 @@ class qtype_gapfill extends question_type {
             $question->places[$counter] = $choicedata->answer;
             $counter++;
         }
-
-
         // Will put empty places '' where there is no text content.
         $l = substr($question->delimitchars, 0, 1);
         $r = substr($question->delimitchars, 1, 1);
@@ -88,12 +86,10 @@ class qtype_gapfill extends question_type {
         $right = "]";
         $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
         $bits = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
-      
         $question->textfragments[0] = array_shift($bits);
         $i = 1;
 
         while (!empty($bits)) {
-
             $question->textfragments[$i] = array_shift($bits);
             $i += 1;
         }
@@ -166,6 +162,7 @@ class qtype_gapfill extends question_type {
                 $answer->correctfeedback = '';
                 $answer->partiallycorrectfeedback = '';
                 $answer->incorrectfeedback = '';
+                $answer->wronganswers='';
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
         }
@@ -189,6 +186,8 @@ class qtype_gapfill extends question_type {
         $options->delimitchars = $question->delimitchars;
         $options->showanswers = $question->showanswers;
         $options->casesensitive = $question->casesensitive;
+        $options->wronganswers = $question->wronganswers;
+
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
 

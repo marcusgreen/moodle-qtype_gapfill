@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -47,6 +46,10 @@ class qtype_gapfill_test extends UnitTestCase {
         $this->qtype = new qtype_gapfill();
     }
 
+    protected function tearDown() {
+        $this->qtype = null;
+    }
+
     protected function get_test_question_data() {
         global $USER;
         $q = new stdClass();
@@ -77,10 +80,6 @@ class qtype_gapfill_test extends UnitTestCase {
         return $q;
     }
 
-    public function tearDown() {
-        $this->qtype = null;
-    }
-
     public function test_name() {
         $this->assertEquals($this->qtype->name(), 'gapfill');
     }
@@ -94,9 +93,8 @@ class qtype_gapfill_test extends UnitTestCase {
     }
 
     public function test_extra_question_fields() {
-        $extra_question_fields = array('question_gapfill', 'showanswers', 'delimitchars', 'casesensitive');
+        $extra_question_fields = array('question_gapfill', 'showanswers', 'delimitchars', 'casesensitive', 'wronganswers');
         $this->assertEquals($this->qtype->extra_question_fields(), $extra_question_fields);
     }
 
 }
-

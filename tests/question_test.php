@@ -31,7 +31,6 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 
 require_once($CFG->dirroot . '/question/type/gapfill/question.php');
 
-
 /**
  * Unit tests for the gapfill question definition class.
  *
@@ -41,25 +40,25 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
 class qtype_gapfill_question_test extends UnitTestCase {
     public function test_get_expected_data() {
 
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
         $expected_data = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
         $this->assertEquals($question->get_expected_data(), $expected_data);
-        $this->assertEquals(is_string($question->get_Shuffled_Answers()), true);
+        $this->assertEquals(is_array($question->get_Shuffled_Answers()), true);
     }
 
     public function test_field() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
         $this->assertEquals($question->field('1'), 'p1');
     }
 
     public function test_summarise_response_() {
-         $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+         $question = qtype_gapfill_test_helper::make_question('gapfill');
          $response = array('p1' => 'cat', 'p2' => 'dog');
          $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
 
     public function test_grade_response() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
 
         $response = array('p1' => 'cat', 'p2' => 'dog');
         list($fraction, $state) = $question->grade_response($response);
@@ -81,7 +80,7 @@ class qtype_gapfill_question_test extends UnitTestCase {
     }
 
     public function test_is_complete_response() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
 
         $response = array('p1' => 'cat', 'p2' => 'mat');
 
@@ -92,19 +91,19 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
         $this->assertFalse($question->is_complete_response(array()));
     }
-   public function test_get_correct_response(){
-       $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-      $this->assertEquals($question->get_correct_response(),array('answer'=>'cat mat'));
-   }
-   
-   public function test_get_validation_error(){
-       $question = qtype_gapfill_test_helper::make_a_gapfill_question();
-      $this->assertTrue(is_string($question->get_validation_error( array("") ) ));
-   }
-   
-   
+    public function test_get_correct_response() {
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
+        $this->assertEquals($question->get_correct_response(), array('answer'=>'cat mat'));
+    }
+
+    public function test_get_validation_error() {
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
+        $this->assertTrue(is_string($question->get_validation_error( array("") ) ));
+    }
+
+
     public function test_is_correct_response() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
         $question->casesensitive = 0;
         $answergiven = 'CAT';
         $rightanswer = 'cat';
@@ -124,13 +123,13 @@ class qtype_gapfill_question_test extends UnitTestCase {
     }
 
     public function test_get_right_choice_for_place() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
         $this->assertEqual($question->get_right_choice_for(1), 'cat');
         $this->assertNotEqual($question->get_right_choice_for(2), 'cat');
     }
 
     public function test_is_same_response() {
-        $question = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $question = qtype_gapfill_test_helper::make_question('gapfill');
         $prevresponse = array();
         $newresponse = array('p1' => 'cat', 'p2' => 'mat');
         $this->assertFalse($question->is_same_response($prevresponse, $newresponse));

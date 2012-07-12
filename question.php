@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,6 +31,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $answer;
     /* boolean value display answers as a clue as to what to put in */
     public $showanswers;
+    public $wronganswers;
     public $correctfeedback;
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
@@ -85,10 +85,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /* For displaying a dropdown list of correct answers randomly shuffled */
 
     public function get_shuffled_answers() {
-        $random_answers = $this->places;
-        shuffle($random_answers);
+        $selectoptions = $this->places;
+        $wrong_answers = explode(",", $this->wronganswers);
+        $selectoptions = array_merge($selectoptions, $wrong_answers);
+
+        shuffle($selectoptions);
+         /*set the key to be the same as the value */
+        $selectoptions=array_combine($selectoptions,$selectoptions);
+
         /* return a string of answers as a string with gaps */
-        return implode(" ", $random_answers);
+        return $selectoptions;
     }
 
     /**
@@ -167,6 +173,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /* called from within renderer in interactive mode */
 
     public function is_correct_response($answergiven, $rightanswer) {
+        
         if (!$this->casesensitive == 1) {
             $answergiven = strtolower($answergiven);
             $rightanswer = strtolower($rightanswer);
@@ -213,13 +220,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $grade;
     }
 
- // Required by the interface question_automatically_gradable_with_countback.
- public function compute_final_grade($responses, $totaltries) {
-//only applies in interactive mode.
+    // Required by the interface question_automatically_gradable_with_countback.
+    public function compute_final_grade($responses, $totaltries) {
+        // Only applies in interactive mode.
         $totalscore = 0;
         foreach ($this->places as $place => $notused) {
             $fieldname = $this->field($place);
-
             $lastwrongindex = -1;
             $finallyright = false;
             foreach ($responses as $i => $response) {
@@ -231,17 +237,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                     $finallyright = true;
                 }
             }
-
             if ($finallyright) {
-                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
+                   $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
             }
         }
-
         return $totalscore / count($this->places);
     }
 
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
-        if ($component == 'question' && in_array($filearea, array('correctfeedback', 'partiallycorrectfeedback', 'incorrectfeedback'))) {
+        if ($component == 'question' && in_array($filearea, array('correctfeedback',
+            'partiallycorrectfeedback', 'incorrectfeedback'))) {
             return $this->check_combined_feedback_file_access($qa, $options, $filearea);
         } else if ($component == 'question' && $filearea == 'hint') {
             return $this->check_hint_file_access($qa, $options, $args);
@@ -253,23 +258,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /* borrowed directly from the shortanswer question */
 
     public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
-
-        // Break the string on non-escaped asterisks.
-        $bits = preg_split('/(?<!\\\\)\*/', $pattern);
-        // Escape regexp special characters in the bits.
-        $escapedbits = array();
-        foreach ($bits as $bit) {
-            $escapedbits[] = preg_quote(str_replace('\*', '*', $bit));
-        }
-        // Put it back together to make the regexp.
-        $regexp = '|^' . implode('.*', $escapedbits) . '$|u';
-
+        /* answers with a positive grade must be anchored for strict match
+         incorrect answers are not strictly matched */
+        $regexp = '/^' . $pattern . '$/u';
         // Make the match insensitive if requested to.
         if (!$casesensitive) {
             $regexp .= 'i';
         }
-
-        return preg_match($regexp, trim($string));
+        if (preg_match($regexp, trim($string))) {
+            return true;
+        }
     }
-
 }

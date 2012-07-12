@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -41,13 +40,21 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     public function test_deferred_feedback_unanswered() {
 
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
-        //Check the initial state.
+        /* Check the initial state. */
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
         $this->check_step_count(1);
+
+           $this->check_current_output(
+                $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         // Save an  correct response.
         $this->process_submission(array('p1' => '', 'p2' => ''));
@@ -62,15 +69,15 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
 
     public function test_deferred_with_correct() {
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
-        //Check the initial state.
+        // Check the initial state.
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
         $this->check_step_count(1);
 
-//        // Save an  correct response.
+        // Save an  correct response.
         $this->process_submission(array('p1' => 'cat', 'p2' => 'mat'));
         $this->check_step_count(2);
         $this->check_current_state(question_state::$complete);
@@ -85,10 +92,10 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     public function test_deferred_with_incorrect() {
 
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
-        //Check the initial state.
+        // Check the initial state.
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
         $this->check_step_count(1);
@@ -107,15 +114,15 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     public function test_deferred_with_partially_correct() {
 
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
-        //Check the initial state.
+        // Check the initial state.
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
         $this->check_step_count(1);
 
-//        // Save an  correct response.
+        // Save an  correct response.
         $this->process_submission(array('p1' => 'cat', 'p2' => 'dog'));
         $this->check_step_count(2);
         $this->check_current_state(question_state::$complete);
@@ -129,26 +136,48 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     public function test_interactive_with_correct() {
 
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
-        //$this->get_tries_remaining_expectation(1);
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
-        //Check the initial state.
+        // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
         $this->check_step_count(1);
 
-        //Save a  correct response.
+        $this->check_current_output(
+                $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
+
+        // Save a  correct response.
         $this->process_submission(array('p0' => 'cat', 'p1' => 'mat'));
         $this->check_step_count(2);
 
         $this->check_current_state(question_state::$todo);
-        //submit saved response
+
+        $this->check_current_output(
+                    $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
+
+        // Submit saved response.
         $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
         $this->check_step_count(3);
         // Verify.
         $this->check_current_state(question_state::$gradedright);
+
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         $this->check_current_mark(2);
         // Finish the attempt.
@@ -159,22 +188,22 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     public function test_interactive_with_incorrect() {
 
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_a_gapfill_question();
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
-        //$this->get_tries_remaining_expectation(1);
+        
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
-        //Check the initial state.
+        // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
         $this->check_step_count(1);
 
-        //Save a  correct response.
+        // Save a  correct response.
         $this->process_submission(array('p0' => 'mat', 'p1' => 'cat'));
         $this->check_step_count(2);
 
         $this->check_current_state(question_state::$todo);
-        //submit saved response
+        // Submit saved response
         $this->process_submission(array('-submit' => 1, 'p1' => 'mat', 'p2' => 'cat'));
         $this->check_step_count(3);
         // Verify.
@@ -182,6 +211,37 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedwrong);
 
         $this->check_current_mark(0);
+        // Finish the attempt.
+    }
+    public function test_immediatefeedback_with_correct() {
+
+        // Create a gapfill question.
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
+        $maxmark = 2;
+    
+        $gapfill->showanswers=true;
+        
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
+
+        // Check the initial state.
+        $this->check_current_state(question_state::$todo);
+
+        $this->check_step_count(1);
+
+        // Save a  correct response.
+        $this->process_submission(array('p0' => 'cat', 'p1' => 'cat'));
+        $this->check_step_count(2);
+
+        
+        $this->check_current_state(question_state::$todo);
+        // Submit saved response.
+        $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
+        $this->check_step_count(3);
+        // Verify.
+        $this->quba->finish_all_questions();
+        $this->check_current_state(question_state::$gradedright);
+
+        $this->check_current_mark(2);
         // Finish the attempt.
     }
 

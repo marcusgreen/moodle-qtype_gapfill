@@ -27,16 +27,19 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_gapfill_test_helper extends question_test_helper{
     public function get_test_questions() {
         /* must be implemented or class made abstract */
+        return array('catmat');
     }
-    public static function make_a_gapfill_question() {
+    public static function make_question($type) {
 
-        question_bank::load_question_definition_classes('gapfill');
+        question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
-        
+
         test_question_maker::initialise_a_question($question);
+        $question->qtype = question_bank::get_qtype('gapfill');
 
         $question->name = 'Gapfill Test Question';
         $question->questiontext = 'The [cat] sat on the [mat]';
+        $question->textfragments=array('The ', ' sat on the ');
 
         $question->displayanswers = '1';
         $question->casesensitive = '1';
@@ -47,23 +50,24 @@ class qtype_gapfill_test_helper extends question_test_helper{
         $answer1=new question_answer(43, 'cat', 4, 1, 1);
         $answer2=new question_answer(44, 'mat', 4, 1 , 1);
         $question->answers=array($answer1, $answer2);
-        
-        $options=new stdClass;
-        $options->showanswers=false;
-        $options->delimitchars="[]";
-        $options->casesensitive=false;
-        
-        $options->correctfeedback="";
-        $options->correctfeedbackformat="";
-        $options->partiallycorrectfeedback="";
-        $options->partiallycorrectfeedbackformat="";
-        $options->incorrectfeedback="";
-        $options->incorrectfeedbackformat="";
-        
+
+        $question->options = new stdClass();
+
+        $question->options->showanswers=false;
+        $question->options->delimitchars="[]";
+        $question->options->casesensitive=false;
+
+        $question->options->correctfeedback="";
+        $question->options->correctfeedbackformat="";
+        $question->options->partiallycorrectfeedback="";
+        $question->options->partiallycorrectfeedbackformat="";
+        $question->options->incorrectfeedback="";
+        $question->options->incorrectfeedbackformat="";
+
         $answers=new stdClass;
-        $question->options=$options;
+
         $question->options->answers=array($answer1, $answer2);
-        
+
         $question->hints = array(
             new question_hint(1, 'This is the first hint.', FORMAT_HTML),
             new question_hint(2, 'This is the second hint.', FORMAT_HTML),
@@ -71,5 +75,23 @@ class qtype_gapfill_test_helper extends question_test_helper{
         return $question;
 
     }
+    /**
+     * Gets the question data for a shortanswer questionwith just the correct
+     * ansewer 'frog', and no other answer matching.
+     * @return stdClass
+     */
+    public function get_gapfill_question_data_catmat() {
+        $qdata = new stdClass();
+        test_question_maker::initialise_question_data($qdata);
 
+        $qdata->qtype = 'gapfill';
+        $qdata->name = 'catmat';
+        $qdata->questiontext = 'The [cat] sat on the [mat]';
+        $qdata->generalfeedback = 'someanswer';
+
+        $qdata->options = new stdClass();
+        $qdata->options->casesensitive = false;
+
+        return $qdata;
+    }
 }
