@@ -29,6 +29,10 @@ class qtype_gapfill_test_helper extends question_test_helper{
         /* must be implemented or class made abstract */
         return array('catmat');
     }
+public static function make_gapfill_backup(){
+    $backup= new backup_qtype_gapfill_plugin();
+    
+}
     public static function make_question($type) {
 
         question_bank::load_question_definition_classes($type);
@@ -63,6 +67,9 @@ class qtype_gapfill_test_helper extends question_test_helper{
         $question->options->partiallycorrectfeedbackformat="";
         $question->options->incorrectfeedback="";
         $question->options->incorrectfeedbackformat="";
+        $question->options->shuffledanswers="mat,cat";
+        $question->options->wronganswers="bat,dog";
+        $question->shuffledanswers="mat,cat,bat,dog";
 
         $answers=new stdClass;
 

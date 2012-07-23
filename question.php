@@ -29,9 +29,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     // Not actually using the countback bit at the moment, not sure what it does.
 
     public $answer;
-    /* boolean value display answers as a clue as to what to put in */
-    public $showanswers;
+    /* answerdisplay is a string of either gapfill,dropdown or drag drop */
+    public $answerdisplay;
     public $wronganswers;
+    public $shuffledanswers;
     public $correctfeedback;
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
@@ -83,19 +84,19 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /* For displaying a dropdown list of correct answers randomly shuffled */
-
-    public function get_shuffled_answers() {
-        $selectoptions = $this->places;
-        $wrong_answers = explode(",", $this->wronganswers);
-        $selectoptions = array_merge($selectoptions, $wrong_answers);
-
-        shuffle($selectoptions);
-         /*set the key to be the same as the value */
-        $selectoptions=array_combine($selectoptions,$selectoptions);
-
-        /* return a string of answers as a string with gaps */
-        return $selectoptions;
+    public function get_shuffled_answers($answerdisplay) {
+        if($answerdisplay=='dragdrop'){
+            return $this->shuffledanswers;
+        }
+        if($answerdisplay='dropdown'){
+            //turn string into an array
+            $shuffledanswers=explode(",",$this->shuffledanswers);
+            //make the key and value the same in the array
+            $shuffledanswers= array_combine($shuffledanswers,$shuffledanswers);
+            return $shuffledanswers;
+        }
     }
+        
 
     /**
      * @param array $response  as might be passed to {@link grade_response()}

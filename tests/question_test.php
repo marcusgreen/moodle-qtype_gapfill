@@ -43,7 +43,12 @@ class qtype_gapfill_question_test extends UnitTestCase {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
         $expected_data = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
         $this->assertEquals($question->get_expected_data(), $expected_data);
-        $this->assertEquals(is_array($question->get_Shuffled_Answers()), true);
+       
+        /* dropdown uses an array with the key and value the same to populate the dropdown box */
+        $this->assertEquals(is_array($question->get_Shuffled_Answers('dropdown')), true);
+        /*dragdrop uses a string to populate the fields */
+        $this->assertEquals(is_string($question->get_Shuffled_Answers('dragdrop')), true);
+
     }
 
     public function test_field() {

@@ -34,13 +34,17 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_gapfill_edit_form extends question_edit_form {
 
     public $answer;
-    public $showanswers;
+    public $answerdisplay;
     public $delimitchars;
 
 
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->removeelement('generalfeedback');
+
+        // Make questiontext a required field for this question type.
+        $mform->addRule('questiontext', null, 'required', null, 'client');
+
 
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
@@ -50,8 +54,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
-        $mform->addElement('advcheckbox', 'showanswers', get_string('showanswers', 'qtype_gapfill'));
-        $mform->addHelpButton('showanswers', 'showanswers', 'qtype_gapfill');
+        //TODO add getstrings for i18n
+        $answer_display_types=array("gapfill"=>"gapfill","dropdown"=>"dropdown","dragdrop"=>"dragdrop");
+        $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'),$answer_display_types);
+        $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
 
@@ -77,7 +83,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     public function set_data($question) {
         $question->answer = $this->answer;
-        $question->showanswers = $this->showanswers;
+        $question->answerdisplay = $this->answerdisplay;
         $question->delimitchars = $this->delimitchars;
 
         parent::set_data($question);
@@ -89,7 +95,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $question = $this->data_preprocessing_hints($question);
 
         if (!empty($question->options)) {
-            $question->showanswers = $question->options->showanswers;
+            $question->answerdisplay = $question->options->answerdisplay;
         }
         return $question;
     }
