@@ -27,7 +27,7 @@ $(function() {
         revert: false,
         helper: 'clone',
         cursor: 'pointer',
-        
+
         start: function(event, ui) {
             $(this).fadeTo('fast', 0.5);
         },
@@ -37,7 +37,7 @@ $(function() {
            /*  $(this).css("text-decoration","line-through"); */
         }
     });
-    
+
     $(".droppable").droppable({
         hoverClass: 'active',
         drop: function(event, ui) {
