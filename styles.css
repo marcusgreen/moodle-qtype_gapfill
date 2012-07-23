@@ -28,3 +28,9 @@
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
+.que.gapfill input.droppable{
+    border:solid .5px;
+    padding:1px;
+    background:white;
+    color:black;
+}
