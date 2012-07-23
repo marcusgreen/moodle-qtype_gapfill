@@ -50,15 +50,15 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
         $plugin->add_child($pluginwrapper);
 
         /* This qtype uses standard question_answers, add them here
-         to the tree before any other information that will use them
-         $this->add_question_question_answers($pluginwrapper);*/
+         to the tree before any other information that will use them */
+         $this->add_question_question_answers($pluginwrapper);
 
         // Now create the qtype own structures.
         $gapfill = new backup_nested_element('gapfill', array('id'), array(
-            'answerdisplay', 'delimitchars', 'casesensitive', 
-            'wronganswers',  'shuffledanswers','correctfedback',
-            'correctfeddbackformat','partiallycorrectfeedback','partiallycorrectfeedbackformat', 
-            'incorrectfeedback','incorrectfeedbackformat'));
+            'answerdisplay', 'delimitchars', 'casesensitive',
+            'wronganswers',  'shuffledanswers', 'correctfedback',
+            'correctfeddbackformat', 'partiallycorrectfeedback', 'partiallycorrectfeedbackformat',
+            'incorrectfeedback', 'incorrectfeedbackformat'));
 
         // Now the own qtype tree.
         $pluginwrapper->add_child($gapfill);
