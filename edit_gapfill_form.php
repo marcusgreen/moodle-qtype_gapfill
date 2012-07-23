@@ -45,7 +45,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Make questiontext a required field for this question type.
         $mform->addRule('questiontext', null, 'required', null, 'client');
 
-
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
@@ -54,9 +53,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
-        //TODO add getstrings for i18n
-        $answer_display_types=array("gapfill"=>"gapfill","dropdown"=>"dropdown","dragdrop"=>"dragdrop");
-        $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'),$answer_display_types);
+        // TODO add getstrings for i18n.
+        $answer_display_types=array("gapfill"=>get_string('displaygapfill', 'qtype_gapfill'),
+            "dropdown"=>get_string('displaydropdown', 'qtype_gapfill'), "dragdrop"=>get_string('displaydragdrop', 'qtype_gapfill'));
+        $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
