@@ -136,7 +136,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['size'] = "";
 
             $selectoptions = $question->get_shuffled_answers('dropdown');
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
+             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
+                     $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {
             return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;

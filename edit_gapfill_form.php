@@ -37,7 +37,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answerdisplay;
     public $delimitchars;
 
-
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->removeelement('generalfeedback');
@@ -54,8 +53,9 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
         // TODO add getstrings for i18n.
-        $answer_display_types=array("gapfill"=>get_string('displaygapfill', 'qtype_gapfill'),
-            "dropdown"=>get_string('displaydropdown', 'qtype_gapfill'), "dragdrop"=>get_string('displaydragdrop', 'qtype_gapfill'));
+        $answer_display_types = array("gapfill" => get_string('displaygapfill', 'qtype_gapfill'),
+            "dropdown" => get_string('displaydropdown', 'qtype_gapfill'),
+            "dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'));
         $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
@@ -63,13 +63,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
 
-           $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
-                array('size' => 70));
+        $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         $mform->setType('wronganswers', PARAM_TEXT);
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'), array('rows' => 10),
-                $this->editoroptions);
+        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback',
+                'question'), array('rows' => 10), $this->editoroptions);
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');

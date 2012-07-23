@@ -84,19 +84,20 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /* For displaying a dropdown list of correct answers randomly shuffled */
+
     public function get_shuffled_answers($answerdisplay) {
-        if($answerdisplay=='dragdrop'){
-            return $this->shuffledanswers;
+        if ($answerdisplay == 'dragdrop') {
+            $answers = explode(",", $this->shuffledanswers);
+            return $answers;
         }
-        if($answerdisplay='dropdown'){
-            //turn string into an array
-            $shuffledanswers=explode(",",$this->shuffledanswers);
-            //make the key and value the same in the array
-            $shuffledanswers= array_combine($shuffledanswers,$shuffledanswers);
+        if ($answerdisplay == 'dropdown') {
+            // Turn string into an array.
+            $shuffledanswers = explode(",", $this->shuffledanswers);
+            // Make the key and value the same in the array.
+            $shuffledanswers = array_combine($shuffledanswers, $shuffledanswers);
             return $shuffledanswers;
         }
     }
-        
 
     /**
      * @param array $response  as might be passed to {@link grade_response()}
@@ -174,7 +175,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /* called from within renderer in interactive mode */
 
     public function is_correct_response($answergiven, $rightanswer) {
-        
+
         if (!$this->casesensitive == 1) {
             $answergiven = strtolower($answergiven);
             $rightanswer = strtolower($rightanswer);
@@ -239,7 +240,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 }
             }
             if ($finallyright) {
-                   $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
+                $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
             }
         }
         return $totalscore / count($this->places);
@@ -247,7 +248,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
         if ($component == 'question' && in_array($filearea, array('correctfeedback',
-            'partiallycorrectfeedback', 'incorrectfeedback'))) {
+                    'partiallycorrectfeedback', 'incorrectfeedback'))) {
             return $this->check_combined_feedback_file_access($qa, $options, $filearea);
         } else if ($component == 'question' && $filearea == 'hint') {
             return $this->check_hint_file_access($qa, $options, $args);
@@ -260,7 +261,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
         /* answers with a positive grade must be anchored for strict match
-         incorrect answers are not strictly matched */
+          incorrect answers are not strictly matched */
         $regexp = '/^' . $pattern . '$/u';
         // Make the match insensitive if requested to.
         if (!$casesensitive) {
@@ -270,4 +271,5 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return true;
         }
     }
+
 }
