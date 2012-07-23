@@ -25,46 +25,35 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-    
-     
-    
-    
+
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
 
         $question = $qa->get_question();
-  
-if ($question->answerdisplay == "dragdrop"){
 
-$PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.4.2.js');
-$PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.js');
-$PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.js');
-$PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.js');
-$PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.js');
-$PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.js');
-$PAGE->requires->js('/question/type/gapfill/dragdrop.js');
-}
+        if ($question->answerdisplay == "dragdrop") {
+
+            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.4.2.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.js');
+            $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
+        }
         $fields = array();
 
         $place_count = count($question->places);
         $counter = 0;
-        $output='';
-        
-        if ($question->answerdisplay == "dragdrop"){
-        $ddclass="answers";
-        //don't allow the answers to be dragged once the question has been answered
-       if(!($qa->get_state()==question_state::$complete)){
-        $ddclass="draggable answers";
-        }
-            $shuffled_answers= $question->get_shuffled_answers('dragdrop');
-            $answers=explode(",",$shuffled_answers);
-                        
-            foreach($answers as $key=>$value){
-                $output.= '<span class="'.$ddclass.'">'.$value."</span>&nbsp";
-             }
+        $output = '';
+        if ($question->answerdisplay == "dragdrop") {
+            $ddclass = "draggable answers";
+            $shuffled_answers = $question->get_shuffled_answers('dragdrop');
+            foreach ($shuffled_answers as $key => $value) {
+                $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
+            }
             $output.="</br></br>";
         }
-        
 
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
@@ -74,7 +63,6 @@ $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
               ensure images get displayed */
             $output .= $question->format_text($fragment, $question->questiontextformat, $qa,
                     'question', 'questiontext', $question->id);
-            
         }
         if ($qa->get_state() == question_state::$invalid) {
             $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
@@ -90,7 +78,7 @@ $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $answer = $qa->get_last_qt_var('answer');
-          $answer = trim($answer);
+        $answer = trim($answer);
         $size = "0"; /* width of the field to be filled in */
         if ($currentanswer == null) {
             if ($answer != null) {
@@ -104,7 +92,7 @@ $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         $rightanswer = $question->get_right_choice_for($place);
         $size = strlen($rightanswer);
 
-        /* $options->correctness is really about it being ready to mark,*/
+        /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
         $inputclass = "";
 
@@ -125,8 +113,6 @@ $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
             }
         }
 
-     
-        
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
         $style = "";
@@ -137,31 +123,22 @@ $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
             'id' => $inputname,
             'size' => $size,
             'style' => 'width: ' . $style . 'px;',
-            'class' => 'droppable',
-            
+            'class' => 'droppable ' . $inputclass,
         );
-           if(($qa->get_state()==question_state::$complete)){
-               $readonly=array('readonly'=>'true');
-               $inputattributes=array_combine($inputattributes,$readonly);
-          }
+        /* When previewing after a quiz is complete */
+        if ($options->readonly) {
+            $readonly = array('disabled' => 'true');
+            $inputattributes = array_merge($inputattributes, $readonly);
+        }
 
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
 
-            $selectoptions=$question->get_shuffled_answers('dropdown');
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
-                    $inputattributes) . ' ' . $feedbackimage;
+            $selectoptions = $question->get_shuffled_answers('dropdown');
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {
-
-            /* When previewing */
-            if ($options->readonly) {
-                $inputattributes['readonly'] = 'readonly';
-            }
-            $type = "input";
-            $inputattributes["type"] = "input";
-            $style = $size * 10;
             return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
         }
     }
