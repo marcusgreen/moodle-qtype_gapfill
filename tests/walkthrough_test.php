@@ -218,9 +218,8 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         // Create a gapfill question.
         $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
-    
+
         $gapfill->showanswers=true;
-        
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
 
         // Check the initial state.
@@ -232,7 +231,6 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->process_submission(array('p0' => 'cat', 'p1' => 'cat'));
         $this->check_step_count(2);
 
-        
         $this->check_current_state(question_state::$todo);
         // Submit saved response.
         $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
