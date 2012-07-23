@@ -26,15 +26,16 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/engine/lib.php');
+
 /**
  * The gapfill question class
  * Load from database, and initialise class
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
-    
+
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers','shuffledanswers');
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers', 'shuffledanswers');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -60,10 +61,10 @@ class qtype_gapfill extends question_type {
         }
     }
 
-    
     /*
      *  Called when previewing a question or when displayed in a quiz
      */
+
     protected function initialise_question_instance(question_definition $question, $questiondata) {
 
         parent::initialise_question_instance($question, $questiondata);
@@ -92,8 +93,7 @@ class qtype_gapfill extends question_type {
             $question->textfragments[$i] = array_shift($bits);
             $i += 1;
         }
-       
-}
+    }
 
     /**
      *
@@ -114,8 +114,6 @@ class qtype_gapfill extends question_type {
         preg_match_all($fieldregex, $form->questiontext['text'], $bits);
 
         $form->defaultmark = count($bits[1]);
-        
-        
         return parent::save_question($question, $form);
     }
 
@@ -126,8 +124,8 @@ class qtype_gapfill extends question_type {
      */
     public function save_question_options($question) {
         /* Save the extra data to your database tables from the
-         $question object, which has all the post data from editquestion.html*/
-        
+          $question object, which has all the post data from editquestion.html */
+
         $l = substr($question->delimitchars, 0, 1);
         $r = substr($question->delimitchars, 1, 1);
 
@@ -163,9 +161,8 @@ class qtype_gapfill extends question_type {
                 $answer->correctfeedback = '';
                 $answer->partiallycorrectfeedback = '';
                 $answer->incorrectfeedback = '';
-                $answer->wronganswers='';
-                $answer->shuffledanswers='';
-                
+                $answer->wronganswers = '';
+                $answer->shuffledanswers = '';
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
         }
@@ -178,8 +175,8 @@ class qtype_gapfill extends question_type {
         if (!$options) {
             $options = new stdClass();
             $options->question = $question->id;
-            $options->wronganswers='';
-            $options->shuffledanswers='';            
+            $options->wronganswers = '';
+            $options->shuffledanswers = '';
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback = '';
@@ -191,9 +188,12 @@ class qtype_gapfill extends question_type {
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
+
+        // Trim any unwanted trailing commas.
+        $question->wronganswers=rtrim($question->wronganswers, ',');
         $options->wronganswers = $question->wronganswers;
-        
-        $options->shuffledanswers = $this->shuffle_answers($question,$answerwords);
+
+        $options->shuffledanswers = $this->shuffle_answers($question, $answerwords);
 
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
@@ -202,39 +202,27 @@ class qtype_gapfill extends question_type {
         return true;
     }
 
-//    public function get_shuffled_answers(){
-//        return $question->shuffled_answers;
-//    }
-    public function shuffle_answers($question,$answerwords){
-        
+    public function shuffle_answers($question, $answerwords) {
         $selectoptions = $answerwords;
-        if(count($question->wronganswers)>0){
+        if ($question->wronganswers != "") {
             $wrong_answers = explode(",", $question->wronganswers);
             $selectoptions = array_merge($selectoptions, $wrong_answers);
         }
-         shuffle($selectoptions);
-        $shuffled_answers="";
-        $element_count=count($selectoptions );
-        foreach($selectoptions as $key=>$value){
-            $shuffled_answers.=$value;
-            if($key < $element_count -1){
-                $shuffled_answers.=",";
-            }
-        }
-      
+
+        shuffle($selectoptions);
+        $shuffled_answers = implode(",", $selectoptions);
         return $shuffled_answers;
     }
+
     public function questionid_column_name() {
         return 'question';
     }
 
     public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
-
         if (!isset($data['@']['type']) || $data['@']['type'] != 'gapfill') {
             return false;
         }
         $question = parent::import_from_xml($data, $question, $format, null);
-
         $format->import_combined_feedback($question, $data, true);
         $format->import_hints($question, $data, true, false, $format->get_format($question->questiontextformat));
         return $question;
@@ -242,21 +230,14 @@ class qtype_gapfill extends question_type {
 
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $output = parent::export_to_xml($question, $format);
-
-
         $output .= '    <delimitchars>' . $question->options->delimitchars .
                 "</delimitchars>\n";
-
         $output .= '    <answerdisplay>' . $question->options->answerdisplay .
                 "</answerdisplay>\n";
-
         $output .= '    <casesensitive>' . $question->options->casesensitive .
                 "</casesensitive>\n";
-
         $output .= '    <wronganswers>' . $question->options->wronganswers .
                 "</wronganswers>\n";
-
-        
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
