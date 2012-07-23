@@ -21,18 +21,19 @@
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
-class qtype_gapfill_test_helper extends question_test_helper{
+class qtype_gapfill_test_helper extends question_test_helper {
+
     public function get_test_questions() {
         /* must be implemented or class made abstract */
         return array('catmat');
     }
-public static function make_gapfill_backup(){
-    $backup= new backup_qtype_gapfill_plugin();
-    
-}
+
+    public static function make_gapfill_backup() {
+        $backup = new backup_qtype_gapfill_plugin();
+    }
+
     public static function make_question($type) {
 
         question_bank::load_question_definition_classes($type);
@@ -43,45 +44,45 @@ public static function make_gapfill_backup(){
 
         $question->name = 'Gapfill Test Question';
         $question->questiontext = 'The [cat] sat on the [mat]';
-        $question->textfragments=array('The ', ' sat on the ');
+        $question->textfragments = array('The ', ' sat on the ');
 
         $question->displayanswers = '1';
         $question->casesensitive = '1';
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
 
-        $question->places[1]='cat';
-        $question->places[2]='mat';
-        $answer1=new question_answer(43, 'cat', 4, 1, 1);
-        $answer2=new question_answer(44, 'mat', 4, 1 , 1);
-        $question->answers=array($answer1, $answer2);
+        $question->places[1] = 'cat';
+        $question->places[2] = 'mat';
+        $answer1 = new question_answer(43, 'cat', 4, 1, 1);
+        $answer2 = new question_answer(44, 'mat', 4, 1, 1);
+        $question->answers = array($answer1, $answer2);
 
         $question->options = new stdClass();
 
-        $question->options->showanswers=false;
-        $question->options->delimitchars="[]";
-        $question->options->casesensitive=false;
+        $question->options->showanswers = false;
+        $question->options->delimitchars = "[]";
+        $question->options->casesensitive = false;
 
-        $question->options->correctfeedback="";
-        $question->options->correctfeedbackformat="";
-        $question->options->partiallycorrectfeedback="";
-        $question->options->partiallycorrectfeedbackformat="";
-        $question->options->incorrectfeedback="";
-        $question->options->incorrectfeedbackformat="";
-        $question->options->shuffledanswers="mat,cat";
-        $question->options->wronganswers="bat,dog";
-        $question->shuffledanswers="mat,cat,bat,dog";
+        $question->options->correctfeedback = "";
+        $question->options->correctfeedbackformat = "";
+        $question->options->partiallycorrectfeedback = "";
+        $question->options->partiallycorrectfeedbackformat = "";
+        $question->options->incorrectfeedback = "";
+        $question->options->incorrectfeedbackformat = "";
+        $question->options->shuffledanswers = "mat,cat";
+        $question->options->wronganswers = "bat,dog";
+        $question->shuffledanswers = "mat,cat,bat,dog";
 
-        $answers=new stdClass;
+        $answers = new stdClass;
 
-        $question->options->answers=array($answer1, $answer2);
+        $question->options->answers = array($answer1, $answer2);
 
         $question->hints = array(
             new question_hint(1, 'This is the first hint.', FORMAT_HTML),
             new question_hint(2, 'This is the second hint.', FORMAT_HTML),
         );
         return $question;
-
     }
+
     /**
      * Gets the question data for a shortanswer questionwith just the correct
      * ansewer 'frog', and no other answer matching.
@@ -101,4 +102,5 @@ public static function make_gapfill_backup(){
 
         return $qdata;
     }
+
 }
