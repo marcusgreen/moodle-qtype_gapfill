@@ -65,7 +65,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
-
+        
+        /* Only allow plain text in for the comma delimited set of wrong answer values
+         * wrong answers really should be a set of zero marked ordinary answers in the answers
+         * table. 
+         */
         $mform->setType('wronganswers', PARAM_TEXT);
         $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback',
                 'question'), array('rows' => 10), $this->editoroptions);
