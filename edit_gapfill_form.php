@@ -32,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * about the Moodle forms library, which is based on the HTML Quickform PEAR library.
  */
 class qtype_gapfill_edit_form extends question_edit_form {
-
     public $answer;
     public $answerdisplay;
     public $delimitchars;
