@@ -24,6 +24,7 @@
  * @package qtype
  * @subpackage gapfill
  */
+
 $string['addinggapfill']='Adding Gap Fill';
 $string['casesensitive']='Case Sensitive';
 $string['casesensitive_help']='When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
@@ -32,6 +33,11 @@ $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Cloze Gapfill.';
+
+$string['displaygapfill'] = 'gapfill';
+$string['displaydropdown'] = 'dropdown';
+$string['displaydragdrop'] = 'dragdrop';
+
 $string['pluginname']="Gapfill question type";
 $string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]. Dropdown and Dragdrop modes allows for a shuffled list of answers to be displayed which can include optional wrong/distractor answers.';
 
