@@ -29,7 +29,13 @@
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 .que.gapfill input.droppable{
-    border:solid .5px;
+    border:5px solid black
+    padding:1px;
+    background:white;
+    color:black;
+}
+.que.gapfill select.droppable{
+    border:5px solid black
     padding:1px;
     background:white;
     color:black;
