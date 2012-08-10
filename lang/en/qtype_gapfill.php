@@ -41,7 +41,7 @@ $string['displaydragdrop'] = 'dragdrop';
 $string['pluginname']="Gapfill question type";
 $string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat]. Dropdown and Dragdrop modes allows for a shuffled list of answers to be displayed which can include optional wrong/distractor answers.';
 
-// Will link to docs.moodle.org if there is ever a page there. $string['pluginname_link']=/question/type/gapfill.
+$string['pluginname_link']='/question/type/gapfill';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['answerdisplay']='Display Answers';

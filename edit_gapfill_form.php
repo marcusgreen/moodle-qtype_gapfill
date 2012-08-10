@@ -32,6 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * about the Moodle forms library, which is based on the HTML Quickform PEAR library.
  */
 class qtype_gapfill_edit_form extends question_edit_form {
+
     public $answer;
     public $answerdisplay;
     public $delimitchars;
@@ -51,10 +52,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
-        // TODO add getstrings for i18n.
-        $answer_display_types = array("gapfill" => get_string('displaygapfill', 'qtype_gapfill'),
-            "dropdown" => get_string('displaydropdown', 'qtype_gapfill'),
-            "dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'));
+        $answer_display_types = array("dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'),
+            "gapfill" => get_string('displaygapfill', 'qtype_gapfill'),
+            "dropdown" => get_string('displaydropdown', 'qtype_gapfill'));
+
         $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
@@ -64,14 +65,14 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
-        
+
         /* Only allow plain text in for the comma delimited set of wrong answer values
          * wrong answers really should be a set of zero marked ordinary answers in the answers
-         * table. 
+         * table.
          */
         $mform->setType('wronganswers', PARAM_TEXT);
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback',
-                'question'), array('rows' => 10), $this->editoroptions);
+        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
+                array('rows' => 10), $this->editoroptions);
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
@@ -84,11 +85,28 @@ class qtype_gapfill_edit_form extends question_edit_form {
     }
 
     public function set_data($question) {
-        $question->answer = $this->answer;
-        $question->answerdisplay = $this->answerdisplay;
-        $question->delimitchars = $this->delimitchars;
-
+        /* accessing the form in this way is probably not correct style */
+        $this->_form->getElement('wronganswers')->setValue($this->get_wrong_answers($question));
         parent::set_data($question);
+    }
+
+    /**
+     * Pull out a comma delimited string with the 
+     * wrong answers in it from question->options->answers
+     * @param type $question
+     * @return type string
+     */
+    public function get_wrong_answers($question) {
+        $wronganswers = "";
+        if (property_exists($question, 'options')) {
+            foreach ($question->options->answers as $a) {
+                /* if it doesn't contain a 1 it must be zero */
+                if (!(strpos($a->fraction, '1') !== false)) {
+                    $wronganswers.=$a->answer . ",";
+                }
+            }
+        }
+        return $wronganswers = rtrim($wronganswers, ',');
     }
 
     protected function data_preprocessing($question) {

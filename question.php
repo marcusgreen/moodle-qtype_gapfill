@@ -25,8 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-
-    // Not actually using the countback bit at the moment, not sure what it does.
+    /* Not actually using the countback bit at the moment, not sure what it does.
+     * if you are trying to make sense of Moodle question code, check the following link
+     * http://docs.moodle.org/dev/Question_engine
+     */
 
     public $answer;
     /* answerdisplay is a string of either gapfill,dropdown or drag drop */
@@ -65,6 +67,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
+    public $allanswers = array();
+
+    public function start_attempt(question_attempt_step $step, $variant) {
+        shuffle($this->allanswers);
+        $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
+    }
 
     /**
      * @param int $key stem number
@@ -81,22 +89,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $data['p' . $key] = PARAM_RAW_TRIMMED;
         }
         return $data;
-    }
-
-    /* For displaying a dropdown list of correct answers randomly shuffled */
-
-    public function get_shuffled_answers($answerdisplay) {
-        if ($answerdisplay == 'dragdrop') {
-            $answers = explode(",", $this->shuffledanswers);
-            return $answers;
-        }
-        if ($answerdisplay == 'dropdown') {
-            // Turn string into an array.
-            $shuffledanswers = explode(",", $this->shuffledanswers);
-            // Make the key and value the same in the array.
-            $shuffledanswers = array_combine($shuffledanswers, $shuffledanswers);
-            return $shuffledanswers;
-        }
     }
 
     /**
@@ -118,6 +110,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
             if ($ans == "") {
+
                 return false;
             }
         }
@@ -214,8 +207,31 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return array($numright, count($this->places));
     }
 
-    public function grade_response(array $response) {
+    /**
+     * Given a response, rest the parts that are wrong. Relevent in 
+     * interactive with multiple tries
+     * @param array $response a response
+     * @return array a cleaned up response with the wrong bits reset.
+     */
+    public function clear_wrong_from_response(array $response) {
+        foreach ($this->places as $place => $notused) {
+            if (!array_key_exists($this->field($place), $response)) {
+                continue;
+            }
+            $answergiven = $response[$this->field($place)];
+            $rightanswer = $this->get_right_choice_for($place);
+            if (!$this->casesensitive == 1) {
+                $answergiven = strtolower($answergiven);
+                $rightanswer = strtolower($rightanswer);
+            }
+            if (!$this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
+                $response[$this->field($place)] = '';
+            }
+        }
+        return $response;
+    }
 
+    public function grade_response(array $response) {
         list($right, $total) = $this->get_num_parts_right($response);
         $fraction = $right / $total;
         $grade = array($fraction, question_state::graded_state_for_fraction($fraction));

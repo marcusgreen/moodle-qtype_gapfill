@@ -34,22 +34,23 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dragdrop") {
 
             $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.4.2.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
         $fields = array();
 
+        $answers=$qa->get_step(0)->get_qt_var('_allanswers');
         $place_count = count($question->places);
         $counter = 0;
         $output = '';
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = "draggable answers";
-            $shuffled_answers = $question->get_shuffled_answers('dragdrop');
-            foreach ($shuffled_answers as $key => $value) {
+            $answers = $this->get_answers('dragdrop', $answers);
+            foreach ($answers as $key => $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
             $output.="</br></br>";
@@ -73,6 +74,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function embedded_element(question_attempt $qa, $place, question_display_options $options) {
 
+        /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $fraction = 0;
         $question = $qa->get_question();
         $fieldname = $question->field($place);
@@ -134,8 +136,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
-
-            $selectoptions = $question->get_shuffled_answers('dropdown');
+             $answers=$qa->get_step(0)->get_qt_var('_allanswers');
+             $selectoptions = $this->get_answers('dropdown', $answers);
              $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
                      $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
@@ -146,6 +148,19 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function specific_feedback(question_attempt $qa) {
         return $this->combined_feedback($qa);
+    }
+
+    public function get_answers($answerdisplay, $answers) {
+        // Turn string into an array.
+        $answers=explode(",", $answers);
+        if ($answerdisplay == 'dragdrop') {
+                return $answers;
+        }
+        if ($answerdisplay == 'dropdown') {
+            // Make the key and value the same in the array.
+            $answers = array_combine($answers, $answers);
+            return $answers;
+        }
     }
 
 }

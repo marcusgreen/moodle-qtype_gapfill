@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="question/type/gapfill/db" VERSION="20120719" COMMENT="XMLDB file for Moodle question/type/gapfill"
+<XMLDB PATH="question/type/gapfill/db" VERSION="20120803" COMMENT="XMLDB file for Moodle question/type/gapfill"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
 >
@@ -10,10 +10,8 @@
         <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key references question.id" PREVIOUS="id" NEXT="answerdisplay"/>
         <FIELD NAME="answerdisplay" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Display a shuffled list of answers true/false 1 or 0" PREVIOUS="question" NEXT="delimitchars"/>
         <FIELD NAME="delimitchars" TYPE="char" LENGTH="2" NOTNULL="false" DEFAULT="[]" SEQUENCE="false" COMMENT="The characters that define fields, generally defaults to [] i.e. The [cat] sat on the [mat] where the fields are [cat] and [mat]" PREVIOUS="answerdisplay" NEXT="casesensitive"/>
-        <FIELD NAME="casesensitive" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="make marking case sensitive, e.g. if the answer is cat Cat will also be accepted as correct" PREVIOUS="delimitchars" NEXT="wronganswers"/>
-        <FIELD NAME="wronganswers" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="incorrect distracting answers to be used in dropdown and dragdrop mode" PREVIOUS="casesensitive" NEXT="shuffledanswers"/>
-        <FIELD NAME="shuffledanswers" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="actual and any wrong answers shuffled in a comma delimited list. Only of use in dropdown or dragdrop answer display mode." PREVIOUS="wronganswers" NEXT="correctfeedback"/>
-        <FIELD NAME="correctfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="shuffledanswers" NEXT="correctfeedbackformat"/>
+        <FIELD NAME="casesensitive" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="make marking case sensitive, e.g. if the answer is cat Cat will also be accepted as correct" PREVIOUS="delimitchars" NEXT="correctfeedback"/>
+        <FIELD NAME="correctfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="casesensitive" NEXT="correctfeedbackformat"/>
         <FIELD NAME="correctfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="correctfeedback" NEXT="partiallycorrectfeedback"/>
         <FIELD NAME="partiallycorrectfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="correctfeedbackformat" NEXT="partiallycorrectfeedbackformat"/>
         <FIELD NAME="partiallycorrectfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false" PREVIOUS="partiallycorrectfeedback" NEXT="incorrectfeedback"/>
