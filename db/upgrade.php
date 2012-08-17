@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,36 +33,50 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     global $CFG, $DB;
 
     $dbman = $DB->get_manager();
-    /* some fractions may be zero which will confuse the new way of marking */
-    $sql = "Update " . $CFG->prefix . "question_answers qa," . $CFG->prefix . "question q set
+    if ($oldversion < 2006082505) {
+
+        /* some fractions may be zero which will confuse the new way of marking */
+        $sql = "Update " . $CFG->prefix . "question_answers qa," . $CFG->prefix . "question q set
         qa.fraction='1' where q.id=qa.question and q.qtype='gapfill'";
 
-    $DB->execute($sql);
+        $DB->execute($sql);
 
-    $rs = $DB->get_recordset_sql("SELECT wronganswers, question
+        $rs = $DB->get_recordset_sql("SELECT wronganswers, question
                                         FROM {question_gapfill}");
 
-    foreach ($rs as $gf) {
-        if ($gf->wronganswers == '') {
-            continue;
+        foreach ($rs as $gf) {
+            if ($gf->wronganswers == '') {
+                continue;
+            }
+            $wa = explode(",", $gf->wronganswers);
+            foreach ($wa as $wronganswer) {
+                $answer = new stdClass();
+                $answer->question = $gf->question;
+                $answer->answer = $wronganswer;
+                $answer->feedback = '';
+                $answer->fraction = 0;
+                $answer->id = $DB->insert_record("question_answers", $answer);
+            }
         }
-        $wa = explode(",", $gf->wronganswers);
-        foreach ($wa as $wronganswer) {
-            $answer = new stdClass();
-            $answer->question = $gf->question;
-            $answer->answer = $wronganswer;
-            $answer->feedback = '';
-            $answer->fraction = 0;
-            $answer->id = $DB->insert_record("question_answers", $answer);
+
+        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column wronganswers");
+        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column shuffledanswers");
+
+        $sql= "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
+        $DB->change_database_structure($sql);
+        
+        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill add column 'noduplicates' int(1) default 1 NULL ");
+
+        $rs->close();
+
         }
+ if ($oldversion == 2006082505) {
+     $sql= "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
+     $DB->change_database_structure($sql);
     }
-
-    $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column wronganswers");
-    $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column shuffledanswers");
-    $rs->close();
-
+    
     // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2006082505, 'qtype', 'gapfill');
+    upgrade_plugin_savepoint(true, 2006082506, 'qtype', 'gapfill');
 
     return;
 }

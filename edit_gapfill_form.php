@@ -47,6 +47,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
+                $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
+        $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
         // The delimiting characters around fields.
         $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
@@ -62,9 +64,13 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
 
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
+ 
+        $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
 
-        $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
-        $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
+        $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
+
+        
+
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
          * wrong answers really should be a set of zero marked ordinary answers in the answers

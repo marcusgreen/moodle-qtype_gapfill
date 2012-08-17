@@ -28,6 +28,10 @@
 $string['addinggapfill']='Adding Gap Fill';
 $string['casesensitive']='Case Sensitive';
 $string['casesensitive_help']='When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
+$string['noduplicates']='No Duplicates';
+$string['noduplicates_help']='When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
+
+
 $string['delimitchars']='Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
