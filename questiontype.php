@@ -288,6 +288,8 @@ class qtype_gapfill extends question_type {
                 "</answerdisplay>\n";
         $output .= '    <casesensitive>' . $question->options->casesensitive .
                 "</casesensitive>\n";
+        $output .= '    <noduplicates>' . $question->options->casesensitive .
+                "</noduplicates>\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
