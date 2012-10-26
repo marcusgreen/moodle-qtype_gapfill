@@ -288,7 +288,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
         /* answers with a positive grade must be anchored for strict match
           incorrect answers are not strictly matched */
-        
+
          /*If you want to escape all wildcards the following code
          * will do it. But I default to leaving them into allow
          * their use as part of the quetion. I escape forward slash
@@ -296,9 +296,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          * i.e. [/div]
          * $pattern =preg_quote($pattern,'/');
          */
-        
+
         $pattern=str_replace('/', '\/', $pattern);
-        
+
         $regexp = '/^' . $pattern . '$/u';
         // Make the match insensitive if requested to.
         if (!$casesensitive) {
