@@ -25,7 +25,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-
     /* Not actually using the countback bit at the moment, not sure what it does.
      * if you are trying to make sense of Moodle question code, check the following link
      * http://docs.moodle.org/dev/Question_engine
@@ -54,6 +53,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * a field where the correct answer is cat
      */
     public $delimitchars = "[]";
+
     /**
      * @var array place number => group number of the places in the question
      * text where choices can be put. Places are numbered from 1.
@@ -68,14 +68,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
+    public $allanswers = array();
 
-    public $allanswers= array();
-
-      public function start_attempt(question_attempt_step $step, $variant) {
-         shuffle($this->allanswers);
-         $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
+    public function start_attempt(question_attempt_step $step, $variant) {
+        shuffle($this->allanswers);
+        $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
     }
-    
+
     /**
      * @param int $key stem number
      * @return string the question-type variable name.
@@ -109,7 +108,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_complete_response(array $response) {
         /* checks that none of of the gaps is blanks */
-       foreach ($this->answers as $key => $value) {
+        foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
             if ($ans == "") {
 
@@ -129,7 +128,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * What is the correct value for the field 
      */
     public function get_right_choice_for($place) {
-                      return $this->places[$place];
+        return $this->places[$place];
     }
 
     public function is_same_response(array $prevresponse, array $newresponse) {
@@ -209,12 +208,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return array($numright, count($this->places));
     }
 
-     /**
-      * Given a response, rest the parts that are wrong. Relevent in 
-      * interactive with multiple tries
-      * @param array $response a response
-      * @return array a cleaned up response with the wrong bits reset.
-      */
+    /**
+     * Given a response, rest the parts that are wrong. Relevent in 
+     * interactive with multiple tries
+     * @param array $response a response
+     * @return array a cleaned up response with the wrong bits reset.
+     */
     public function clear_wrong_from_response(array $response) {
         foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
@@ -233,16 +232,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $response;
     }
 
-    public function discard_duplicates(array $response){
-        if($this->noduplicates){
-             return array_unique($response);
-        }else{
+    public function discard_duplicates(array $response) {
+        if ($this->noduplicates) {
+            return array_unique($response);
+        } else {
             return $response;
         }
-        
     }
+
     public function grade_response(array $response) {
-        $response= $this->discard_duplicates($response);
+        $response = $this->discard_duplicates($response);
         list($right, $total) = $this->get_num_parts_right($response);
         $fraction = $right / $total;
         $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
@@ -285,9 +284,21 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /* borrowed directly from the shortanswer question */
+
     public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
         /* answers with a positive grade must be anchored for strict match
           incorrect answers are not strictly matched */
+        
+         /*If you want to escape all wildcards the following code
+         * will do it. But I default to leaving them into allow
+         * their use as part of the quetion. I escape forward slash
+         * because I create html questions with tag close match
+         * i.e. [/div]
+         * $pattern =preg_quote($pattern,'/');
+         */
+        
+        $pattern=str_replace('/', '\/', $pattern);
+        
         $regexp = '/^' . $pattern . '$/u';
         // Make the match insensitive if requested to.
         if (!$casesensitive) {

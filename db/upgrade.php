@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -62,19 +61,19 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column wronganswers");
         $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column shuffledanswers");
 
-        $sql= "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
+        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1)
+            default 1 after casesensitive   ";
         $DB->change_database_structure($sql);
-        
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill add column 'noduplicates' int(1) default 1 NULL ");
-
+        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill add column
+            'noduplicates' int(1) default 1 NULL ");
         $rs->close();
-
-        }
- if ($oldversion == 2006082505) {
-     $sql= "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
-     $DB->change_database_structure($sql);
     }
-    
+    if ($oldversion == 2006082505) {
+        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 af
+            ter casesensitive   ";
+        $DB->change_database_structure($sql);
+    }
+
     // Gapfill savepoint reached.
     upgrade_plugin_savepoint(true, 2006082506, 'qtype', 'gapfill');
 

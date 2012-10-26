@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive','noduplicates');
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'noduplicates');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -205,7 +205,7 @@ class qtype_gapfill extends question_type {
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
-        
+
         $options->noduplicates = $question->noduplicates;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
 
@@ -228,11 +228,11 @@ class qtype_gapfill extends question_type {
      */
     public function get_answer_fields(array $answerwords, $question) {
 
-        foreach ($answerwords as $key=>$value) {
+        foreach ($answerwords as $key => $value) {
             $answerfields[$key]['value'] = $value;
             $answerfields[$key]['fraction'] = 1;
         }
-        
+
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers != '') {
                 /* remove any trailing commas */
