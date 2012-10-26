@@ -19,5 +19,6 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'qtype_gapfill';
 $plugin->version  = 2006082506;
 $plugin->requires = 2010112400;
+$plugin->release ='1.0';
 $plugin->maturity  = MATURITY_BETA;
 
