@@ -64,13 +64,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
 
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
- 
+
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
 
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
-
-        
-
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
          * wrong answers really should be a set of zero marked ordinary answers in the answers
