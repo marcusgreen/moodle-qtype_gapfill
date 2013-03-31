@@ -185,32 +185,38 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedright);
     }
 
-    public function test_interactive_with_incorrect() {
-
+    
+    public function test_interactive_wildcard_with_correct() {
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill',array('cat|dog', 'mat'));
         $maxmark = 2;
+        
+     
 
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
+        //$this->quba->set_preferred_behaviour('interactive');
+
 
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
         $this->check_step_count(1);
 
+
         // Save a  correct response.
-        $this->process_submission(array('p0' => 'mat', 'p1' => 'cat'));
+        $this->process_submission(array('p0' => 'cat', 'p1' => 'mat'));
         $this->check_step_count(2);
 
         $this->check_current_state(question_state::$todo);
         // Submit saved response.
-        $this->process_submission(array('-submit' => 1, 'p1' => 'mat', 'p2' => 'cat'));
+        $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
         $this->check_step_count(3);
+
         // Verify.
         $this->quba->finish_all_questions();
-        $this->check_current_state(question_state::$gradedwrong);
+        $this->check_current_state(question_state::$gradedright);
 
-        $this->check_current_mark(0);
+        $this->check_current_mark(2);
         // Finish the attempt.
     }
     public function test_immediatefeedback_with_correct() {
