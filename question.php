@@ -285,19 +285,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /* borrowed directly from the shortanswer question */
 
-<<<<<<< HEAD
     public function compare_string_with_wildcard($string, $pattern, $casesensitive = false) {
         /* answers with a positive grade must be anchored for strict match
           incorrect answers are not strictly matched */
 
         /* If you want to escape all wildcards the following code
-=======
-    public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
-        /* answers with a positive grade must be anchored for strict match
-          incorrect answers are not strictly matched */
-
-         /*If you want to escape all wildcards the following code
->>>>>>> 1c801ba8855ecb46e32bf140ee3e741162d9349b
          * will do it. But I default to leaving them into allow
          * their use as part of the quetion. I escape forward slash
          * because I create html questions with tag close match
@@ -305,11 +297,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          * $pattern =preg_quote($pattern,'/');
          */
 
-<<<<<<< HEAD
         $pattern = str_replace('/', '\/', $pattern);
-=======
-        $pattern=str_replace('/', '\/', $pattern);
->>>>>>> 1c801ba8855ecb46e32bf140ee3e741162d9349b
 
         $regexp = '/^' . $pattern . '$/u';
 
