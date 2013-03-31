@@ -34,8 +34,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $backup = new backup_qtype_gapfill_plugin();
     }
 
-    public static function make_question($type) {
-
+    public static function make_question($type, $answers=array("cat", "mat")) {
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
 
@@ -43,17 +42,17 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->qtype = question_bank::get_qtype('gapfill');
 
         $question->name = 'Gapfill Test Question';
-        $question->questiontext = 'The [cat] sat on the [mat]';
+        $question->questiontext = "The [cat] sat on the [mat]";
         $question->textfragments = array('The ', ' sat on the ');
 
         $question->displayanswers = '1';
         $question->casesensitive = '1';
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
 
-        $question->places[1] = 'cat';
-        $question->places[2] = 'mat';
-        $answer1 = new question_answer(43, 'cat', 4, 1, 1);
-        $answer2 = new question_answer(44, 'mat', 4, 1, 1);
+        $question->places[1] = $answers[0];
+        $question->places[2] = $answers[1];
+        $answer1 = new question_answer(43, $answers[0], 4, 1, 1);
+        $answer2 = new question_answer(44, $answers[1], 4, 1, 1);
         $question->answers = array($answer1, $answer2);
 
         $question->options = new stdClass();
