@@ -185,23 +185,17 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedright);
     }
 
-    
     public function test_interactive_wildcard_with_correct() {
         // Create a gapfill question.
-        $gapfill = qtype_gapfill_test_helper::make_question('gapfill',array('cat|dog', 'mat'));
+        $gapfill = qtype_gapfill_test_helper::make_question('gapfill', array('cat|dog', 'mat'));
         $maxmark = 2;
-        
-     
 
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
-        //$this->quba->set_preferred_behaviour('interactive');
-
 
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
         $this->check_step_count(1);
-
 
         // Save a  correct response.
         $this->process_submission(array('p0' => 'cat', 'p1' => 'mat'));
@@ -248,5 +242,4 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_mark(2);
         // Finish the attempt.
     }
-
 }
