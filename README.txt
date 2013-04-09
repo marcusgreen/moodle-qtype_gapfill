@@ -11,7 +11,7 @@ drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created under Moodle 2.2 and tested with 2.3 It will not work with versions of 
+This question type was created under Moodle 2.2 and tested with 2.3 and 2.4 It will not work with versions of 
 moodle prior to 2.1.
 
 Place the files in a directory 
