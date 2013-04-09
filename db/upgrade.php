@@ -75,7 +75,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     }
 
     // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2006082506, 'qtype', 'gapfill');
+    upgrade_plugin_savepoint(true, 2006082507, 'qtype', 'gapfill');
 
     return;
 }
