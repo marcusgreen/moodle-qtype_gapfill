@@ -39,6 +39,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
+        $mform->setType('reload',PARAM_RAW);
         $mform->removeelement('generalfeedback');
 
         // Make questiontext a required field for this question type.
@@ -49,7 +50,21 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
                 $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
-        // The delimiting characters around fields.
+        
+ /* Only allow plain text in for the comma delimited set of wrong answer values
+         * wrong answers really should be a set of zero marked ordinary answers in the answers
+         * table.
+         */
+        $mform->setType('wronganswers', PARAM_TEXT);
+
+         $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
+                array('rows' => 10), $this->editoroptions);
+
+        $mform->setType('generalfeedback', PARAM_RAW);
+        $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');        
+        $mform->addElement('header', 'feedbackheader',get_string('moreoptions'));
+        
+// The delimiting characters around fields.
         $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
@@ -69,24 +84,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
 
-        /* Only allow plain text in for the comma delimited set of wrong answer values
-         * wrong answers really should be a set of zero marked ordinary answers in the answers
-         * table.
-         */
-        $mform->setType('wronganswers', PARAM_TEXT);
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
-                array('rows' => 10), $this->editoroptions);
-
-        $mform->setType('generalfeedback', PARAM_RAW);
-        $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
-
+      
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
-        $mform->disabledIf('shownumcorrect', 'single', 'eq', 1);
-
 
         // Adds hinting features.
-        $this->add_interactive_settings(true,true);
+        $this->add_interactive_settings();
     }
 
     public function set_data($question) {
@@ -117,7 +120,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_combined_feedback($question);
-        $question = $this->data_preprocessing_hints($question,true,true);
+        $question = $this->data_preprocessing_hints($question);
 
         if (!empty($question->options)) {
             $question->answerdisplay = $question->options->answerdisplay;
