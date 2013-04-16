@@ -82,9 +82,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
+        $mform->disabledIf('shownumcorrect', 'single', 'eq', 1);
+
 
         // Adds hinting features.
-        $this->add_interactive_settings();
+        $this->add_interactive_settings(true,true);
     }
 
     public function set_data($question) {
@@ -115,7 +117,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_combined_feedback($question);
-        $question = $this->data_preprocessing_hints($question);
+        $question = $this->data_preprocessing_hints($question,true,true);
 
         if (!empty($question->options)) {
             $question->answerdisplay = $question->options->answerdisplay;
