@@ -62,7 +62,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');        
-        $mform->addElement('header', 'feedbackheader',get_string('moreoptions'));
+        $mform->addElement('header', 'feedbackheader',get_string('moreoptions','qtype_gapfill'));
         
 // The delimiting characters around fields.
         $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
