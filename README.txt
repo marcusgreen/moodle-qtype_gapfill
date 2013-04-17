@@ -1,5 +1,7 @@
 Gapfill question type for Moodle 
 
+Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
+
 A simpler Cloze question type that only supports fill the the blank type questions. 
 Teacher can define the question with square braces to define the missing words. For example
 The [cat] sat on the [mat]. Alternative delimiting characters can be defined during question edit
