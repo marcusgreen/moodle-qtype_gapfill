@@ -162,5 +162,18 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return $answers;
         }
     }
+    /* overriding base class method purely to return a string yougotnrightcount
+     * instead of default yougotnright
+     */
+    protected function num_parts_correct(question_attempt $qa) {
+        $a = new stdClass();
+        list($a->num, $a->outof) = $qa->get_question()->get_num_parts_right(
+                $qa->get_last_qt_data());
+        if (is_null($a->outof)) {
+            return '';
+        } else {
+           return get_string('yougotnrightcount', 'qtype_gapfill', $a);
+        }
+    }
 
 }
