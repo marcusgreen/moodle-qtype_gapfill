@@ -211,7 +211,7 @@ class qtype_gapfill extends question_type {
 
         $DB->update_record('question_gapfill', $options);
 
-        $this->save_hints($question);
+        $this->save_hints($question,true);
 
         return true;
     }
