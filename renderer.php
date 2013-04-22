@@ -98,7 +98,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $feedbackimage = "";
         $inputclass = "";
 
-        if ($options->correctness) {
+         if (($options->correctness) or ($options->numpartscorrect)) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
                 $fraction = 0;
