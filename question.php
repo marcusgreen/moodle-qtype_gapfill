@@ -190,6 +190,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function get_num_parts_right(array $response) {
         $numright = 0;
+    
         foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
@@ -201,7 +202,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $rightanswer = strtolower($rightanswer);
             }
             if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
-                $numright+=1;
+                      $numright+=1;
             }
         }
         return array($numright, count($this->places));
@@ -232,17 +233,28 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function discard_duplicates(array $response) {
-        if ($this->noduplicates) {
-            return array_unique($response);
+        if ($this->noduplicates==1) {
+            /*
+             * find unique values then keeping the same 
+             * keys blank rest of the values
+             */
+            $au=array_unique($response);
+            foreach ($response as $key =>$value){
+                $response[$key]='';                
+            }
+            return array_merge($response,$au);
+
         } else {
             return $response;
         }
     }
 
     public function grade_response(array $response) {
-        $response = $this->discard_duplicates($response);
-        list($right, $total) = $this->get_num_parts_right($response);
+         $response = $this->discard_duplicates($response);
+         list($right, $total) = $this->get_num_parts_right($response);
+     
         $fraction = $right / $total;
+        
         $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
         return $grade;
     }
@@ -250,6 +262,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     // Required by the interface question_automatically_gradable_with_countback.
     public function compute_final_grade($responses, $totaltries) {
         // Only applies in interactive mode.
+        $responses[0] = $this->discard_duplicates($responses[0]);
         $totalscore = 0;
         foreach ($this->places as $place => $notused) {
             $fieldname = $this->field($place);
@@ -258,7 +271,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             foreach ($responses as $i => $response) {
                 $rcfp = $this->get_right_choice_for($place);
                 $resp = $response[$fieldname];
-                if (!$this->compare_string_with_wildcard($resp, $rcfp)) {
+                if (!$this->compare_string_with_wildcard($resp, $rcfp,$this->casesensitive)) {
                     $lastwrongindex = $i;
                     $finallyright = false;
                 } else {
@@ -285,7 +298,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /* borrowed directly from the shortanswer question */
 
-    public function compare_string_with_wildcard($string, $pattern, $casesensitive = false) {
+    public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
         /* answers with a positive grade must be anchored for strict match
           incorrect answers are not strictly matched */
 
