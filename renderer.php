@@ -119,12 +119,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $inputname = $qprefix . 'p' . $place;
         $style = "";
         $inputattributes = array(
-            'type' => "input",
+            'type' => "text",
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'style' => 'width: ' . $style . 'px;',
+       
             'class' => 'droppable ' . $inputclass,
         );
         /* When previewing after a quiz is complete */
