@@ -97,8 +97,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
         $inputclass = "";
-
-         if (($options->correctness) or ($options->numpartscorrect)) {
+                
+         if (($options->correctness) or ($options->numpartscorrect) ) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
                 $fraction = 0;
@@ -114,7 +114,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
             }
         }
-
+       
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
         $style = "";
@@ -130,12 +130,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
             $readonly = array('disabled' => 'true');
-            $inputattributes = array_merge($inputattributes, $readonly);
+           $inputattributes = array_merge($inputattributes, $readonly);
         }
 
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
+            $inputattributes['class']=$inputclass;
              $answers=$qa->get_step(0)->get_qt_var('_allanswers');
              $selectoptions = $this->get_answers('dropdown', $answers);
              $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
