@@ -190,8 +190,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function get_num_parts_right(array $response) {
         $numright = 0;
-    
-        foreach ($this->places as $place => $notused) {
+       foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
             }
@@ -250,9 +249,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function grade_response(array $response) {
+
          $response = $this->discard_duplicates($response);
+      
          list($right, $total) = $this->get_num_parts_right($response);
-     
         $fraction = $right / $total;
         
         $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
@@ -270,6 +270,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $finallyright = false;
             foreach ($responses as $i => $response) {
                 $rcfp = $this->get_right_choice_for($place);
+                /* break out the loop if response does not contain the key */
+                if(!array_key_exists($fieldname,$response)) continue;
                 $resp = $response[$fieldname];
                 if (!$this->compare_string_with_wildcard($resp, $rcfp,$this->casesensitive)) {
                     $lastwrongindex = $i;
