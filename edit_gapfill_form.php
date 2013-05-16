@@ -136,7 +136,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
         preg_match_all($fieldregex, $fromform['questiontext']['text'], $matches);
-        if (count($matches) == 0) {
+        if (count($matches[0]) == 0) {
             $errors['questiontext'] = get_string('questionsmissing', 'qtype_gapfill');
         }
 
