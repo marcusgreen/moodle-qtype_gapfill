@@ -57,8 +57,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
          */
         $mform->setType('wronganswers', PARAM_TEXT);
 
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question'),
-                array('rows' => 10), $this->editoroptions);
+        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question')
+                , array('rows' => 10), $this->editoroptions);
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
@@ -119,10 +119,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_combined_feedback($question);
-        /*populates the hints and adds clearincorrect and and shownumcorrect (true,true) */
-        $question = $this->data_preprocessing_hints($question,true,true);
-        
-
+        /* populates the hints and adds clearincorrect and and shownumcorrect (true,true) */
+        $question = $this->data_preprocessing_hints($question, true, true);
 
         if (!empty($question->options)) {
             $question->answerdisplay = $question->options->answerdisplay;
@@ -132,6 +130,16 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     public function validation($fromform, $data) {
         $errors = array();
+        /* don't save the form if there are no fields defined */
+        $l = substr($fromform['delimitchars'], 0, 1);
+        $r = substr($fromform['delimitchars'], 1, 1);
+
+        $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
+        preg_match_all($fieldregex, $fromform['questiontext']['text'], $matches);
+        if (count($matches) == 0) {
+            $errors['questiontext'] = get_string('questionsmissing', 'qtype_gapfill');
+        }
+
         if ($errors) {
             return $errors;
         } else {
@@ -142,4 +150,5 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function qtype() {
         return 'gapfill';
     }
+
 }
