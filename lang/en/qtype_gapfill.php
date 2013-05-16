@@ -47,6 +47,8 @@ $string['pluginname_help'] = 'Place the words to be completed within square brac
 
 $string['pluginname_link']='/question/type/gapfill';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
+$string['questionsmissing']='You have not included any fields in your question text';
+
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['answerdisplay']='Display Answers';
 $string['answerdisplay_help'] = 'Dragdrop shows a list of words that can be dragged into the gaps, gapfill shows gaps with no word options, dropdown shows the same list of correct (and possibly incorrect) answers for each field';
