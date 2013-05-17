@@ -48,7 +48,7 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_mark(null);
         $this->check_step_count(1);
 
-           $this->check_current_output(
+        $this->check_current_output(
                 $this->get_contains_marked_out_of_summary(),
                 $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_does_not_contain_feedback_expectation(),
@@ -160,7 +160,7 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$todo);
 
         $this->check_current_output(
-                    $this->get_contains_marked_out_of_summary(),
+                $this->get_contains_marked_out_of_summary(),
                 $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_does_not_contain_feedback_expectation(),
                 $this->get_does_not_contain_validation_error_expectation(),
@@ -213,29 +213,27 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_mark(2);
         // Finish the attempt.
     }
-    
-    
+
     public function test_interactive_discard_duplicates() {
-        /* this is for the scenario where you have multiple fields 
+        /* this is for the scenario where you have multiple fields
          * and each field could take any value. The marking is designed
          * to asssure that the student cannot get credited more than once
          * for each value, i.e. so if the answer is gold,silver, bronze
          * they cannot get 3 marks by entereing gold, gold and gold
          */
-        
-        // Create a gapfill question and set noduplicates to true
-        $questiontext='
+
+        /*Create a gapfill question and set noduplicates to true*/
+        $questiontext = '
 What are the colors of the Olympic medals?
 
 [gold|silver|bronze]
 [gold|silver|bronze]
-[gold|silver|bronze] arse';  
-$submission=array('p0'=>'gold','p1'=>'gold','p2'=>'silver');
+[gold|silver|bronze] arse';
+        $submission = array('p0' => 'gold', 'p1' => 'gold', 'p2' => 'silver');
 
-        
-        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill',$questiontext,false,true);
-     
-        $maxmark=3;
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, true);
+
+        $maxmark = 3;
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
         // Check the initial state.
@@ -246,32 +244,28 @@ $submission=array('p0'=>'gold','p1'=>'gold','p2'=>'silver');
         $this->process_submission($submission);
         $this->check_current_state(question_state::$todo);
 
-        
         $this->check_current_mark(null);
 
         $this->check_step_count(2);
-        
-        $submission=array('-submit' => 1,'p1'=>'gold','p2'=>'gold','p3'=>'silver');
+
+        $submission = array('-submit' => 1, 'p1' => 'gold', 'p2' => 'gold', 'p3' => 'silver');
 
         $this->process_submission($submission);
         $this->check_step_count(3);
-        
+
         $gapfill->grade_response($submission);
         $this->check_current_mark(2);
 
-        
         $this->check_current_state(question_state::$gradedpartial);
-        
     }
-    
-    
+
     public function test_immediatefeedback_with_correct() {
 
         // Create a gapfill question.
         $gapfill = qtype_gapfill_test_helper::make_question('gapfill');
         $maxmark = 2;
 
-        $gapfill->showanswers=true;
+        $gapfill->showanswers = true;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
 
         // Check the initial state.
@@ -294,4 +288,5 @@ $submission=array('p0'=>'gold','p1'=>'gold','p2'=>'silver');
         $this->check_current_mark(2);
         // Finish the attempt.
     }
+
 }
