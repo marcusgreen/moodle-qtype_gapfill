@@ -54,6 +54,7 @@ class qtype_gapfill extends question_type {
         }
         foreach ($questiondata->options->answers as $a) {
             array_push($question->allanswers, $a->answer);
+
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
@@ -72,7 +73,6 @@ class qtype_gapfill extends question_type {
      */
 
     protected function initialise_question_instance(question_definition $question, $questiondata) {
-
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
@@ -124,10 +124,10 @@ class qtype_gapfill extends question_type {
         $r = substr($form->delimitchars, 1, 1);
 
         $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
-        preg_match_all($fieldregex, $form->questiontext['text'], $bits);
+        preg_match_all($fieldregex, $form->questiontext['text'], $matches);
 
         /* count the number of fields */
-        $form->defaultmark = count($bits[1]);
+        $form->defaultmark = count($matches[1]);
         return parent::save_question($question, $form);
     }
 
@@ -211,7 +211,7 @@ class qtype_gapfill extends question_type {
 
         $DB->update_record('question_gapfill', $options);
 
-        $this->save_hints($question,true);
+        $this->save_hints($question, true);
 
         return true;
     }
@@ -228,6 +228,7 @@ class qtype_gapfill extends question_type {
      */
     public function get_answer_fields(array $answerwords, $question) {
 
+        $answerfields = array();
         foreach ($answerwords as $key => $value) {
             $answerfields[$key]['value'] = $value;
             $answerfields[$key]['fraction'] = 1;
