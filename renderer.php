@@ -43,7 +43,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $fields = array();
 
-        $answers=$qa->get_step(0)->get_qt_var('_allanswers');
+        $answers = $qa->get_step(0)->get_qt_var('_allanswers');
         $place_count = count($question->places);
         $counter = 0;
         $output = '';
@@ -62,12 +62,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $output .= $question->format_text($fragment, $question->questiontextformat, $qa,
-                    'question', 'questiontext', $question->id);
+            $output .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question',
+                    'questiontext', $question->id);
         }
         if ($qa->get_state() == question_state::$invalid) {
-            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
-                    array('class' => 'validationerror'));
+            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' =>
+                $output)), array('class' => 'validationerror'));
         }
         return $output;
     }
@@ -97,8 +97,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
         $inputclass = "";
-                
-         if (($options->correctness) or ($options->numpartscorrect) ) {
+
+        if (($options->correctness) or ($options->numpartscorrect)) {
             $response = $qa->get_last_qt_data();
             if (array_key_exists($fieldname, $response)) {
                 $fraction = 0;
@@ -114,7 +114,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
             }
         }
-       
+
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
         $style = "";
@@ -124,23 +124,22 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-       
             'class' => 'droppable ' . $inputclass,
         );
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
             $readonly = array('disabled' => 'true');
-           $inputattributes = array_merge($inputattributes, $readonly);
+            $inputattributes = array_merge($inputattributes, $readonly);
         }
 
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
-            $inputattributes['class']=$inputclass;
-             $answers=$qa->get_step(0)->get_qt_var('_allanswers');
-             $selectoptions = $this->get_answers('dropdown', $answers);
-             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
-                     $inputattributes) . ' ' . $feedbackimage;
+            $inputattributes['class'] = $inputclass;
+            $answers = $qa->get_step(0)->get_qt_var('_allanswers');
+            $selectoptions = $this->get_answers('dropdown', $answers);
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
+                    $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {
             return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
@@ -153,9 +152,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function get_answers($answerdisplay, $answers) {
         // Turn string into an array.
-        $answers=explode(",", $answers);
+        $answers = explode(",", $answers);
         if ($answerdisplay == 'dragdrop') {
-                return $answers;
+            return $answers;
         }
         if ($answerdisplay == 'dropdown') {
             // Make the key and value the same in the array.
@@ -163,9 +162,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return $answers;
         }
     }
+
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
      */
+
     protected function num_parts_correct(question_attempt $qa) {
         $a = new stdClass();
         list($a->num, $a->outof) = $qa->get_question()->get_num_parts_right(
@@ -173,7 +174,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if (is_null($a->outof)) {
             return '';
         } else {
-           return get_string('yougotnrightcount', 'qtype_gapfill', $a);
+            return get_string('yougotnrightcount', 'qtype_gapfill', $a);
         }
     }
 
