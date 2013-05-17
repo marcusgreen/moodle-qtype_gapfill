@@ -190,7 +190,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function get_num_parts_right(array $response) {
         $numright = 0;
-       foreach ($this->places as $place => $notused) {
+        foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
             }
@@ -201,7 +201,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $rightanswer = strtolower($rightanswer);
             }
             if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
-                      $numright+=1;
+                $numright+=1;
             }
         }
         return array($numright, count($this->places));
@@ -232,17 +232,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function discard_duplicates(array $response) {
-        if ($this->noduplicates==1) {
+        if ($this->noduplicates == 1) {
             /*
-             * find unique values then keeping the same 
+             * find unique values then keeping the same
              * keys blank rest of the values
              */
-            $au=array_unique($response);
-            foreach ($response as $key =>$value){
-                $response[$key]='';                
+            $au = array_unique($response);
+            foreach ($response as $key => $value) {
+                $response[$key] = '';
             }
-            return array_merge($response,$au);
-
+            return array_merge($response, $au);
         } else {
             return $response;
         }
@@ -250,11 +249,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function grade_response(array $response) {
 
-         $response = $this->discard_duplicates($response);
-      
-         list($right, $total) = $this->get_num_parts_right($response);
+        $response = $this->discard_duplicates($response);
+
+        list($right, $total) = $this->get_num_parts_right($response);
         $fraction = $right / $total;
-        
+
         $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
         return $grade;
     }
@@ -271,9 +270,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             foreach ($responses as $i => $response) {
                 $rcfp = $this->get_right_choice_for($place);
                 /* break out the loop if response does not contain the key */
-                if(!array_key_exists($fieldname,$response)) continue;
+                if (!array_key_exists($fieldname, $response)) {
+                    continue;
+                }
                 $resp = $response[$fieldname];
-                if (!$this->compare_string_with_wildcard($resp, $rcfp,$this->casesensitive)) {
+                if (!$this->compare_string_with_wildcard($resp, $rcfp, $this->casesensitive)) {
                     $lastwrongindex = $i;
                     $finallyright = false;
                 } else {
