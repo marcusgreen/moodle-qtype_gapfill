@@ -33,77 +33,76 @@ class qtype_gapfill_test_helper extends question_test_helper {
     public static function make_gapfill_backup() {
         $backup = new backup_qtype_gapfill_plugin();
     }
-    
-     public static function make_question2($type, $questiontext,$casesensitive=false,$noduplicates=false) {
- question_bank::load_question_definition_classes($type);
+
+    public static function make_question2($type, $questiontext, $casesensitive = false, $noduplicates = false) {
+        question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
         test_question_maker::initialise_a_question($question);
-        
-        $l='[';
-        $r=']';
+
+        $l = '[';
+        $r = ']';
         $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
         preg_match_all($fieldregex, $questiontext, $matches);
-         /* just the field contents */
+        /* just the field contents */
         $answerwords = $matches[1];
 
         $question->places = array();
         $counter = 1;
 
         $answers = array();
-        foreach($answerwords as $key => $answer){
-                        $answers[$key]=(object) array(
+        foreach ($answerwords as $key => $answer) {
+            $answers[$key] = (object) array(
                         'question' => '163',
                         'answer' => $answer,
                         'fraction' => '1',
                         'feedback' => 'Feedback text',
-                        'feedbackformat'=>'1',    
+                        'feedbackformat' => '1',
                         'id' => 456,
-                           );
-        
-        }  
-        
+            );
+        }
+
         $question->qtype = question_bank::get_qtype('gapfill');
-               $options= (object) array(
-                'id' => '117',
-                'question' => '163',
-                'layout' => '0',
-                'answerdisplay'=>'ddrop',
-                'delimitchars'=>'[]',
-                'casesensitive'=>false,
-                'noduplicates'=>'1',
-                'correctfeedback' => 'Correct Feedback',
-                'correctfeedbackformat' => '0',
-                'partiallycorrectfeedback' => 'Partially Correct Feedback',
-                'partiallycorrectfeedbackformat' => '0',
-                'incorrectfeedback' => 'Incorrect Feedback',
-                'incorrectfeedbackformat' => '0',
-                'answers' => $answers,
-            );
-                
+        $options = (object) array(
+                    'id' => '117',
+                    'question' => '163',
+                    'layout' => '0',
+                    'answerdisplay' => 'ddrop',
+                    'delimitchars' => '[]',
+                    'casesensitive' => false,
+                    'noduplicates' => '1',
+                    'correctfeedback' => 'Correct Feedback',
+                    'correctfeedbackformat' => '0',
+                    'partiallycorrectfeedback' => 'Partially Correct Feedback',
+                    'partiallycorrectfeedbackformat' => '0',
+                    'incorrectfeedback' => 'Incorrect Feedback',
+                    'incorrectfeedbackformat' => '0',
+                    'answers' => $answers,
+        );
+
         $questiondata = (object) array(
-            'id' => '2',
-            'category' => '2',
-            'contextid'=>'1',
-            'parent' => '0',
-            'name' => 'Generic Gapfill Question',
-            'questiontext' => $questiontext,
-            'questiontextformat' => '1',
-            'generalfeedback' => '',
-            'generalfeedbackformat' => '1',
-            'qtype' => 'gapfill',
-            'length' => '1',
-            'stamp' => 'tjh238.vledev.open.ac.uk+100708154547+JrHygi',
-            'version' => 'tjh238.vledev.open.ac.uk+100708154548+a3zh8v',
-            'hidden' => '0',
-            'timecreated' => '1278603947',
-            'timemodified' => '1278603947',
-            'createdby' => '3',
-            'modifiedby' => '3',
-            'defaultmark' => '1.0000000',
-            'penalty' => '0.3333333',
-            'maxmark' => '1.00000',
-            'options' => $options
-            );
+                    'id' => '2',
+                    'category' => '2',
+                    'contextid' => '1',
+                    'parent' => '0',
+                    'name' => 'Generic Gapfill Question',
+                    'questiontext' => $questiontext,
+                    'questiontextformat' => '1',
+                    'generalfeedback' => '',
+                    'generalfeedbackformat' => '1',
+                    'qtype' => 'gapfill',
+                    'length' => '1',
+                    'stamp' => 'tjh238.vledev.open.ac.uk+100708154547+JrHygi',
+                    'version' => 'tjh238.vledev.open.ac.uk+100708154548+a3zh8v',
+                    'hidden' => '0',
+                    'timecreated' => '1278603947',
+                    'timemodified' => '1278603947',
+                    'createdby' => '3',
+                    'modifiedby' => '3',
+                    'defaultmark' => '1.0000000',
+                    'penalty' => '0.3333333',
+                    'maxmark' => '1.00000',
+                    'options' => $options
+        );
         $question->qtype->make_question($questiondata);
         foreach ($questiondata->options->answers as $choicedata) {
             /* fraction contains a 1 */
@@ -112,13 +111,11 @@ class qtype_gapfill_test_helper extends question_test_helper {
                 $counter++;
             }
         }
-        $question->noduplicates=1;
+        $question->noduplicates = 1;
         return $question;
-        
     }
-   
 
-    public static function make_question($type, $answers=array("cat", "mat")) {
+    public static function make_question($type, $answers = array("cat", "mat")) {
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
 
@@ -174,7 +171,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
     public function get_gapfill_question_data_catmat() {
         $qdata = new stdClass();
         test_question_maker::initialise_question_data($qdata);
-        
 
         $qdata->qtype = 'gapfill';
         $qdata->name = 'catmat';
