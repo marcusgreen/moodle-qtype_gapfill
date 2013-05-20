@@ -153,16 +153,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /**
      * @return question_answer an answer that 
      * contains the a response that would get full marks.
+     * used in preview mode
      */
     public function get_correct_response() {
         $response = array();
-        $string = "";
-        /* convert array of places into a single string with spaces between each word */
-        foreach ($this->places as $answer) {
-            $string = $string . " " . $answer;
+        foreach ($this->places as $place => $answer) {
+            $response[$this->field($place)] = $answer;
         }
-        /* trim of leading space */
-        $response['answer'] = trim($string);
         return $response;
     }
 
