@@ -26,7 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * restore plugin class that provides the necessary information
- * needed to restore one gapfill qtype plugin
+ * needed to restore one gapfill qtype plugin. Also used if you click
+ * the duplicate quiz button in a course.
  *
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -90,4 +91,91 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
         return $contents;
     }
+
+    /**
+     * Processes the answer element (question answers).  This has been copied in from 
+     * the parent restore_qtype class to allow the creation of duplicate
+     * answers. These are a significant feature of this question type, see the
+     * no duplicates feature in the documentation at
+     * http://docs.moodle.org/25/en//question/type/gapfill#No_Duplicates_Mode 
+     *  Previously it was throwing a debug error. This has been 'fixed' by 
+     * the addition of the IGNORE_MULTIPLE parameter to the call to get_field_sql.
+     * However the docs seem to frown on the use of this parameter.
+     */
+    public function process_question_answer($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        // Detect if the question is created or mapped
+        $oldquestionid   = $this->get_old_parentid('question');
+        $newquestionid   = $this->get_new_parentid('question');
+        $questioncreated = $this->get_mappingid('question_created', $oldquestionid) ? true : false;
+
+        // In the past, there were some sloppily rounded fractions around. Fix them up.
+        $changes = array(
+            '-0.66666'  => '-0.6666667',
+            '-0.33333'  => '-0.3333333',
+            '-0.16666'  => '-0.1666667',
+            '-0.142857' => '-0.1428571',
+             '0.11111'  =>  '0.1111111',
+             '0.142857' =>  '0.1428571',
+             '0.16666'  =>  '0.1666667',
+             '0.33333'  =>  '0.3333333',
+             '0.333333' =>  '0.3333333',
+             '0.66666'  =>  '0.6666667',
+        );
+        if (array_key_exists($data->fraction, $changes)) {
+            $data->fraction = $changes[$data->fraction];
+        }
+
+        // If the question has been created by restore, we need to create its question_answers too
+        if ($questioncreated) {
+            // Adjust some columns
+            $data->question = $newquestionid;
+            $data->answer = $data->answertext;
+            // Insert record
+            $newitemid = $DB->insert_record('question_answers', $data);
+
+        // The question existed, we need to map the existing question_answers
+        } else {
+            // Look in question_answers by answertext matching
+            $sql = 'SELECT id
+                      FROM {question_answers}
+                     WHERE question = ?
+                       AND ' . $DB->sql_compare_text('answer', 255) . ' = ' . $DB->sql_compare_text('?', 255);
+            $params = array($newquestionid, $data->answertext);
+            $newitemid = $DB->get_field_sql($sql, $params,IGNORE_MULTIPLE);
+
+            // Not able to find the answer, let's try cleaning the answertext
+            // of all the question answers in DB as slower fallback. MDL-30018.
+            if (!$newitemid) {
+                $params = array('question' => $newquestionid);
+                $answers = $DB->get_records('question_answers', $params, '', 'id, answer');
+                foreach ($answers as $answer) {
+                    // Clean in the same way than {@link xml_writer::xml_safe_utf8()}.
+                    $clean = preg_replace('/[\x-\x8\xb-\xc\xe-\x1f\x7f]/is','', $answer->answer); // Clean CTRL chars.
+                    $clean = preg_replace("/\r\n|\r/", "\n", $clean); // Normalize line ending.
+                    if ($clean === $data->answertext) {
+                        $newitemid = $data->id;
+                    }
+                }
+            }
+
+            // If we haven't found the newitemid, something has gone really wrong, question in DB
+            // is missing answers, exception
+            if (!$newitemid) {
+                $info = new stdClass();
+                $info->filequestionid = $oldquestionid;
+                $info->dbquestionid   = $newquestionid;
+                $info->answer         = $data->answertext;
+                throw new restore_step_exception('error_question_answers_missing_in_db', $info);
+            }
+        }
+        // Create mapping (we'll use this intensively when restoring question_states. And also answerfeedback files)
+        $this->set_mapping('question_answer', $oldid, $newitemid);
+    }
+
+    
 }
