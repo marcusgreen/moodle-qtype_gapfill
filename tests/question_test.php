@@ -93,7 +93,7 @@ class qtype_gapfill_question_test extends UnitTestCase {
     }
     public function test_get_correct_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-        $this->assertEquals($question->get_correct_response(), array('answer'=>'cat mat'));
+        $this->assertEquals($question->get_correct_response(), array('p1'=>'cat', 'p2'=>'mat'));
     }
 
     public function test_get_validation_error() {
