@@ -8,16 +8,16 @@
     </category>
   </question>
 
-<!-- question: 18  -->
+<!-- question: 5  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces.  Enter 1 into the gap for the first try to see the hints.</span></p>
+      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces.  Enter 1 into the gap for the first try to see the hints.</span></p>
 <p><span style="font-size: medium;">Make the following php code print out the string "cat"</span></p>
 <p><span style="font-size: medium;">$ar= array('cat','mat');</span><br /><span style="font-size: medium;">print $ar[{0}];</span></p>
-<p><span style="font-size: medium;"> </span></p>]]></text>
+<p><span style="font-size: medium;"> </span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -39,7 +39,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
-    <correctfeedback format="unknown">
+    <correctfeedback format="html">
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
@@ -60,15 +60,15 @@
     </hint>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 6  -->
   <question type="gapfill">
     <name>
       <text>CatMatDD</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this </p>
+      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this </p>
 <p>The [cat] sat on the [mat]</p>
-<p>Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser. </p>
+<p>Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser. </p>
 <p>Drag the correct words into the gaps.</p>
 <p>The {cat} sat on the {mat}</p>]]></text>
     </questiontext>
@@ -94,23 +94,11 @@
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>dog</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>hat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
     <delimitchars>{}</delimitchars>
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
-    <correctfeedback format="unknown">
+    <correctfeedback format="html">
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
@@ -125,12 +113,12 @@
       <clearwrong/>
     </hint>
     <hint format="html">
-      <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat.  The show number of correct responses option is not ticked for this.</p>]]></text>
+      <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat.  The show number of correct responses option is not ticked for this.</p>]]></text>
       <clearwrong/>
     </hint>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 7  -->
   <question type="gapfill">
     <name>
       <text>CatMatDropDown</text>
@@ -161,29 +149,11 @@
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>dog</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>hat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>rug</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
     <delimitchars>[]</delimitchars>
     <answerdisplay>dropdown</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
-    <correctfeedback format="unknown">
+    <correctfeedback format="html">
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
@@ -202,7 +172,7 @@
     </hint>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 8  -->
   <question type="gapfill">
     <name>
       <text>CatMatGapCaseSensitive</text>
@@ -237,7 +207,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>1</casesensitive>
     <noduplicates>1</noduplicates>
-    <correctfeedback format="unknown">
+    <correctfeedback format="html">
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
@@ -248,7 +218,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 17  -->
+<!-- question: 9  -->
   <question type="gapfill">
     <name>
       <text>CatMatGapfill</text>
@@ -283,7 +253,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
-    <correctfeedback format="unknown">
+    <correctfeedback format="html">
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
@@ -294,15 +264,62 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 11  -->
+  <question type="gapfill">
+    <name>
+      <text>multiwordanswers</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">This illustrates answers containing more than one word</p>
+<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">The answer is "the black cat sat on the soft mat"</p>
+<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">The [black cat] sat on the [soft mat]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>gapfill</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>black cat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>soft mat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>gapfill</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 10  -->
   <question type="gapfill">
     <name>
       <text>OlympicMedals</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses  using the boolean option. So here it has been entered as [gold|silver|bronze] . Here is the question.</p>
+      <text><![CDATA[<p>The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses  using the boolean option. So here it has been entered as [gold|silver|bronze] . Here is the question.</p>
 <p>What are the medals that can be won in the olympic games?</p>
-<p>Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three. </p>
+<p>Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three. </p>
 <p>{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
