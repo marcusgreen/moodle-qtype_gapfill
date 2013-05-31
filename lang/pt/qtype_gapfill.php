@@ -52,7 +52,7 @@ $string['questionsmissing']='Você não incluiu todos os campos em seu texto da 
 
 $string['delimitchars_help']='Altera os caracteres que demarcam um campo dos pre-definidos [], útil para perguntas sobre linguagens de programação';
 $string['answerdisplay']='Mostrar Repostas';
-$string['answerdisplay_help'] = 'Dragdrop shows a list of words that can be dragged into the gaps, gapfill shows gaps with no word options, dropdown shows the same list of correct (and possibly incorrect) answers for each field';
+$string['answerdisplay_help'] = "Arrastar&Largar mostra uma lista de palavras que podem ser arrastadas para os espaços em branco, o preenchimento de espaço em branco mostra espaços sem opções de palavra, o menu suspenso mostra a mesma lista de respostas corretas (e possivelmente incorretas) para cada campo";
 $string['moreoptions']='More Options.';
 $string['pleaseenterananswer']='Por favor introduza a resposta';
 $string['wronganswers']='Respostas erradas.';
