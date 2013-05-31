@@ -1,4 +1,4 @@
-Gapfill question type for Moodle 
+Gapfill question type for Moodle V 1.1
 
 A simpler Cloze question type that only supports fill the the blank type questions. 
 Teacher can define the question with square braces to define the missing words. For example
@@ -11,8 +11,8 @@ drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created under Moodle 2.2 and tested with 2.3 and 2.4 It will not work with versions of 
-moodle prior to 2.1.
+This question type was created and tested under Moodle 2.5. It will not work with versions of 
+moodle prior to 2.1 but it will probably work with versions between 2.1 and 2.5.
 
 Place the files in a directory 
 
