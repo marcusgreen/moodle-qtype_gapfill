@@ -25,7 +25,6 @@
  * @subpackage gapfill
  */
 
-$string['addinggapfill']='Adding Gap Fill';
 $string['casesensitive']='Case Sensitive';
 $string['casesensitive_help']='When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
 $string['noduplicates']='No Duplicates';
