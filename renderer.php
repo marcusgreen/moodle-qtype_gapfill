@@ -146,8 +146,20 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    public function specific_feedback(question_attempt $qa) {
-        return $this->combined_feedback($qa);
+     public function specific_feedback(question_attempt $qa) {
+         
+        return $this->combined_feedback($qa).$this->get_duplicate_feedback($qa);
+    }
+    public function get_duplicate_feedback($qa){
+        $question= $qa->get_question();
+        if ($question->noduplicates==0 || ($qa->get_fraction()==0)){
+            return;
+        }
+        $response = $qa->get_last_qt_data();
+          $au = array_unique($response);
+          if(sizeof($au)!= sizeof($response)){
+                  return get_string('duplicatepartialcredit','qtype_gapfill');
+           }
     }
 
     public function get_answers($answerdisplay, $answers) {
@@ -174,7 +186,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if (is_null($a->outof)) {
             return '';
         } else {
-            return get_string('yougotnrightcount', 'qtype_gapfill', $a);
+            return get_string('yougotnrightcount', 'qtype_gapfill',$a);
         }
     }
 
