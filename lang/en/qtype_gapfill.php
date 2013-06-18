@@ -35,7 +35,7 @@ $string['delimitchars']='Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
-$string['gapfill'] = 'Cloze Gapfill.';
+$string['gapfill'] = 'Gapfill.';
 
 $string['displaygapfill'] = 'gapfill';
 $string['displaydropdown'] = 'dropdown';
@@ -55,6 +55,10 @@ $string['moreoptions']='More Options.';
 $string['pleaseenterananswer']='Please enter an answer.';
 $string['wronganswers']='Wrong answers.';
 $string['wronganswers_help']='List of incorrect words separated by commas, only applies in dragdrop/dropdowns mode';
-$string['yougotnrightcount'] = 'Your number of correct answers is {$a->num}.';
+$string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
+$string['duplicatepartialcredit'] = 'Credit is partial because you have duplicate answers';
+
+
+
 
 
