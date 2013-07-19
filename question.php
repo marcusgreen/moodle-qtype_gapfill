@@ -42,6 +42,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $correctfeedbackformat;
     public $partiallycorrectfeedbackformat;
     public $incorrectfeedbackformat;
+    public $fraction;
 
     /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
     public $casesensitive;
@@ -245,13 +246,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function grade_response(array $response) {
-
         $response = $this->discard_duplicates($response);
-
         list($right, $total) = $this->get_num_parts_right($response);
-        $fraction = $right / $total;
-
-        $grade = array($fraction, question_state::graded_state_for_fraction($fraction));
+        $this->fraction = $right / $total;
+        $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
 
@@ -309,7 +307,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          * i.e. [/div]
          * $pattern =preg_quote($pattern,'/');
          */
-
         $pattern = str_replace('/', '\/', $pattern);
 
         $regexp = '/^' . $pattern . '$/u';
@@ -321,6 +318,44 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         if (preg_match($regexp, trim($string))) {
             return true;
         }
+    }
+
+    public function get_marked_gaps(question_attempt $qa, question_display_options $options) {
+        $marked_gaps = array();
+        $question = $qa->get_question();
+        $correct_gaps = array();
+        foreach ($question->textfragments as $place => $fragment) {
+            if ($place < 1) {
+                continue;
+            }
+            $fieldname = $question->field($place);
+            $rightanswer = $question->get_right_choice_for($place);
+            if (($options->correctness) or ($options->numpartscorrect)) {
+                $response = $qa->get_last_qt_data();
+
+                if (array_key_exists($fieldname, $response)) {
+                    if ($question->is_correct_response($response[$fieldname], $rightanswer)) {
+                        $marked_gaps[$fieldname]['value'] = $response[$fieldname];
+                        $marked_gaps[$fieldname]['fraction'] = 1;
+                        $correct_gaps[] = $response[$fieldname];
+                    } else {
+                        $marked_gaps[$fieldname]['value'] = $response[$fieldname];
+                        $marked_gaps[$fieldname]['fraction'] = 0;
+                    }
+                }
+            }
+        }
+        $arr_unique = array_unique($correct_gaps);
+        $arr_duplicates = array_diff_assoc($correct_gaps, $arr_unique);
+        foreach ($marked_gaps as $fieldname => $gap) {
+
+            if (in_array($gap['value'], $arr_duplicates)) {
+                $marked_gaps[$fieldname]['duplicate'] = 'true';
+            } else {
+                $marked_gaps[$fieldname]['duplicate'] = 'false';
+            }
+        }
+        return $marked_gaps;
     }
 
 }
