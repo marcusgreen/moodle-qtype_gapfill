@@ -26,10 +26,13 @@ defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
+    public $correct_responses = array();
+    public $marked_responses = array();
+
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
 
-        $question = $qa->get_question();
+          $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
 
@@ -41,55 +44,42 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
-        $fields = array();
 
         $answers = $qa->get_step(0)->get_qt_var('_allanswers');
-        $place_count = count($question->places);
-        $counter = 0;
         $output = '';
         if ($question->answerdisplay == "dragdrop") {
-            $ddclass = "draggable answers";
+            $ddclass = " draggable answers ";
             $answers = $this->get_answers('dragdrop', $answers);
-            foreach ($answers as $key => $value) {
+            foreach ($answers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
             $output.="</br></br>";
         }
-
+        $marked_gaps = $question->get_marked_gaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
-                $output.=$this->embedded_element($qa, $place, $options);
+                $output.=$this->embedded_element($qa, $place, $options, $marked_gaps);
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $output .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question',
-                    'questiontext', $question->id);
+            $output .= $question->format_text($fragment, $question->questiontextformat,
+                    $qa, 'question', 'questiontext', $question->id);
         }
+
+        print ("<br/>");
         if ($qa->get_state() == question_state::$invalid) {
             $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' =>
-                $output)), array('class' => 'validationerror'));
+                                $output)), array('class' => 'validationerror'));
         }
         return $output;
     }
 
-    public function embedded_element(question_attempt $qa, $place, question_display_options $options) {
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $marked_gaps) {
 
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
-        $fraction = 0;
         $question = $qa->get_question();
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
-        $answer = $qa->get_last_qt_var('answer');
-        $answer = trim($answer);
-        $size = "0"; /* width of the field to be filled in */
-        if ($currentanswer == null) {
-            if ($answer != null) {
-                /* if fill in correct answer is pressed during question preview */
-                $answer_parts = explode(' ', $answer);
-                /* minus 1 because explode creates array with offset 0, places has offset of 1 */
-                $currentanswer = $answer_parts[$place - 1];
-            }
-        }
 
         $rightanswer = $question->get_right_choice_for($place);
         $size = strlen($rightanswer);
@@ -97,35 +87,34 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
         $inputclass = "";
-
         if (($options->correctness) or ($options->numpartscorrect)) {
+            $gap = $marked_gaps['p' . $place];
+            $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
-            if (array_key_exists($fieldname, $response)) {
-                $fraction = 0;
+            if ($fraction == 1) {
+                array_push($this->correct_responses, $response[$fieldname]);
                 $feedbackimage = $this->feedback_image($fraction);
-                /* sets the field background to a different colour if the answer is right */
+                /* sets the field background to green or yellow if fraction is 1 */
+                $inputclass = $this->get_input_class($marked_gaps, $qa, $fraction, $fieldname);
+            } else {
+                /* set background to red and image to cross if fraction is 0  */
+                $feedbackimage = $this->feedback_image($fraction);
                 $inputclass = $this->feedback_class($fraction);
-
-                if ($question->is_correct_response($response[$fieldname], $rightanswer)) {
-                    $fraction = 1;
-                    $feedbackimage = $this->feedback_image($fraction);
-                    /* sets the field background to a different colour if the answer is wrong */
-                    $inputclass = $this->feedback_class($fraction);
-                }
             }
         }
 
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
-        $style = "";
+
         $inputattributes = array(
             'type' => "text",
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'class' => 'droppable ' . $inputclass,
+            'class' => 'droppable ' . $inputclass
         );
+
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
             $readonly = array('disabled' => 'true');
@@ -138,28 +127,59 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['class'] = $inputclass;
             $answers = $qa->get_step(0)->get_qt_var('_allanswers');
             $selectoptions = $this->get_answers('dropdown', $answers);
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
-                    $inputattributes) . ' ' . $feedbackimage;
+            $selecthtml = html_writer::select($selectoptions, $inputname,
+                    $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {
             return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
         }
     }
 
-     public function specific_feedback(question_attempt $qa) {
-         
-        return $this->combined_feedback($qa).$this->get_duplicate_feedback($qa);
+    /**
+     * 
+     * @param array $marked_gaps
+     * @param question_attempt $qa
+     * @param type $fraction either 0 or 1 for correct or incorrect
+     * @param type $fieldname p1, p2, p3 etc
+     * @return string set the feedback class to green unless noduplicates is set
+     * then check if this is a duplicated value and if it is set the background
+     * to yellow.
+     */
+    public function get_input_class(array $marked_gaps, question_attempt $qa, $fraction, $fieldname) {
+        $response = $qa->get_last_qt_data();
+        $question = $qa->get_question();
+        $inputclass = $this->feedback_class($fraction);
+        foreach ($marked_gaps as $gap) {
+            if ($response[$fieldname] == $gap['value']) {
+                if ($gap['duplicate'] == 'true') {
+                    if ($question->noduplicates == 1) {
+                        $inputclass = ' correctduplicate';
+                    }
+                }
+            }
+        }
+        return $inputclass;
     }
-    public function get_duplicate_feedback($qa){
-        $question= $qa->get_question();
-        if ($question->noduplicates==0 || ($qa->get_fraction()==0)){
+
+    public function specific_feedback(question_attempt $qa) {
+        return $this->combined_feedback($qa) . $this->get_duplicate_feedback($qa);
+    }
+
+    /**
+     * @param type questionattemtp $qa
+     * @return type string
+     * if noduplicates is set check if any responses 
+     * are duplicate values
+     */
+    public function get_duplicate_feedback(question_attempt $qa) {
+        $question = $qa->get_question();
+        if ($question->noduplicates == 0 ) {
             return;
         }
-        $response = $qa->get_last_qt_data();
-          $au = array_unique($response);
-          if(sizeof($au)!= sizeof($response)){
-                  return get_string('duplicatepartialcredit','qtype_gapfill');
-           }
+        $arr_unique = array_unique($this->correct_responses);
+        if (count($arr_unique) != count($this->correct_responses)) {
+            return get_string('duplicatepartialcredit', 'qtype_gapfill');
+        }
     }
 
     public function get_answers($answerdisplay, $answers) {
@@ -186,7 +206,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if (is_null($a->outof)) {
             return '';
         } else {
-            return get_string('yougotnrightcount', 'qtype_gapfill',$a);
+            return get_string('yougotnrightcount', 'qtype_gapfill', $a);
         }
     }
 
