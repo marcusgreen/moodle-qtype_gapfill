@@ -99,7 +99,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     /**
      * Pull out a comma delimited string with the 
-     * wrong answers in it from question->options->answers
+     * wrong answers (distractors) in it from question->options->answers
      * @param type $question
      * @return type string
      */
