@@ -192,6 +192,12 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
 
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
+
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
@@ -200,6 +206,12 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         // Save a  correct response.
         $this->process_submission(array('p0' => 'cat', 'p1' => 'mat'));
         $this->check_step_count(2);
+
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         $this->check_current_state(question_state::$todo);
         // Submit saved response.
@@ -222,7 +234,7 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
          * they cannot get 3 marks by entereing gold, gold and gold
          */
 
-        /*Create a gapfill question and set noduplicates to true*/
+        /* Create a gapfill question and set noduplicates to true */
         $questiontext = '
 What are the colors of the Olympic medals?
 
@@ -240,6 +252,12 @@ What are the colors of the Olympic medals?
         $this->check_current_state(question_state::$todo);
         $this->check_step_count(1);
 
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
+
         // Save a  correct response.
         $this->process_submission($submission);
         $this->check_current_state(question_state::$todo);
@@ -252,6 +270,12 @@ What are the colors of the Olympic medals?
 
         $this->process_submission($submission);
         $this->check_step_count(3);
+
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         $gapfill->grade_response($submission);
         $this->check_current_mark(2);
