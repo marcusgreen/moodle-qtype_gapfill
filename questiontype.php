@@ -58,8 +58,8 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
-                                $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction,
+                        $a->feedback, $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -88,10 +88,10 @@ class qtype_gapfill extends question_type {
                 $counter++;
             }
         }
+
         /* Will put empty places '' where there is no text content.
          * l for left delimiter r for right delimiter
          */
-
         $l = substr($question->delimitchars, 0, 1);
         $r = substr($question->delimitchars, 1, 1);
 
@@ -115,20 +115,28 @@ class qtype_gapfill extends question_type {
      * Does not allow setting any other value per space/field at the moment
      */
     public function save_question($question, $form) {
-        /*
-          l for left delimiter r for right delimiter
-          this should be refactored into a separate method
-          for use also in initialsing the question
+        $gaps = $this->get_gaps($question, $form->delimitchars, $form->questiontext['text']);
+        /* count the number of gaps
+         * this is used to set the maximum
+         * value for the whole question. Value for
+         * each gap can be only 0 or 1
          */
-        $l = substr($form->delimitchars, 0, 1);
-        $r = substr($form->delimitchars, 1, 1);
-
-        $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
-        preg_match_all($fieldregex, $form->questiontext['text'], $matches);
-
-        /* count the number of fields */
-        $form->defaultmark = count($matches[1]);
+        $form->defaultmark = count($gaps);
         return parent::save_question($question, $form);
+    }
+
+    public function get_gaps($question, $delimitchars, $questiontext ) {
+        /* l for left delimiter r for right delimiter
+         * defaults to []
+         * e.g. l=[ and r=] where question is
+         * The [cat] sat on the [mat]
+         */
+        $l = substr($delimitchars, 0, 1);
+        $r = substr($delimitchars, 1, 1);
+        $fieldregex = '/.*?\\' . $l . '(.*?)\\' . $r . '/';
+        $matches = array();
+        preg_match_all($fieldregex, $questiontext, $matches);
+        return $matches[1];
     }
 
     /**
@@ -140,24 +148,47 @@ class qtype_gapfill extends question_type {
         /* Save the extra data to your database tables from the
           $question object, which has all the post data from editquestion.html */
 
-        /* left and right delimiters pulled in from the
-         * delimitchars field in the question_gapfill table
-         */
-        $l = substr($question->delimitchars, 0, 1);
-        $r = substr($question->delimitchars, 1, 1);
-
-        $fieldregex = '/.*?\\' . $l . '(.*?)\\' . $r . '/';
-        $matches = array();
-        preg_match_all($fieldregex, $question->questiontext, $matches);
-
-        /* just the field contents */
-        $answerwords = $matches[1];
-
+        $answerwords = $this->get_gaps($question, $question->delimitchars, $question->questiontext);
+        /* answerwords are the text within gaps */
         $answerfields = $this->get_answer_fields($answerwords, $question);
         global $DB;
 
         $context = $question->context;
         // Fetch old answer ids so that we can reuse them.
+        $this->update_question_answers($question, $answerfields);
+
+        $options = $DB->get_record('question_gapfill', array('question' => $question->id));
+        $this->update_question_gapfill($question, $options, $context);
+        $this->save_hints($question, true);
+        return true;
+    }
+
+    public function update_question_gapfill($question, $options, $context) {
+        global $DB;
+        $options = $DB->get_record('question_gapfill', array('question' => $question->id));
+        if (!$options) {
+            $options = new stdClass();
+            $options->question = $question->id;
+            $options->wronganswers = '';
+            $options->correctfeedback = '';
+            $options->partiallycorrectfeedback = '';
+            $options->incorrectfeedback = '';
+            $options->answerdisplay = '';
+            $options->delimitchars = '';
+            $options->casesensitive = '';
+            $options->noduplicates = '';
+            $options->id = $DB->insert_record('question_gapfill', $options);
+        }
+        $options->delimitchars = $question->delimitchars;
+        $options->answerdisplay = $question->answerdisplay;
+        $options->casesensitive = $question->casesensitive;
+        $options->noduplicates = $question->noduplicates;
+        $options = $this->save_combined_feedback_helper($options, $question, $context, true);
+        $DB->update_record('question_gapfill', $options);
+    }
+
+    public function update_question_answers($question, array $answerfields) {
+        global $DB;
         $oldanswers = $DB->get_records('question_answers', array('question' => $question->id), 'id ASC');
 
         // Insert all the new answers.
@@ -187,33 +218,6 @@ class qtype_gapfill extends question_type {
         foreach ($oldanswers as $oa) {
             $DB->delete_records('question_answers', array('id' => $oa->id));
         }
-
-        $options = $DB->get_record('question_gapfill', array('question' => $question->id));
-        if (!$options) {
-            $options = new stdClass();
-            $options->question = $question->id;
-            $options->wronganswers = '';
-            $options->correctfeedback = '';
-            $options->partiallycorrectfeedback = '';
-            $options->incorrectfeedback = '';
-            $options->answerdisplay = '';
-            $options->delimitchars = '';
-            $options->casesensitive = '';
-            $options->noduplicates='';
-            $options->id = $DB->insert_record('question_gapfill', $options);
-        }
-        $options->delimitchars = $question->delimitchars;
-        $options->answerdisplay = $question->answerdisplay;
-        $options->casesensitive = $question->casesensitive;
-
-        $options->noduplicates = $question->noduplicates;
-        $options = $this->save_combined_feedback_helper($options, $question, $context, true);
-
-        $DB->update_record('question_gapfill', $options);
-
-        $this->save_hints($question, true);
-
-        return true;
     }
 
     /**
