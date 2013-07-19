@@ -42,7 +42,10 @@ $(function() {
         hoverClass: 'active',
         drop: function(event, ui) {
             this.value = $(ui.draggable).text();
-            $(ui.draggable).css("display","none");
+           /* $(ui.draggable).css("display","none");*/
+            $(this).css("background-color","white");
+            
+            
         }
     });
 });
