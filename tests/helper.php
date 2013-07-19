@@ -46,6 +46,16 @@ class qtype_gapfill_test_helper extends question_test_helper {
         /* just the field contents */
         $answerwords = $matches[1];
 
+        $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
+        $found = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
+        $question->textfragments[0] = array_shift($found);
+        $i = 1;
+
+        while (!empty($found)) {
+            $question->textfragments[$i] = array_shift($found);
+            $i += 1;
+        }
+
         $question->places = array();
         $counter = 1;
 
