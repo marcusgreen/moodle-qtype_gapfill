@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'noduplicates');
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'noduplicates', 'disableregex');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -177,12 +177,15 @@ class qtype_gapfill extends question_type {
             $options->delimitchars = '';
             $options->casesensitive = '';
             $options->noduplicates = '';
+            /*mavg*/
+            $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
+        $options->disableregex = $question->disableregex;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
