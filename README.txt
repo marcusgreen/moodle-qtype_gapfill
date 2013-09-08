@@ -19,3 +19,4 @@ Where moodle is webroot for your install.
 
 Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
 Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used (see help)
+Version 1.3 toggle regex for plain string compare. Useful for math, html and programming language questions
