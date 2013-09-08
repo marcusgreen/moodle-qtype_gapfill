@@ -83,6 +83,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
 
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
+        
+        
+        
+        $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
+
+        $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
+
+        $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
+
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
