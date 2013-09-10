@@ -80,6 +80,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'delimitchars' => '[]',
                     'casesensitive' => false,
                     'noduplicates' => '1',
+                    'disableregex'=>'0',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
