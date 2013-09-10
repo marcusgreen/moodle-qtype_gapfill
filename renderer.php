@@ -66,7 +66,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     $qa, 'question', 'questiontext', $question->id);
         }
 
-        print ("<br/>");
+        $output.="</br>";
+
         if ($qa->get_state() == question_state::$invalid) {
             $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' =>
                                 $output)), array('class' => 'validationerror'));
