@@ -57,3 +57,6 @@ $string['wronganswers']='Distractors.';
 $string['wronganswers_help']='List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
 $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
 $string['duplicatepartialcredit'] = 'Credit is partial because you have duplicate answers';
+$string['disableregex'] = 'Disable Regex';
+$string['disableregex']='Disable Regex';
+$string['disableregex_help'] = 'Disable regular expression processing and perform a standard string comparison. This can be useful for html quesitons where the angle brackets (&lt; and &gt;) should be treated literall and maths where symbols such as * should be seen literally rather than as expressions';
