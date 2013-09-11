@@ -59,4 +59,4 @@ $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->
 $string['duplicatepartialcredit'] = 'Credit is partial because you have duplicate answers';
 $string['disableregex'] = 'Disable Regex';
 $string['disableregex']='Disable Regex';
-$string['disableregex_help'] = 'Disable regular expression processing and perform a standard string comparison. This can be useful for html quesitons where the angle brackets (&lt; and &gt;) should be treated literall and maths where symbols such as * should be seen literally rather than as expressions';
+$string['disableregex_help'] = 'Disable regular expression processing and perform a standard string comparison. This can be useful for html quesitons where the angle brackets (&lt; and &gt;) should be treated literally and maths where symbols such as * should be seen literally rather than as expressions';
