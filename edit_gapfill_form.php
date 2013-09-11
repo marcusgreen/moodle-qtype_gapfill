@@ -84,8 +84,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
 
-        $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
-
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
 
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
