@@ -35,13 +35,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
           $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
-
-            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.4.2.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.9.1.min.js');
+            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
 
@@ -81,8 +76,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $question = $qa->get_question();
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
+        $currentanswer = htmlspecialchars_decode($currentanswer);
+
 
         $rightanswer = $question->get_right_choice_for($place);
+
         $size = strlen($rightanswer);
 
         /* $options->correctness is really about it being ready to mark, */
@@ -183,6 +181,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
+    /*used to populate values that can be dragged into gaps, and that appear in dropdows */
     public function get_answers($answerdisplay, $answers) {
         // Turn string into an array.
         $answers = explode(",", $answers);
