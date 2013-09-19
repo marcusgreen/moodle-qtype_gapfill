@@ -18,7 +18,7 @@
  * Contains the helper class for the select missing words question type tests.
  *
  * @package    qtype
- * @copyright  2012 Marcus Green
+ * @copyright  2013 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
