@@ -172,7 +172,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $answergiven = strtolower($answergiven);
             $rightanswer = strtolower($rightanswer);
         }
-        if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
+        if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
             return true;
         } else {
             return false;
@@ -199,7 +199,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $answergiven = strtolower($answergiven);
                 $rightanswer = strtolower($rightanswer);
             }
-            if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
+            if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
                 $numright+=1;
             }
         }
@@ -223,7 +223,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $answergiven = strtolower($answergiven);
                 $rightanswer = strtolower($rightanswer);
             }
-            if (!$this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
+            if (!$this->compare_response_with_answer($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
                 $response[$this->field($place)] = '';
             }
         }
@@ -270,7 +270,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                     continue;
                 }
                 $resp = $response[$fieldname];
-                if (!$this->compare_string_with_wildcard($resp, $rcfp, $this->casesensitive, $this->disableregex)) {
+                if (!$this->compare_response_with_answer($resp, $rcfp, $this->casesensitive, $this->disableregex)) {
                     $lastwrongindex = $i;
                     $finallyright = false;
                 } else {
@@ -295,23 +295,21 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
-    /* borrowed directly from the shortanswer question */
-
-    public function compare_string_with_wildcard($string, $pattern, $casesensitive, $disableregex = false) {
+    public function compare_response_with_answer($string, $response, $casesensitive, $disableregex = false) {
         /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
-            $pattern = htmlspecialchars_decode($pattern);
+            $response = htmlspecialchars_decode($response);
             /* strcmp is case sensitive. If case sensitive is off both string and
              * pattern will come into function already converted to lower case with
              * strtolower
              */
-            if (strcmp(trim($string), $pattern) == 0) {
+            if (strcmp(trim($string), $response) == 0) {
                 return true;
             } else {
                 return false;
             }
         }
-        $pattern = str_replace('/', '\/', $pattern);
+        $pattern = str_replace('/', '\/', $response);
         $regexp = '/^' . $pattern . '$/u';
 
         // Make the match insensitive if requested to, not sure this is necessary.
