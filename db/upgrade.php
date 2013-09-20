@@ -68,12 +68,12 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
             'noduplicates' int(1) default 1 NULL ");
         $rs->close();
     }
-    if ($oldversion == 2006082505) {
-        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 af
-            ter casesensitive   ";
+    if ($oldversion == 2006082507) {
+        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 
+		after casesensitive   ";
         $DB->change_database_structure($sql);
     }
-    if ($oldversion == 2006082509) {
+    if ($oldversion < 2006082510) {
           $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column disableregex tinyint(1)
             default 0 after noduplicates   ";
             $DB->change_database_structure($sql);
