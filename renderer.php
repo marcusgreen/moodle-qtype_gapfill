@@ -78,7 +78,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
 
-
         $rightanswer = $question->get_right_choice_for($place);
 
         $size = strlen($rightanswer);
