@@ -1,368 +1,169 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<quiz>
-<!-- question: 0  -->
-  <question type="category">
-    <category>
-        <text>$course$/Default for GFT2</text>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Moodle Quiz XHTML Export</title>
+<style>
+   body {
+     font-family: Verdana, Helvetica, Sans-Serif;
+     background-color: #fff;
+     color: #000;
+   }
+ 
+   .question {
+     border: 1px solid #ddd;
+     margin: 5px;
+     padding: 3px;
+     }
+ 
+   .question h3 {
+     font-weight: normal;
+     font-size: 125%;
+   }
+ 
+   .question ul {
+     list-style-type: none;
+   }
+ 
+ </style>
+ 
+</head>
+<body>
+<form action="...REPLACE ME..." method="post">
 
-    </category>
-  </question>
 
-<!-- question: 5  -->
-  <question type="gapfill">
-    <name>
-      <text>Alternative_Delimiters</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces.  Enter 1 into the gap for the first try to see the hints.</span></p>
+<!-- question: 7  name: Alternative_Delimiters -->
+<div class="question">
+<h3>Alternative_Delimiters</h3>
+<p class="questiontext"><p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces.  Enter 1 into the gap for the first try to see the hints.</span></p>
 <p><span style="font-size: medium;">Make the following php code print out the string "cat"</span></p>
 <p><span style="font-size: medium;">$ar= array('cat','mat');</span><br /><span style="font-size: medium;">print $ar[{0}];</span></p>
-<p><span style="font-size: medium;"> </span></p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>{}</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>0</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>{}</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Hint:What number do array places count from?</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>Hint:Remember that php arrays count from zero not one (like most programming languages)</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-  </question>
+<p><span style="font-size: medium;"> </span></p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
 
-<!-- question: 6  -->
-  <question type="gapfill">
-    <name>
-      <text>CatMatDD</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this </p>
+
+
+<!-- question: 10  name: CaseSensitive -->
+<div class="question">
+<h3>CaseSensitive</h3>
+<p class="questiontext"><p>The complete phrase is "The cat sat on the mat", This version case sensitivity checked so the words cat and mat must be entered as Cat and Mat.</p>
+<p>The [Cat] sat on the [Mat]</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
+
+
+
+<!-- question: 14  name: Disable RegEx for Math, HTML and Code questions -->
+<div class="question">
+<h3>Disable RegEx for Math, HTML and Code questions</h3>
+<p class="questiontext"><p><span style="font-size: medium;">This question has disabled regular expressions. This means that special characters used in regular expressions such as &lt; / * . etc  will have no meaning which can be useful when creating questions for maths and programming or HTML (which of course uses the &lt; and &gt; characters extensively).</span></p>
+<p><span style="font-family: courier new,courier,monospace; font-size: medium;">2[+]2=4</span></p>
+<p><span style="font-size: medium;">The option for disable regex can be found in the More Options in the question editing form.</span></p>
+<p><span style="font-size: medium;">Complete the syntax for this for loop in PHP</span></p>
+<p><span style="font-size: medium; font-family: courier new,courier,monospace;">for($i=0;$i[&lt;]10;$++){</span></p>
+<p><span style="font-size: medium; font-family: courier new,courier,monospace;">print($i);</span></p>
+<p><span style="font-size: medium; font-family: courier new,courier,monospace;">}</span></p>
+<p> </p>
+<p> </p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
+
+
+
+<!-- question: 8  name: DragAndDrop -->
+<div class="question">
+<h3>DragAndDrop</h3>
+<p class="questiontext"><p>The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this</p>
 <p>The [cat] sat on the [mat]</p>
-<p>Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser. </p>
+<p>Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser.</p>
 <p>Drag the correct words into the gaps.</p>
-<p>The {cat} sat on the {mat}</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>dragdrop</answerdisplay>
-    <delimitchars>{}</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>{}</delimitchars>
-    <answerdisplay>dragdrop</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect. You need to brush up on your knowledge of feelines in the domestic sphere.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Hint1: The answer refers to a feline and a floor covering. Note how the incorrect answers are cleared after you press the try again button. This hint DOES show the number of correct answers and so each field has an indicator of correctness or incorrectness via tick/cross colour</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat.  The show number of correct responses option is not ticked for this.</p>]]></text>
-      <clearwrong/>
-    </hint>
-  </question>
+<p>The {cat} sat on the {mat}</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
 
-<!-- question: 7  -->
-  <question type="gapfill">
-    <name>
-      <text>CatMatDropDown</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</p>
-<p>The [cat] sat on the [mat]</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>dropdown</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>dropdown</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Have another go. There is no indication of what answers are correct or incorrect because the show the number of correct responses box is not checked in hint 1.</p>]]></text>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>One last time. The Show the number of correct responses box was checked and so you have the background colour and symbols (tick/cross) to indicate which answers were correct.</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-  </question>
 
-<!-- question: 8  -->
-  <question type="gapfill">
-    <name>
-      <text>CatMatGapCaseSensitive</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat", This version case sensitivity checked so the words cat and mat must be entered as Cat and Mat.</p>
-<p>The [Cat] sat on the [Mat]</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>1</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>Cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>Mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>1</casesensitive>
-    <noduplicates>1</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-  </question>
 
-<!-- question: 9  -->
-  <question type="gapfill">
-    <name>
-      <text>CatMatGapfill</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat", This version has no prompts (i.e. no dragdrop or dropdowns displayed).</p>
-<p>The [cat] sat on the [mat]</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-  </question>
+<!-- question: 9  name: DropDowns -->
+<div class="question">
+<h3>DropDowns</h3>
+<p class="questiontext"><p>The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</p>
+<p>The [cat] sat on the [mat]</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
 
-<!-- question: 11  -->
-  <question type="gapfill">
-    <name>
-      <text>multiwordanswers</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">This illustrates answers containing more than one word</p>
+
+
+<!-- question: 11  name: Gapfill (no prompts) -->
+<div class="question">
+<h3>Gapfill (no prompts)</h3>
+<p class="questiontext"><p>The complete phrase is "The cat sat on the mat", This version has no prompts (i.e. no dragdrop or dropdowns displayed).</p>
+<p>The [cat] sat on the [mat]</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
+
+
+
+<!-- question: 12  name: Multi Word Answers -->
+<div class="question">
+<h3>Multi Word Answers</h3>
+<p class="questiontext"><p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">This illustrates answers containing more than one word</p>
 <p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">The answer is "the black cat sat on the soft mat"</p>
-<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">The [black cat] sat on the [soft mat]</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>black cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>soft mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-  </question>
+<p style="margin: 0px 0px 10px; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14.666666984558105px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">The [black cat] sat on the [soft mat]</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
 
-<!-- question: 10  -->
-  <question type="gapfill">
-    <name>
-      <text>OlympicMedals</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses  using the boolean option. So here it has been entered as [gold|silver|bronze] . Here is the question.</p>
+
+
+<!-- question: 15  name: RegularExpressions -->
+<div class="question">
+<h3>RegularExpressions</h3>
+<p class="questiontext"><p><span style="font-size: medium;">This question illustrates that following a letter with a question mark ? will make it optional. The following gap will accept colours, colour, colors and colors as correct answers, so allowing both US and UK spelling of the word. If you look at the source of this question this gap contains <span style="font-size: medium;">colou?rs?</span> </span></p>
+<p><span style="font-size: medium;">Red, Green and Blue are examples of {colou?rs?}</span></p>
+<p><span style="font-size: medium;">This gap illustrates how you can "escape" the special characters used in regular expressions such as the dollar sign by preceeding them with a backslash i.e. \$.  The correct answer for this gap is the $ symbol. <br /></span></p>
+<p><span style="font-size: medium;">The special character that indicates the start of a variable in PHP is the {\$} sign.</span></p>
+<p><span style="font-size: medium;">The HTML tag to start a paragraph is {\&lt;p\&gt;} (enter &lt;p&gt;)<br /></span></p>
+<p><span style="font-size: medium;"><span style="font-size: medium;">Note there is an option under more options to switch off regular expression for the whole question, but escaping is useful where you need some regex processing.<br /></span></span></p>
+<p><span style="font-size: medium;"><span style="font-size: medium;">You can ensure any spare spaces between words are ignored with \s</span></span></p>
+<p><span style="font-size: medium;"><span style="font-size: medium;">The correct answer here is black and white but it will accept the words with one or more spaces between them {black\s+and\s+white}. <br /></span></span></p>
+<p><span style="font-size: medium;"><span style="font-size: medium;">Moodle has two short answer question types that support regular expressions</span></span></p>
+<p><strong><span style="font-size: medium;"><span style="font-size: medium;">Preg</span></span></strong></p>
+<p><a href="http://docs.moodle.org/25/en/question/type/preg" target="_blank"><span style="font-size: medium;"><span style="font-size: medium;">http://docs.moodle.org/25/en/question/type/preg</span></span></a></p>
+<p><span style="font-size: medium;"><span style="font-size: medium;">and</span></span></p>
+<p><strong><span style="font-size: medium;"><span style="font-size: medium;">Regular Expression Short Answer</span></span></strong></p>
+<p><a href="https://moodle.org/plugins/view.php?plugin=qtype_regexp" target="_blank"><span style="font-size: medium;"><span style="font-size: medium;">https://moodle.org/plugins/view.php?plugin=qtype_regexp</span></span></a></p>
+<p> </p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
+
+
+
+<!-- question: 16  name: Troubleshooting -->
+<div class="question">
+<h3>Troubleshooting</h3>
+<p class="questiontext"><p>You can troubleshoot a question by clicking the "fill in correct responses" button in preview mode.</p>
+<p>This question does not [<span>work</span>] because there are hidden html tags within the field, you can view (and delete) the hidden div tags by clicking the HTML button on the editor bar.</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
+
+
+
+<!-- question: 13  name: ValuesInAnyOrder -->
+<div class="question">
+<h3>ValuesInAnyOrder</h3>
+<p class="questiontext"><p>The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the boolean option. So here it has been entered as [gold|silver|bronze] . Here is the question.</p>
 <p>What are the medals that can be won in the olympic games?</p>
-<p>Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three. </p>
-<p>{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>3.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>{}</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>{}</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct. Note how the actual mark matches the number of unique correct answers whatever the number of ticks is.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-  </question>
+<p>Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</p>
+<p>{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</p></p>
+<!-- export of gapfill type is not supported  -->
+</div>
 
-</quiz>
+
+
+<p class="submit">
+  <input type="submit" />
+</p>
+</form>
+</body>
+</html>
