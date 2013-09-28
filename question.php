@@ -296,7 +296,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function compare_response_with_answer($string, $response, $casesensitive, $disableregex = false) {
-        /*converts things like &lt; into <*/ 
+        /*converts things like &lt; into <*/
         $response = htmlspecialchars_decode($response);
         /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
