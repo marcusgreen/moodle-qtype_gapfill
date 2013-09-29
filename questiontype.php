@@ -46,20 +46,28 @@ class qtype_gapfill extends question_type {
         parent::get_question_options($question);
     }
 
-    protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
+    /* called when previewing or at runtime in a quiz */
 
+    protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
         }
         foreach ($questiondata->options->answers as $a) {
+            /* if this is a wronganswer/distractor strip any
+             * backslahses, this allows escaped backslashes to
+             * be used i.e. \, and not displayed in the draggable
+             * area
+             */
+            if (strpos($a->fraction, '1') == false) {
+                $a->answer = stripslashes($a->answer);
+            }
             array_push($question->allanswers, $a->answer);
-
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction,
-                        $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback,
+                        $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -125,7 +133,7 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-    public function get_gaps($question, $delimitchars, $questiontext ) {
+    public function get_gaps($question, $delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
@@ -177,7 +185,7 @@ class qtype_gapfill extends question_type {
             $options->delimitchars = '';
             $options->casesensitive = '';
             $options->noduplicates = '';
-            /*mavg*/
+            /* mavg */
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
@@ -234,8 +242,8 @@ class qtype_gapfill extends question_type {
      * @return type array
      */
     public function get_answer_fields(array $answerwords, $question) {
-
         $answerfields = array();
+
         foreach ($answerwords as $key => $value) {
             $answerfields[$key]['value'] = $value;
             $answerfields[$key]['fraction'] = 1;
@@ -244,9 +252,12 @@ class qtype_gapfill extends question_type {
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers != '') {
                 /* remove any trailing commas */
-                $question->wronganswers = rtrim($question->wronganswers, ',');
-                $wronganswers = explode(",", $question->wronganswers);
 
+                $question->wronganswers = rtrim($question->wronganswers, ',');
+                /* this allows escaped commas in wrong answers, i.e. \, */
+                $regex = '/(.*?[^\\\\](\\\\\\\\)*?);/';
+                preg_match_all($regex, $question->wronganswers . ';', $wronganswers);
+                $wronganswers = $wronganswers[0];
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
                     $wronganswerfields[$key]['fraction'] = 0;
