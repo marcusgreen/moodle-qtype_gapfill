@@ -113,13 +113,13 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $wronganswers = "";
         if (property_exists($question, 'options')) {
             foreach ($question->options->answers as $a) {
-                /* if it doesn't contain a 1 it must be zero */
+                /* if it doesn't contain a 1 it must be zero and so be a wrong answer */
                 if (!(strpos($a->fraction, '1') !== false)) {
                     $wronganswers.=$a->answer . ",";
                 }
             }
         }
-        return $wronganswers = rtrim($wronganswers, ',');
+         return $wronganswers = rtrim($wronganswers, ',');
     }
 
     protected function data_preprocessing($question) {
