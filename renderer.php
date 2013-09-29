@@ -45,7 +45,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
             $answers = $this->get_answers('dragdrop', $answers);
-            foreach ($answers as $value) {
+            foreach ($question->allanswers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
             $output.="</br></br>";
@@ -124,7 +124,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
             $answers = $qa->get_step(0)->get_qt_var('_allanswers');
-            $selectoptions = $this->get_answers('dropdown', $answers);
+            $selectoptions = $this->get_answers('dropdown', $question);
             $selecthtml = html_writer::select($selectoptions, $inputname,
                     $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
@@ -181,15 +181,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     /*used to populate values that can be dragged into gaps, and that appear in dropdows */
-    public function get_answers($answerdisplay, $answers) {
-        // Turn string into an array.
-        $answers = explode(",", $answers);
+    public function get_answers($answerdisplay, $question) {
         if ($answerdisplay == 'dragdrop') {
-            return $answers;
+            return $question->allanswers;
         }
         if ($answerdisplay == 'dropdown') {
             // Make the key and value the same in the array.
-            $answers = array_combine($answers, $answers);
+            $answers = array_combine($question->allanswers, $question->allanswers);
             return $answers;
         }
     }
