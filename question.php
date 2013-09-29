@@ -33,7 +33,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $answer;
     /* answerdisplay is a string of either gapfill,dropdown or drag drop */
     public $answerdisplay;
-    public $wronganswers;
     public $shuffledanswers;
     public $correctfeedback;
     public $noduplicates;
@@ -73,8 +72,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
-        shuffle($this->allanswers);
-        $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
+          $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
     }
 
     /**
