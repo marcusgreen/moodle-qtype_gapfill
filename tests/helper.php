@@ -34,7 +34,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $backup = new backup_qtype_gapfill_plugin();
     }
 
-    public static function make_question2($type, $questiontext, $casesensitive = false, $noduplicates = false) {
+    public static function make_question2($type, $questiontext, $casesensitive = false, array $poptions) {
+        $noduplicates=$poptions['noduplicates'];
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
         test_question_maker::initialise_a_question($question);
@@ -70,7 +71,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
                         'id' => 456,
             );
         }
-
         $question->qtype = question_bank::get_qtype('gapfill');
         $options = (object) array(
                     'id' => '117',
@@ -80,7 +80,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'delimitchars' => '[]',
                     'casesensitive' => false,
                     'noduplicates' => '1',
-                    'disableregex'=>'0',
+                    'disableregex'=>$poptions['disableregex'],
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
@@ -122,6 +122,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                 $counter++;
             }
         }
+        $question->disableregex=$poptions['disableregex'];
         $question->noduplicates = 1;
         return $question;
     }
