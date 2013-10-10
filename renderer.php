@@ -180,7 +180,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    /*used to populate values that can be dragged into gaps, and that appear in dropdows */
+    /*used to populate values that can be dragged into gaps, and that appear in dropdowns */
     public function get_answers($answerdisplay, $question) {
         if ($answerdisplay == 'dragdrop') {
             return $question->allanswers;
