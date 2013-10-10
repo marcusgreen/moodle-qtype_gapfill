@@ -252,12 +252,12 @@ class qtype_gapfill extends question_type {
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers != '') {
                 /* remove any trailing commas */
-
                 $question->wronganswers = rtrim($question->wronganswers, ',');
                 /* this allows escaped commas in wrong answers, i.e. \, */
-                $regex = '/(.*?[^\\\\](\\\\\\\\)*?);/';
-                preg_match_all($regex, $question->wronganswers . ';', $wronganswers);
+               $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
+               preg_match_all($regex, $question->wronganswers.',', $wronganswers);
                 $wronganswers = $wronganswers[0];
+                $wronganswerfields=array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
                     $wronganswerfields[$key]['fraction'] = 0;
