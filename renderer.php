@@ -44,7 +44,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $output = '';
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
-            $answers = $this->get_answers('dragdrop', $answers);
             foreach ($question->allanswers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
@@ -124,7 +123,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
             $answers = $qa->get_step(0)->get_qt_var('_allanswers');
-            $selectoptions = $this->get_answers('dropdown', $question);
+            $selectoptions = $this->get_dropdown_list($question);
             $selecthtml = html_writer::select($selectoptions, $inputname,
                     $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
@@ -180,17 +179,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    /*used to populate values that can be dragged into gaps, and that appear in dropdowns */
-    public function get_answers($answerdisplay, $question) {
-        if ($answerdisplay == 'dragdrop') {
-            return $question->allanswers;
-        }
-        if ($answerdisplay == 'dropdown') {
+    /*used to populate values that appear in dropdowns */
+    public function get_dropdown_list($question) {
             // Make the key and value the same in the array.
             $answers = array_combine($question->allanswers, $question->allanswers);
             return $answers;
-        }
-    }
+       }
 
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
