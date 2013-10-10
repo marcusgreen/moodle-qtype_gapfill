@@ -74,6 +74,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
+         shuffle($this->allanswers);
           $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
     }
 
