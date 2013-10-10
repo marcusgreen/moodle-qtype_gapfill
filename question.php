@@ -43,6 +43,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $partiallycorrectfeedbackformat;
     public $incorrectfeedbackformat;
     public $fraction;
+    /* wronganswers is used, but needs a name change to distractors at some point */
+    public $wronganswers;
 
     /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
     public $casesensitive;
