@@ -39,7 +39,7 @@
  -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
 }
 .que.gapfill select.droppable{
-    border:.5px solid black;
+    border:.1px solid black;
     padding:1px;
     background:white;
     color:black;
