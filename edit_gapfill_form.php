@@ -42,9 +42,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setType('reload', PARAM_RAW);
         $mform->removeelement('generalfeedback');
 
-        // Make questiontext a required field for this question type.
-        $mform->addRule('questiontext', null, 'required', null, 'client');
-
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
