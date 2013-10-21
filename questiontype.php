@@ -54,12 +54,12 @@ class qtype_gapfill extends question_type {
             return;
         }
         foreach ($questiondata->options->answers as $a) {
-            /* if this is a wronganswer/distractor strip any
+            if (strpos($a->fraction, '1') == false) {
+             /* if this is a wronganswer/distractor strip any
              * backslahses, this allows escaped backslashes to
              * be used i.e. \, and not displayed in the draggable
              * area
              */
-            if (strpos($a->fraction, '1') == false) {
                 $a->answer = stripslashes($a->answer);
             }
             array_push($question->allanswers, $a->answer);
@@ -235,7 +235,8 @@ class qtype_gapfill extends question_type {
      * Set up all the answer fields with respective fraction (mark values)
      * This is used to update the question_answers table. Answerwords has
      * been pulled from within the delimitchars e.g. the cat within [cat]
-     * Wronganswers has been pulled from a comma delimited edit form field
+     * Wronganswers (distractors) has been pulled from a comma delimited edit
+     * form field
      * 
      * @param array $answerwords
      * @param type $question
@@ -307,6 +308,10 @@ class qtype_gapfill extends question_type {
                 "</casesensitive>\n";
         $output .= '    <noduplicates>' . $question->options->casesensitive .
                 "</noduplicates>\n";
+        $output .= '    <disableregex>' . $question->options->disableregex .
+                "</disableregex>\n";
+        
+        
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
