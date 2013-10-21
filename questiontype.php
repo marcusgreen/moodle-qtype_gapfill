@@ -243,8 +243,7 @@ class qtype_gapfill extends question_type {
      */
     public function get_answer_fields(array $answerwords, $question) {
         $answerfields = array();
-
-        foreach ($answerwords as $key => $value) {
+           foreach ($answerwords as $key => $value) {
             $answerfields[$key]['value'] = $value;
             $answerfields[$key]['fraction'] = 1;
         }
@@ -254,9 +253,8 @@ class qtype_gapfill extends question_type {
                 /* remove any trailing commas */
                 $question->wronganswers = rtrim($question->wronganswers, ',');
                 /* this allows escaped commas in wrong answers, i.e. \, */
-             //  $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $regex='/,/';
-             $wronganswers = preg_split($regex, $question->wronganswers);
+             $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
+             $wronganswers = preg_split($regex, $question->wronganswers,-1,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
              $wronganswerfields=array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
