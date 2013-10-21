@@ -28,6 +28,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public $correct_responses = array();
     public $marked_responses = array();
+    public $allanswers=array();
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
@@ -40,11 +41,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
 
-        $answers = $qa->get_step(0)->get_qt_var('_allanswers');
+        $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
+        $this->allanswers=unserialize($seranswers);
         $output = '';
+     
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
-            foreach ($question->allanswers as $value) {
+          
+            foreach ($this->allanswers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
             $output.="</br></br>";
@@ -122,8 +126,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
-            $answers = $qa->get_step(0)->get_qt_var('_allanswers');
-            $selectoptions = $this->get_dropdown_list($question);
+            $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname,
                     $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
@@ -180,10 +183,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     /*used to populate values that appear in dropdowns */
-    public function get_dropdown_list($question) {
-            // Make the key and value the same in the array.
-            $answers = array_combine($question->allanswers, $question->allanswers);
-            return $answers;
+    public function get_dropdown_list() {         
+       // Make the key and value the same in the array.
+        $selectoptions=array_combine($this->allanswers,$this->allanswers);
+        return $selectoptions;
        }
 
     /* overriding base class method purely to return a string yougotnrightcount
