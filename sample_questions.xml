@@ -8,16 +8,16 @@
     </category>
   </question>
 
-<!-- question: 7  -->
+<!-- question: 24  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces.  Enter 1 into the gap for the first try to see the hints.</span></p>
+      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces. Enter 1 into the gap for the first try to see the hints.</span></p>
 <p><span style="font-size: medium;">Make the following php code print out the string "cat"</span></p>
 <p><span style="font-size: medium;">$ar= array('cat','mat');</span><br /><span style="font-size: medium;">print $ar[{0}];</span></p>
-<p><span style="font-size: medium;"> </span></p>]]></text>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -40,8 +40,9 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
-      <text></text>
+      <text><![CDATA[<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAmCAIAAADiLeRoAAACOUlEQVRYhc3Yv+s5cRzA8XeXLkmXJEkG6SbdJKMuySjTTbrp0ieZJMmkdEm6QXpnkEkySzIaTTLKIEkGmS7dcEmX76BP+fp8+OL9qvs+/4B3j969371/oMv/FwIZRVEUhmEYhkmn06fTyXyTqqoURaHvGo2G+ab5fI5uSiQS5pvG4/GtiWVZ8021Wu3W5PV6TTYdj0eXy3Vr4nneZFMul0N/V61WzTR1u907EE3T+/3eNFOn07FYLHcmSZIIQR+aNE3LZDLoR06nk3yS3jbpuo4x9vl8P0EIoV6vRw56z6RpWigU+lWDEIrH4yCg90z1ev0RyGq1rlYrE0zBYPCRqVKpQIHeMC0Wi0cghBDP84IgCIIgSdLXd4VCodlsTqfTd28Kr5pkWX5iep7b7e52u/AmlmU/Nl0TRdEwDDDT3cn/ce12G8Z0Op04jgMxlctlAJNhGIIggIA4jlNVldR0Pp8lSQIBRSIRXddfAT0zLZfLcDgMArrWarWITNls9vbaDxLDMET7LhqNwoKuaZr2uUkURXDQ6++Z302lUgkWZLfbN5sNkanVasGaKIrabrdEpuFwCGtCCGGMiUx3T1uQFEUhMh0OB1iQw+EgXU+Xy4WmaSiQx+NZr9cvgp6ZAoEAlAkhVCgUAEw8zwOaXC4XgCmVSgGaYrEYgKlYLEKB/H7/brcDMGGMyTVOpzOfz794zP3bNBgMEEIcx8myPJlMZrPZaDTCGCeTSZvN9pxis9mSyWS/3//sb/MPrGbpzVpcVHgAAAAASUVORK5CYII=" alt="" /><span style="font-size: large;">Correct!</span></p>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
       <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
@@ -61,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 10  -->
+<!-- question: 25  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -97,6 +98,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>1</casesensitive>
     <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -108,14 +110,14 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 26  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p><span style="font-size: medium;">This question has disabled regular expressions. This means that special characters used in regular expressions such as &lt; / * . etc  will have no meaning which can be useful when creating questions for maths and programming or HTML (which of course uses the &lt; and &gt; characters extensively).</span></p>
-<p><span style="font-family: courier new,courier,monospace; font-size: medium;">2[+]2=4</span></p>
+<p><span style="font-family: courier new,courier,monospace; font-size: medium;">2[+]2=4<br />4[/]2=2</span></p>
 <p><span style="font-size: medium;">The option for disable regex can be found in the More Options in the question editing form.</span></p>
 <p><span style="font-size: medium;">Complete the syntax for this for loop in PHP</span></p>
 <p><span style="font-size: medium; font-family: courier new,courier,monospace;">for($i=0;$i[&lt;]10;$++){</span></p>
@@ -127,7 +129,7 @@
     <generalfeedback format="html">
       <text></text>
     </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
+    <defaultgrade>3.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
     <answerdisplay>dragdrop</answerdisplay>
@@ -142,31 +144,13 @@
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text><![CDATA[&lt;]]></text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>+</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
       <text>/</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text><![CDATA[&]]></text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>^</text>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[&lt;]]></text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -175,8 +159,16 @@
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
     <correctfeedback format="html">
-      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+      <text><![CDATA[<table border="0">
+<tbody>
+<tr>
+<td><img src="data:image/png;base64,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" alt="" /></td>
+<td><span style="font-size: medium;">Yes,  you can see how this does a plain text search and disables regular expressions</span></td>
+</tr>
+</tbody>
+</table>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
       <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
@@ -184,19 +176,36 @@
     <incorrectfeedback format="html">
       <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
     </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>One more try</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
   </question>
 
-<!-- question: 8  -->
+<!-- question: 27  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this</p>
-<p>The [cat] sat on the [mat]</p>
-<p>Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser.</p>
-<p>Drag the correct words into the gaps.</p>
-<p>The {cat} sat on the {mat}</p>]]></text>
+      <text><![CDATA[<table border="0">
+<tbody>
+<tr>
+<td><img src="http://openclipart.org/image/90px/svg_to_png/27219/missiridia_Sleepy_Calico_Cat.png" alt="#" /></td>
+<td><span style="font-size: medium;">The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this</span></td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
+<p><span style="font-size: medium;">Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser.</span></p>
+<p><span style="font-size: medium;">Drag the correct words into the gaps.</span></p>
+<p><span style="font-size: medium;">The {cat} sat on the {mat}</span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -222,13 +231,13 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>dog</text>
+      <text>rug</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>rug</text>
+      <text>dog</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -243,6 +252,7 @@
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -263,14 +273,27 @@
     </hint>
   </question>
 
-<!-- question: 9  -->
+<!-- question: 28  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</p>
-<p>The [cat] sat on the [mat]</p>]]></text>
+      <text><![CDATA[<table border="0">
+<tbody>
+<tr>
+<td>
+<p><span style="font-size: medium;"><img src="http://openclipart.org/image/90px/svg_to_png/5329/molumen_cat_icons_4.png" alt="#" width="71" height="53" /></span></p>
+</td>
+<td>
+<p> </p>
+<p><span style="font-size: medium;">The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
+<p><span style="font-size: medium;"> </span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -302,6 +325,12 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
+      <text>bat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
       <text>rug</text>
       <feedback format="moodle_auto_format">
         <text></text>
@@ -317,6 +346,7 @@
     <answerdisplay>dropdown</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -336,7 +366,7 @@
     </hint>
   </question>
 
-<!-- question: 11  -->
+<!-- question: 29  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -372,6 +402,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -393,7 +424,7 @@
     </hint>
   </question>
 
-<!-- question: 12  -->
+<!-- question: 30  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -430,6 +461,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -441,7 +473,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 31  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -502,6 +534,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -513,7 +546,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 32  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -543,6 +576,7 @@
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -554,7 +588,71 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 34  -->
+  <question type="gapfill">
+    <name>
+      <text>UsingCommas</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><span style="font-size: medium;">Answers may contain commas and commas can be used in distractors by escaping them with the backslash like this \,</span></p>
+<table border="0">
+<tbody>
+<tr>
+<td>
+<p><span style="font-size: medium;">What are the colors of the French flag?</span></p>
+</td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAeCAIAAADlxgqWAAACT0lEQVRYhWPYvXu3jZWDspyOvLQWBMlJaUKQjISGtLg6BEmKqkmJqctLaxoZmpgRDUz09fWlJHRFhPVERXRFhPEwDMTFrPX0li5dyuDh5iPN46QjnK0lCENCGEgQSroYVC5dvH430WDz7JmzNeWm8jFM5WeYyseAn5HFzWSkosygrqyvJpBsKTGJGBTjuPTxvff/iQZfr1y4YqlxRoSBGLRQgEGOmZFBTUlvkDhokQCDHDMDg5qSnvpgc9CgC6FB56CRFGXXLl1zMjynwHteWeCCmshFDdGLmmIXtcQvaknCkPhFTbEL6qIXVIWWyfDKszLR1kHfbt+4Fe55xVyNGLRGR06Rg422UUamg4ZqCNlIT070WPHk4YeBd5CN9BRX1Rm++nOLojY+e/RxIKPMSnKSk9L0AON5oRYLw60WlcRsormDVBR0sYaQleRkZ+XpAUbzwqwWhcPQgDnITm6Kp9ZsSKiE099BaFHmqDgtwGh+mOUiNNcMQAhZS09205gZhuGOgXGQjfRkLx0s0TRgUeatMzvMEp9r6OcgDcEUD81Z+J1CRwcp6hrIZIaYEwgb+jlITUXfWr2AGNfQyUHqqvq2GoWDyEEaaga2moPJQYMuhDTVDQeJg1ZDHOTu6qUjH+CsW+2iV+2iV+OiB2fUIDGg7Ej39rVrth0kGuxaunips8UCbbmF2nILtOXwM8qVJY3VVBi2bdtmYmQpLqIoJqQAR6JCCiKC8iKCCmhIUkxRQ11Th2igpaamJiKkKsCHidQE+ZGRupCAmZbmooULAUqDxLmD9mgKAAAAAElFTkSuQmCC" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size: medium;">It's [blue, white, red]</span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>blue, white, red</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>green\, white\, blue</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text> blue\, red\, brown</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 33  -->
   <question type="gapfill">
     <name>
       <text>ValuesInAnyOrder</text>
@@ -598,6 +696,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
