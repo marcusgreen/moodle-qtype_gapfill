@@ -44,10 +44,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers=unserialize($seranswers);
         $output = '';
-     
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
-          
             foreach ($this->allanswers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
@@ -183,11 +181,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     /*used to populate values that appear in dropdowns */
-    public function get_dropdown_list() {         
-       // Make the key and value the same in the array.
-        $selectoptions=array_combine($this->allanswers,$this->allanswers);
+    public function get_dropdown_list() {
+        // Make the key and value the same in the array.
+        $selectoptions=array_combine($this->allanswers, $this->allanswers);
         return $selectoptions;
-       }
+    }
 
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
