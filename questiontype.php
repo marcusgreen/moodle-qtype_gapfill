@@ -55,19 +55,19 @@ class qtype_gapfill extends question_type {
         }
         foreach ($questiondata->options->answers as $a) {
             if (strpos($a->fraction, '1') == false) {
-             /* if this is a wronganswer/distractor strip any
-             * backslahses, this allows escaped backslashes to
-             * be used i.e. \, and not displayed in the draggable
-             * area
-             */
+                /* if this is a wronganswer/distractor strip any
+                 * backslahses, this allows escaped backslashes to
+                 * be used i.e. \, and not displayed in the draggable
+                 * area
+                 */
                 $a->answer = stripslashes($a->answer);
             }
             array_push($question->allanswers, $a->answer);
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback,
-                        $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
+                        $a->fraction, $a->feedback, $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -244,7 +244,7 @@ class qtype_gapfill extends question_type {
      */
     public function get_answer_fields(array $answerwords, $question) {
         $answerfields = array();
-           foreach ($answerwords as $key => $value) {
+        foreach ($answerwords as $key => $value) {
             $answerfields[$key]['value'] = $value;
             $answerfields[$key]['fraction'] = 1;
         }
@@ -254,9 +254,9 @@ class qtype_gapfill extends question_type {
                 /* remove any trailing commas */
                 $question->wronganswers = rtrim($question->wronganswers, ',');
                 /* this allows escaped commas in wrong answers, i.e. \, */
-             $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-             $wronganswers = preg_split($regex, $question->wronganswers,-1,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-             $wronganswerfields=array();
+                $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
+                $wronganswers = preg_split($regex, $question->wronganswers, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
                     $wronganswerfields[$key]['fraction'] = 0;
@@ -310,9 +310,8 @@ class qtype_gapfill extends question_type {
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
-        
-        
-        $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
+        $output .= $format->write_combined_feedback($question->options,
+                $question->id, $question->contextid);
         return $output;
     }
 
