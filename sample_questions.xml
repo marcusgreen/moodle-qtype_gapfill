@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 24  -->
+<!-- question: 59  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -28,6 +28,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>{}</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -36,6 +37,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>{}</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -48,7 +50,7 @@
       <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+      <text><![CDATA[<p><img src="data:image/png;base64,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" alt="" />Your answer is incorrect.</p>]]></text>
     </incorrectfeedback>
     <hint format="html">
       <text><![CDATA[<p>Hint:What number do array places count from?</p>]]></text>
@@ -62,14 +64,14 @@
     </hint>
   </question>
 
-<!-- question: 25  -->
+<!-- question: 60  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The complete phrase is "The cat sat on the mat", This version case sensitivity checked so the words cat and mat must be entered as Cat and Mat.</p>
-<p>The [Cat] sat on the [Mat]</p>]]></text>
+      <text><![CDATA[<p><span style="font-size: medium;">The complete phrase is "The cat sat on the mat", This version case the case sensitivity option checked so the words cat and mat must be entered as Cat and Mat.</span></p>
+<p><span style="font-size: medium;">The [Cat] sat on the [Mat]</span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -80,6 +82,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>1</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -94,10 +97,11 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>1</casesensitive>
-    <noduplicates>1</noduplicates>
+    <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
@@ -110,7 +114,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 26  -->
+<!-- question: 61  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -135,6 +139,7 @@
     <answerdisplay>dragdrop</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -155,6 +160,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -188,7 +194,7 @@
     </hint>
   </question>
 
-<!-- question: 27  -->
+<!-- question: 62  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -197,7 +203,7 @@
       <text><![CDATA[<table border="0">
 <tbody>
 <tr>
-<td><img src="http://openclipart.org/image/90px/svg_to_png/27219/missiridia_Sleepy_Calico_Cat.png" alt="#" /></td>
+<td><img src="data:image/png;base64,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" alt="" /></td>
 <td><span style="font-size: medium;">The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this</span></td>
 </tr>
 </tbody>
@@ -216,6 +222,7 @@
     <answerdisplay>dragdrop</answerdisplay>
     <delimitchars>{}</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers>rat,bat,rug,hat</wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -231,95 +238,7 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>rug</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>dog</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>hat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>{}</delimitchars>
-    <answerdisplay>dragdrop</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <disableregex>0</disableregex>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect. You need to brush up on your knowledge of feelines in the domestic sphere.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Hint1: The answer refers to a feline and a floor covering. Note how the incorrect answers are cleared after you press the try again button. This hint DOES show the number of correct answers and so each field has an indicator of correctness or incorrectness via tick/cross colour</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat. The show number of correct responses option is not ticked for this.</p>]]></text>
-      <clearwrong/>
-    </hint>
-  </question>
-
-<!-- question: 28  -->
-  <question type="gapfill">
-    <name>
-      <text>DropDowns</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<table border="0">
-<tbody>
-<tr>
-<td>
-<p><span style="font-size: medium;"><img src="http://openclipart.org/image/90px/svg_to_png/5329/molumen_cat_icons_4.png" alt="#" width="71" height="53" /></span></p>
-</td>
-<td>
-<p> </p>
-<p><span style="font-size: medium;">The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</span></p>
-</td>
-</tr>
-</tbody>
-</table>
-<p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
-<p><span style="font-size: medium;"> </span></p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>2.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>dropdown</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <disableregex>0</disableregex>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>cat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>dog</text>
+      <text>rat</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -342,6 +261,92 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers>rat,bat,rug,hat</wronganswers>
+    <delimitchars>{}</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAIAAAC1eHXNAAAMeElEQVRYhbXYd1RT5xsH8Px1czNAkqBALShWUVsXw4GAAkoVuIQAYc+EQCAJM4wwEgLIhrAS9o4s2StAI5UfYqkURRlCRK1WW9tqrVaGeiT5/ZEerFotWvqe+9+9530+557nvud7H5jsQ5ZUKp2+PcXv4FN4ZKNQg83u6lgiBokHsUTMZnf1I0xDCo/M7+BP356SSqUftDNslc/dun+LW8PRIm0DIUB+4YgYPYaOSYSxBdvcJMJYl66DI2JW7mqRtnKFcbfu31ozh+SexCvDE4kHQQjY6KJG4/sXiATf3Lwwdm904Ia4V9LTea29Y7qtbbJFLOnvmujgtWdS83w/cVYFIQCFR5Ayva7/eP1fOZaeL8XVcBQIKBACjoYZ1Zyrvnp/fOCmuGOmrXmqsf7q6epLFWWjxQXf5Oee52UOpiUPJMb3c2JFrMR+bsNYXW5XthHTAIQARQKaK4xber70MY7rdyV6DF0QAnZTv2gZab7801j/DVHXbEfrdFPjRJ1wvKpirLToooB/IYc3lJH2dXKimMvpjY7qDme2Bwc20/0bfSi1XpniNEFv/he+O0EIOBCgd/2e5MMcZ8fPKttjEVbw8LKwyZ8nzt7s77ne1T7T2jTVUHdFWHWpvGS0sGAkL+d8VsZgavJAArefHSOKjOgMDW4LoDf5+daTvYRurpWO9mU2tsV4njgjoICBsIIr22MHxgdW62gdblUgoHBETNM3Zy78cL53rqdztr1l+kzDRG3NeGX5WEnRRX7+hZysofTUr5MSxXHsvihWd1hoR1BAM82vkeJd6+le4+xUQbQtwVsVmJ/MO2aadcStzCmnKxtrp6RAQLUOt/6zQ3xZrEBAfeKs2n+l7+vvz3Zf72ybaTkzVV97pabyUlnJaIFgJC97ODN9MCVpIJ7bHxstigjvDAlqY9CaqD71JE+hq0uVA7GMYF1kacE3M8sxPpppcDj1gF7iPoPkg4I+vpqTiiIB/fZbec0huTurbI/FETGi8Z7+G70ds23N0431E6erxyvKxooLL/LzLmRnDqWlfH0qQcyJ7WNFdjNDOgIZLf7URm9yrYdbjZNjhZ1NiRVUcPJEnqkJz8gw/dCBZB3t+N1fsLdvj9qyI2prbk8OxnbdenvcG73yyrH4bFGPoYOA4PXna/tuiFpnmhsn605fqa64VFo8WsAfyeUNZ6QNJp8a4Mb1x0SJwsM6QwLb6LQmX0q9l4fQxbnK3q7MGl9kYc4/fjzn6JHMw/qp+3UT9+7m7twZs/WzSA0NpppqoLImUz2lOVnetn/9gl45ONVsEAICChnim31N0w11E8Kq8fLSsaKCb/NzL/AyhlKTzyXGi9kxfZER3czgjgB6i59vI5lU5+5W4+hQYUsogSwLvvwyz8SYZ2iQfvBAsvZu7g5NlvqnYarKgeuUaChFKgLtA6IocD22tm+uDwgB8ULumw7JPYkCAbXdW2v49lDDZK3wSlX5pZKiUUH+SE7WcHrqYFLiQBynP5olCmd2Bge00fyaKN4Nnh6nnZ2qiHZl1lZF5if5x47lHDHK1N+b+LkGSw0ThEbT4frJ+39+ct+nkozyhaN84CgKHOUNR5Hg1FLKNtJnigT03I9zrzm8MjxBCKg8V1E7IawcLysdKxR8m5dzISt9KCXpXDxXHBvdFxneHRLcwaC1UH3OkLzq3FxrHBwqbAmlkEWhmVm+sVHWoe1xW3ChCugAOJoBlyMePn0ok8mWpcs+FeQVBMoLrkBCcGrZIASQs0ivHLd+uonCI/RDDvXP9ZZfKi4c5eeNZGcNp6UMnkoY4LC/imKJwphdQQFt/tRmb3KDh/tpJ6cqO9syvFXxyRMCU+NsAy2uplIIUiEI/jZCvpalyz5lZDkC6QkgPQCbTPzBwP0oPOL7n7//0xFXwwEhoLBPUDJWwL+Ym30hM30o+dQ5bpw4JrovIqw7JKiDTmvxpZzx8qxzdRHa21faWJdaWhSaHc8/uidpJzYMrRAEfxMx/wrxilJKliOQ7gDKDc4RxoIQwBXGyWQymFQq1SJtU3XacPZGf+4IL3M4NWUwMX6AHfsVK0LEDO0KZLT5UZvJpAZ3t1onx2pbm3IrqPjkCYGpUfYh9RgVhRD4ahArFLNTpkh3AOkKIF2AoPIAVccN2723SaVS2NTtSRACaHz/4u8EaUNJiefiOOLoqL7wsJ7gwA6af4sP5YynR52Ls5BIrCTgSy3MC48fzz+ql74XG47+IIRMJvt27hsVH5wcgXQGtvhvpmR7gxBw7c40jN/JByEgtzs7eTAhfiA25qvICFFoSFcAvY3q20wiNbi51jo6VNsSyiHL4hNfCkyMcw2/SNJax0T8SwTCCUA4AhwhG4QAQacARuGRQQjomupgi6NYfWHMnqCATn+/Vor3GQ+POmcnITG4ndFzrZtYSTiWf8Qo59COxC0KofA1QSAcAPlXQ+F5w4yYBspEbPt0a7goJKiLTmv39Wn28mpwdal1sK+2obdQb/1288H8r+P3LkNFJ7QSNq8hAkEEwiuYWDulo0wj2GY3DV26TsnFAkanH7XVm9zk7l7v5Ci0s6myojZ533g492D+wcP5h48WH039NPl54tY1RCDsAGKKrQ5tn6bHJhiOiDGJMOadz6C0eHo2ujjX2hOrCfgKC3KD5/VfJSuIx4u/P1l6LPllVjtp11ohQFvALPa4SfhRrB0GhrCCQxzL+LNst3pHB6GtTRVkWXbCRegg+XXmwfyD3xZ+e7T46PHi4z+Wnsw/e7r4YvHe7/f0U/XWBAHaAAZhhy1izZF4EIa1UzKNMI4Xs4k11vgK85Mlx48VHrGrtJb8Mvtw4eGjxUdPlv5ELL1YfP7y+cvll48WHplkHPn3CJAAmEUfNwk/iiNiYJvd1PUYOoniOMuyL82KjY0FBodzDxzI0jYvNJu+P/Vk6fHTZ38sPJ9ferH04uWLl8sv5WWePnv6279GgHjALtFWl66t6bEJZhh6WNkeyx/ONS00Msw/dChbVydj9+6UHTsStxzK1L16b3zh+YIcsSxdflfh1xEjq0SAVgCzOBRHxBgxDWDeWSQQAgqG8g/n7d/P27c3/fPPk7ZtS9ikwVZTi1LWitP87vbof4QAIUAeeig8MiyvPReEgKTmRO3MXbtSt28/pakZ9+nG2A0bIjEYJkohGK7OUvn21sh/gQAhgFMdC0IAv5MPm/x+AoQAv3yqYc7BrQkaGhxV1WgcLkJBMRRcOSdUmbhBybk1R2x216Dm+oAQMHV7EiaVSj/z2vKJs2pUR/jG2A3rWUpKYci3DyvloHV9k73vRFxfbWOuIEAICBAw1JxUtEifSaVSmEwmi62KASGA28jBRSgoMsG3EWgaHO0Px9EVeydEbyOGZ89v+HAEAoLLm4NdHSuT56C5H+eQePBwiL51keW7EGgqHOULx/or9l59jfK/a4PrKZgPRYAQYMWx1A8+iMSDN368IVvJp+5pbiAEcM9w1gUj3oWQB10sVbH3yp+UgcmzOG+lj0Ag8SCnhg1CgFeGh3yrPx2zP8ygrZE7Kdsp1V7vQciDLtZHUXSlp/9qH5as+BEIeTze4a2lQEBJ7kpec8hksujKKBACaAL/fQm73oOQB10FL4SiJ/LjEHv8dvnnUUEIiK2KWan+yrGwtLDPfy/CCp7WlqoWqvwehDzofhxig4Nycn0SwgquS9defLb4Nw6ZTDZ9Zxprp6RMxPK6s5QZ69YcoWSrmN3KwxExOCJm5oeZv5Z+839fNCpCWyPVXTfm9uSoBa5fQ4SK4/rsVt5GFzW0NbJvrO+Nun8z/2gcbEDhEevtcTmdPJ2YPWuC0KbtzWrJVLbHofCIxsGGt4v+/TxINCrC2K1DWoHMklBGJU2BhPhoBAqPoPNpocUhSCsQa6fU+93fH8rvnI9N357a57cHhIB9/nt47Vk2GXiUG/xDT0xCvHVWS+Ze+T60vdN3pt9V7n3zwvmleVZ5JNoaCULAsUjTlKbkwHKGuu/Gf0Sou24MLAhIbkg+FmkKQgDaGhlVwVpYWnhPrX+en167M+2c4oSwgoMQsMldnSGgc4TsuFp2QDHdMt7CKMJQN1DbKMwQ4lgECBicajanhk3n0zTc1EEIQFjBXVNdZu5c+8cqq50nz96dZVWwND00Vl67mrOqQYi+ecxJ2wQb85iTBiH6ak4qK3c1PTaxKliSu7Or3H+1DvlaXl6+PHeZ15Llnua6n6Gn5qiCwiPkzajmpHIgYL97miuvJevy3OXl5VXlt5X1f77YaFzkFwXuAAAAAElFTkSuQmCC" alt="" /></p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect. You need to brush up on your knowledge of feelines in the domestic sphere.</p>
+<p><img src="data:image/png;base64,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" alt="" /></p>]]></text>
+    </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Hint1: The answer refers to a feline and a floor covering. Note how the incorrect answers are cleared after you press the try again button. This hint DOES show the number of correct answers and so each field has an indicator of correctness or incorrectness via tick/cross colour</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat. The show number of correct responses option is not ticked for this.</p>]]></text>
+      <clearwrong/>
+    </hint>
+  </question>
+
+<!-- question: 63  -->
+  <question type="gapfill">
+    <name>
+      <text>DropDowns</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<table border="0">
+<tbody>
+<tr>
+<td>
+<p><span style="font-size: medium;"><img src="data:image/png;base64,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" alt="" /></span></p>
+</td>
+<td>
+<p> </p>
+<p><span style="font-size: medium;">The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
+<p><span style="font-size: medium;"> </span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dropdown</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <wronganswers>bat,rug</wronganswers>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>cat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>mat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>bat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>rug</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <wronganswers>bat,rug</wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>dropdown</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -366,7 +371,7 @@
     </hint>
   </question>
 
-<!-- question: 29  -->
+<!-- question: 64  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -384,6 +389,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -398,6 +404,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -424,7 +431,7 @@
     </hint>
   </question>
 
-<!-- question: 30  -->
+<!-- question: 65  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -443,6 +450,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -457,6 +465,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -473,7 +482,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 31  -->
+<!-- question: 66  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -482,8 +491,8 @@
       <text><![CDATA[<p><span style="font-size: medium;">This question illustrates that following a letter with a question mark ? will make it optional. The following gap will accept colours, colour, colors and colors as correct answers, so allowing both US and UK spelling of the word. If you look at the source of this question this gap contains <span style="font-size: medium;">colou?rs?</span> </span></p>
 <p><span style="font-size: medium;">Red, Green and Blue are examples of {colou?rs?}</span></p>
 <p><span style="font-size: medium;">This gap illustrates how you can "escape" the special characters used in regular expressions such as the dollar sign by preceeding them with a backslash i.e. \$.  The correct answer for this gap is the $ symbol. <br /></span></p>
-<p><span style="font-size: medium;">The special character that indicates the start of a variable in PHP is the {\$} sign.</span></p>
-<p><span style="font-size: medium;">The HTML tag to start a paragraph is {\&lt;p\&gt;} (enter &lt;p&gt;)<br /></span></p>
+<p><span style="font-size: medium;">The special character that indicates the start of a variable in PHP is the {\$} sign. (enter the $ sign)</span></p>
+<p><span style="font-size: medium;">The HTML tag to start a paragraph is {\&lt;p\&gt;}  (enter &lt;p&gt;)<br /></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">Note there is an option under more options to switch off regular expression for the whole question, but escaping is useful where you need some regex processing.<br /></span></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">You can ensure any spare spaces between words are ignored with \s</span></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">The correct answer here is black and white but it will accept the words with one or more spaces between them {black\s+and\s+white}. <br /></span></span></p>
@@ -504,6 +513,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>{}</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -530,6 +540,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>{}</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -546,7 +557,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 32  -->
+<!-- question: 67  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -564,6 +575,7 @@
     <answerdisplay>dragdrop</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -572,6 +584,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -588,7 +601,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 34  -->
+<!-- question: 68  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -605,7 +618,7 @@
 </tr>
 </tbody>
 </table>
-<p><span style="font-size: medium;">It's [blue, white, red]</span></p>]]></text>
+<p><span style="font-size: medium;">It's [ blue, white, red ]</span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -616,26 +629,28 @@
     <answerdisplay>dragdrop</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers>orange\, white\, red, green\, white\, black</wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <answer fraction="100" format="moodle_auto_format">
-      <text>blue, white, red</text>
+      <text> blue, white, red </text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>green\, white\, blue</text>
+      <text>orange\, white\, red</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text> blue\, red\, brown</text>
+      <text> green\, white\, black</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
+    <wronganswers>orange\, white\, red, green\, white\, black</wronganswers>
     <delimitchars>[]</delimitchars>
     <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
@@ -652,7 +667,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 33  -->
+<!-- question: 69  -->
   <question type="gapfill">
     <name>
       <text>ValuesInAnyOrder</text>
@@ -672,6 +687,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>{}</delimitchars>
     <casesensitive>0</casesensitive>
+    <wronganswers></wronganswers>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
@@ -692,6 +708,7 @@
         <text></text>
       </feedback>
     </answer>
+    <wronganswers></wronganswers>
     <delimitchars>{}</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
