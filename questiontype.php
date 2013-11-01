@@ -34,8 +34,9 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  */
 class qtype_gapfill extends question_type {
 
+    /*data used by export_to_xml (among other things possibly */
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'noduplicates', 'disableregex');
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers','noduplicates', 'disableregex');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -189,11 +190,13 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
+        $options->wronganswers = $question->wronganswers;
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
+     
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -300,13 +303,15 @@ class qtype_gapfill extends question_type {
 
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $output = parent::export_to_xml($question, $format);
+        $output .= '    <wronganswers>' . $question->options->wronganswers .
+                "</wronganswers>\n";
         $output .= '    <delimitchars>' . $question->options->delimitchars .
                 "</delimitchars>\n";
         $output .= '    <answerdisplay>' . $question->options->answerdisplay .
                 "</answerdisplay>\n";
         $output .= '    <casesensitive>' . $question->options->casesensitive .
                 "</casesensitive>\n";
-        $output .= '    <noduplicates>' . $question->options->casesensitive .
+        $output .= '    <noduplicates>' . $question->options->noduplicates .
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
