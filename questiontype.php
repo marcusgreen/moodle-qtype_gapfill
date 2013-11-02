@@ -33,10 +33,11 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
+    /* data used by export_to_xml (among other things possibly */
 
-    /*data used by export_to_xml (among other things possibly */
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers','noduplicates', 'disableregex');
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers',
+            'noduplicates', 'disableregex');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -55,7 +56,7 @@ class qtype_gapfill extends question_type {
             return;
         }
         foreach ($questiondata->options->answers as $a) {
-            if (strpos($a->fraction, '1') == false) {
+            if (strstr($a->fraction, '1') == false) {
                 /* if this is a wronganswer/distractor strip any
                  * backslahses, this allows escaped backslashes to
                  * be used i.e. \, and not displayed in the draggable
@@ -67,8 +68,8 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
-                        $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback,
+                        $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -196,7 +197,7 @@ class qtype_gapfill extends question_type {
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
-     
+
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -315,8 +316,7 @@ class qtype_gapfill extends question_type {
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
-        $output .= $format->write_combined_feedback($question->options,
-                $question->id, $question->contextid);
+        $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
 
