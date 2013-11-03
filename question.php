@@ -296,9 +296,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
-    public function compare_response_with_answer($string, $response, $casesensitive, $disableregex = false) {
+    public function compare_response_with_answer($answergiven, $answer, $casesensitive, $disableregex = false) {
         /*converts things like &lt; into <*/
-        $response = htmlspecialchars_decode($response);
+        $answer = htmlspecialchars_decode($answer);
 
         /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
@@ -306,20 +306,20 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
              * pattern will come into function already converted to lower case with
              * strtolower
              */
-            if (strcmp(trim($string), trim($response)) == 0) {
+            if (strcmp(trim($answergiven), trim($answer)) == 0) {
                 return true;
             } else {
                 return false;
             }
         }
-        $pattern = str_replace('/', '\/', $response);
+        $pattern = str_replace('/', '\/', $answer);
         $regexp = '/^' . $pattern . '$/u';
 
         // Make the match insensitive if requested to, not sure this is necessary.
         if (!$casesensitive) {
             $regexp .= 'i';
         }
-        if (preg_match($regexp, trim($string))) {
+        if (preg_match($regexp, trim($answergiven))) {
             return true;
         }
     }
