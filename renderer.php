@@ -81,7 +81,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $rightanswer = $question->get_right_choice_for($place);
 
-        $size = strlen($rightanswer);
+        $size = strlen(htmlspecialchars_decode($rightanswer));
 
         /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
@@ -110,8 +110,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size' => $size,
+            'size' => $size+1,
             'class' => 'droppable ' . $inputclass
+            /*'style'=> 'width:'.(($size*10)).'px'*/
         );
 
         /* When previewing after a quiz is complete */
@@ -124,6 +125,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
+            /*blank out the style put in previously */
+            $inputattributes['style']='';
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname,
                     $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
