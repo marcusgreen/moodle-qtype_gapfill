@@ -36,7 +36,7 @@ class qtype_gapfill extends question_type {
     /* data used by export_to_xml (among other things possibly */
 
     public function extra_question_fields() {
-        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive', 'wronganswers',
+        return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
             'noduplicates', 'disableregex');
     }
 
@@ -224,7 +224,6 @@ class qtype_gapfill extends question_type {
                 $answer->correctfeedback = '';
                 $answer->partiallycorrectfeedback = '';
                 $answer->incorrectfeedback = '';
-                $answer->wronganswers = '';
                 $answer->fraction = $field['fraction'];
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
@@ -304,8 +303,6 @@ class qtype_gapfill extends question_type {
 
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $output = parent::export_to_xml($question, $format);
-        $output .= '    <wronganswers>' . $question->options->wronganswers .
-                "</wronganswers>\n";
         $output .= '    <delimitchars>' . $question->options->delimitchars .
                 "</delimitchars>\n";
         $output .= '    <answerdisplay>' . $question->options->answerdisplay .
