@@ -169,7 +169,6 @@ class qtype_gapfill extends question_type {
         if (!$options) {
             $options = new stdClass();
             $options->question = $question->id;
-            $options->wronganswers = '';
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback = '';
@@ -209,7 +208,6 @@ class qtype_gapfill extends question_type {
                 $answer->correctfeedback = '';
                 $answer->partiallycorrectfeedback = '';
                 $answer->incorrectfeedback = '';
-                $answer->wronganswers = '';
                 $answer->fraction = $field['fraction'];
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
