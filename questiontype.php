@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -68,8 +69,7 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback,
-                        $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -179,7 +179,6 @@ class qtype_gapfill extends question_type {
         if (!$options) {
             $options = new stdClass();
             $options->question = $question->id;
-            $options->wronganswers = '';
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback = '';
@@ -191,7 +190,6 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
-        $options->wronganswers = $question->wronganswers;
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
@@ -246,12 +244,32 @@ class qtype_gapfill extends question_type {
      * @return type array
      */
     public function get_answer_fields(array $answerwords, $question) {
+ /* this code runs both on saving from a form and from importing and needs
+ * improving as it mixes pulling information from the question object which
+ * comes from the import and from $question->wronganswers field which 
+ * comes from the question_editing form. 
+ */
+        
         $answerfields = array();
-        foreach ($answerwords as $key => $value) {
-            $answerfields[$key]['value'] = $value;
-            $answerfields[$key]['fraction'] = 1;
+
+        if (property_exists($question, 'answer')) {
+            foreach ($question->answer as $key => $value) {
+                if ($question->fraction[$key] == 0) {
+                    $answerfields[$key]['value'] = $question->answer[$key];
+                    $answerfields[$key]['fraction'] = 0;
+                } else {
+                    $answerfields[$key]['value'] = $question->answer[$key];
+                    $answerfields[$key]['fraction'] = 1;
+                }
+            }
         }
 
+        if (!property_exists($question, 'answer')) {
+            foreach ($answerwords as $key => $value) {
+                $answerfields[$key]['value'] = $value;
+                $answerfields[$key]['fraction'] = 1;
+            }
+        }
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers != '') {
                 /* remove any trailing commas */
@@ -267,6 +285,8 @@ class qtype_gapfill extends question_type {
                 $answerfields = array_merge($answerfields, $wronganswerfields);
             }
         }
+
+
         return $answerfields;
     }
 
