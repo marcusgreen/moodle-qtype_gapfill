@@ -251,7 +251,7 @@ class qtype_gapfill extends question_type {
  */
         
         $answerfields = array();
-
+        /*this next block runs when importing from xml */
         if (property_exists($question, 'answer')) {
             foreach ($question->answer as $key => $value) {
                 if ($question->fraction[$key] == 0) {
@@ -263,7 +263,8 @@ class qtype_gapfill extends question_type {
                 }
             }
         }
-
+        
+        /*the rest of this function runs when saving from edit form */
         if (!property_exists($question, 'answer')) {
             foreach ($answerwords as $key => $value) {
                 $answerfields[$key]['value'] = $value;
