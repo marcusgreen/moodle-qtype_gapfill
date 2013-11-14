@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 59  -->
+<!-- question: 951  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -62,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 60  -->
+<!-- question: 952  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -110,7 +110,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 61  -->
+<!-- question: 953  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -188,7 +188,7 @@
     </hint>
   </question>
 
-<!-- question: 62  -->
+<!-- question: 954  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -280,7 +280,7 @@
     </hint>
   </question>
 
-<!-- question: 63  -->
+<!-- question: 955  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -361,7 +361,7 @@
     </hint>
   </question>
 
-<!-- question: 64  -->
+<!-- question: 956  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -419,7 +419,7 @@
     </hint>
   </question>
 
-<!-- question: 65  -->
+<!-- question: 957  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -468,7 +468,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 66  -->
+<!-- question: 958  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -541,7 +541,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 67  -->
+<!-- question: 959  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -583,7 +583,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 68  -->
+<!-- question: 960  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -614,7 +614,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <answer fraction="100" format="moodle_auto_format">
-      <text> blue, white, red </text>
+      <text>blue, white, red</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -626,7 +626,7 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text> green\, white\, black</text>
+      <text>green\, white\, black</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -647,7 +647,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 69  -->
+<!-- question: 961  -->
   <question type="gapfill">
     <name>
       <text>ValuesInAnyOrder</text>
@@ -667,7 +667,7 @@
     <answerdisplay>gapfill</answerdisplay>
     <delimitchars>{}</delimitchars>
     <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
+    <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
       <text>gold|silver|bronze</text>
@@ -690,7 +690,7 @@
     <delimitchars>{}</delimitchars>
     <answerdisplay>gapfill</answerdisplay>
     <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
+    <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <correctfeedback format="html">
       <text></text>
