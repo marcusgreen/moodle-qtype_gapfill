@@ -74,8 +74,31 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
-          shuffle($this->allanswers);
-          $step->set_qt_var('_allanswers', serialize($this->allanswers));
+        /*         * this is for multiple values in any order with the | (or operator)
+         * it takes the first occurance of an or, splits it into separate fields
+         * that will be draggable when answering. It then discards any subsequent
+         * fields with an | in it.
+         */
+
+        /* $done = false;
+          $temp = array();
+          //  if ($this->answerdisplay == "dragdrop") {
+          foreach ($this->allanswers as $value) {
+          if (strpos($value, '|')) {
+          if ($done == false) {
+          $temp = explode("|", $value);
+          $done = true;
+          }
+          } else {
+          array_push($temp, $value);
+          }
+          }
+          $this->allanswers = $temp;
+          //}
+         * */
+
+        shuffle($this->allanswers);
+        $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 
     /**
@@ -297,7 +320,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function compare_response_with_answer($answergiven, $answer, $casesensitive, $disableregex = false) {
-        /*converts things like &lt; into <*/
+        /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
 
         /* useful with questions containing html code or math symbols */
