@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -69,7 +68,8 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
+                        $a->fraction, $a->feedback, $a->feedbackformat);
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
@@ -244,14 +244,13 @@ class qtype_gapfill extends question_type {
      * @return type array
      */
     public function get_answer_fields(array $answerwords, $question) {
- /* this code runs both on saving from a form and from importing and needs
- * improving as it mixes pulling information from the question object which
- * comes from the import and from $question->wronganswers field which 
- * comes from the question_editing form. 
- */
-        
+        /* this code runs both on saving from a form and from importing and needs
+         * improving as it mixes pulling information from the question object which
+         * comes from the import and from $question->wronganswers field which
+         * comes from the question_editing form.
+         */
         $answerfields = array();
-        /*this next block runs when importing from xml */
+        /* this next block runs when importing from xml */
         if (property_exists($question, 'answer')) {
             foreach ($question->answer as $key => $value) {
                 if ($question->fraction[$key] == 0) {
@@ -263,8 +262,8 @@ class qtype_gapfill extends question_type {
                 }
             }
         }
-        
-        /*the rest of this function runs when saving from edit form */
+
+        /* the rest of this function runs when saving from edit form */
         if (!property_exists($question, 'answer')) {
             foreach ($answerwords as $key => $value) {
                 $answerfields[$key]['value'] = $value;
@@ -286,8 +285,6 @@ class qtype_gapfill extends question_type {
                 $answerfields = array_merge($answerfields, $wronganswerfields);
             }
         }
-
-
         return $answerfields;
     }
 
