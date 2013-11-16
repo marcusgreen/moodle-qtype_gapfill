@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 951  -->
+<!-- question: 599  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -62,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 952  -->
+<!-- question: 600  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -110,7 +110,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 953  -->
+<!-- question: 601  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -188,7 +188,7 @@
     </hint>
   </question>
 
-<!-- question: 954  -->
+<!-- question: 602  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -280,7 +280,7 @@
     </hint>
   </question>
 
-<!-- question: 955  -->
+<!-- question: 603  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -361,7 +361,7 @@
     </hint>
   </question>
 
-<!-- question: 956  -->
+<!-- question: 604  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -419,7 +419,7 @@
     </hint>
   </question>
 
-<!-- question: 957  -->
+<!-- question: 605  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -468,7 +468,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 958  -->
+<!-- question: 606  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -541,7 +541,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 959  -->
+<!-- question: 607  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -583,7 +583,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 960  -->
+<!-- question: 608  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -647,16 +647,16 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 961  -->
+<!-- question: 609  -->
   <question type="gapfill">
     <name>
       <text>ValuesInAnyOrder</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the boolean option. So here it has been entered as [gold|silver|bronze] . Here is the question.</p>
-<p>What are the medals that can be won in the olympic games?</p>
-<p>Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</p>
-<p>{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</p>]]></text>
+      <text><![CDATA[<p><span style="font-size: medium;">The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the broken bar | operator to indicate the or operation, i.e. the answer can be this or that. So here it has been entered as [gold|silver|bronze] . Here is the question.</span></p>
+<p><span style="font-size: medium;">What are the medals that can be won in the olympic games?</span></p>
+<p><span style="font-size: medium;">Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</span></p>
+<p><span style="font-size: medium;">{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -701,6 +701,16 @@
     <incorrectfeedback format="html">
       <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
     </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Try again</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
   </question>
 
 </quiz>
