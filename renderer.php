@@ -44,9 +44,32 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers=unserialize($seranswers);
         $output = '';
-        if ($question->answerdisplay == "dragdrop") {
+        
+        
+      /*  if ($question->answerdisplay == "dragdrop") { 
+            $done=false;
+            $temp=array();
+            foreach ($this->allanswers as $key=>$value) {
+                if (strpos($value, '|'))  {
+                      if($done==false){
+                        $temp=explode("|",$value);
+                        $done=true;      
+                      }            
+                 
+                }else{
+                  array_push($temp, $value);
+                }
+            }     
+          } 
+          shuffle($temp);
+          $this->allanswers=$temp;
+        */
+		
+        if ($question->answerdisplay == "dragdrop") {        
             $ddclass = " draggable answers ";
             foreach ($this->allanswers as $value) {
+              
+            
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
             }
             $output.="</br></br>";
