@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -74,28 +75,26 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
-        /*         * this is for multiple values in any order with the | (or operator)
+        /* this is for multiple values in any order with the | (or operator)
          * it takes the first occurance of an or, splits it into separate fields
          * that will be draggable when answering. It then discards any subsequent
-         * fields with an | in it.
+         * fields with an | in it. Does the same thing for dropdowns as well
+         * It depends on every field having the same sequences of answers separated
+         * by | character
          */
-
-        /* $done = false;
-          $temp = array();
-          //  if ($this->answerdisplay == "dragdrop") {
-          foreach ($this->allanswers as $value) {
-          if (strpos($value, '|')) {
-          if ($done == false) {
-          $temp = explode("|", $value);
-          $done = true;
-          }
-          } else {
-          array_push($temp, $value);
-          }
-          }
-          $this->allanswers = $temp;
-          //}
-         * */
+        $done = false;
+        $temp = array();
+        foreach ($this->allanswers as $value) {
+            if (strpos($value, '|')) {
+                if ($done == false) {
+                    $temp = explode("|", $value);
+                    $done = true;
+                }
+            } else {
+                array_push($temp, $value);
+            }
+        }
+        $this->allanswers = $temp;
 
         shuffle($this->allanswers);
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
