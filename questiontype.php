@@ -191,7 +191,6 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
-        $options->wronganswers = $question->wronganswers;
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
