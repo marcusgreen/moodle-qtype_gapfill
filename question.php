@@ -74,7 +74,25 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
+  $done=false;
+            $temp=array();		   
+		 //  if ($this->answerdisplay == "dragdrop") { 
+          
+            foreach ($this->allanswers as $key=>$value) {
+                if (strpos($value, '|'))  {
+                      if($done==false){
+                        $temp=explode("|",$value);
+                        $done=true;      
+                      }            
+                 
+                }else{
+                  array_push($temp, $value);
+                }
+            }          
+          $this->allanswers=$temp;
+		  //}
           shuffle($this->allanswers);
+        
           $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 
