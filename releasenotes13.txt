@@ -5,7 +5,7 @@ can be useful for maths, HTML and programming questions. In this mode there char
 special meaning in regular expressions are treated as plain strings. 
 This feature appears as a checkbox in the More Options section of the question editing form. The default
 for this option can be set in the admin interface so you could set this to be checked by default for every
-new quesiton.
+new question.
 
 I have included a file called sample_questions.xml in with the source code that can be imported 
 to illustrate the features.
@@ -16,14 +16,15 @@ these will be broken into separate selectable answer options. This builds on the
 version that allowed this approach in plain gapfill mode and can discard duplicate correct answers. 
 
 This version has been modified to work with Moodle 2.6. Previous versions of this quesiton type 
-will throw an error when used with Moodle 2.6 which is linked to a rule on the quesiton text editing box.
+will throw an error when used with Moodle 2.6 which is linked to a rule on the question text editing box.
 
 This version has been tested mainly in Moodle 2.5 and for about a month with early versions of Moodle 2.6.It will probably work with Moodle 2.4 but it will not work at all with versions of Moodle prior to 2.1
 
 It is now possible to have commas in the answer strings and to have commas in distractors by escaping
 them with a backslash.
 
-A bug has been fixed that was stopping distractor options being exported to xml.
+A bug has been fixed that was stopping distractor options being exported to xml. A bug has been fixed in 
+the CSS which meant that there was no border to the gaps when viewed in chrome.
 
 Thanks to Adam Wojtkiewicz testing and feedback. I have implemented his suggestion for a minor modification
 to the Javascript to ensure it works along with geogebra. He has made some suggestions to allow the dragdrop code work on more mobile platforms which I hope to look at closely in the near future.
