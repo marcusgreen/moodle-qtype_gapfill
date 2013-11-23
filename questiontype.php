@@ -270,19 +270,21 @@ class qtype_gapfill extends question_type {
                 $answerfields[$key]['fraction'] = 1;
             }
         }
+      
         if (property_exists($question, 'wronganswers')) {
-            if ($question->wronganswers != '') {
+               if ($question->wronganswers['text'] != '') {
                 /* remove any trailing commas */
-                $question->wronganswers = rtrim($question->wronganswers, ',');
-                /* this allows escaped commas in wrong answers, i.e. \, */
+                $question->wronganswers['text'] = rtrim($question->wronganswers['text'], ',');
+                               
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
                     $wronganswerfields[$key]['fraction'] = 0;
                 }
                 $answerfields = array_merge($answerfields, $wronganswerfields);
+
             }
         }
         return $answerfields;
