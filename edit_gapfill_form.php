@@ -45,7 +45,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('text', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70));
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70,'rows'=>1),$this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -96,7 +96,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     public function set_data($question) {
         /* accessing the form in this way is probably not correct style */
-        $this->_form->getElement('wronganswers')->setValue($this->get_wrong_answers($question));
+        $wronganswers=$this->get_wrong_answers($question);
+        $this->_form->getElement('wronganswers')->setValue(array('text'=>$wronganswers));
         parent::set_data($question);
     }
 
