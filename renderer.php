@@ -185,7 +185,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     /*used to populate values that appear in dropdowns */
     public function get_dropdown_list() {
-        // Make the key and value the same in the array.
+        /* convert things like &gt; to > etc */
+        foreach($this->allanswers as $key=>$value){
+            $this->allanswers[$key]=htmlspecialchars_decode($value);
+        }
+       // Make the key and value the same in the array.
         $selectoptions=array_combine($this->allanswers, $this->allanswers);
         return $selectoptions;
     }
