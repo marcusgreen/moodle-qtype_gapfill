@@ -82,13 +82,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          */
         $done = false;
         $temp = array();
+        $this->allanswers=array_unique($this->allanswers);
         foreach ($this->allanswers as $value) {
             if (strpos($value, '|')) {
-                if ($done == false) {
-                    $temp = explode("|", $value);
-                    $done = true;
-                }
+                   $temp=array_merge($temp,explode("|", $value));                 
             } else {
+               
                 array_push($temp, $value);
             }
         }
@@ -319,6 +318,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function compare_response_with_answer($answergiven, $answer, $casesensitive, $disableregex = false) {
         /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
+        $answergiven=htmlspecialchars_decode($answergiven);
+      
 
         /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
