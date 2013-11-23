@@ -15,6 +15,7 @@
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
+
 .que.gapfill span.answers{
     cursor: pointer;
     border:solid .5px;
@@ -48,6 +49,17 @@
  -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
 }
 
+.gapfilltable td{
+   border:solid;
+   border-width:thin;
+}
+.gapfilltable th{
+   border:solid;
+   border-width:thin;
+   background-color: pink;
+
+   
+}
 .que.gapfill input.correctduplicate{
         background-color: #FFFF00;
 }
