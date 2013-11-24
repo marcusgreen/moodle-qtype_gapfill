@@ -56,9 +56,11 @@
 .gapfilltable th{
    border:solid;
    border-width:thin;
-   background-color: pink;
-
-   
+   background-color: lightgray;     
+}
+.gapfilltable caption{
+   border-bottom:solid;
+   border-width:thin;
 }
 .que.gapfill input.correctduplicate{
         background-color: #FFFF00;
