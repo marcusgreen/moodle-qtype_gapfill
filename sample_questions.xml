@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 599  -->
+<!-- question: 630  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -62,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 612  -->
+<!-- question: 631  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -146,7 +146,7 @@
     </hint>
   </question>
 
-<!-- question: 613  -->
+<!-- question: 632  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDragDropGroups</text>
@@ -287,7 +287,7 @@
     </hint>
   </question>
 
-<!-- question: 609  -->
+<!-- question: 633  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -353,7 +353,7 @@
     </hint>
   </question>
 
-<!-- question: 600  -->
+<!-- question: 634  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -401,7 +401,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 601  -->
+<!-- question: 635  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -479,7 +479,7 @@
     </hint>
   </question>
 
-<!-- question: 602  -->
+<!-- question: 636  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -571,7 +571,7 @@
     </hint>
   </question>
 
-<!-- question: 614  -->
+<!-- question: 637  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -654,7 +654,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 603  -->
+<!-- question: 638  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -735,7 +735,7 @@
     </hint>
   </question>
 
-<!-- question: 604  -->
+<!-- question: 639  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -793,21 +793,25 @@
     </hint>
   </question>
 
-<!-- question: 611  -->
+<!-- question: 640  -->
   <question type="gapfill">
     <name>
-      <text>Greater than</text>
+      <text>Maths Operators</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the greater than sign [&gt;]</p>]]></text>
+      <text><![CDATA[<p>What is the greater than sign [&gt;]</p>
+<p>What is the less than sign [&lt;]</p>
+<p>What is the addition symbol [+]</p>
+<p>What is the subtraction symbol [-]</p>
+<p>What is the multiplication symbol? [*]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
     </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
+    <defaultgrade>5.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <answerdisplay>dragdrop</answerdisplay>
+    <answerdisplay>dropdown</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
@@ -818,8 +822,26 @@
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="moodle_auto_format">
+    <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[&lt;]]></text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>+</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>-</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>*</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -831,31 +853,25 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>*</text>
+      <text>?</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>+</text>
+      <text>/</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>-</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>elephant</text>
+      <text>\</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <delimitchars>[]</delimitchars>
-    <answerdisplay>dragdrop</answerdisplay>
+    <answerdisplay>dropdown</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
@@ -870,7 +886,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 605  -->
+<!-- question: 641  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -919,7 +935,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 606  -->
+<!-- question: 642  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -992,7 +1008,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 607  -->
+<!-- question: 643  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1034,7 +1050,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 608  -->
+<!-- question: 644  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
