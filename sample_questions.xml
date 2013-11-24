@@ -153,7 +153,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and bovine. The key to this is using the | (or) operator. </p>
-<table class="gapfilltable" border="2" rules="rows"><caption>Categories</caption>
+<table class="gapfilltable" border="2" rules="rows">
 <tbody>
 <tr><th>Canine</th><th>Feline</th><th>Bovine</th></tr>
 <tr>
