@@ -62,6 +62,297 @@
     </hint>
   </question>
 
+<!-- question: 612  -->
+  <question type="gapfill">
+    <name>
+      <text>AnyOrderDDrop</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><span style="font-size: medium;">The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the broken bar | operator to indicate the or operation, i.e. the answer can be this or that. So here it has been entered as [gold|silver|bronze] . Here is the question.</span></p>
+<p><span style="font-size: medium;">What are the medals that can be won in the olympic games?</span></p>
+<p><span style="font-size: medium;">Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</span></p>
+<p><span style="font-size: medium;">{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>3.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>{}</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>brown</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>pink</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>green</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>{}</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct. Note how the actual mark matches the number of unique correct answers whatever the number of ticks is.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Try again</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+  </question>
+
+<!-- question: 613  -->
+  <question type="gapfill">
+    <name>
+      <text>AnyOrderDragDropGroups</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and bovine. The key to this is using the | (or) operator. </p>
+<table class="gapfilltable" border="2" rules="rows"><caption>Categories</caption>
+<tbody>
+<tr><th>Canine</th><th>Feline</th><th>Bovine</th></tr>
+<tr>
+<td>[wolf|dog|dingo]</td>
+<td>[lion|tiger|lynx]</td>
+<td>[buffalo|yak|antelope]</td>
+</tr>
+<tr>
+<td>[wolf|dog|dingo]</td>
+<td>[lion|tiger|lynx]</td>
+<td>[buffalo|yak|antelope]</td>
+</tr>
+<tr>
+<td>[wolf|dog|dingo]</td>
+<td>[lion|tiger|lynx]</td>
+<td>[buffalo|yak|antelope]</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>9.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>wolf|dog|dingo</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>lion|tiger|lynx</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>buffalo|yak|antelope</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>wolf|dog|dingo</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>lion|tiger|lynx</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>buffalo|yak|antelope</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>wolf|dog|dingo</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>lion|tiger|lynx</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>buffalo|yak|antelope</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>rat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>swallow</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>kangaroo</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Try again</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+  </question>
+
+<!-- question: 609  -->
+  <question type="gapfill">
+    <name>
+      <text>AnyOrderGapfill</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><span style="font-size: medium;">The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the broken bar | operator to indicate the or operation, i.e. the answer can be this or that. So here it has been entered as [gold|silver|bronze] . Here is the question.</span></p>
+<p><span style="font-size: medium;">What are the medals that can be won in the olympic games?</span></p>
+<p><span style="font-size: medium;">Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</span></p>
+<p><span style="font-size: medium;">{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>3.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>gapfill</answerdisplay>
+    <delimitchars>{}</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>gold|silver|bronze</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>{}</delimitchars>
+    <answerdisplay>gapfill</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct. Note how the actual mark matches the number of unique correct answers whatever the number of ticks is.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Try again</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+  </question>
+
 <!-- question: 600  -->
   <question type="gapfill">
     <name>
@@ -280,6 +571,89 @@
     </hint>
   </question>
 
+<!-- question: 614  -->
+  <question type="gapfill">
+    <name>
+      <text>DropDownMathSymbols</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>This demonstrates comparing basic maths symbols and depends on DisableRegex (regular expressions) being checked.</p>
+<p>What is the greater than symbol [&gt;]</p>
+<p>What is the less than symbol [&lt;]</p>
+<p>What is the addition symbol [+]</p>
+<p>What is the minus symbol [-]</p>
+<p>What is the multiply symbol [*]</p>
+<p> </p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>5.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dropdown</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[&gt;]]></text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[&lt;]]></text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>+</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>-</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>*</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>?</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dropdown</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
 <!-- question: 603  -->
   <question type="gapfill">
     <name>
@@ -417,6 +791,83 @@
       <shownumcorrect/>
       <clearwrong/>
     </hint>
+  </question>
+
+<!-- question: 611  -->
+  <question type="gapfill">
+    <name>
+      <text>Greater than</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the greater than sign [&gt;]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text><![CDATA[&gt;]]></text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text><![CDATA[&lt;]]></text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>*</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>+</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>-</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>elephant</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>1</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
   </question>
 
 <!-- question: 605  -->
@@ -645,72 +1096,6 @@
     <incorrectfeedback format="html">
       <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
     </incorrectfeedback>
-  </question>
-
-<!-- question: 609  -->
-  <question type="gapfill">
-    <name>
-      <text>ValuesInAnyOrder</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">The question uses the no duplicates option. This means a field may accept a range of words but if the same word is entered into more than one field it will only gain one mark for that word. The question syntax uses using the broken bar | operator to indicate the or operation, i.e. the answer can be this or that. So here it has been entered as [gold|silver|bronze] . Here is the question.</span></p>
-<p><span style="font-size: medium;">What are the medals that can be won in the olympic games?</span></p>
-<p><span style="font-size: medium;">Enter the same value twice or, e.g. gold, gold, silver. It will mark all answers correct with a tick, but if you notice the score will be 2 rather than three.</span></p>
-<p><span style="font-size: medium;">{gold|silver|bronze} {gold|silver|bronze} {gold|silver|bronze}</span></p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>3.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>gapfill</answerdisplay>
-    <delimitchars>{}</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>1</noduplicates>
-    <disableregex>0</disableregex>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>gold|silver|bronze</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>{}</delimitchars>
-    <answerdisplay>gapfill</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>1</noduplicates>
-    <disableregex>0</disableregex>
-    <correctfeedback format="html">
-      <text></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct. Note how the actual mark matches the number of unique correct answers whatever the number of ticks is.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Have another go</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>Try again</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
   </question>
 
 </quiz>
