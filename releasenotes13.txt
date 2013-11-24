@@ -1,7 +1,7 @@
 Version 1.3 of the Moodle Gapfill question type contributed by Marcus Green
 The main new feature is disableregex which switches from regular expressions for 
 matching the given answer with the stored answer to do a plain string comparison. This
-can be useful for maths, HTML and programming questions. In this mode thee characters that have a
+can be useful for maths, HTML and programming questions. In this mode the characters that have a
 special meaning in regular expressions are treated as plain strings. 
 This feature appears as a checkbox in the More Options section of the question editing form. The default
 for this option can be set in the admin interface so you could set this to be checked by default for every
