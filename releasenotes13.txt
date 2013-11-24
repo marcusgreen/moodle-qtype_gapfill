@@ -18,7 +18,9 @@ version that allowed this approach in plain gapfill mode and can discard duplica
 This version has been modified to work with Moodle 2.6. Previous versions of this quesiton type 
 will throw an error when used with Moodle 2.6 which is linked to a rule on the question text editing box.
 
-This version has been tested mainly in Moodle 2.5 and for about a month with early versions of Moodle 2.6.It will probably work with Moodle 2.4 but it will not work at all with versions of Moodle prior to 2.1
+This version has been tested mainly in Moodle 2.5 and for about a month with early versions of Moodle 2.6.
+It has been installed and briefly tested with 2.4 but it will not work at all with versions of Moodle prior 
+to 2.1
 
 It is now possible to have commas in the answer strings and to have commas in distractors by escaping
 them with a backslash.
@@ -27,9 +29,11 @@ A bug has been fixed that was stopping distractor options being exported to xml.
 the CSS which meant that there was no border to the gaps when viewed in chrome.
 
 Thanks to Adam Wojtkiewicz testing and feedback. I have implemented his suggestion for a minor modification
-to the Javascript to ensure it works along with geogebra. He has made some suggestions to allow the dragdrop code work on more mobile platforms which I hope to look at closely in the near future.
+to the Javascript to ensure it works along with Geogebra. He has made some suggestions to allow the dragdrop 
+code work on more mobile platforms which I hope to look at closely in the near future.
 
-Thanks for testing and feedback and comments from Joseph Rézeau, Frankie Kam and Nigel Robertson.
+Thanks for testing and feedback and comments from Joseph Rézeau, Frankie Kam and Nigel Robertson and 
+Wayne Prescott.
 
 The elevator pitch for this question type is as follows
 
