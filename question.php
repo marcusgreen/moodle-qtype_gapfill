@@ -340,8 +340,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         if (!$casesensitive) {
             $regexp .= 'i';
         }
-        if (preg_match($regexp, trim($answergiven))) {
+        /* the @ is to suppress warnings, e.g. someone forgot to turn off regex matching */
+        if (@preg_match($regexp, trim($answergiven))) {
             return true;
+        }else{
+            return false;
         }
     }
 
