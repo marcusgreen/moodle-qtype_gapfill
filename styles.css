@@ -15,7 +15,7 @@
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-/* for correct and distractor options that can be 
+/* for correct and distractor options that can be
 dragged into the answer fields */
 .que.gapfill span.answers{
     display: inline-block;
@@ -58,7 +58,7 @@ dragged into the answer fields */
 .gapfilltable th{
    border:solid;
    border-width:thin;
-   background-color: lightgray;     
+   background-color: lightgray;
 }
 .gapfilltable caption{
    border-bottom:solid;
