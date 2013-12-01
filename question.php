@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -82,12 +81,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          */
         $done = false;
         $temp = array();
-        $this->allanswers=array_unique($this->allanswers);
+        /* array_unique is for when you have multiple identical answers separated
+         * by |, i.e. olympic medals as [gold|silve|bronze]
+         */
+        $this->allanswers = array_unique($this->allanswers);
         foreach ($this->allanswers as $value) {
             if (strpos($value, '|')) {
-                   $temp=array_merge($temp,explode("|", $value));                 
+                $temp = array_merge($temp, explode("|", $value));
             } else {
-               
+
                 array_push($temp, $value);
             }
         }
@@ -318,9 +320,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function compare_response_with_answer($answergiven, $answer, $casesensitive, $disableregex = false) {
         /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
-        $answergiven=htmlspecialchars_decode($answergiven);
-      
-
+        $answergiven = htmlspecialchars_decode($answergiven);
         /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
             /* strcmp is case sensitive. If case sensitive is off both string and
@@ -343,7 +343,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         /* the @ is to suppress warnings, e.g. someone forgot to turn off regex matching */
         if (@preg_match($regexp, trim($answergiven))) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
