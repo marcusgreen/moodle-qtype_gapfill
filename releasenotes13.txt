@@ -37,4 +37,5 @@ Wayne Prescott.
 
 The elevator pitch for this question type is as follows
 
-"The Gapfill question type is so easy use, the instructions require one 7 word sentence. Put square braces around the missing words."
+"The Gapfill question type is so easy use, the instructions require one 7 word sentence. Put square braces around
+the missing words."
