@@ -15,13 +15,15 @@
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-
+/* for correct and distractor options that can be 
+dragged into the answer fields */
 .que.gapfill span.answers{
+    display: inline-block;
+    margin:1px;
     cursor: pointer;
     border:solid .5px;
     padding:1px;
     background:white;
-    /* font-size:48pt;*/
      z-index: 3;
     -moz-box-shadow: 3px 3px 4px #000;
     -webkit-box-shadow: 3px 3px 4px #000;
