@@ -28,12 +28,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public $correct_responses = array();
     public $marked_responses = array();
-    public $allanswers=array();
+    public $allanswers = array();
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
 
-          $question = $qa->get_question();
+        $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
             $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.9.1.min.js');
@@ -42,9 +42,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
 
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
-        $this->allanswers=unserialize($seranswers);
+        $this->allanswers = unserialize($seranswers);
         $output = '';
-        if ($question->answerdisplay == "dragdrop") {        
+        if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
             foreach ($this->allanswers as $value) {
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
@@ -110,9 +110,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size' => $size+1,
+            'size' => $size + 1,
             'class' => 'droppable ' . $inputclass
-            /*'style'=> 'width:'.(($size*10)).'px'*/
+                /* 'style'=> 'width:'.(($size*10)).'px' */
         );
 
         /* When previewing after a quiz is complete */
@@ -125,11 +125,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
-            /*blank out the style put in previously */
-            $inputattributes['style']='';
+            /* blank out the style put in previously */
+            $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
-            $selecthtml = html_writer::select($selectoptions, $inputname,
-                    $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
+                    $inputattributes) . ' ' . $feedbackimage;
             return $selecthtml;
         } else {
             return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
@@ -174,7 +174,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      */
     public function get_duplicate_feedback(question_attempt $qa) {
         $question = $qa->get_question();
-        if ($question->noduplicates == 0 ) {
+        if ($question->noduplicates == 0) {
             return;
         }
         $arr_unique = array_unique($this->correct_responses);
@@ -183,14 +183,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    /*used to populate values that appear in dropdowns */
+    /* used to populate values that appear in dropdowns */
+
     public function get_dropdown_list() {
         /* convert things like &gt; to > etc */
-        foreach($this->allanswers as $key=>$value){
-            $this->allanswers[$key]=htmlspecialchars_decode($value);
+        foreach ($this->allanswers as $key => $value) {
+            $this->allanswers[$key] = htmlspecialchars_decode($value);
         }
-       // Make the key and value the same in the array.
-        $selectoptions=array_combine($this->allanswers, $this->allanswers);
+        // Make the key and value the same in the array.
+        $selectoptions = array_combine($this->allanswers, $this->allanswers);
         return $selectoptions;
     }
 
