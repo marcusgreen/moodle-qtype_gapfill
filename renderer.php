@@ -47,9 +47,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
             foreach ($this->allanswers as $value) {
-                $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
+                $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp;";
             }
-            $output.="</br></br>";
+            $output.="<br/><br/>";
         }
         $marked_gaps = $question->get_marked_gaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
@@ -62,7 +62,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     $qa, 'question', 'questiontext', $question->id);
         }
 
-        $output.="</br>";
+        $output.="<br/>";
 
         if ($qa->get_state() == question_state::$invalid) {
             $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' =>
