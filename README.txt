@@ -1,4 +1,4 @@
-Gapfill question type V1.3 for Moodle 
+Gapfill question type V1.4 for Moodle 
 
 A simpler Cloze question type that only supports fill the the blank type questions. 
 Teacher can define the question with square braces to define the missing words. For example
@@ -23,3 +23,4 @@ Where moodle is webroot for your install.
 Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
 Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used (see help)
 Version 1.3 toggle regex for plain string compare. Useful for maths, html and programming language questions
+Version 1.4 added support for touch devices such as Apple iOS phones and tablets (iPhone/iPad) and Android devices 
