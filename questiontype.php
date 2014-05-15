@@ -131,7 +131,16 @@ class qtype_gapfill extends question_type {
          * value for the whole question. Value for
          * each gap can be only 0 or 1
          */
-        $form->defaultmark = count($gaps);
+        $ua=array_unique($gaps);
+        $discount=0;
+        foreach($ua as $gap=>$value){
+           if(preg_match("/!!/",$value)) {
+               $discount++;
+           }
+        }
+         
+        $form->defaultmark = (count($gaps)-$discount);
+        
         return parent::save_question($question, $form);
     }
 
