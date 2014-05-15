@@ -125,7 +125,7 @@ class qtype_gapfill extends question_type {
      * Does not allow setting any other value per space/field at the moment
      */
     public function save_question($question, $form) {
-        $gaps = $this->get_gaps($question, $form->delimitchars, $form->questiontext['text']);
+        $gaps = $this->get_gaps($form->delimitchars, $form->questiontext['text']);
         /* count the number of gaps
          * this is used to set the maximum
          * value for the whole question. Value for
@@ -144,7 +144,7 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-    public function get_gaps($question, $delimitchars, $questiontext) {
+    public function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
@@ -154,6 +154,7 @@ class qtype_gapfill extends question_type {
         $r = substr($delimitchars, 1, 1);
         $fieldregex = '/.*?\\' . $l . '(.*?)\\' . $r . '/';
         $matches = array();
+
         preg_match_all($fieldregex, $questiontext, $matches);
         return $matches[1];
     }
@@ -164,12 +165,14 @@ class qtype_gapfill extends question_type {
      * 
      */
     public function save_question_options($question) {
-        /* Save the extra data to your database tables from the
-          $question object, which has all the post data from editquestion.html */
+      /* Save the extra data to your database tables from the
+          $question object, which has all the post data from editquestion.html
+          although it is called question it seems to actually be the form
+         * */
 
-        $answerwords = $this->get_gaps($question, $question->delimitchars, $question->questiontext);
+        $gaps = $this->get_gaps($question->delimitchars, $question->questiontext);
         /* answerwords are the text within gaps */
-        $answerfields = $this->get_answer_fields($answerwords, $question);
+        $answerfields = $this->get_answer_fields($gaps, $question);
         global $DB;
 
         $context = $question->context;
