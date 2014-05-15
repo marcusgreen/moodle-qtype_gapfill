@@ -1,4 +1,4 @@
-Gapfill question type V1.4 for Moodle 
+Gapfill question type V1.5 for Moodle 
 
 A simpler Cloze question type that only supports fill the the blank type questions. 
 Teacher can define the question with square braces to define the missing words. For example
