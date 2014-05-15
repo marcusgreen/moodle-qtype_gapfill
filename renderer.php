@@ -48,7 +48,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dragdrop") {
             $ddclass = " draggable answers ";
             foreach ($this->allanswers as $value) {
+              if(trim($value)!=="!!"){
                 $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp;";
+                }
             }
             $output.="<br/><br/>";
         }
@@ -96,7 +98,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 $feedbackimage = $this->feedback_image($fraction);
                 /* sets the field background to green or yellow if fraction is 1 */
                 $inputclass = $this->get_input_class($marked_gaps, $qa, $fraction, $fieldname);
-            } else {
+            } else if ($fraction==0){
                 /* set background to red and image to cross if fraction is 0  */
                 $feedbackimage = $this->feedback_image($fraction);
                 $inputclass = $this->feedback_class($fraction);
