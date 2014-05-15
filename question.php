@@ -134,8 +134,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         /* checks that none of of the gaps is blanks */
         foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
-            if ($ans == "") {
-
+            if (($ans == "") && (!preg_match("/!!/",$value->answer))) {
                 return false;
             }
         }
@@ -271,7 +270,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
         list($right, $total) = $this->get_num_parts_right($response);
-        $this->fraction = $right / $total;
+        $this->fraction = $right / $this->defaultmark;
+        
         $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
@@ -303,7 +303,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
             }
         }
-        return $totalscore / count($this->places);
+        return $totalscore / $this->defaultmark;
     }
 
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
@@ -368,7 +368,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                         $correct_gaps[] = $response[$fieldname];
                     } else {
                         $marked_gaps[$fieldname]['value'] = $response[$fieldname];
-                        $marked_gaps[$fieldname]['fraction'] = 0;
+                       /* if the field contains blank (!!) and there is no response for it */
+                        if((preg_match("/!!/",$rightanswer)&& $response[$fieldname]==trim(""))){
+                        $marked_gaps[$fieldname]['fraction'] = -1;
+                        }else{
+                        $marked_gaps[$fieldname]['fraction'] = 0;                            
+                        }
                     }
                 }
             }
