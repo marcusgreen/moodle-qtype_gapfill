@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 630  -->
+<!-- question: 2  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -62,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 631  -->
+<!-- question: 3  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -146,7 +146,7 @@
     </hint>
   </question>
 
-<!-- question: 632  -->
+<!-- question: 4  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDragDropGroups</text>
@@ -287,7 +287,7 @@
     </hint>
   </question>
 
-<!-- question: 633  -->
+<!-- question: 5  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -353,7 +353,55 @@
     </hint>
   </question>
 
-<!-- question: 634  -->
+<!-- question: 17  -->
+  <question type="gapfill">
+    <name>
+      <text>blanks</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The cat sat on the [mat]</p>
+<p>The carpet sat on the [!!]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>mat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>!!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 6  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -401,7 +449,79 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 635  -->
+<!-- question: 1  -->
+  <question type="gapfill">
+    <name>
+      <text>Correct_empty_gaps with !!</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Use of the double !! indicates that a gap can be left blank and still considered a correct answer. This question shows how this can be used to ask students to put items into categories without indicating how many items are in each category.</p>
+<table border="0">
+<tbody class="gapfilltable">
+<tr><th>Feline</th><th>Canine</th></tr>
+<tr>
+<td>[tiger|lion]</td>
+<td>[wolf|!!]</td>
+</tr>
+<tr>
+<td>[tiger|lion]</td>
+<td>[wolf|!!]</td>
+</tr>
+</tbody>
+</table>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>3.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>wolf|!!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>wolf|!!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 7  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -479,7 +599,7 @@
     </hint>
   </question>
 
-<!-- question: 636  -->
+<!-- question: 8  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -571,7 +691,7 @@
     </hint>
   </question>
 
-<!-- question: 637  -->
+<!-- question: 9  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -654,7 +774,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 638  -->
+<!-- question: 10  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -735,7 +855,7 @@
     </hint>
   </question>
 
-<!-- question: 639  -->
+<!-- question: 11  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -793,7 +913,7 @@
     </hint>
   </question>
 
-<!-- question: 640  -->
+<!-- question: 12  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -886,7 +1006,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 641  -->
+<!-- question: 13  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -935,7 +1055,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 642  -->
+<!-- question: 14  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1008,7 +1128,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 643  -->
+<!-- question: 15  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1050,7 +1170,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 644  -->
+<!-- question: 16  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
