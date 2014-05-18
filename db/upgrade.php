@@ -74,9 +74,12 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $DB->change_database_structure($sql);
     }
     if ($oldversion < 2006082510) {
-          $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column disableregex tinyint(1)
-            default 0 after noduplicates   ";
-            $DB->change_database_structure($sql);
+         // $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column disableregex tinyint(1)
+         //   default 0 after noduplicates   ";
+        $table = new xmldb_table('question_gapfill');  
+        $field = new xmldb_field('disableregex', XMLDB_TYPE_INTEGER,null, null, null,
+                                                                    null, null, '1');
+        //$DB->change_database_structure($sql);
 
     }
 
