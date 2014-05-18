@@ -133,6 +133,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function is_complete_response(array $response) {
         /* checks that none of of the gaps is blanks */
         foreach ($this->answers as $key => $value) {
+            if(!preg_match("/!!/",$value->answer)){
+                return true;
+            }
             $ans = array_shift($response);
             if (($ans == "") && (!preg_match("/!!/",$value->answer))) {
                 return false;
