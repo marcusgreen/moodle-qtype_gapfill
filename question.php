@@ -132,16 +132,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_complete_response(array $response) {
         /* checks that none of of the gaps is blanks */
+        $iscomplete=true;
         foreach ($this->answers as $key => $value) {
-            if(!preg_match("/!!/",$value->answer)){
-                return true;
-            }
             $ans = array_shift($response);
+            /*if the response given is blank and the correct answer is not
+             * !! (which means the field can be left blank then the 
+             * response is not complete
+             */
             if (($ans == "") && (!preg_match("/!!/",$value->answer))) {
-                return false;
+                $iscomplete=false;;
             }
         }
-        return true;
+        return $iscomplete;
     }
 
     public function get_validation_error(array $response) {
@@ -273,8 +275,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
         list($right, $total) = $this->get_num_parts_right($response);
-        $this->fraction = $right / $this->defaultmark;
-        
+      //  $this->fraction = $right / $this->defaultmark;
+         $this->fraction = $right / $total;
         $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
