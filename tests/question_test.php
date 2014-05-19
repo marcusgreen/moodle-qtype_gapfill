@@ -59,6 +59,7 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_grade_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
+        
 
         $response = array('p1' => 'cat', 'p2' => 'dog');
         list($fraction, $state) = $question->grade_response($response);
