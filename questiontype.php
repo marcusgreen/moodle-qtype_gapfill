@@ -144,7 +144,7 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-     public function get_gaps($delimitchars, $questiontext) {
+     static function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
