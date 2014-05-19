@@ -46,6 +46,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         preg_match_all($fieldregex, $questiontext, $matches);
         /* just the field contents */
         $answerwords = $matches[1];
+        $gaps=qtype_gapfill::get_gaps("[]",$questiontext);
 
         $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
         $found = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
