@@ -35,7 +35,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     if ($oldversion < 2006082505) {
 
         /* some fractions may be zero which will confuse the new way of marking */
-        $sql = "update " . $CFG->prefix . "question_answers qa," . $CFG->prefix . "question q set qa.fraction='1' where q.id=qa.question and q.qtype='gapfill'";
+        $sql = "update " .$CFG->prefix."question_answers qa,".$CFG->prefix."question q set qa.fraction='1' where q.id=qa.question and q.qtype='gapfill'";
 
         $DB->execute($sql);
 
@@ -56,21 +56,17 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
             }
         }
 
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column wronganswers");
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column shuffledanswers");
-
-        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
-        $DB->change_database_structure($sql);
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill add column 'noduplicates' int(1) default 1 NULL ");
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill drop column wronganswers");
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill drop column shuffledanswers");
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive");
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill add column 'noduplicates' int(1) default 1 NULL ");
         $rs->close();
     }
     if ($oldversion == 2006082507) {
-        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive   ";
-        $DB->change_database_structure($sql);
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill add column noduplicates tinyint(1) default 1 after casesensitive");
     }
     if ($oldversion < 2006082510) {
-          $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column disableregex tinyint(1) default 0 after noduplicates   ";
-            $DB->change_database_structure($sql);
+        $DB->change_database_structure("ALTER TABLE ".$CFG->prefix."question_gapfill add column disableregex tinyint(1) default 0 after noduplicates");
 
     }
 
