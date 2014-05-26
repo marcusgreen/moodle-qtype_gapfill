@@ -22,5 +22,8 @@ Where moodle is webroot for your install.
 
 Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
 Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used (see help)
+<<<<<<< HEAD
 Version 1.3 toggle regex for plain string compare. Useful for maths, html and programming language questions
 Version 1.4 added support for touch devices such as Apple iOS phones and tablets (iPhone/iPad) and Android devices 
+=======
+>>>>>>> 491ec3fe12eb8ae071dc9043283324742747afcf
