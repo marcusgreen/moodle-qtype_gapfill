@@ -11,7 +11,7 @@ dropddropdown lists or javascript powered drag and drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created and tested under Moodle 2.5 and 2.6. It has also been tested with Moodle 2.4.
+This question type was created and tested under Moodle 2.5 and 2.7. It has also been tested with Moodle 2.4.
 It will not work with versions of moodle prior to 2.1.
 
 Place the files in a directory 
@@ -24,4 +24,4 @@ Version 1.1 includes a count of correct answers and clears incorrect responses i
 Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used (see help)
 Version 1.3 toggle regex for plain string compare. Useful for maths, html and programming language questions
 Version 1.4 added support for touch devices such as Apple iOS phones and tablets (iPhone/iPad) and Android devices 
-Version 1.5 added support for !! as blank fields that can be ignored
+Version 1.5 added support for gaps that are marked correct if left empty using !!
