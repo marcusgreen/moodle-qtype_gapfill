@@ -3,12 +3,12 @@
 <!-- question: 0  -->
   <question type="category">
     <category>
-        <text>$course$/Default for GFT2</text>
+        <text>$course$/Gapfill sample questions</text>
 
     </category>
   </question>
 
-<!-- question: 2  -->
+<!-- question: 72  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -17,7 +17,7 @@
       <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces. Enter 1 into the gap for the first try to see the hints.</span></p>
 <p><span style="font-size: medium;">Make the following php code print out the string "cat"</span></p>
 <p><span style="font-size: medium;">$ar= array('cat','mat');</span><br /><span style="font-size: medium;">print $ar[{0}];</span></p>
-<p> </p>]]></text>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -62,7 +62,7 @@
     </hint>
   </question>
 
-<!-- question: 3  -->
+<!-- question: 73  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -146,13 +146,13 @@
     </hint>
   </question>
 
-<!-- question: 4  -->
+<!-- question: 74  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDragDropGroups</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and bovine. The key to this is using the | (or) operator. </p>
+      <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and bovine. The key to this is using the | (or) operator. </p>
 <table class="gapfilltable" border="2" rules="rows">
 <tbody>
 <tr><th>Canine</th><th>Feline</th><th>Bovine</th></tr>
@@ -173,10 +173,10 @@
 </tr>
 </tbody>
 </table>
-<p> </p>
-<p> </p>
-<p> </p>
-<p> </p>]]></text>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -287,7 +287,7 @@
     </hint>
   </question>
 
-<!-- question: 5  -->
+<!-- question: 75  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -353,55 +353,7 @@
     </hint>
   </question>
 
-<!-- question: 17  -->
-  <question type="gapfill">
-    <name>
-      <text>blanks</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>The cat sat on the [mat]</p>
-<p>The carpet sat on the [!!]</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>dragdrop</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <disableregex>0</disableregex>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>mat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>!!</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>dragdrop</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>0</noduplicates>
-    <disableregex>0</disableregex>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-  </question>
-
-<!-- question: 6  -->
+<!-- question: 77  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -449,23 +401,27 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 1  -->
+<!-- question: 78  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Use of the double !! indicates that a gap can be left blank and still considered a correct answer. This question shows how this can be used to ask students to put items into categories without indicating how many items are in each category.</p>
-<table border="0">
-<tbody class="gapfilltable">
-<tr><th>Feline</th><th>Canine</th></tr>
+      <text><![CDATA[<span style="font-size: medium;"><p>Use of the double !! indicates that a gap must be left blank be considered correct. The !! fields get a mark if left blank and can be thought of as distractors. Do not use a space character between ! and ! to try to set the width, use any other character such as underscore and remember the ! and ! contribute to the character count.</p></span>
+
+<table class="gapfilltable" rules="rows" border="2">
+<tbody>
 <tr>
-<td>[tiger|lion]</td>
-<td>[wolf|!!]</td>
+<td>Canine</td>
+<td>[dog]</td>
 </tr>
 <tr>
-<td>[tiger|lion]</td>
-<td>[wolf|!!]</td>
+<td>Feline</td>
+<td>[cat]</td>
+</tr>
+<tr>
+<td>Bovine</td>
+<td>[!_!]</td>
 </tr>
 </tbody>
 </table>]]></text>
@@ -482,25 +438,25 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <answer fraction="100" format="moodle_auto_format">
-      <text>tiger|lion</text>
+      <text>dog</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text>wolf|!!</text>
+      <text>cat</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text>tiger|lion</text>
+      <text>!_!</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>wolf|!!</text>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>mouse</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -521,21 +477,21 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 7  -->
+<!-- question: 79  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question has disabled regular expressions. This means that special characters used in regular expressions such as &lt; / * . etc  will have no meaning which can be useful when creating questions for maths and programming or HTML (which of course uses the &lt; and &gt; characters extensively).</span></p>
+      <text><![CDATA[<p><span style="font-size: medium;">This question has disabled regular expressions. This means that special characters used in regular expressions such as &lt; / * . etc  will have no meaning which can be useful when creating questions for maths and programming or HTML (which of course uses the &lt; and &gt; characters extensively).</span></p>
 <p><span style="font-family: courier new,courier,monospace; font-size: medium;">2[+]2=4<br />4[/]2=2</span></p>
 <p><span style="font-size: medium;">The option for disable regex can be found in the More Options in the question editing form.</span></p>
 <p><span style="font-size: medium;">Complete the syntax for this for loop in PHP</span></p>
 <p><span style="font-size: medium; font-family: courier new,courier,monospace;">for($i=0;$i[&lt;]10;$++){</span></p>
 <p><span style="font-size: medium; font-family: courier new,courier,monospace;">print($i);</span></p>
 <p><span style="font-size: medium; font-family: courier new,courier,monospace;">}</span></p>
-<p> </p>
-<p> </p>]]></text>
+<p> </p>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -576,7 +532,7 @@
 <tbody>
 <tr>
 <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAIAAAC1eHXNAAAJc0lEQVRYhbWYaUxUVxuAHwFrrNa/NvqzTaOJGy5toiRN1URasbHVmKqNbWK0SVNjRNo0oehHqTLAgOCCggpq+aAoWhYtCKgoguIwKwMDjCwisjMbzMwdmJn7/WAcFgHF8r15Mj/O+95znnvm3DN3DuIUw+12C4LQ19fX09PT2tra2NjY3Nzc0dFhMplsNpvT6Zxqh0PBG9a5XK6+vj6dTpebmyuRSH744Ycvv/xy06ZNX3zxxVdffbVt27bdu3f/8ssvKSkp5eXlnZ2dAwMD0+zhdDo7Oztv3bp16NChdevWbdy4MTQ0NCsrq7Ky0m63u1+G3W6vrKz8+++/pVJpcHBwQkJCVVWV3W6fBg+3220wGPLy8nbv3r18+fLffvtNo9E4XU5FuyL+cfy+vH3rL6/3T/JffGbxyqSV6y+v35+3P6EiQdmudLlcarU6KSlJKpXW1tYODg6+vcfg4KBWqw0JCVm6dGl4eHhPT099T/3hosMLTiwggslZGL/w5+Kf9b367u7uS5cuZWRkmEwmt9s9ZQ+73V5QUPD5559v2bKlvr6+ydi0M3unb6Qvx/FwDKSQCKnwJ6TCGZDCMbw1fpF+3+Z8+8z0TK/XX7hw4fnz55OojONhtVozMzNXr14dGhrqcDhiK2LnxM5BApEQAefgJshBOx5yyINzEAGRIGFu7NwEWYLgELKysmpraydSGetht9szMzP9/f3Pnj1rspuCrgcRDVEQDinweILhX+URXIBwiIJott7YahEsRUVF9fX146qM8hgcHMzPz1+9enViYmJ7X/uqK6uQem6LElBPnXsQCZEg5eO0j7v6u0pKSlpbWyfzcLvdGo0mMDAwNDTUaDOuSltFHETAKagExdsig1PwB8SxJn2N2W6+ffu2zWab0MNgMBw+fDgoKEhwCJtzNhMPf0ASVE6AbCqcg2MQz9a8rXbBfvfuXZfLNY6H0+nMyclZtmxZXV1djDyGkyCBBKiYPuJBAieJV8Y3NjY2NDSM49HR0bFr167w8PCnhqfvJr3LCYiAh1A+fZTC73CCuUlzm0xNZWVlI6cEURRdLldeXt6KFSu6u7t33N7BGTgCt6B0Gnjn4TvpXenr1OsohTw4Amf4tujbrq4unU43ysNisRw8eDAsLKy6p9o32ZdYOAn3pwG/+35Z3VmiKPY7+zeoN1AC8RCHX7JfXW9dRUXFKI+ampq1a9eq1eqDZQdJgiPwD9z9t/jc9bnSccU7kt6mn3lvJjfhCCQR8ihEp9P19vZ6PNxud3Z29oYNG+wO+/z0+ZyGGCieOkWjmFE0I6k1ySvR4ehYVLbIk42CMyzMWOgYcMjlco+HIAjHjx8PCwt73PGYVIiGVLj9b4lrjvNK9A70LitbNpxNgRhIRd4lr6ys9HhYLJZ9+/ZdvXo1WhNNKvwHcuGff0WEPsIrYR40rylbM6ogB8LhEie0J2Qymceju7s7KCiosrLy+4ffkwK/w83xyHtTftX96pXod/YHlAWMU/Y7pLKvfJ9Go3E4HKIo0tLSEhgYaLVaAwoDuAgSyHl7DmgOeCUEl7CxfOOoguyXRMJF1hevN5vN9fX1oijS0NAQFBTkcDiW5i/lIsTAjVG8l/vemJaJ2Cvf6xY9v6UDroEt5VsmLI6GFPwL/B0Oh1qtFkWRpqamr7/+WhCED//5kFSIhWvDhGnDGvsbF9xcMLJxXHZW7HS5Pfuj0+3c8WjHZPVSSGVR/iJBEFQqlSiKtLW1bd++XRCEpYVLuQwxkAmZ+F71Pfv07FC/KqNq3vV5Q+3jsvXh1kG35yXULbq/q/hukmIyIRqu4F/kLwiCRqMRRRGj0bhr167+/v6AkgD+CxJIh3Rm/TWrqL3I+2UXtRfNypw1lBrDpnubBJfglfhR9uO4ZaOQQDqfPfjMZDLp9XpRFLFarcHBwTKZbI9sD9cgEtI8zMucpzKovCoZzRk+aT6e7J8ePi381OYcfpkIkYd4U5MRCVnsle9Vq9VD/3QYHBw8f/78tWvXJLUSsiEWUuCyhwVXFzT1NXmHidHGeFNc5pNbn1gGLN7sUdXRkdkJuQixkE1sfezwfiqKYmlpqVQqLess4yZchHhIGeajrI96hJ7hO34SMtS+InuFwWHwtkdrokdeNRlxkAI3edL9RKlUDnu0tbUdOnSo39Y//858rkM0XIDzw6zNXWsbtHlXwDd3v1l8bXGXvcsrcab6zIzzM0ZeMhlRcIOF9xZabdahh9bj4XA44uLilErlAe0B8uEUnIGkUWzO3+x9IgSnYBCGZyK1LtUnyWdMPUlwbjxOw2nIJ7g6uLa21mw2D3uIoqhWqxMTE1W9Kp9iH65DFCSOZX/JfvGV+Ev/l+9Z31eLJyQabuBX7Kc1aBUKhbcfj4fVapVIJG1tbdvV2ymG8xD30n0ERyqOjJTIbcqdmTiT03DqzYiFC1DMTs3Ojo6O5ubmsR5ut7umpiY1NbXGUDP7wWwKIA7iIWEsyVXJQ5cUPiucdXrWqwUTEg8noIC5D+bWGeu8K3SUhyiKAwMDaWlpOp3ueONx7kMeREHcWPzi/XKe5pS2ls45OefV7GREw024T0xTTGNjY1dX1/geoigajcbk5GSzxRyoCeThSxUpSCFmmNknZs9LmDey5fVEQR48ZEvVFrPZrNVqx6yzUR5ut7ulpSUjI6Pd0r5cuZxyyAcpSCDqbZGAFAqgnJWqlZ2WTu/eNaHHkIpWqy0sLGwyNa1Qr6AC7kMyRAwfKEyBP+A8PIAKVmlWPTM/02q1giC83sO7Zu/cudNuaQ/UBSKDJ5APJyH8NScww4TDSSiAJyBjs25zp6Wzqqqqv7//1RHH9xhSef78eUFBgclsOtZybLZiNnKohGJIhWNwFMLH4ygch1S4A5UgZ45iTlRLlNFoVCgU487EZB5DYbVah04sqo3V2/TbfFW+KPFQAXmQDmkjPvOgAm+Nr9J3h36HzqhraGioqqqaZKDXeIii6HK56uvrS0pK2traFAbFT80/za+ej4bJeb/6/QPNB1QG1YsXL+RyeWdn5+SjvN5jKJxOp1arLSsrq66uNveZH/Q+iHwRuad5T4A+YEndkg9qP1hStyRAH7CnaU9ka2RpT6nJYqqpqZHL5SN3zGnwGAq3293V1SWTyR4/fvzo0SOFQmEwGCwvw2AwKJXKiooKuVyuUqlMJtOb9zw1jzFhs9lqamqUSqVSqVSr1bW1tZMsw/+jx/TG/wDNyEJyJxDTcQAAAABJRU5ErkJggg==" alt="" /></td>
-<td><span style="font-size: medium;">Yes,  you can see how this does a plain text search and disables regular expressions</span></td>
+<td><span style="font-size: medium;">Yes,  you can see how this does a plain text search and disables regular expressions</span></td>
 </tr>
 </tbody>
 </table>]]></text>
@@ -599,7 +555,7 @@
     </hint>
   </question>
 
-<!-- question: 8  -->
+<!-- question: 80  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -691,7 +647,7 @@
     </hint>
   </question>
 
-<!-- question: 9  -->
+<!-- question: 81  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -703,7 +659,7 @@
 <p>What is the addition symbol [+]</p>
 <p>What is the minus symbol [-]</p>
 <p>What is the multiply symbol [*]</p>
-<p> </p>]]></text>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -774,7 +730,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 10  -->
+<!-- question: 82  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -787,14 +743,14 @@
 <p><span style="font-size: medium;"><img src="data:image/png;base64,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" alt="" /></span></p>
 </td>
 <td>
-<p> </p>
+<p> </p>
 <p><span style="font-size: medium;">The complete phrase is "The cat sat on the mat", but this time the word options are in dropdowns.</span></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
-<p><span style="font-size: medium;"> </span></p>]]></text>
+<p><span style="font-size: medium;"> </span></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -855,7 +811,7 @@
     </hint>
   </question>
 
-<!-- question: 11  -->
+<!-- question: 83  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -913,7 +869,7 @@
     </hint>
   </question>
 
-<!-- question: 12  -->
+<!-- question: 84  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -1006,7 +962,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 85  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -1055,17 +1011,17 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 86  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question illustrates that following a letter with a question mark ? will make it optional. The following gap will accept colours, colour, colors and colors as correct answers, so allowing both US and UK spelling of the word. If you look at the source of this question this gap contains <span style="font-size: medium;">colou?rs?</span> </span></p>
+      <text><![CDATA[<p><span style="font-size: medium;">This question illustrates that following a letter with a question mark ? will make it optional. The following gap will accept colours, colour, colors and colors as correct answers, so allowing both US and UK spelling of the word. If you look at the source of this question this gap contains <span style="font-size: medium;">colou?rs?</span> </span></p>
 <p><span style="font-size: medium;">Red, Green and Blue are examples of {colou?rs?}</span></p>
-<p><span style="font-size: medium;">This gap illustrates how you can "escape" the special characters used in regular expressions such as the dollar sign by preceeding them with a backslash i.e. \$.  The correct answer for this gap is the $ symbol. <br /></span></p>
+<p><span style="font-size: medium;">This gap illustrates how you can "escape" the special characters used in regular expressions such as the dollar sign by preceeding them with a backslash i.e. \$.  The correct answer for this gap is the $ symbol. <br /></span></p>
 <p><span style="font-size: medium;">The special character that indicates the start of a variable in PHP is the {\$} sign. (enter the $ sign)</span></p>
-<p><span style="font-size: medium;">The HTML tag to start a paragraph is {\&lt;p\&gt;}  (enter &lt;p&gt;)<br /></span></p>
+<p><span style="font-size: medium;">The HTML tag to start a paragraph is {\&lt;p\&gt;}  (enter &lt;p&gt;)<br /></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">Note there is an option under more options to switch off regular expression for the whole question, but escaping is useful where you need some regex processing.<br /></span></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">You can ensure any spare spaces between words are ignored with \s</span></span></p>
 <p><span style="font-size: medium;"><span style="font-size: medium;">The correct answer here is black and white but it will accept the words with one or more spaces between them {black\s+and\s+white}. <br /></span></span></p>
@@ -1075,7 +1031,7 @@
 <p><span style="font-size: medium;"><span style="font-size: medium;">and</span></span></p>
 <p><strong><span style="font-size: medium;"><span style="font-size: medium;">Regular Expression Short Answer</span></span></strong></p>
 <p><a href="https://moodle.org/plugins/view.php?plugin=qtype_regexp" target="_blank"><span style="font-size: medium;"><span style="font-size: medium;">https://moodle.org/plugins/view.php?plugin=qtype_regexp</span></span></a></p>
-<p> </p>]]></text>
+<p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -1128,7 +1084,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 87  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1170,7 +1126,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 88  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
