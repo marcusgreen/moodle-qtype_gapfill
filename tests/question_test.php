@@ -59,7 +59,6 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_grade_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-        
 
         $response = array('p1' => 'cat', 'p2' => 'dog');
         list($fraction, $state) = $question->grade_response($response);
@@ -81,17 +80,21 @@ class qtype_gapfill_question_test extends UnitTestCase {
     }
 
     public function test_is_complete_response() {
-        $question = qtype_gapfill_test_helper::make_question('gapfill');
+        
+    $question = qtype_gapfill_test_helper::make_question('gapfill');
 
         $response = array('p1' => 'cat', 'p2' => 'mat');
 
         $this->assertTrue($question->is_complete_response($response));
 
         $response = array('p1' => 'cat');
+        $question->gapcount=2;
         $this->assertFalse($question->is_complete_response($response));
 
         $this->assertFalse($question->is_complete_response(array()));
     }
+    
+    
     public function test_get_correct_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
         $this->assertEquals($question->get_correct_response(), array('p1'=>'cat', 'p2'=>'mat'));
@@ -99,6 +102,7 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_get_validation_error() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
+        $question->gapcount=2;
         $this->assertTrue(is_string($question->get_validation_error( array("") ) ));
     }
 
