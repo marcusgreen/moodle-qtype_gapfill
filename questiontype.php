@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -33,15 +34,16 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
-    /* data used by export_to_xml (among other things possibly */
 
+    public $blankregex = "/!.*!/";
+
+    /* data used by export_to_xml (among other things possibly */
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
             'noduplicates', 'disableregex');
     }
 
     /* populates fields such as combined feedback in the editing form */
-
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
@@ -49,13 +51,13 @@ class qtype_gapfill extends question_type {
     }
 
     /* called when previewing or at runtime in a quiz */
-
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
         }
-        foreach ($questiondata->options->answers as $a) {
+      
+        foreach ($questiondata->options->answers as $a) {  
             if (strstr($a->fraction, '1') == false) {
                 /* if this is a wronganswer/distractor strip any
                  * backslahses, this allows escaped backslashes to
@@ -68,30 +70,30 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
-                        $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
+                /* exclude gaps containing !! as the correct answer is to leave
+                 * these blank. They act as distractors
+                 */
+                $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
                 }
             }
         }
-    }
+   
+     }
 
     /*
      *  Called when previewing a question or when displayed in a quiz
      *  (not from within the editing form)
      */
-
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
-
         $question->places = array();
         $counter = 1;
-
         foreach ($questiondata->options->answers as $choicedata) {
-
             /* fraction contains a 1 */
             if (strpos($choicedata->fraction, '1') !== false) {
                 $question->places[$counter] = $choicedata->answer;
@@ -117,7 +119,6 @@ class qtype_gapfill extends question_type {
     }
 
     /**
-     *
      * @param type $question The current question
      * @param type $form The question editing form data
      * @return type object
@@ -131,20 +132,12 @@ class qtype_gapfill extends question_type {
          * value for the whole question. Value for
          * each gap can be only 0 or 1
          */
-        $ua=array_unique($gaps);
-        $discount=0;
-        foreach($ua as $gap=>$value){
-           if(preg_match("/!!/",$value)) {
-               $discount++;
-           }
-        }
-         
-        $form->defaultmark = (count($gaps)-$discount);
-        
+        $ua = array_unique($gaps);
+        $form->defaultmark = count($gaps);
         return parent::save_question($question, $form);
     }
 
-     static function get_gaps($delimitchars, $questiontext) {
+    function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
@@ -154,7 +147,6 @@ class qtype_gapfill extends question_type {
         $r = substr($delimitchars, 1, 1);
         $fieldregex = '/.*?\\' . $l . '(.*?)\\' . $r . '/';
         $matches = array();
-
         preg_match_all($fieldregex, $questiontext, $matches);
         return $matches[1];
     }
@@ -167,9 +159,8 @@ class qtype_gapfill extends question_type {
     public function save_question_options($question) {
         /* Save the extra data to your database tables from the
           $question object, which has all the post data from editquestion.html */
-
         $gaps = $this->get_gaps($question->delimitchars, $question->questiontext);
-      /* answerwords are the text within gaps */
+        /* answerwords are the text within gaps */
         $answerfields = $this->get_answer_fields($gaps, $question);
         global $DB;
 
@@ -196,7 +187,6 @@ class qtype_gapfill extends question_type {
             $options->delimitchars = '';
             $options->casesensitive = '';
             $options->noduplicates = '';
-            /* mavg */
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
@@ -205,7 +195,6 @@ class qtype_gapfill extends question_type {
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
-
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -213,7 +202,6 @@ class qtype_gapfill extends question_type {
     public function update_question_answers($question, array $answerfields) {
         global $DB;
         $oldanswers = $DB->get_records('question_answers', array('question' => $question->id), 'id ASC');
-
         // Insert all the new answers.
         foreach ($answerfields as $field) {
             // Save the true answer - update an existing answer if possible.
@@ -284,10 +272,8 @@ class qtype_gapfill extends question_type {
             if ($question->wronganswers['text'] != '') {
                 /* remove any trailing commas */
                 $question->wronganswers['text'] = rtrim($question->wronganswers['text'], ',');
-
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'],
-                        -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
