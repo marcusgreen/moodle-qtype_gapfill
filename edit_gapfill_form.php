@@ -36,7 +36,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answer;
     public $answerdisplay;
     public $delimitchars;
-
+    
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
