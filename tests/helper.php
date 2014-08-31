@@ -45,24 +45,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->qtype = question_bank::get_qtype('gapfill');
         $answerwords=$question->qtype->get_gaps($poptions['delimitchars'], $questiontext);
    
-         
-//        $l = '[';
-//        $r = ']';
-//        $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
-//        preg_match_all($fieldregex, $questiontext, $matches);
-//        /* just the field contents */
-//        $answerwords = $matches[1];
-
-//        $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
-//        $found = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
-//        $question->textfragments[0] = array_shift($found);
-//        $i = 1;
-//
-//        while (!empty($found)) {
-//            $question->textfragments[$i] = array_shift($found);
-//            $i += 1;
-//        }
-
         $question->places = array();
         $counter = 1;
 
@@ -123,16 +105,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         );
 
        $question= $question->qtype->make_question($questiondata);
-     //  var_dump($question->options);
-     //  return;
- 
-//        foreach ($questiondata->options->answers as $choicedata) {
-//            /* fraction contains a 1 */
-//            if (strpos($choicedata->fraction, '1') !== false) {
-//                $question->places[$counter] = $choicedata->answer;
-//                $counter++;
-//            }
-//        }
+
         $question->gapstofill=sizeof($answerwords);
         $question->disableregex = $poptions['disableregex'];
         $question->noduplicates = $poptions['noduplicates'];
@@ -153,7 +126,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
         $question->displayanswers = '1';
         $question->casesensitive = '1';
-        $question->gapstofill='2';
+        $question->gapcount='2';
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
 
         $question->places[1] = $answers[0];
