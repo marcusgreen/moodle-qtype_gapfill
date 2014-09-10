@@ -136,12 +136,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function validation($fromform, $data) {
         $errors = array();
         /* don't save the form if there are no fields defined */
-        $l = substr($fromform['delimitchars'], 0, 1);
-        $r = substr($fromform['delimitchars'], 1, 1);
-
-        $fieldregex = '/\\' . $l . '(.*?)\\' . $r . '/';
-        preg_match_all($fieldregex, $fromform['questiontext']['text'], $matches);
-        if (count($matches[0]) == 0) {
+        $gaps=qtype_gapfill::get_gaps($fromform['delimitchars'],$fromform['questiontext']['text']);
+        if (count($gaps) == 0) {
             $errors['questiontext'] = get_string('questionsmissing', 'qtype_gapfill');
         }
 
