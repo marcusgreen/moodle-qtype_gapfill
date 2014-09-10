@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -36,7 +37,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answer;
     public $answerdisplay;
     public $delimitchars;
-    
+
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
@@ -45,8 +46,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
-                array('size' => 70, 'rows'=>1), $this->editoroptions);
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -97,8 +97,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     public function set_data($question) {
         /* accessing the form in this way is probably not correct style */
-        $wronganswers=$this->get_wrong_answers($question);
-        $this->_form->getElement('wronganswers')->setValue(array('text'=>$wronganswers));
+        $wronganswers = $this->get_wrong_answers($question);
+        $this->_form->getElement('wronganswers')->setValue(array('text' => $wronganswers));
         parent::set_data($question);
     }
 
@@ -118,7 +118,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
                 }
             }
         }
-         return $wronganswers = rtrim($wronganswers, ',');
+        return $wronganswers = rtrim($wronganswers, ',');
     }
 
     protected function data_preprocessing($question) {
@@ -136,11 +136,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function validation($fromform, $data) {
         $errors = array();
         /* don't save the form if there are no fields defined */
-        $gaps=qtype_gapfill::get_gaps($fromform['delimitchars'],$fromform['questiontext']['text']);
+        $gaps = qtype_gapfill::get_gaps($fromform['delimitchars'], $fromform['questiontext']['text']);
         if (count($gaps) == 0) {
             $errors['questiontext'] = get_string('questionsmissing', 'qtype_gapfill');
         }
-
         if ($errors) {
             return $errors;
         } else {
