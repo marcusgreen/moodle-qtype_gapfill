@@ -56,7 +56,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
    // public $blankregex="/!!/";
     public $blankregex="/!.*!/";
 
-    
 
     /* the characters indicating a field to fill i.e. [cat] creates
      * a field where the correct answer is cat
@@ -100,7 +99,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             }
         }
         $this->allanswers = $temp;
-
         shuffle($this->allanswers);
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
@@ -236,10 +234,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $numright++;
             }
-                if (($answergiven == "") && (preg_match($this->blankregex,$rightanswer))) {
-                $numright++;
-            }
-        }
+       }
        return $numright;
    }
 
