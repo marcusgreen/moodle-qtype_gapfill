@@ -64,7 +64,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $output .= $question->format_text($fragment, $question->questiontextformat,
                     $qa, 'question', 'questiontext', $question->id);
         }
-
         $output.="<br/>";
 
         if ($qa->get_state() == question_state::$invalid) {
@@ -75,15 +74,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     public function embedded_element(question_attempt $qa, $place, question_display_options $options, $marked_gaps) {
-
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
-
         $rightanswer = $question->get_right_choice_for($place);
-
         $size=$this->get_width($rightanswer);
 
         /* $options->correctness is really about it being ready to mark, */
@@ -95,7 +91,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $response = $qa->get_last_qt_data();
             if ($fraction == 1) {
                 array_push($this->correct_responses, $response[$fieldname]);
-                if(!preg_match($question->blankregex,$rightanswer)){
+                /*if the gap contains !! but the response is (a correct) non blank */
+                if(!preg_match($question->blankregex,$rightanswer) || ($response[$fieldname]<>'')){
                      $feedbackimage = $this->feedback_image($fraction);
                      /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($marked_gaps, $qa, $fraction, $fieldname);
@@ -201,13 +198,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     public function get_width($rightanswer){
-       //$size = strlen(htmlspecialchars_decode($rightanswer));
         $rightanswer=htmlspecialchars_decode($rightanswer);
         $words=explode("|",$rightanswer);
         $lengthtotal=0;
         foreach($words as $word){
             $lengthtotal=$lengthtotal+strlen($word);
         }
+        /*divide the sum of the length of the words 
+         * by the count of words, i.e. get the average
+         */
      return $lengthtotal/count($rightanswer);
     }
     /* overriding base class method purely to return a string yougotnrightcount
