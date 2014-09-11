@@ -371,6 +371,50 @@ What are the colors of the Olympic medals?
         $this->quba->finish_all_questions();
     }
 
+  public function test_deferred_grade_for_blank() {
+        /* this is for the scenario where you have multiple fields
+         * and each field could take any value. The marking is designed
+         * to asssure that the student cannot get credited more than once
+         * for each value, i.e. so if the answer is gold,silver, bronze
+         * they cannot get 3 marks by entereing gold, gold and gold
+         */
+
+        /* Create a gapfill question that gives a mark where one response
+         * is designed to be blank, i.e. [!!] */
+        $questiontext = '
+ [one] sat on the [two] [!!] ';
+
+        $options = array();
+        $options['noduplicates'] = 0;
+        $options['disableregex'] = 0;
+        $options['delimitchars'] = '[]';
+
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, $options);
+
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', $gapfill->gapstofill);
+        /* A mark for a blank submission where the gap is [!!]*/
+        $submission = array('p1' => 'one', 'p2' => 'two', 'p3' => '');
+
+        // Check the initial state.
+        $this->check_current_state(question_state::$todo);
+        $this->check_step_count(1);
+        // Save a  correct response.
+        $this->process_submission($submission);
+
+        $this->check_current_output(
+                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_feedback_expectation(), 
+                $this->get_does_not_contain_validation_error_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_no_hint_visible_expectation());
+        
+        $this->process_submission(array('-finish' => 1));
+
+        $this->check_current_mark(3);
+        $this->check_current_state(question_state::$gradedright);
+        $this->quba->finish_all_questions();
+    }
+
     public function test_immediatefeedback_with_correct() {
 
         // Create a gapfill question.
