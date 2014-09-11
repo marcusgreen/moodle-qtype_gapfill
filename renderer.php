@@ -91,7 +91,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $response = $qa->get_last_qt_data();
             if ($fraction == 1) {
                 array_push($this->correct_responses, $response[$fieldname]);
-                /*if the gap contains !! but the response is (a correct) non blank */
+                /*if the gap contains !! or  the response is (a correct) non blank */
                 if(!preg_match($question->blankregex,$rightanswer) || ($response[$fieldname]<>'')){
                      $feedbackimage = $this->feedback_image($fraction);
                      /* sets the field background to green or yellow if fraction is 1 */
