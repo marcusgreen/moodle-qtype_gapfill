@@ -38,6 +38,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $correctfeedback;
     public $noduplicates;
     public $disableregex;
+    public $fixedgapsize;
+    public $maxgapsize;
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
     public $correctfeedbackformat;
