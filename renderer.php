@@ -41,7 +41,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $PAGE->requires->js('/question/type/gapfill/jquery/jquery.ui.touch-punch.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
-
+       
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
         $output = '';
@@ -80,7 +80,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
-        $size=$this->get_width($rightanswer);
+        if($question->fixedgapsize==1){
+          $size=$question->maxgapsize;
+        }else{
+          $size=$this->get_width($rightanswer);
+        }
 
         /* $options->correctness is really about it being ready to mark, */
         $feedbackimage = "";
@@ -114,7 +118,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'id' => $inputname,
             'size' => $size,
             'class' => 'droppable ' . $inputclass,
-            'style'=> 'height:1em; width:'.$size.'em'
+            'style'=> 'height:1em;'
         );
 
         /* When previewing after a quiz is complete */
