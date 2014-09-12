@@ -40,7 +40,7 @@ class qtype_gapfill extends question_type {
     /* data used by export_to_xml (among other things possibly */
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex');
+            'noduplicates', 'disableregex','fixedgapsize');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -93,14 +93,19 @@ class qtype_gapfill extends question_type {
         $this->initialise_combined_feedback($question, $questiondata);
         $question->places = array();
         $counter = 1;
+        $question->maxgapsize=0;
         foreach ($questiondata->options->answers as $choicedata) {
+            $len=strlen($choicedata->answer);
+            if($len >$question->maxgapsize){
+                $question->maxgapsize=$len;
+            }
             /* fraction contains a 1 */
             if (strpos($choicedata->fraction, '1') !== false) {
                 $question->places[$counter] = $choicedata->answer;
                 $counter++;
             }
         }
-
+   
         /* Will put empty places '' where there is no text content.
          * l for left delimiter r for right delimiter
          */
@@ -195,6 +200,7 @@ class qtype_gapfill extends question_type {
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
+        $options->fixedgapsize = $question->fixedgapsize;        
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -328,6 +334,8 @@ class qtype_gapfill extends question_type {
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
+         $output .= '    <fixedgapsize>' . $question->options->disableregex .
+                "</fixedgapsize>\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
