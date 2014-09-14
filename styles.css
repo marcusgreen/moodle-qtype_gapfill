@@ -55,6 +55,14 @@ dragged into the answer fields */
    border:solid;
    border-width:thin;
 }
+
+.gapfillfirstcol {
+    background-color:#BCBBBB;
+}
+
+.gapfillcol{
+    background-color: lightgray;
+}
 .gapfilltable th{
    border:solid;
    border-width:thin;
