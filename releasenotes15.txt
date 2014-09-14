@@ -6,5 +6,4 @@ This is illustrated in a new sample question in the sample_questions.xml files s
 called "Correct_empty_gaps with !!"  As part of this change the calculation of maximum score per question instance has been modified
 to allow for the !! blanks.
 
-The upgrade.php file has been changed to fix an issue that may occur with databases other than MySQL.
-
+The upgrade.php file to use XMLDB to fix issues with databases other than MySQL.
