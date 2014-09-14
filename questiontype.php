@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -38,12 +37,14 @@ class qtype_gapfill extends question_type {
     public $blankregex = "/!.*!/";
 
     /* data used by export_to_xml (among other things possibly */
+
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex','fixedgapsize');
+            'noduplicates', 'disableregex', 'fixedgapsize');
     }
 
     /* populates fields such as combined feedback in the editing form */
+
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
@@ -51,26 +52,30 @@ class qtype_gapfill extends question_type {
     }
 
     /* called when previewing or at runtime in a quiz */
+
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
         }
-      
-        foreach ($questiondata->options->answers as $a) {  
+
+        foreach ($questiondata->options->answers as $a) {
             if (strstr($a->fraction, '1') == false) {
                 /* if this is a wronganswer/distractor strip any
-                 * backslahses, this allows escaped backslashes to
+                 * backslashes, this allows escaped backslashes to
                  * be used i.e. \, and not displayed in the draggable
                  * area
                  */
                 $a->answer = stripslashes($a->answer);
             }
-            array_push($question->allanswers, $a->answer);
+            if (!in_array($a->answer, $question->allanswers)) {
+                array_push($question->allanswers, $a->answer);
+            }
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer,
+                        $a->fraction, $a->feedback, $a->feedbackformat);
                 /* exclude gaps containing !! as the correct answer is to leave
                  * these blank. They act as distractors
                  */
@@ -80,24 +85,24 @@ class qtype_gapfill extends question_type {
                 }
             }
         }
-   
-     }
+    }
 
     /*
      *  Called when previewing a question or when displayed in a quiz
      *  (not from within the editing form)
      */
+
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
         $question->places = array();
         $counter = 1;
-        $question->maxgapsize=0;
+        $question->maxgapsize = 0;
         foreach ($questiondata->options->answers as $choicedata) {
-            $len=strlen($choicedata->answer);
-            if($len >$question->maxgapsize){
-                $question->maxgapsize=$len;
+            $len = strlen($choicedata->answer);
+            if ($len > $question->maxgapsize) {
+                $question->maxgapsize = $len;
             }
             /* fraction contains a 1 */
             if (strpos($choicedata->fraction, '1') !== false) {
@@ -105,7 +110,7 @@ class qtype_gapfill extends question_type {
                 $counter++;
             }
         }
-   
+
         /* Will put empty places '' where there is no text content.
          * l for left delimiter r for right delimiter
          */
@@ -142,7 +147,7 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-    function get_gaps($delimitchars, $questiontext) {
+    public function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
@@ -179,6 +184,8 @@ class qtype_gapfill extends question_type {
         return true;
     }
 
+    /* runs from question editing form */
+
     public function update_question_gapfill($question, $options, $context) {
         global $DB;
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
@@ -200,7 +207,7 @@ class qtype_gapfill extends question_type {
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
-        $options->fixedgapsize = $question->fixedgapsize;        
+        $options->fixedgapsize = $question->fixedgapsize;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -279,7 +286,8 @@ class qtype_gapfill extends question_type {
                 /* remove any trailing commas */
                 $question->wronganswers['text'] = rtrim($question->wronganswers['text'], ',');
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1,
+                        PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
@@ -334,7 +342,7 @@ class qtype_gapfill extends question_type {
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
-         $output .= '    <fixedgapsize>' . $question->options->disableregex .
+        $output .= '    <fixedgapsize>' . $question->options->disableregex .
                 "</fixedgapsize>\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
