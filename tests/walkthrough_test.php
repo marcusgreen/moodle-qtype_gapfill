@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -50,11 +49,11 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_step_count(1);
 
         $this->check_current_output(
-                $this->get_contains_marked_out_of_summary(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
         // Save an  correct response.
@@ -145,15 +144,14 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
 
-
         $this->check_step_count(1);
 
         $this->check_current_output(
-                $this->get_contains_marked_out_of_summary(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
         // Save a  correct response.
@@ -163,11 +161,11 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$todo);
 
         $this->check_current_output(
-                $this->get_contains_marked_out_of_summary(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_contains_marked_out_of_summary(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
         // Submit saved response.
@@ -177,9 +175,9 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedright);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
         $this->check_current_mark(2);
@@ -196,7 +194,10 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), $this->get_does_not_contain_validation_error_expectation(), $this->get_does_not_contain_try_again_button_expectation(), $this->get_no_hint_visible_expectation());
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
@@ -208,9 +209,9 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_step_count(2);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
         $this->check_current_state(question_state::$todo);
@@ -233,7 +234,6 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $options['disableregex'] = 1;
         $options['delimitchars'] = '[]';
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, $options);
-        // var_dump($gapfill->options);
         $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
 
         $this->check_current_state(question_state::$todo);
@@ -282,7 +282,9 @@ What are the colors of the Olympic medals?
         $this->check_step_count(1);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), $this->get_does_not_contain_validation_error_expectation(), $this->get_no_hint_visible_expectation());
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_no_hint_visible_expectation());
 
         $this->check_current_mark(null);
 
@@ -329,14 +331,14 @@ What are the colors of the Olympic medals?
         $this->process_submission($submission);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation()
+                , $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
-  
+
         $this->check_current_mark(null);
-        
+
         // Save a  correct response.
         $submission = array('-submit' => 1, 'p1' => 'one', 'p2' => 'two', 'p3' => '');
 
@@ -354,13 +356,12 @@ What are the colors of the Olympic medals?
         $this->check_current_state(question_state::$todo);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
 
-        
         $submission = array('-submit' => 1, 'p1' => 'one', 'p2' => 'two', 'p3' => "three");
         $this->process_submission($submission);
         $this->check_current_mark(2);
@@ -371,7 +372,7 @@ What are the colors of the Olympic medals?
         $this->quba->finish_all_questions();
     }
 
-  public function test_deferred_grade_for_blank() {
+    public function test_deferred_grade_for_blank() {
         /* this is for the scenario where you have multiple fields
          * and each field could take any value. The marking is designed
          * to asssure that the student cannot get credited more than once
@@ -392,7 +393,7 @@ What are the colors of the Olympic medals?
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, $options);
 
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $gapfill->gapstofill);
-        /* A mark for a blank submission where the gap is [!!]*/
+        /* A mark for a blank submission where the gap is [!!] */
         $submission = array('p1' => 'one', 'p2' => 'two', 'p3' => '');
 
         // Check the initial state.
@@ -402,12 +403,12 @@ What are the colors of the Olympic medals?
         $this->process_submission($submission);
 
         $this->check_current_output(
-                $this->get_does_not_contain_try_again_button_expectation(), 
-                $this->get_does_not_contain_feedback_expectation(), 
-                $this->get_does_not_contain_validation_error_expectation(), 
-                $this->get_does_not_contain_try_again_button_expectation(), 
+                $this->get_does_not_contain_try_again_button_expectation(),
+                $this->get_does_not_contain_feedback_expectation(),
+                $this->get_does_not_contain_validation_error_expectation(),
+                $this->get_does_not_contain_try_again_button_expectation(),
                 $this->get_no_hint_visible_expectation());
-        
+
         $this->process_submission(array('-finish' => 1));
 
         $this->check_current_mark(3);
@@ -433,7 +434,6 @@ What are the colors of the Olympic medals?
         $this->process_submission(array('p0' => 'cat', 'p1' => 'cat'));
         $this->check_step_count(2);
         $this->check_current_mark(null);
-
 
         $this->check_current_state(question_state::$todo);
         // Submit saved response.
