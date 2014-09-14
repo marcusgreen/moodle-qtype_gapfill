@@ -27,5 +27,8 @@ if ($ADMIN->fulltree) {
         get_string('disableregex', 'qtype_gapfill'), "", 0));
     $settings->add(new admin_setting_configcheckbox('qtype_gapfill/fixedgapsized',
         get_string('fixedgapsize', 'qtype_gapfill'), "", 0));
-    
+    $settings->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
+        'Delimit Chars',
+        '',
+         '[ ],{ },# #,@ @', PARAM_RAW, 20, 3));
 }
