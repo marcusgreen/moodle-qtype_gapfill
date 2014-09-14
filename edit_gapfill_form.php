@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -46,7 +45,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
+                array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -63,8 +63,22 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
         // The delimiting characters around fields.
-        $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
-        $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars);
+
+        $config = get_config('qtype_gapfill');
+        /* turn  config->delimitchars into an array) */
+        $delimitchars = explode(",", $config->delimitchars);
+        /* copies the values into the keys */
+        $delimitchars = array_combine($delimitchars, $delimitchars);
+        /* strip any spaces from keys. This is about backward compatibility with old code
+         * and avoiding having to expand the size of the delimitchar column from its current
+         * 2. The value in the drop down looks better with a gap between the delimitchars, but
+         * a gap in the key will break the insert into the question_gapfill table
+         */
+        foreach ($delimitchars as $key => $value) {
+            $key2 = str_replace(' ', '', $key);
+            $delimitchars2[$key2] = $value;
+        }
+        $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars2);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
         $answer_display_types = array("dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'),
@@ -75,21 +89,21 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
-
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
 
+        /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
-
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
 
+        /* use plain string matching instead of regular expressions */
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
-        $config = get_config('qtype_gapfill');
         $mform->setDefault('disableregex', $config->disableregex);
-        
+
+        /* sets all gaps to the size of the largest gap, avoids giving clues to the correct answer */
         $mform->addElement('advcheckbox', 'fixedgapsize', get_string('fixedgapsize', 'qtype_gapfill'));
         $config = get_config('qtype_gapfill');
-//        $mform->setDefault('disableregex', $config->fixedgapsize);
+        $mform->setDefault('disableregex', $config->fixedgapsize);
         $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
 
         // To add combined feedback (correct, partial and incorrect).
@@ -154,5 +168,4 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function qtype() {
         return 'gapfill';
     }
-
 }
