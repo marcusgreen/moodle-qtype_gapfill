@@ -8,15 +8,15 @@
     </category>
   </question>
 
-<!-- question: 72  -->
+<!-- question: 29  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><span style="font-size: medium;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces. Enter 1 into the gap for the first try to see the hints.</span></p>
+      <text><![CDATA[<p><span style="font-size: large;">This question is designed to demonstrate that the gaps can be delimited by characters other than the default square braces. This is useful for questions about programming languages for example where the questions are about arrays in a language that uses square braces. Enter 1 into the gap for the first try to see the hints.</span></p>
 <p><span style="font-size: medium;">Make the following php code print out the string "cat"</span></p>
-<p><span style="font-size: medium;">$ar= array('cat','mat');</span><br /><span style="font-size: medium;">print $ar[{0}];</span></p>
+<p><span style="font-size: medium;">$ar= array('cat','mat');</span><br><span style="font-size: medium;">print $ar[{0}];</span></p>
 <p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -30,6 +30,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>0</text>
       <feedback format="moodle_auto_format">
@@ -41,6 +42,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAmCAIAAADiLeRoAAACOUlEQVRYhc3Yv+s5cRzA8XeXLkmXJEkG6SbdJKMuySjTTbrp0ieZJMmkdEm6QXpnkEkySzIaTTLKIEkGmS7dcEmX76BP+fp8+OL9qvs+/4B3j969371/oMv/FwIZRVEUhmEYhkmn06fTyXyTqqoURaHvGo2G+ab5fI5uSiQS5pvG4/GtiWVZ8021Wu3W5PV6TTYdj0eXy3Vr4nneZFMul0N/V61WzTR1u907EE3T+/3eNFOn07FYLHcmSZIIQR+aNE3LZDLoR06nk3yS3jbpuo4x9vl8P0EIoV6vRw56z6RpWigU+lWDEIrH4yCg90z1ev0RyGq1rlYrE0zBYPCRqVKpQIHeMC0Wi0cghBDP84IgCIIgSdLXd4VCodlsTqfTd28Kr5pkWX5iep7b7e52u/AmlmU/Nl0TRdEwDDDT3cn/ce12G8Z0Op04jgMxlctlAJNhGIIggIA4jlNVldR0Pp8lSQIBRSIRXddfAT0zLZfLcDgMArrWarWITNls9vbaDxLDMET7LhqNwoKuaZr2uUkURXDQ6++Z302lUgkWZLfbN5sNkanVasGaKIrabrdEpuFwCGtCCGGMiUx3T1uQFEUhMh0OB1iQw+EgXU+Xy4WmaSiQx+NZr9cvgp6ZAoEAlAkhVCgUAEw8zwOaXC4XgCmVSgGaYrEYgKlYLEKB/H7/brcDMGGMyTVOpzOfz794zP3bNBgMEEIcx8myPJlMZrPZaDTCGCeTSZvN9pxis9mSyWS/3//sb/MPrGbpzVpcVHgAAAAASUVORK5CYII=" alt="" /><span style="font-size: large;">Correct!</span></p>]]></text>
     </correctfeedback>
@@ -62,7 +64,7 @@
     </hint>
   </question>
 
-<!-- question: 73  -->
+<!-- question: 30  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -84,6 +86,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>gold|silver|bronze</text>
       <feedback format="moodle_auto_format">
@@ -125,6 +128,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -146,148 +150,7 @@
     </hint>
   </question>
 
-<!-- question: 74  -->
-  <question type="gapfill">
-    <name>
-      <text>AnyOrderDragDropGroups</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and bovine. The key to this is using the | (or) operator. </p>
-<table class="gapfilltable" border="2" rules="rows">
-<tbody>
-<tr><th>Canine</th><th>Feline</th><th>Bovine</th></tr>
-<tr>
-<td>[wolf|dog|dingo]</td>
-<td>[lion|tiger|lynx]</td>
-<td>[buffalo|yak|antelope]</td>
-</tr>
-<tr>
-<td>[wolf|dog|dingo]</td>
-<td>[lion|tiger|lynx]</td>
-<td>[buffalo|yak|antelope]</td>
-</tr>
-<tr>
-<td>[wolf|dog|dingo]</td>
-<td>[lion|tiger|lynx]</td>
-<td>[buffalo|yak|antelope]</td>
-</tr>
-</tbody>
-</table>
-<p> </p>
-<p> </p>
-<p> </p>
-<p> </p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>9.0000000</defaultgrade>
-    <penalty>0.3333333</penalty>
-    <hidden>0</hidden>
-    <answerdisplay>dragdrop</answerdisplay>
-    <delimitchars>[]</delimitchars>
-    <casesensitive>0</casesensitive>
-    <noduplicates>1</noduplicates>
-    <disableregex>0</disableregex>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>wolf|dog|dingo</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>lion|tiger|lynx</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>buffalo|yak|antelope</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>wolf|dog|dingo</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>lion|tiger|lynx</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>buffalo|yak|antelope</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>wolf|dog|dingo</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>lion|tiger|lynx</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100" format="moodle_auto_format">
-      <text>buffalo|yak|antelope</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>rat</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>swallow</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>kangaroo</text>
-      <feedback format="moodle_auto_format">
-        <text></text>
-      </feedback>
-    </answer>
-    <delimitchars>[]</delimitchars>
-    <answerdisplay>dragdrop</answerdisplay>
-    <casesensitive>0</casesensitive>
-    <noduplicates>1</noduplicates>
-    <disableregex>0</disableregex>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
-    </incorrectfeedback>
-    <hint format="html">
-      <text><![CDATA[<p>Try again</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-    <hint format="html">
-      <text><![CDATA[<p>Have another go</p>]]></text>
-      <shownumcorrect/>
-      <clearwrong/>
-    </hint>
-  </question>
-
-<!-- question: 75  -->
+<!-- question: 32  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -309,6 +172,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>gold|silver|bronze</text>
       <feedback format="moodle_auto_format">
@@ -332,6 +196,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -353,7 +218,7 @@
     </hint>
   </question>
 
-<!-- question: 77  -->
+<!-- question: 33  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -373,6 +238,7 @@
     <casesensitive>1</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>Cat</text>
       <feedback format="moodle_auto_format">
@@ -390,6 +256,7 @@
     <casesensitive>1</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -401,7 +268,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 78  -->
+<!-- question: 34  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
@@ -437,6 +304,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>dog</text>
       <feedback format="moodle_auto_format">
@@ -466,6 +334,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -477,7 +346,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 79  -->
+<!-- question: 35  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -504,6 +373,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>+</text>
       <feedback format="moodle_auto_format">
@@ -527,6 +397,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<table border="0">
 <tbody>
@@ -555,7 +426,7 @@
     </hint>
   </question>
 
-<!-- question: 80  -->
+<!-- question: 36  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -585,6 +456,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -626,6 +498,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p><img src="data:image/png;base64,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" alt="" />This tick graphic and text is from the Combined Feedback section "For Any correct response" section of the editing form</p>]]></text>
     </correctfeedback>
@@ -647,7 +520,7 @@
     </hint>
   </question>
 
-<!-- question: 81  -->
+<!-- question: 37  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -658,7 +531,7 @@
 <p>What is the less than symbol [&lt;]</p>
 <p>What is the addition symbol [+]</p>
 <p>What is the minus symbol [-]</p>
-<p>What is the multiply symbol [*]</p>
+<p>What is the multiply symbol [*]</p><p><br></p>
 <p> </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -672,6 +545,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[&gt;]]></text>
       <feedback format="moodle_auto_format">
@@ -719,6 +593,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -730,7 +605,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 82  -->
+<!-- question: 38  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -763,6 +638,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -792,6 +668,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -811,7 +688,7 @@
     </hint>
   </question>
 
-<!-- question: 83  -->
+<!-- question: 39  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -831,6 +708,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -848,6 +726,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text></text>
     </correctfeedback>
@@ -869,7 +748,186 @@
     </hint>
   </question>
 
-<!-- question: 84  -->
+<!-- question: 45  -->
+  <question type="gapfill">
+    <name>
+      <text>GroupTablesHorizontal</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[This question has Fixed Gap Size and No Duplicates set. The Canine row values include a !! to allow for one field to be left blank in order to get all 4 marks.&nbsp; <br><table class="gapfilltable" rules="rows" border="2">
+<tbody>
+</tbody><colgroup>
+    <col class="gapfillfirstcol">
+    <col class="gapfillcol">
+    <col class="gapfillcol">
+ </colgroup>
+<tbody><tr><td>Feline</td><td>[tiger|lion]</td><td>[tiger|lion]</td></tr>
+<tr><td>Canine</td><td>[dog|!!]</td><td>[dog|!!]</td></tr>
+</tbody>
+</table>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>4.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>1</fixedgapsize>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>dog|!!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>dog|!!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>cow</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>mouse</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <correctfeedback format="html">
+      <text><![CDATA[Note how you get a mark for leaving the one field blank, but there is no coloring or tick for that response. It is necssary to get a mark for a gap correctly left blank, otherwise it would not be possible to miss out on a mark if you put a value into that gap.<br>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text>Your answer is partially correct.</text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text>Your answer is incorrect.</text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 31  -->
+  <question type="gapfill">
+    <name>
+      <text>GroupTablesVertical</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>You can offer groups of answer fields to be dragged in its appropriate category or group. For example a language teacher might offer words that are dragged into the gender categories or biologists could offer options to be dragged into the categories of animals, e.g. canine, feline and . The key to this is using the | (or) operator. </p>
+<table class="gapfilltable" rules="rows" border="2">
+<tbody>
+<tr><th>Feline</th><th>Canine</th></tr>
+<tr><td>[tiger|lion]</td><td>[dog|wolf]</td></tr>
+<tr><td>[tiger|lion]</td><td>[dog|wolf]</td></tr>
+</tbody>
+</table>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>4.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>1</fixedgapsize>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>dog|wolf</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tiger|lion</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>dog|wolf</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>rat</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>swallow</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>kangaroo</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>1</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+    <hint format="html">
+      <text><![CDATA[<p>Try again</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+    <hint format="html">
+      <text><![CDATA[<p>Have another go</p>]]></text>
+      <shownumcorrect/>
+      <clearwrong/>
+    </hint>
+  </question>
+
+<!-- question: 40  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -879,19 +937,21 @@
 <p>What is the less than sign [&lt;]</p>
 <p>What is the addition symbol [+]</p>
 <p>What is the subtraction symbol [-]</p>
-<p>What is the multiplication symbol? [*]</p>]]></text>
+<p>What is the multiplication symbol? [*]</p>
+[10² ]=100<br>Note that the raising to powers and backslash were entered using the HTML unicode strings.<br>For example the squared string is &amp;#178; However these must be entered into the editor with HTML mode turned off otherwise it will "interpret" the strings, i.e. put in &amp;amp instead of plain &amp; and it will not display correctly at runtime.<br><br><br>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
     </generalfeedback>
-    <defaultgrade>5.0000000</defaultgrade>
+    <defaultgrade>6.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
-    <answerdisplay>dropdown</answerdisplay>
+    <answerdisplay>dragdrop</answerdisplay>
     <delimitchars>[]</delimitchars>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[&gt;]]></text>
       <feedback format="moodle_auto_format">
@@ -922,8 +982,8 @@
         <text></text>
       </feedback>
     </answer>
-    <answer fraction="0" format="moodle_auto_format">
-      <text>!</text>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>10² </text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -935,22 +995,29 @@
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
+      <text>!</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
       <text>/</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0" format="moodle_auto_format">
-      <text>\</text>
+      <text>10³</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
     </answer>
     <delimitchars>[]</delimitchars>
-    <answerdisplay>dropdown</answerdisplay>
+    <answerdisplay>dragdrop</answerdisplay>
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -962,7 +1029,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 85  -->
+<!-- question: 41  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -983,6 +1050,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>black cat</text>
       <feedback format="moodle_auto_format">
@@ -1000,6 +1068,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1011,7 +1080,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 86  -->
+<!-- question: 42  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1044,6 +1113,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>colou?rs?</text>
       <feedback format="moodle_auto_format">
@@ -1073,6 +1143,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1084,7 +1155,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 87  -->
+<!-- question: 43  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1104,6 +1175,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[<span>work</span>]]></text>
       <feedback format="moodle_auto_format">
@@ -1115,6 +1187,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1126,7 +1199,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 88  -->
+<!-- question: 44  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -1156,6 +1229,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>0</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>blue, white, red</text>
       <feedback format="moodle_auto_format">
@@ -1179,6 +1253,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1189,5 +1264,4 @@
       <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
     </incorrectfeedback>
   </question>
-
 </quiz>
