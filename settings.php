@@ -29,5 +29,6 @@ if ($ADMIN->fulltree) {
         get_string('fixedgapsize', 'qtype_gapfill'), "", 0));
     $settings->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
          get_string('delimitset','qtype_gapfill'),
-        "","[ ],{ },# #,@ @", PARAM_RAW, 20, 3));
+         get_string('delimitset_text','qtype_gapfill'),
+         "[ ],{ },# #,@ @", PARAM_RAW, 20, 3));
 }
