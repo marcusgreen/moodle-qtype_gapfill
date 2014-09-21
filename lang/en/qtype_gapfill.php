@@ -62,7 +62,5 @@ $string['disableregex']='Disable Regex';
 $string['disableregex_help'] = 'Disable regular expression processing and perform a standard string comparison. This can be useful for html quesitons where the angle brackets (&lt; and &gt;) should be treated literally and maths where symbols such as * should be seen literally rather than as expressions';
 $string['fixedgapsize']='Fixed Gap Size';
 $string['fixedgapsize_help'] = 'When attempting the question all gaps will be set to the same size as the largest gap. This can help giving a clue to answers, e.g. if the gaps are [red] and [yellow] it would be clear that the yellow went in the biggest gap';
-$string['delimitcharsetting']='Delimit characters';
-$string['delimitcharsetting_explain']='Sets the delimiters for gaps, so you could add % % for The %cat% sat on the %mat%';
-
-
+$string['delimitset']='Delimit Chars';
+$string['delimitset_text']='Sets the delimiters for gaps, so you could add % % for The %cat% sat on the %mat%';
