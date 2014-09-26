@@ -117,8 +117,8 @@ class qtype_gapfill extends question_type {
         $l = substr($question->delimitchars, 0, 1);
         $r = substr($question->delimitchars, 1, 1);
 
-        $nonfieldregex = '/\\' . $l . '.*?\\' . $r . '/';
-        $bits = preg_split($nonfieldregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
+        $nongapregex = '/\\' . $l . '.*?\\' . $r . '/';
+        $bits = preg_split($nongapregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
         $question->textfragments[0] = array_shift($bits);
         $i = 1;
 
@@ -147,7 +147,8 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-    public function get_gaps($delimitchars, $questiontext) {
+    /* it really does need to be static */
+    public static function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
          * e.g. l=[ and r=] where question is
