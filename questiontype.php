@@ -118,13 +118,11 @@ class qtype_gapfill extends question_type {
         $r = substr($question->delimitchars, 1, 1);
 
         $nongapregex = '/\\' . $l . '.*?\\' . $r . '/';
-        $bits = preg_split($nongapregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
-        $question->textfragments[0] = array_shift($bits);
-        $i = 1;
-
-        while (!empty($bits)) {
-            $question->textfragments[$i] = array_shift($bits);
-            $i += 1;
+        $nongaptext = preg_split($nongapregex, $question->questiontext, null, PREG_SPLIT_DELIM_CAPTURE);
+        $i = 0;
+        while (!empty($nongaptext)) {
+            $question->textfragments[$i] = array_shift($nongaptext);
+            $i++;
         }
     }
 
