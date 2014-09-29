@@ -41,7 +41,7 @@ $string['displaygapfill'] = 'gapfill';
 $string['displaydropdown'] = 'dropdown';
 $string['displaydragdrop'] = 'dragdrop';
 
-$string['pluginname']="Gapfill question type";
+$string['pluginname']="Gapfill";
 $string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat].  If mat or rug are acceptable use [mat|rug]. Dropdown and Dragdrop modes allows for a shuffled list of answers to be displayed which can include optional wrong/distractor answers.';
 
 $string['pluginname_link']='question/type/gapfill';
