@@ -341,7 +341,7 @@ class qtype_gapfill extends question_type {
                 "</noduplicates>\n";
         $output .= '    <disableregex>' . $question->options->disableregex .
                 "</disableregex>\n";
-        $output .= '    <fixedgapsize>' . $question->options->disableregex .
+        $output .= '    <fixedgapsize>' . $question->options->fixedgapsize .
                 "</fixedgapsize>\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
