@@ -56,7 +56,7 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
         // Now create the qtype own structures.
         $gapfill = new backup_nested_element('gapfill', array('id'), array(
             'answerdisplay', 'delimitchars', 'casesensitive', 'noduplicates', 'disableregex',
-            'correctfedback', 'correctfeddbackformat', 'partiallycorrectfeedback',
+            'fixedgapsize','correctfedback', 'correctfeddbackformat', 'partiallycorrectfeedback',
             'partiallycorrectfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat'));
 
