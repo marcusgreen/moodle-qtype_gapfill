@@ -33,18 +33,16 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
-
+    /* checks for gaps that get a mark for being left black i.e. [!!]*/
     public $blankregex = "/!.*!/";
 
     /* data used by export_to_xml (among other things possibly */
-
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
             'noduplicates', 'disableregex', 'fixedgapsize');
     }
 
     /* populates fields such as combined feedback in the editing form */
-
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
@@ -52,7 +50,6 @@ class qtype_gapfill extends question_type {
     }
 
     /* called when previewing or at runtime in a quiz */
-
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
@@ -91,7 +88,6 @@ class qtype_gapfill extends question_type {
      *  Called when previewing a question or when displayed in a quiz
      *  (not from within the editing form)
      */
-
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
@@ -163,7 +159,6 @@ class qtype_gapfill extends question_type {
     /**
      * Save the units and the answers associated with this question.
      * @return boolean to indicate success or failure.
-     * 
      */
     public function save_question_options($question) {
         /* Save the extra data to your database tables from the
@@ -184,7 +179,6 @@ class qtype_gapfill extends question_type {
     }
 
     /* runs from question editing form */
-
     public function update_question_gapfill($question, $options, $context) {
         global $DB;
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
