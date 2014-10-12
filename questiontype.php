@@ -33,8 +33,6 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
-    /* checks for gaps that get a mark for being left black i.e. [!!]*/
-    public $blankregex = "/!.*!/";
 
     /* data used by export_to_xml (among other things possibly */
     public function extra_question_fields() {
@@ -73,9 +71,6 @@ class qtype_gapfill extends question_type {
             if (strpos($a->fraction, '1') !== false) {
                 $question->answers[$a->id] = new question_answer($a->id, $a->answer,
                         $a->fraction, $a->feedback, $a->feedbackformat);
-                /* exclude gaps containing !! as the correct answer is to leave
-                 * these blank. They act as distractors
-                 */
                 $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
@@ -195,12 +190,12 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
-        $options->delimitchars = $question->delimitchars;
+        $options->delimitchars =  $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
-        $options->noduplicates = $question->noduplicates;
-        $options->disableregex = $question->disableregex;
-        $options->fixedgapsize = $question->fixedgapsize;
+        $options->noduplicates  = $question->noduplicates;
+        $options->disableregex  = $question->disableregex;
+        $options->fixedgapsize  = $question->fixedgapsize;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
