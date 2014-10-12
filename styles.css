@@ -1,6 +1,6 @@
 .que.gapfill span.draggable.answers{
     cursor: pointer;
-    border:solid .5px;
+    border:solid 1px;
     padding-left:4px;
     padding-right:4px;
     background:white;
@@ -21,7 +21,7 @@ dragged into the answer fields */
     display: inline-block;
     margin:1px;
     cursor: pointer;
-    border:solid .5px;
+    border:solid 1px;
     padding:1px;
     background:white;
      z-index: 3;
