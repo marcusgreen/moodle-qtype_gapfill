@@ -55,6 +55,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /** @var array of question_answer. */
     public $answers = array();
+     /* checks for gaps that get a mark for being left black i.e. [!!]*/
     public $blankregex = "/!.*!/";
 
 
