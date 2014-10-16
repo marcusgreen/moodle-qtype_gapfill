@@ -70,6 +70,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'casesensitive' => false,
                     'noduplicates' => '1',
                     'disableregex'=>$poptions['disableregex'],
+                    'fixedgapsize'=>'0',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
