@@ -268,13 +268,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         if ($this->noduplicates == 1) {
             /*
              * find unique values then keeping the same
-             * keys blank rest of the values
+             * keys but nonanswer in any duplicate responses in non !! 
+             * gaps
              */
             $au = array_unique($response);
-            foreach ($response as $key => $value) {
-                $response[$key] = '';
+            /*Hash of flatted answer values is is guaranteed
+             not to to be an answer for any gap*/
+            $nonanswer=hash('ripemd160',implode(' ', $this->places));
+            foreach ($response as $key => $value) {    
+                $response[$key] = $nonanswer;
             }
-            return array_merge($response, $au);
+            $response= array_merge($response, $au);
+            return $response;
         } else {
             return $response;
         }
