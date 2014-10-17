@@ -1,7 +1,6 @@
 Gapfill question type V1.5 for Moodle 
 
-A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices. 
-Teacher can define the question with square braces to define the missing words. For example
+A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices. Teachers can define the question with square braces to define the missing words. For example
 The [cat] sat on the [mat]. Alternative delimiting characters can be defined during question edit
 for example The #cat# sat on the #mat# can be valid.
 
