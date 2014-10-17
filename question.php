@@ -268,8 +268,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         if ($this->noduplicates == 1) {
             /*
              * find unique values then keeping the same
-             * keys but nonanswer in any duplicate responses in non !! 
-             * gaps
+             * keys but nonanswer in any duplicate non !! gaps
              */
             $au = array_unique($response);
             /*Hash of flatted answer values is is guaranteed
