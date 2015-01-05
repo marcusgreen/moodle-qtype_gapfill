@@ -1,0 +1,2 @@
+Version 1.6 of the Moodle Gapfill question type contributed by Marcus Green
+When using fixedgapsize the width of a gap such as [cat|tiger] will be the width of tiger not cat|tiger, i.e. 5 not 9
