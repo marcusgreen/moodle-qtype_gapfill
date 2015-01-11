@@ -32,7 +32,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
-
+ 
         $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
@@ -56,7 +56,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $marked_gaps = $question->get_marked_gaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
-                $output.=$this->embedded_element($qa, $place, $options, $marked_gaps);
+                $output.=$this->embedded_element($qa, $place, $options, $marked_gaps,$options);
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
@@ -72,7 +72,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $output;
     }
 
-    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $marked_gaps) {
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $marked_gaps, question_display_options $options) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
@@ -82,27 +82,39 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->fixedgapsize == 1) {
             $size = $question->maxgapsize;
         } else {
-            $size = $this->get_width($rightanswer);
+            $size = $this->get_size($rightanswer);
         }
 
         /* $options->correctness is really about it being ready to mark, */
-        $feedbackimage = "";
+        $aftergapfeedback = "";
         $inputclass = "";
         if (($options->correctness) or ($options->numpartscorrect)) {
             $gap = $marked_gaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
+            /*fraction is always either 1 or 0 for correct or incorrect response */
             if ($fraction == 1) {
                 array_push($this->correct_responses, $response[$fieldname]);
                 /* if the gap contains !! or  the response is (a correct) non blank */
                 if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
-                    $feedbackimage = $this->feedback_image($fraction);
+                    $aftergapfeedback = $this->feedback_image($fraction);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($marked_gaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
-                /* set background to red and image to cross if fraction is 0  */
-                $feedbackimage = $this->feedback_image($fraction);
+                /* set background to red and image to cross if fraction is 0 (an incorrect response
+                 * was given */
+                $aftergapfeedback = $this->feedback_image($fraction);
+                if($options->rightanswer==1){
+                      /* replace | operator with the word or */
+                      /* replace || with the word blank */
+                      $rightanswer_display = preg_replace("/\|/"," or ",$rightanswer); 
+                      /* replace || with the 'or blank' */
+                      $rightanswer_display = preg_replace("/\!!/"," or blank",$rightanswer_display); 
+                 
+                      $delim=qtype_gapfill::get_delimit_array($question->delimitchars);
+                      $aftergapfeedback.=" ".$delim["l"].$rightanswer_display.$delim["r"];
+                }
                 $inputclass = $this->feedback_class($fraction);
             }
         }
@@ -134,10 +146,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ',
-                    $inputattributes) . ' ' . $feedbackimage;
+                    $inputattributes) . ' ' . $aftergapfeedback;
             return $selecthtml;
         } else {
-            return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
+            return html_writer::empty_tag('input', $inputattributes) .$aftergapfeedback;
         }
     }
 
@@ -200,23 +212,25 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $selectoptions;
     }
 
-    public function get_width($rightanswer) {
+    /* get the length the correct answer and if the | is used
+     * the length of the longest word 
+     */
+    public function get_size($rightanswer) {
         $rightanswer = htmlspecialchars_decode($rightanswer);
         $words = explode("|", $rightanswer);
-        $lengthtotal = 0;
+        $sizetotal = 0;
         foreach ($words as $word) {
-            $lengthtotal = $lengthtotal + strlen($word);
+            $sizetotal = $sizetotal + strlen($word);
         }
         /* divide the sum of the length of the words
          * by the count of words, i.e. get the average
          */
-        return $lengthtotal / count($rightanswer);
+        return $sizetotal / count($rightanswer);
     }
 
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
      */
-
     protected function num_parts_correct(question_attempt $qa) {
         $a = new stdClass();
         list($a->num, $a->outof) = $qa->get_question()->get_num_parts_right(
