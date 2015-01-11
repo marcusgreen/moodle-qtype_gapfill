@@ -141,6 +141,16 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
+    /* chop the delimit string into a two element array
+     * this might be better done on initialisation
+     */
+    public static function get_delimit_array($delimitchars){
+        $delimitarray=array();
+        $delimitarray["l"] = substr($delimitchars, 0, 1);
+        $delimitarray["r"]= substr($delimitchars, 1, 1);
+        return $delimitarray;              
+    }
+    
     /* it really does need to be static */
     public static function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
@@ -148,9 +158,8 @@ class qtype_gapfill extends question_type {
          * e.g. l=[ and r=] where question is
          * The [cat] sat on the [mat]
          */
-        $l = substr($delimitchars, 0, 1);
-        $r = substr($delimitchars, 1, 1);
-        $fieldregex = '/.*?\\' . $l . '(.*?)\\' . $r . '/';
+        $delim=qtype_gapfill::get_delimit_array($delimitchars);
+        $fieldregex = '/.*?\\' . $delim["l"] . '(.*?)\\' . $delim["r"] . '/';
         $matches = array();
         preg_match_all($fieldregex, $questiontext, $matches);
         return $matches[1];
