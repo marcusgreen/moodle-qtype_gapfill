@@ -88,12 +88,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
-        $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
-        $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
+     
 
-        /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
-        $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
-        $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
 
         /* use plain string matching instead of regular expressions */
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
@@ -105,6 +101,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $config = get_config('qtype_gapfill');
         $mform->setDefault('disableregex', $config->fixedgapsize);
         $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
+
+        /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
+        $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
+        $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
+        $mform->setAdvanced('noduplicates');
+        
+        $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
+        $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
+                $mform->setAdvanced('casesensitive');
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
