@@ -108,9 +108,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 if($options->rightanswer==1){
                       /* replace | operator with the word or */
                       /* replace || with the word blank */
-                      $rightanswer_display = preg_replace("/\|/"," or ",$rightanswer); 
+                      $rightanswer_display = preg_replace("/\|/",get_string("or","qtype_gapfill"),$rightanswer); 
                       /* replace || with the 'or blank' */
-                      $rightanswer_display = preg_replace("/\!!/"," or blank",$rightanswer_display); 
+                      $rightanswer_display = preg_replace("/\!!/",get_string("orblank","qtype_gapfill"),$rightanswer_display); 
                  
                       $delim=qtype_gapfill::get_delimit_array($question->delimitchars);
                       $aftergapfeedback.=" ".$delim["l"].$rightanswer_display.$delim["r"];
