@@ -47,15 +47,10 @@ $string['pluginname_help'] = 'Place the words to be completed within square brac
 $string['pluginname_link']='question/type/gapfill';
 $string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
 $string['questionsmissing']='You have not included any fields in your question text';
-
 $string['delimitchars_help']='Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['answerdisplay']='Display Answers';
 $string['answerdisplay_help'] = 'Dragdrop shows a list of words that can be dragged into the gaps, gapfill shows gaps with no word options, dropdown shows the same list of correct (and possibly incorrect) answers for each field';
-$string['moreoptions']='More Options.';
 $string['pleaseenterananswer']='Please enter an answer.';
-$string['wronganswers']='Distractors.';
-$string['wronganswers_help']='List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
-$string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
 $string['duplicatepartialcredit'] = 'Credit is partial because you have duplicate answers';
 $string['disableregex'] = 'Disable Regex';
 $string['disableregex_help'] = 'Disable regular expression processing and perform a standard string comparison. This can be useful for html quesitons where the angle brackets (&lt; and &gt;) should be treated literally and maths where symbols such as * should be seen literally rather than as expressions';
@@ -64,4 +59,11 @@ $string['fixedgapsize']='Fixed Gap Size';
 $string['fixedgapsize_help'] = 'When attempting the question all gaps will be set to the same size as the largest gap. This removes gap size as a clue to the correct answer, e.g. if the gaps are [red] and [yellow] it would be clear that the yellow went in the biggest gap';
 $string['fixedgapsizeset_text']='Sets the size of every gap to that of the biggest gap';
 $string['delimitset']='Delimit Chars';
+$string['moreoptions']='More Options.';
+$string['orblank']='or blank ';
+$string['or']=' or ';
 $string['delimitset_text']='Sets the delimiters for gaps, so you could add % % for The %cat% sat on the %mat%';
+$string['wronganswers']='Distractors.';
+$string['wronganswers_help']='List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
+$string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
+
