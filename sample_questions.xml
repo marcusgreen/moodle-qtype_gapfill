@@ -702,7 +702,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>kangaroo</text>
       <feedback format="moodle_auto_format">
@@ -908,7 +908,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>tiger|lion</text>
       <feedback format="moodle_auto_format">
