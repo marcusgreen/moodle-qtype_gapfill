@@ -91,15 +91,12 @@ class qtype_gapfill extends question_type {
         $counter = 1;
         $question->maxgapsize = 0;
         foreach ($questiondata->options->answers as $choicedata) {
-            /* break the answer options into an array */
-            $answers = explode("|",$choicedata->answer);
-            /*find the longest element in the array, it 
-             * works correctly if there are no | operators
-             */
-            $len = max(array_map('strlen', $answers));
+            /*find the width of the biggest gap*/
+            $len=$question->get_size($choicedata->answer);
             if ($len > $question->maxgapsize) {
                 $question->maxgapsize = $len;
             }
+            
             /* fraction contains a 1 */
             if (strpos($choicedata->fraction, '1') !== false) {
                 $question->places[$counter] = $choicedata->answer;
