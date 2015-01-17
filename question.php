@@ -104,6 +104,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         shuffle($this->allanswers);
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
+    
+    /* get the length the correct answer and if the | is used
+     * the length of the longest of the correct answers
+     */
+    public function get_size($answer) {
+        $answer = htmlspecialchars_decode($answer);
+        $words = explode("|", $answer);
+        $maxlen = max(array_map('strlen', $words));
+        return $maxlen;
+    }
 
     /**
      * @param int $key stem number
