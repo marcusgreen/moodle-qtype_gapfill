@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-
+/** Gapfill question type with type in gaps, draggable answers or dropdowns */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public $correct_responses = array();
@@ -80,9 +80,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
         if ($question->fixedgapsize == 1) {
+            /*set all gaps to the size of the  biggest gap  
+            */
             $size = $question->maxgapsize;
         } else {
-            $size = $this->get_size($rightanswer);
+            /* otherwise set the size of an individual gap which might
+             * be less than the string width if it is in the form
+             * "[cat|dog|elephant] the width should be 8 and not 14
+             */
+             $size = $question->get_size($rightanswer);
         }
 
         /* $options->correctness is really about it being ready to mark, */
@@ -113,7 +119,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                       $rightanswer_display = preg_replace("/\!!/",get_string("orblank","qtype_gapfill"),$rightanswer_display); 
                  
                       $delim=qtype_gapfill::get_delimit_array($question->delimitchars);
-                      $aftergapfeedback.=" ".$delim["l"].$rightanswer_display.$delim["r"];
+                      $aftergapfeedback.="<span class='aftergapfeedback' title='Correct Answer'>".$delim["l"].$rightanswer_display.$delim["r"]. "</span>";
+                     // $aftergapfeedback.="<span class='aftergapfeedback' title='Correct Answer'>".$rightanswer_display. "</span>";
+
+                      //$aftergapfeedback.=" <span class=aftergapfeedback ".$aftergapfeedback ."</span>";
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
@@ -212,21 +221,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $selectoptions;
     }
 
-    /* get the length the correct answer and if the | is used
-     * the length of the longest word 
-     */
-    public function get_size($rightanswer) {
-        $rightanswer = htmlspecialchars_decode($rightanswer);
-        $words = explode("|", $rightanswer);
-        $sizetotal = 0;
-        foreach ($words as $word) {
-            $sizetotal = $sizetotal + strlen($word);
-        }
-        /* divide the sum of the length of the words
-         * by the count of words, i.e. get the average
-         */
-        return $sizetotal / count($rightanswer);
-    }
+
 
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
