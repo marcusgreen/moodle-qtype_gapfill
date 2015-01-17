@@ -312,9 +312,9 @@ What are the colors of the Olympic medals?
  [one] sat on the [two] [!!] ';
 
         $options = array();
-        $options['noduplicates'] = 0;
+        /*$options['noduplicates'] = 0;
         $options['disableregex'] = 0;
-        $options['delimitchars'] = '[]';
+        $options['delimitchars'] = '[]';*/
 
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, $options);
 
@@ -386,9 +386,9 @@ What are the colors of the Olympic medals?
  [one] sat on the [two] [!!] ';
 
         $options = array();
-        $options['noduplicates'] = 0;
+       /* $options['noduplicates'] = 0;
         $options['disableregex'] = 0;
-        $options['delimitchars'] = '[]';
+        $options['delimitchars'] = '[]';*/
 
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, false, $options);
 
@@ -446,5 +446,15 @@ What are the colors of the Olympic medals?
         $this->check_current_mark(2);
         // Finish the attempt.
     }
+    
+    
+   public function test_get_gapsize() {
+        $options = array();
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', "", false, $options);
+        $this->assertEquals($gapfill->get_size("one"), 3);
+        $this->assertEquals($gapfill->get_size("one|twleve"),6);
+
+        
+}
 
 }
