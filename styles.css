@@ -33,15 +33,11 @@ dragged into the answer fields */
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-.que.gapfill input.droppable{
-    border:1px solid black;
-    padding-left:1px;
-    padding-right:1px;
-    background:white;
-    color:black;
- -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
-}
 
+
+.que.gapfill span.aftergapfeedback {    
+    font-style: italic;
+}
 .que.gapfill select{
     border:1px solid black;
     padding:1px;
