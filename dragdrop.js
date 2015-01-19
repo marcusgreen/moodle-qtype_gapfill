@@ -38,7 +38,7 @@ $(function() {
         }
     });
 
-    $(".droppable").droppable({
+    $(".droptarget").droppable({
         hoverClass: 'active',
         drop: function(event, ui) {
             this.value = $(ui.draggable).text();
