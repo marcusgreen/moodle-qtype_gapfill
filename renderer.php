@@ -137,8 +137,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'class' => 'droppable ' . $inputclass,
-            'style' => 'height:1.2em;'
+            'class' => 'droptarget ' . $inputclass,
         );
 
         /* When previewing after a quiz is complete */
