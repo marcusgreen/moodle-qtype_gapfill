@@ -1,10 +1,11 @@
  .que.gapfill input.droptarget{
-    height:.9em;
+    height:1.1em;
     border:1px solid black;
     padding-left:1px;
     padding-right:1px;
     background:white;
     vertical-align:middle;
+    color:black;
 }
 
 .que.gapfill span.draggable.answers{
