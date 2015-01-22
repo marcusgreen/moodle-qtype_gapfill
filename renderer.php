@@ -113,16 +113,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 $aftergapfeedback = $this->feedback_image($fraction);
                 if($options->rightanswer==1){
                       /* replace | operator with the word or */
-                      /* replace || with the word blank */
                       $rightanswer_display = preg_replace("/\|/",get_string("or","qtype_gapfill"),$rightanswer); 
-                      /* replace || with the 'or blank' */
-                      $rightanswer_display = preg_replace("/\!!/",get_string("orblank","qtype_gapfill"),$rightanswer_display); 
-                 
+                      /* replace !! with the 'blank' */
+                      $rightanswer_display = preg_replace("/\!!/",get_string("blank","qtype_gapfill"),$rightanswer_display);                  
                       $delim=qtype_gapfill::get_delimit_array($question->delimitchars);
                       $aftergapfeedback.="<span class='aftergapfeedback' title='Correct Answer'>".$delim["l"].$rightanswer_display.$delim["r"]. "</span>";
-                     // $aftergapfeedback.="<span class='aftergapfeedback' title='Correct Answer'>".$rightanswer_display. "</span>";
-
-                      //$aftergapfeedback.=" <span class=aftergapfeedback ".$aftergapfeedback ."</span>";
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
