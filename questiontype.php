@@ -96,7 +96,7 @@ class qtype_gapfill extends question_type {
             if ($len > $question->maxgapsize) {
                 $question->maxgapsize = $len;
             }
-            
+
             /* fraction contains a 1 */
             if (strpos($choicedata->fraction, '1') !== false) {
                 $question->places[$counter] = $choicedata->answer;
@@ -145,7 +145,7 @@ class qtype_gapfill extends question_type {
         $delimitarray=array();
         $delimitarray["l"] = substr($delimitchars, 0, 1);
         $delimitarray["r"]= substr($delimitchars, 1, 1);
-        return $delimitarray;              
+        return $delimitarray;
     }
     
     /* it really does need to be static */
@@ -155,7 +155,7 @@ class qtype_gapfill extends question_type {
          * e.g. l=[ and r=] where question is
          * The [cat] sat on the [mat]
          */
-        $delim=qtype_gapfill::get_delimit_array($delimitchars);
+        $delim = qtype_gapfill::get_delimit_array($delimitchars);
         $fieldregex = '/.*?\\' . $delim["l"] . '(.*?)\\' . $delim["r"] . '/';
         $matches = array();
         preg_match_all($fieldregex, $questiontext, $matches);
@@ -201,7 +201,7 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
-        $options->delimitchars =  $question->delimitchars;
+        $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates  = $question->noduplicates;
