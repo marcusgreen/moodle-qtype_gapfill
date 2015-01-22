@@ -88,9 +88,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
-     
-
-
         /* use plain string matching instead of regular expressions */
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
@@ -106,7 +103,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
         $mform->setAdvanced('noduplicates');
-        
+
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
                 $mform->setAdvanced('casesensitive');
