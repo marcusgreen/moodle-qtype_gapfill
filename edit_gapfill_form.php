@@ -45,8 +45,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
-                array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1),
+                $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -81,11 +81,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars2);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
-        $answer_display_types = array("dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'),
+        $answerdisplaytypes = array("dragdrop" => get_string('displaydragdrop', 'qtype_gapfill'),
             "gapfill" => get_string('displaygapfill', 'qtype_gapfill'),
             "dropdown" => get_string('displaydropdown', 'qtype_gapfill'));
 
-        $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answer_display_types);
+        $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answerdisplaytypes);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
         /* use plain string matching instead of regular expressions */
@@ -106,7 +106,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
-                $mform->setAdvanced('casesensitive');
+        $mform->setAdvanced('casesensitive');
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
@@ -134,7 +134,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
             foreach ($question->options->answers as $a) {
                 /* if it doesn't contain a 1 it must be zero and so be a wrong answer */
                 if (!(strpos($a->fraction, '1') !== false)) {
-                    $wronganswers.=$a->answer . ",";
+                    $wronganswers .= $a->answer . ",";
                 }
             }
         }
@@ -170,4 +170,5 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function qtype() {
         return 'gapfill';
     }
+
 }
