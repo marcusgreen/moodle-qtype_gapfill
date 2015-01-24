@@ -24,11 +24,10 @@
  * @package qtype
  * @subpackage gapfill
  */
-
 $string['casesensitive'] = 'Case Sensitive';
 $string['casesensitive_help'] = 'When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
 $string['noduplicates'] = 'No Duplicates';
-$string['noduplicates_help']= 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
+$string['noduplicates_help'] = 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
 
 
 $string['delimitchars'] = 'Delimit characters';
@@ -57,13 +56,13 @@ $string['disableregex_help'] = 'Disable regular expression processing and perfor
 $string['disableregexset_text'] = 'Disable regular expression processing of responses';
 $string['fixedgapsize'] = 'Fixed Gap Size';
 $string['fixedgapsize_help'] = 'When attempting the question all gaps will be set to the same size as the largest gap. This removes gap size as a clue to the correct answer, e.g. if the gaps are [red] and [yellow] it would be clear that the yellow went in the biggest gap';
-$string['fixedgapsizeset_text']='Sets the size of every gap to that of the biggest gap';
+$string['fixedgapsizeset_text'] = 'Sets the size of every gap to that of the biggest gap';
 $string['delimitset'] = 'Delimit Chars';
 $string['moreoptions'] = 'More Options.';
-$string['orblank'] = 'or blank ';
-$string['or']=' or ';
-$string['delimitset_text']='Sets the delimiters for gaps, so you could add % % for The %cat% sat on the %mat%';
-$string['wronganswers']='Distractors.';
-$string['wronganswers_help']='List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
+$string['blank'] = 'blank';
+$string['or'] = ' or ';
+$string['delimitset_text'] = 'Sets the delimiters for gaps, so you could add % % for The %cat% sat on the %mat%';
+$string['wronganswers'] = 'Distractors.';
+$string['wronganswers_help'] = 'List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
 $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
 
