@@ -4,7 +4,8 @@ The use of !! indicates that a gap can be left empty and considered a correct re
 
 This is of particular use with the | or operator where one or more answers or a blank will be considered correct e.g. [cat|dog|!!]. 
 
-As part of this change the calculation of maximum score per question instance has been modified, so "The [cat] sat on the [!!]" each gap will be worth 1 mark. This is necessary to ensure that if a value is put in the [!!] space a mark will be lost.
+As part of this change the calculation of maximum score per question instance has been modified, so "The [cat] sat on the [!!]" 
+each gap will be worth 1 mark. This is necessary to ensure that if a value is put in the [!!] space a mark will be lost.
 
 The fixedgapsize settings makes all gaps the same size as the biggest. This stops size being a clue to the correct answer.
 
