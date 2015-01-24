@@ -93,9 +93,8 @@ class qtype_gapfill_test extends UnitTestCase {
     }
 
     public function test_extra_question_fields() {
-        $extra_question_fields = array('question_gapfill', 'answerdisplay', 'delimitchars',
-            'casesensitive', 'noduplicates', 'disableregex','fixedgapsize');
-        $this->assertEquals($this->qtype->extra_question_fields(), $extra_question_fields);
+        $extraquestionfields = array('question_gapfill', 'answerdisplay', 'delimitchars',
+            'casesensitive', 'noduplicates', 'disableregex', 'fixedgapsize');
+        $this->assertEquals($this->qtype->extra_question_fields(), $extraquestionfields);
     }
-
 }
