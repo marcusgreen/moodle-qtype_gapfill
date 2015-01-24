@@ -30,7 +30,10 @@
 
 .que.gapfill span.aftergapfeedback {    
     font-style: italic;
+    font-weight:bold;
+    color:green;
 }
+
 .que.gapfill select{
     border:1px solid black;
     padding:1px;
