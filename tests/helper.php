@@ -35,31 +35,31 @@ class qtype_gapfill_test_helper extends question_test_helper {
     }
 
     public static function make_question2($type, $questiontext, $casesensitive = false, array $poptions) {
-        
-        if(empty($poptions)){
-        $poptions = array();
-        $poptions['noduplicates'] = 0;
-        $poptions['disableregex'] = 0;
-        $poptions['delimitchars'] = '[]';            
+
+        if (empty($poptions)) {
+            $poptions = array();
+            $poptions['noduplicates'] = 0;
+            $poptions['disableregex'] = 0;
+            $poptions['delimitchars'] = '[]';
         }
 
-        $noduplicates=$poptions['noduplicates'];
+        $noduplicates = $poptions['noduplicates'];
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
-        $question->questiontext=$questiontext;
+        $question->questiontext = $questiontext;
         test_question_maker::initialise_a_question($question);
 
         $question->qtype = question_bank::get_qtype('gapfill');
-        $answerwords=$question->qtype->get_gaps($poptions['delimitchars'], $questiontext);
+        $answerwords = $question->qtype->get_gaps($poptions['delimitchars'], $questiontext);
 
         $question->places = array();
         $counter = 1;
 
         $answers = array();
-        $id=1;
+        $id = 1;
         foreach ($answerwords as $key => $answer) {
-                   $id++;
-                   $answers[$key] = (object) array(
+            $id++;
+            $answers[$key] = (object) array(
                         'question' => '163',
                         'answer' => $answer,
                         'fraction' => '1',
@@ -76,8 +76,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'delimitchars' => '[]',
                     'casesensitive' => false,
                     'noduplicates' => '1',
-                    'disableregex'=>$poptions['disableregex'],
-                    'fixedgapsize'=>'0',
+                    'disableregex' => $poptions['disableregex'],
+                    'fixedgapsize' => '0',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
@@ -112,8 +112,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'options' => $options
         );
 
-        $question= $question->qtype->make_question($questiondata);
-        $question->gapstofill=count($answerwords);
+        $question = $question->qtype->make_question($questiondata);
+        $question->gapstofill = count($answerwords);
         $question->disableregex = $poptions['disableregex'];
         $question->noduplicates = $poptions['noduplicates'];
         return $question;
@@ -132,7 +132,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
         $question->displayanswers = '1';
         $question->casesensitive = '1';
-        $question->gapcount='2';
+        $question->gapcount = '2';
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
 
         $question->places[1] = $answers[0];
