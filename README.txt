@@ -26,3 +26,4 @@ Version 1.2 will colour duplicate answers yellow when discard duplicates mode is
 Version 1.3 toggle regex for plain string compare. Useful for maths, html and programming language questions
 Version 1.4 added support for touch devices such as Apple iOS phones and tablets (iPhone/iPad) and Android devices 
 Version 1.5 added support for gaps that are marked correct if left empty using !!, and fixedgapsize
+Version 1.6 added display of the correct answer next to gaps with wrong answers entered
