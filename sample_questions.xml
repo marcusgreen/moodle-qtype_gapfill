@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 2  -->
+<!-- question: 4  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -64,7 +64,7 @@
     </hint>
   </question>
 
-<!-- question: 3  -->
+<!-- question: 5  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -150,7 +150,7 @@
     </hint>
   </question>
 
-<!-- question: 4  -->
+<!-- question: 6  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -218,7 +218,7 @@
     </hint>
   </question>
 
-<!-- question: 5  -->
+<!-- question: 7  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -268,13 +268,13 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 6  -->
+<!-- question: 8  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<span style="font-size: medium;"><p>Use of the double !! indicates that a gap must be left blank be considered correct. The !! fields get a mark if left blank and can be thought of as distractors. Do not use a space character between ! and ! to try to set the width, use any other character such as underscore and remember the ! and ! contribute to the character count.</p></span>
+      <text><![CDATA[<span style="font-size: medium;"><p>Use of the double !! indicates that a gap must be left blank be considered correct. The !! fields get a mark if left blank and can be thought of as distractors.&nbsp;</p></span>
 
 <table class="gapfilltable" rules="rows" border="2">
 <tbody>
@@ -288,7 +288,7 @@
 </tr>
 <tr>
 <td>Bovine</td>
-<td>[!_!]</td>
+<td>[!!]</td>
 </tr>
 </tbody>
 </table>]]></text>
@@ -304,7 +304,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>dog</text>
       <feedback format="moodle_auto_format">
@@ -318,7 +318,7 @@
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text>!_!</text>
+      <text>!!</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -334,7 +334,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -346,7 +346,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 7  -->
+<!-- question: 9  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -419,7 +419,7 @@
     </hint>
   </question>
 
-<!-- question: 8  -->
+<!-- question: 10  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -509,12 +509,11 @@
     </hint>
     <hint format="html">
       <text><![CDATA[<p>Hint2: The answer refers to a domestic feline and a floor covering that rhymes with bat. The show number of correct responses option is not ticked for this.</p>]]></text>
-      <shownumcorrect/>
       <clearwrong/>
     </hint>
   </question>
 
-<!-- question: 9  -->
+<!-- question: 11  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -599,7 +598,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 10  -->
+<!-- question: 12  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -682,7 +681,7 @@
     </hint>
   </question>
 
-<!-- question: 11  -->
+<!-- question: 13  -->
   <question type="gapfill">
     <name>
       <text>Fixed Gapsize</text>
@@ -732,7 +731,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -744,7 +743,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 12  -->
+<!-- question: 14  -->
   <question type="gapfill">
     <name>
       <text>Fruit</text>
@@ -776,7 +775,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>apple</text>
       <feedback format="moodle_auto_format">
@@ -806,7 +805,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -818,7 +817,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 15  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -879,7 +878,7 @@
     </hint>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 16  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesHorizontal</text>
@@ -950,7 +949,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -962,7 +961,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 17  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesVertical</text>
@@ -995,7 +994,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <answer fraction="100" format="moodle_auto_format">
       <text>tiger|lion</text>
       <feedback format="moodle_auto_format">
@@ -1043,7 +1042,7 @@
     <casesensitive>0</casesensitive>
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
-    <fixedgapsize>0</fixedgapsize>
+    <fixedgapsize>1</fixedgapsize>
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1065,7 +1064,7 @@
     </hint>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 18  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -1167,7 +1166,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 17  -->
+<!-- question: 19  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -1218,7 +1217,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 18  -->
+<!-- question: 20  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1293,7 +1292,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 19  -->
+<!-- question: 21  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1337,7 +1336,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 20  -->
+<!-- question: 22  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
