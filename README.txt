@@ -11,7 +11,7 @@ dropddropdown lists or javascript powered drag and drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created and tested under Moodle 2.5, 2.6 and 2.7. 
+This question type was created and tested under Moodle 2.5, 2.6 2.7. and 2.8
 
 It will not work with versions of moodle prior to 2.1.
 
