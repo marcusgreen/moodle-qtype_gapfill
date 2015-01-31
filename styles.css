@@ -1,4 +1,5 @@
- .que.gapfill input.droptarget{
+/* the gap where answers are dropped/keyed in */    
+.que.gapfill input.droptarget{
     height:1.1em;
     border:1px solid black;
     padding-left:1px;
@@ -16,7 +17,7 @@
     padding-left:4px;
     padding-right:4px;
     background:white;
-     z-index: 3;
+    z-index: 3;
     -moz-box-shadow: 3px 3px 4px #000;
     -webkit-box-shadow: 3px 3px 4px #000;
     box-shadow: 3px 3px 4px #000;
@@ -27,24 +28,25 @@
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 
-
-.que.gapfill span.aftergapfeedback {    
+/*Displays the correct answer in delimiters if an 
+incorrec answer was entered */
+.que.gapfill span.aftergapfeedback {
     font-style: italic;
     font-weight:bold;
     color:green;
 }
-
+/* styling the dropdowns */
 .que.gapfill select{
     border:1px solid black;
     padding:1px;
     background:white;
     color:black;
- -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
 }
 
 .gapfilltable td{
-   border:solid;
-   border-width:thin;
+    border:solid;
+    border-width:thin;
 }
 
 .gapfillfirstcol {
@@ -55,16 +57,16 @@
     background-color: lightgray;
 }
 .gapfilltable th{
-   border:solid;
-   border-width:thin;
-   background-color: lightgray;
+    border:solid;
+    border-width:thin;
+    background-color: lightgray;
 }
 .gapfilltable caption{
-   border-bottom:solid;
-   border-width:thin;
+    border-bottom:solid;
+    border-width:thin;
 }
 .que.gapfill input.correctduplicate{
-        background-color: #FFFF00;
+    background-color: #FFFF00;
 }
 
 .que.gapfill input.correct{
