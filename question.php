@@ -164,7 +164,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function get_validation_error(array $response) {
-        if (!$this->is_gradable_response($response)) {
+          if (!$this->is_gradable_response($response)) {
             return get_string('pleaseenterananswer', 'qtype_gapfill');
         }
     }
@@ -190,11 +190,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
+     /*A question is gradable if at least one gap response is not blank */
     public function is_gradable_response(array $response) {
-        /* are there any fields still left blank */
-        return $this->is_complete_response($response);
-    }
-
+        foreach($response as $key=>$answergiven){
+        if (($answergiven !== "")){ 
+                    return true;
+                 }
+        }
+    return false;
+        
+     }
     /**
      * @return question_answer an answer that
      * contains the a response that would get full marks.
