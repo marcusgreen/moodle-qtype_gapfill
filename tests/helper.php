@@ -34,15 +34,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $backup = new backup_qtype_gapfill_plugin();
     }
 
-    public static function make_question2($type, $questiontext, $casesensitive = false, array $poptions) {
-
-        if (empty($poptions)) {
-            $poptions = array();
-            $poptions['noduplicates'] = 0;
-            $poptions['disableregex'] = 0;
-            $poptions['delimitchars'] = '[]';
-        }
-
+    public static function make_question2($type, $questiontext, $casesensitive = false,  $poptions=array("noduplicates"=>0,'disableregex'=>0,'delimitchars'=>'[])')) {
         $noduplicates = $poptions['noduplicates'];
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
