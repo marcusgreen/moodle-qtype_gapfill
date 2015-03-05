@@ -30,12 +30,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
         return array('catmat');
     }
 
-    public static function make_gapfill_backup() {
-        $backup = new backup_qtype_gapfill_plugin();
-    }
-
-    public static function make_question2($type, $questiontext, $casesensitive = false,  $poptions=array("noduplicates"=>0,'disableregex'=>0,'delimitchars'=>'[])')) {
-        $noduplicates = $poptions['noduplicates'];
+    public static function make_question2($type, $questiontext, $casesensitive = false, $poptions=array("noduplicates" => 0,
+        'disableregex' => 0, 'delimitchars' => '[])')) {
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
         $question->questiontext = $questiontext;
@@ -45,7 +41,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $answerwords = $question->qtype->get_gaps($poptions['delimitchars'], $questiontext);
 
         $question->places = array();
-        $counter = 1;
 
         $answers = array();
         $id = 1;
