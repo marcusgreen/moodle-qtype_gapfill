@@ -132,12 +132,12 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedpartial);
         $this->check_current_mark(1);
     }
-    
-        public function test_deferred_with_blanks() {
+
+    public function test_deferred_with_blanks() {
 
         // Create a gapfill question.
-        $questiontext="The [cat] sat on the [mat]";
-        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill',$questiontext);
+        $questiontext = "The [cat] sat on the [mat]";
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
