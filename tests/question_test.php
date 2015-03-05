@@ -96,10 +96,10 @@ class qtype_gapfill_question_test extends UnitTestCase {
     }
 
     public function test_get_validation_error() {
-        $questiontext='The [cat] sat on the [mat]';
-        $question = qtype_gapfill_test_helper::make_question2('gapfill',$questiontext);
+        $questiontext = 'The [cat] sat on the [mat]';
+        $question = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
         $question->gapcount = 2;
-        $this->assertTrue(is_string($question->get_validation_error( array('p1'=>'') ) ));
+        $this->assertTrue(is_string($question->get_validation_error( array('p1' => '') ) ));
     }
 
 
