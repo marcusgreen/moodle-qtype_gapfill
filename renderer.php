@@ -119,7 +119,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     /* replace !! with the 'blank' */
                     $rightanswerdisplay = preg_replace("/\!!/", get_string("blank", "qtype_gapfill"), $rightanswerdisplay);
                     $delim = qtype_gapfill::get_delimit_array($question->delimitchars);
-                    $aftergapfeedback .= "<span class='aftergapfeedback' title='Correct Answer'>" . $delim["l"] .
+                    $aftergapfeedback .= "<span class='aftergapfeedback' title='".get_string("correctanswer","qtype_gapfill")."'>" . $delim["l"] .
                             $rightanswerdisplay . $delim["r"] . "</span>";
                 }
                 $inputclass = $this->feedback_class($fraction);
