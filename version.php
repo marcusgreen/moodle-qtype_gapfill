@@ -20,5 +20,5 @@ $plugin->component = 'qtype_gapfill';
 $plugin->version  = 2006082514;
 $plugin->requires = 2012120305;
 $plugin->release = '1.6';
-$plugin->maturity  = MATURITY_BETA;
+$plugin->maturity  = MATURITY_STABLE;
 
