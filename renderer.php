@@ -37,9 +37,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
-            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.9.1.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-ui-1.10.3.custom.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/jquery.ui.touch-punch.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
