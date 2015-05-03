@@ -7,6 +7,7 @@
     background:white;
     vertical-align:middle;
     color:black;
+    border-radius:2px;
 }
 
 .que.gapfill span.draggable.answers{
