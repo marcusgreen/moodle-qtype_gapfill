@@ -96,8 +96,8 @@ class qtype_gapfill extends question_type {
         } else {
             // Moodle <= 2.6
             $jquery = '/question/type/' . $this->name().'/jquery';
-            $PAGE->requires->js($jquery.'/jquery.js', true);
-            $PAGE->requires->js($jquery.'/jquery-ui.js', true);
+            $PAGE->requires->js($jquery.'/jquery-1.9.1.min.js', true);
+            $PAGE->requires->js($jquery.'/jquery-ui-1.10.3.custom.min.js', true);
             $PAGE->requires->js($jquery.'/jquery-ui.touch-punch.js', true);
         }
     }
