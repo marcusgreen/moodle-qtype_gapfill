@@ -373,11 +373,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 return false;
             }
         }
-        //var_dump($answer);
+               
         $pattern = str_replace('/', '\/', $answer);
-        /* var_dump($pattern);
-        exit();*/
-        $regexp = '/^' . $pattern . '$/u';
+        $regexp="";
+        /* if the gap contains | then only match complete words
+         * this is to avoid a situation where [cat|dog]
+         * would match catty or bigcat and adog and doggy
+         */
+        if(strpos($pattern,"|")){
+            $regexp = '/\b(' . $pattern . ')\b/u';
+        }else{
+             $regexp = '/^' . $pattern . '$/u';
+        }
       
 
         // Make the match insensitive if requested to, not sure this is necessary.
