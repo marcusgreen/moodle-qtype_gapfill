@@ -12,6 +12,7 @@
 
 .que.gapfill span.draggable.answers{
     height:1.3em;
+    vertical-align: middle;
     display: inline-block;
     margin:1px;
     cursor: pointer;
