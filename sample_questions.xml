@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 4  -->
+<!-- question: 101  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -64,7 +64,7 @@
     </hint>
   </question>
 
-<!-- question: 5  -->
+<!-- question: 102  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -150,7 +150,7 @@
     </hint>
   </question>
 
-<!-- question: 6  -->
+<!-- question: 103  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -218,7 +218,7 @@
     </hint>
   </question>
 
-<!-- question: 7  -->
+<!-- question: 104  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -268,7 +268,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 8  -->
+<!-- question: 105  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
@@ -346,7 +346,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 9  -->
+<!-- question: 106  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -419,7 +419,7 @@
     </hint>
   </question>
 
-<!-- question: 10  -->
+<!-- question: 107  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -513,7 +513,7 @@
     </hint>
   </question>
 
-<!-- question: 11  -->
+<!-- question: 108  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -598,7 +598,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 12  -->
+<!-- question: 109  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -681,7 +681,7 @@
     </hint>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 110  -->
   <question type="gapfill">
     <name>
       <text>Fixed Gapsize</text>
@@ -743,7 +743,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 111  -->
   <question type="gapfill">
     <name>
       <text>Fruit</text>
@@ -817,7 +817,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 112  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -878,7 +878,7 @@
     </hint>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 113  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesHorizontal</text>
@@ -961,7 +961,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 17  -->
+<!-- question: 114  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesVertical</text>
@@ -1064,7 +1064,7 @@
     </hint>
   </question>
 
-<!-- question: 18  -->
+<!-- question: 115  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -1166,7 +1166,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 19  -->
+<!-- question: 116  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -1217,7 +1217,70 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 20  -->
+<!-- question: 117  -->
+  <question type="gapfill">
+    <name>
+      <text>Other scripts and accents</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The gapfill question type can be used with non ASCII characters. For example the Cyrillic alphabet. </p>
+<p>Moscow is the capital of [Россия]</p>
+<p>The french word garçon has an accent on the letter c [garçon]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>Россия</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>garçon</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>France</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text> garcon</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Your answer is correct.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 118  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1292,7 +1355,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 21  -->
+<!-- question: 119  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1336,7 +1399,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 22  -->
+<!-- question: 120  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
