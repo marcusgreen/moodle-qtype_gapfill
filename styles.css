@@ -1,4 +1,4 @@
-/* the gap where answers are dropped/keyed in */    
+/* the gap where answers are dropped/keyed in */
 .que.gapfill input.droptarget{
     height:1.3em;
     border:1px solid black;
@@ -31,7 +31,7 @@
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 
-/*Displays the correct answer in delimiters if an 
+/*Displays the correct answer in delimiters if an
 incorrec answer was entered */
 .que.gapfill span.aftergapfeedback {
     font-style: italic;
