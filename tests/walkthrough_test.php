@@ -203,7 +203,6 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->quba->finish_all_questions();
         $this->check_current_state(question_state::$gradedright);
     }
-    
     public function test_interactive_wildcard_with_correct() {
         // Create a gapfill question.
         $gapfill = qtype_gapfill_test_helper::make_question('gapfill', array('cat|dog', 'mat'));
@@ -233,11 +232,11 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
                 $this->get_no_hint_visible_expectation());
 
         $this->check_current_state(question_state::$todo);
-        
+
         /*There was a word boundary bug in the regex previously that has been addressed by adding
         *a leading \b( and trailing )\b where the | character is found in the gap. This could be
         *checked further by processing adog as an answer. acat and doga would have been spotted previously
-        *because of the leading ^ and trailing $ in the regex */      
+        *because of the leading ^ and trailing $ in the regex */
         $this->process_submission(array('-submit' => 1, 'p1' => 'catty', 'p2' => 'mat'));
         $this->check_step_count(3);
 
@@ -247,12 +246,12 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
 
         $this->check_current_mark(1);
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
-        
+
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
 
         $this->check_step_count(1);
-        // Submit correct resonse
+        // Submit correct resonse.
         $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
         $this->check_step_count(2);
 
