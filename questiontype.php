@@ -39,7 +39,7 @@ class qtype_gapfill extends question_type {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
             'noduplicates', 'disableregex', 'fixedgapsize');
     }
-    
+
     /**
      * Utility method used by {@link qtype_renderer::head_code()}
      * It looks for any of the files script.js or script.php that
@@ -49,23 +49,23 @@ class qtype_gapfill extends question_type {
     public function find_standard_scripts() {
         global $CFG, $PAGE;
 
-        // include "script.js" and/or "script.php" in the normal way
+        // Include "script.js" and/or "script.php" in the normal way.
         parent::find_standard_scripts();
 
         $version = '';
-        $min_version = '1.11.0'; // Moodle 2.7
+        $minversion = '1.11.0'; // Moodle 2.7.
         $search = '/jquery-([0-9.]+)(\.min)?\.js$/';
 
-        // make sure jQuery version is high enough
+        // ...make sure jQuery version is high enough.
         // (required if Quiz is in a popup window)
         //     Moodle 2.5 has jQuery 1.9.1
         //     Moodle 2.6 has jQuery 1.10.2
         //     Moodle 2.7 has jQuery 1.11.0
         //     Moodle 2.8 has jQuery 1.11.1
-        //     Moodle 2.9 has jQuery 1.11.1
+        //     Moodle 2.9 has jQuery 1.11.1.
         if (method_exists($PAGE->requires, 'jquery')) {
-            // Moodle >= 2.5
-            if ($version=='') {
+            // Moodle >= 2.5.
+            if ($version == '') {
                 include($CFG->dirroot.'/lib/jquery/plugins.php');
                 if (isset($plugins['jquery']['files'][0])) {
                     if (preg_match($search, $plugins['jquery']['files'][0], $matches)) {
@@ -73,7 +73,7 @@ class qtype_gapfill extends question_type {
                     }
                 }
             }
-            if ($version=='') {
+            if ($version == '') {
                 $filename = $CFG->dirroot.'/lib/jquery/jquery*.js';
                 foreach (glob($filename) as $filename) {
                     if (preg_match($search, $filename, $matches)) {
@@ -82,19 +82,19 @@ class qtype_gapfill extends question_type {
                     }
                 }
             }
-            if (version_compare($version, $min_version) < 0) {
+            if (version_compare($version, $minversion) < 0) {
                 $version = '';
             }
         }
 
-        // include jquery files
+        // ...include jquery files.
         if ($version) {
-            // Moodle >= 2.7
+            // Moodle >= 2.7.
             $PAGE->requires->jquery();
             $PAGE->requires->jquery_plugin('ui');
             $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_ordering');
         } else {
-            // Moodle <= 2.6
+            // Moodle <= 2.6.
             $jquery = '/question/type/' . $this->name().'/jquery';
             $PAGE->requires->js($jquery.'/jquery-1.9.1.min.js', true);
             $PAGE->requires->js($jquery.'/jquery-ui-1.10.3.custom.min.js', true);
