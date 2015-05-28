@@ -92,13 +92,13 @@ class qtype_gapfill extends question_type {
             // Moodle >= 2.7.
             $PAGE->requires->jquery();
             $PAGE->requires->jquery_plugin('ui');
-            $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_ordering');
+            $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_gapfill');
         } else {
-            // Moodle <= 2.6.
+            //Moodle <= 2.6.
             $jquery = '/question/type/' . $this->name().'/jquery';
             $PAGE->requires->js($jquery.'/jquery-1.9.1.min.js', true);
             $PAGE->requires->js($jquery.'/jquery-ui-1.11.4.min.js', true);
-            $PAGE->requires->js($jquery.'/jquery-ui.touch-punch.js', true);
+            $PAGE->requires->js($jquery.'/jquery.ui.touch-punch.js', true);
         }
     }
 
