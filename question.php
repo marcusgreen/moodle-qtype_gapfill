@@ -243,6 +243,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $numright = 0;
         foreach ($this->places as $place => $notused) {
             $rightanswer = $this->get_right_choice_for($place);
+            if(!isset($response[$this->field($place)])){
+                 continue;
+            }
             $answergiven = $response[$this->field($place)];
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
