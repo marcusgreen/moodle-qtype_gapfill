@@ -29,6 +29,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('qtype_gapfill/fixedgapsize',
         get_string('fixedgapsize', 'qtype_gapfill'),
         get_string('fixedgapsizeset_text', 'qtype_gapfill') , 0));
+    $settings->add(new admin_setting_configcheckbox('qtype_gapfill/casesensitive',
+        get_string('casesensitive', 'qtype_gapfill'),
+        get_string('casesensitive_text', 'qtype_gapfill') , 0));    
     $settings->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
          get_string('delimitset', 'qtype_gapfill'),
          get_string('delimitset_text', 'qtype_gapfill'),
