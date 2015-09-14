@@ -95,7 +95,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         /* sets all gaps to the size of the largest gap, avoids giving clues to the correct answer */
         $mform->addElement('advcheckbox', 'fixedgapsize', get_string('fixedgapsize', 'qtype_gapfill'));
-        $config = get_config('qtype_gapfill');
         $mform->setDefault('disableregex', $config->fixedgapsize);
         $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
 
@@ -105,6 +104,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setAdvanced('noduplicates');
 
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
+        $mform->setDefault('casesensitive', $config->casesensitive);
+
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
 
