@@ -93,7 +93,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $aftergapfeedback = "";
         $inputclass = "";
-        if (($options->correctness) or ( $options->numpartscorrect)) {
+        if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place]))  {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
