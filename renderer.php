@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -58,8 +59,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $output .= $question->format_text($fragment, $question->questiontextformat, $qa,
-                    'question', 'questiontext', $question->id);
+            $output .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question', 'questiontext', $question->id);
         }
         $output .= "<br/>";
 
@@ -70,8 +70,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $output;
     }
 
-    public function embedded_element(question_attempt $qa, $place, question_display_options $options,
-            $markedgaps, question_display_options $options) {
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps, question_display_options $options) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
@@ -91,9 +90,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
 
         /* $options->correctness is really about it being ready to mark, */
-        $aftergapfeedback = "";
+        $aftergaptext = "";
         $inputclass = "";
-        if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place]))  {
+        if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
@@ -102,23 +101,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 array_push($this->correctresponses, $response[$fieldname]);
                 /* if the gap contains !! or  the response is (a correct) non blank */
                 if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
-                    $aftergapfeedback = $this->feedback_image($fraction);
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
-                /* set background to red and image to cross if fraction is 0 (an incorrect response
-                 * was given */
-                $aftergapfeedback = $this->feedback_image($fraction);
+                $aftergaptext= $this->get_aftergap_feedtext($qa, $fraction);
                 if ($options->rightanswer == 1) {
-                    /* replace | operator with the word or */
-                    $rightanswerdisplay = preg_replace("/\|/", get_string("or", "qtype_gapfill"), $rightanswer);
-                    /* replace !! with the 'blank' */
-                    $rightanswerdisplay = preg_replace("/\!!/", get_string("blank", "qtype_gapfill"), $rightanswerdisplay);
-                    $delim = qtype_gapfill::get_delimit_array($question->delimitchars);
-                    $aftergapfeedback .= "<span class='aftergapfeedback' title='".
-                            get_string("correctanswer", "qtype_gapfill")."'>" . $delim["l"] .
-                            $rightanswerdisplay . $delim["r"] . "</span>";
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $rightanswer);
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
@@ -149,12 +139,32 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
-                    ' ', $inputattributes) . ' ' . $aftergapfeedback;
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ', $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else {
-            return html_writer::empty_tag('input', $inputattributes) . $aftergapfeedback;
+            return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
+    }
+
+    public function get_aftergap_text(question_attempt $qa, $fraction, $rightanswer = "") {
+        $aftergaptext = "";
+        if ($fraction == 0) {
+            /* replace | operator with the word or */
+            $rightanswerdisplay = preg_replace("/\|/", get_string("or", "qtype_gapfill"), $rightanswer);
+            /* replace !! with the 'blank' */
+            $rightanswerdisplay = preg_replace("/\!!/", get_string("blank", "qtype_gapfill"), $rightanswerdisplay);
+            $question = $qa->get_question();
+            $delim = qtype_gapfill::get_delimit_array($question->delimitchars);
+            /* set background to red and image to cross if fraction is 0 (an incorrect response
+             * was given */
+            $aftergaptext = $this->feedback_image($fraction);
+            $aftergaptext.= "<span class='aftergapfeedback' title='" .
+                    get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
+                    $rightanswerdisplay . $delim["r"] . "</span>";
+        } else {
+            $aftergaptext = $this->feedback_image($fraction);
+        }
+        return $aftergaptext;
     }
 
     /**
