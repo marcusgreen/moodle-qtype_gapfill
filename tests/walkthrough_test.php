@@ -150,7 +150,8 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedpartial);
         $this->check_current_mark(1);
     }
-
+   
+   
     public function test_interactive_with_correct() {
 
         // Create a gapfill question.
@@ -403,6 +404,23 @@ What are the colors of the Olympic medals?
         $this->quba->finish_all_questions();
     }
 
+    public function test_get_aftergap_text(){
+        $questiontext = "The [cat] sat on the [mat]";
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
+        $maxmark = 2;
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
+        $this->process_submission(array('-submit' => 1,'p1' => 'cat', 'p2' => 'dog'));
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertContains("[mat]",$html );
+       
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
+        $maxmark = 2;
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
+        $this->process_submission(array('-submit' => 1,'p1' => 'cat', 'p2' => 'mat'));
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertNotContains("[mat]",$html );
+
+    }
     public function test_deferred_grade_for_blank() {
         /* this is for the scenario where you have multiple fields
          * and each field could take any value. The marking is designed
