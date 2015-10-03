@@ -45,7 +45,7 @@ $string['pluginname'] = 'Gapfill';
 $string['pluginname_help'] = 'Place the words to be completed within square brackets e.g. The [cat] sat on the [mat].  If mat or rug are acceptable use [mat|rug]. Dropdown and Dragdrop modes allows for a shuffled list of answers to be displayed which can include optional wrong/distractor answers.';
 
 $string['pluginname_link'] = 'question/type/gapfill';
-$string['pluginnamesummary'] = 'A fill in the gaps style question. Fewer features than the standard Cloze type, but simpler syntax';
+$string['pluginnamesummary'] = 'A fill in the gaps style question. Allows drag drop or dropdown answers with distractors. Very easy to learn syntax';
 $string['questionsmissing'] = 'You have not included any fields in your question text';
 $string['delimitchars_help'] = 'Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['answerdisplay'] = 'Display Answers';
