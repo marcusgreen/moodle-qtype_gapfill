@@ -362,19 +362,27 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $answer = htmlspecialchars_decode($answer);
         $answergiven = htmlspecialchars_decode($answergiven);
 
-        /* useful with questions containing html code or math symbols */
         if ($disableregex == true) {
             /* strcmp is case sensitive. If case sensitive is off both string and
              * pattern will come into function already converted to lower case with
              * mb_strtolower
              */
-            if (strcmp(trim($answergiven), trim($answer)) == 0) {
-                return true;
-            } else if (preg_match($this->blankregex, $answer) && $answergiven == "") {
-                return true;
-            } else {
-                return false;
+            
+            /* use the | operator without regular expressions. Useful for 
+             * programming languages or math related questions which use 
+             * special characters such as ()              * and slashes 
+             */
+            $correctness=false;
+            $answerparts = explode("|", $answer);
+         
+            foreach ($answerparts as $answer) {
+                if (strcmp(trim($answergiven), trim($answer)) == 0) {
+                    $correctness=true;
+                } else if (preg_match($this->blankregex, $answer) && $answergiven == "") {
+                    $correctness=true;
+                }                 
             }
+            return $correctness;
         }
 
         $pattern = str_replace('/', '\/', $answer);
