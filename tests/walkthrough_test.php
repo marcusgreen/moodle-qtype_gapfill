@@ -111,6 +111,41 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_mark(0);
     }
 
+     public function test_no_regex_or() {  
+        /* Tests a feature introduced with Gapfill 1.8 where 
+         * the | operator will be recognised as a separator for
+         * multiple options when regex is turned off. Useful where
+         * the answers contain characters considered special by 
+         * the regex parser.
+         */ 
+         
+        $questiontext = "A programming question with multiple
+                correct answers to a single field
+                [getSize();| printSize();| 7/2]. The handling of 
+                | is done  with regex disabled so the (), ; and / cause
+                no problems";
+
+        $options=array(
+            'disableregex'=>1,
+            'noduplicates'=>0,
+            'delimitchars' => '[]'
+            );
+
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext,null,$options);
+        $maxmark = 1;
+            $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
+        // Check the initial state.
+        $this->check_current_state(question_state::$todo);
+        $this->check_current_mark(null);
+        $this->check_step_count(1);
+              $this->process_submission(array('p1' => 'getSize();'));
+        $this->quba->finish_all_questions();
+        $this->check_step_count(3);
+        $this->check_current_state(question_state::$gradedright);
+        $this->check_current_mark(1);
+        
+    }
+    
     public function test_deferred_with_partially_correct() {
 
         // Create a gapfill question.
