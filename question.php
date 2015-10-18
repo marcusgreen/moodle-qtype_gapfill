@@ -370,7 +370,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             
             /* use the | operator without regular expressions. Useful for 
              * programming languages or math related questions which use 
-             * special characters such as ()              * and slashes 
+             * special characters such as ()and slashes. Introduced with 
+             * gapfill 1.8
              */
             $correctness=false;
             $answerparts = explode("|", $answer);
