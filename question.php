@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -39,12 +40,28 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $noduplicates;
     public $disableregex;
     public $fixedgapsize;
+
+    /**
+     *
+     * @var int
+     */
     public $maxgapsize;
+
+    /**
+     *
+     * @var string
+     */
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
     public $correctfeedbackformat;
     public $partiallycorrectfeedbackformat;
     public $incorrectfeedbackformat;
+
+    /**
+     * its a whole number, it's only called fraction because it is referred to that in core
+     * code
+     * @var int
+     */
     public $fraction;
     public $gapcount;
     /* wronganswers is used, but needs a name change to distractors at some point */
@@ -147,6 +164,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $summary;
     }
 
+    /**
+     * Has the user put something in every gap?
+     * @param array $response
+     * @return boolean
+     */
     public function is_complete_response(array $response) {
         $gapsfilled = 0;
         $iscomplete = true;
@@ -190,8 +212,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
-    /* A question is gradable if at least one gap response is not blank */
-
+    /**
+     *  A question is gradable if at least one gap response is not blank 
+     */
     public function is_gradable_response(array $response) {
         foreach ($response as $key => $answergiven) {
             if (($answergiven !== "")) {
@@ -243,8 +266,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $numright = 0;
         foreach ($this->places as $place => $notused) {
             $rightanswer = $this->get_right_choice_for($place);
-            if(!isset($response[$this->field($place)])){
-                 continue;
+            if (!isset($response[$this->field($place)])) {
+                continue;
             }
             $answergiven = $response[$this->field($place)];
             if (!array_key_exists($this->field($place), $response)) {
@@ -345,6 +368,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $totalscore / $this->gapcount;
     }
 
+    /**
+     * I'm not sure what this does, but I believe it is necessary. Possibly something to do 
+     * with including files such as images.
+     *
+     */
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
         if ($component == 'question' && in_array($filearea, array('correctfeedback',
                     'partiallycorrectfeedback', 'incorrectfeedback'))) {
@@ -357,7 +385,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     public function compare_response_with_answer($answergiven, $answer, $disableregex = false) {
-
         /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
         $answergiven = htmlspecialchars_decode($answergiven);
@@ -367,21 +394,21 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
              * pattern will come into function already converted to lower case with
              * mb_strtolower
              */
-            
+
             /* use the | operator without regular expressions. Useful for 
              * programming languages or math related questions which use 
              * special characters such as ()and slashes. Introduced with 
              * gapfill 1.8
              */
-            $correctness=false;
+            $correctness = false;
             $answerparts = explode("|", $answer);
-         
+
             foreach ($answerparts as $answer) {
                 if (strcmp(trim($answergiven), trim($answer)) == 0) {
-                    $correctness=true;
+                    $correctness = true;
                 } else if (preg_match($this->blankregex, $answer) && $answergiven == "") {
-                    $correctness=true;
-                }                 
+                    $correctness = true;
+                }
             }
             return $correctness;
         }
