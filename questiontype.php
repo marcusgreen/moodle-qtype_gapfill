@@ -94,7 +94,7 @@ class qtype_gapfill extends question_type {
             $PAGE->requires->jquery_plugin('ui');
             $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_gapfill');
         } else {
-            //Moodle <= 2.6.
+            // Moodle <= 2.6.
             $jquery = '/question/type/' . $this->name().'/jquery';
             $PAGE->requires->js($jquery.'/jquery-1.9.1.min.js', true);
             $PAGE->requires->js($jquery.'/jquery-ui-1.11.4.min.js', true);
@@ -399,7 +399,7 @@ class qtype_gapfill extends question_type {
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         global $CFG;
         $pluginmanager = core_plugin_manager::instance();
-        $gapfillinfo=$pluginmanager->get_plugin_info('qtype_gapfill');
+        $gapfillinfo = $pluginmanager->get_plugin_info('qtype_gapfill');
         $output = parent::export_to_xml($question, $format);
         $output .= '    <delimitchars>' . $question->options->delimitchars .
                 "</delimitchars>\n";
@@ -413,8 +413,9 @@ class qtype_gapfill extends question_type {
                 "</disableregex>\n";
         $output .= '    <fixedgapsize>' . $question->options->fixedgapsize .
                 "</fixedgapsize>\n";
-        $output .= '    <!-- Gapfill release:' 
-                .$gapfillinfo->release .' version:'.$gapfillinfo->versiondisk .' Moodle version:'.$CFG->version .' release:'.$CFG->release
+        $output .= '    <!-- Gapfill release:'
+                .$gapfillinfo->release .' version:'.$gapfillinfo->versiondisk .' Moodle version:'
+                .$CFG->version .' release:'.$CFG->release
                 ." -->\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
