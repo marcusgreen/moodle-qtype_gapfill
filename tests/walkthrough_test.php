@@ -111,27 +111,27 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_mark(0);
     }
 
-     public function test_no_regex_or() {  
-        /* Tests a feature introduced with Gapfill 1.8 where 
+    public function test_no_regex_or() {
+        /* Tests a feature introduced with Gapfill 1.8 where
          * the | operator will be recognised as a separator for
          * multiple options when regex is turned off. Useful where
-         * the answers contain characters considered special by 
+         * the answers contain characters considered special by
          * the regex parser.
-         */ 
-         
+         */
+
         $questiontext = "A programming question with multiple
                 correct answers to a single field
-                [getSize();| printSize();| 7/2]. The handling of 
+                [getSize();| printSize();| 7/2]. The handling of
                 | is done  with regex disabled so the (), ; and / cause
                 no problems";
 
-        $options=array(
-            'disableregex'=>1,
-            'noduplicates'=>0,
+        $options = array(
+            'disableregex' => 1,
+            'noduplicates' => 0,
             'delimitchars' => '[]'
             );
 
-        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext,null,$options);
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, null, $options);
         $maxmark = 1;
             $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -143,9 +143,8 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_step_count(3);
         $this->check_current_state(question_state::$gradedright);
         $this->check_current_mark(1);
-        
     }
-    
+
     public function test_deferred_with_partially_correct() {
 
         // Create a gapfill question.
@@ -185,8 +184,7 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_current_state(question_state::$gradedpartial);
         $this->check_current_mark(1);
     }
-   
-   
+
     public function test_interactive_with_correct() {
 
         // Create a gapfill question.
@@ -439,21 +437,21 @@ What are the colors of the Olympic medals?
         $this->quba->finish_all_questions();
     }
 
-    public function test_get_aftergap_text(){
+    public function test_get_aftergap_text() {
         $questiontext = "The [cat] sat on the [mat]";
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
-        $this->process_submission(array('-submit' => 1,'p1' => 'cat', 'p2' => 'dog'));
+        $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'dog'));
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
-        $this->assertContains("[mat]",$html );
-       
+        $this->assertContains("[mat]", $html );
+
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
-        $this->process_submission(array('-submit' => 1,'p1' => 'cat', 'p2' => 'mat'));
+        $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
-        $this->assertNotContains("[mat]",$html );
+        $this->assertNotContains("[mat]", $html );
 
     }
     public function test_deferred_grade_for_blank() {
