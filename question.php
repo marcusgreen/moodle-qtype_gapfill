@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -395,9 +394,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
              * mb_strtolower
              */
 
-            /* use the | operator without regular expressions. Useful for 
-             * programming languages or math related questions which use 
-             * special characters such as ()and slashes. Introduced with 
+            /* use the | operator without regular expressions. Useful for
+             * programming languages or math related questions which use
+             * special characters such as ()and slashes. Introduced with
              * gapfill 1.8
              */
             $correctness = false;
