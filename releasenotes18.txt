@@ -12,4 +12,3 @@ for tracking down issues (it means I don't have to get back to people asking for
 The | symbol will now be recognised as an or operator even
 when regular expression processing is turned off. This is handy for programming language
 and math questions that use characters treated as special such as \/?* etc.
-
