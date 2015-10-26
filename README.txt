@@ -11,7 +11,7 @@ dropddropdown lists or javascript powered drag and drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created and tested under Moodle 2.5, 2.6, 2.7,2.8 and 2.9
+This question type was created and tested under Moodle 2.5, 2.6, 2.7,2.8,2.9,3.0
 
 It will not work with versions of moodle prior to 2.1.
 
@@ -20,6 +20,8 @@ Place the files in a directory
 moodle\question\type\gapfill
 
 Where moodle is webroot for your install.
+
+Go to Site Administration/Notifications
 
 Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
 Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used (see help)
