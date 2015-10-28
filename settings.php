@@ -22,39 +22,18 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->libdir . '/formslib.php');
-
-global $CFG;
-$settings = null;
-
-if (is_siteadmin()) {
-   
-    $ADMIN->add('qtypesettings',new admin_category('qtype_gapfill_category', 'Gapfill'));
-    $conf = get_config('qtype_gapfill');
-    $settings_page = new admin_settingpage('gfsettings' ,'Settings');      
-    $ADMIN->add('qtype_gapfill_category', $settings_page);
-     $settings_page->add(new admin_setting_configcheckbox('qtype_gapfill/disableregex',
+if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_configcheckbox('qtype_gapfill/disableregex',
         get_string('disableregex', 'qtype_gapfill'),
         get_string('disableregexset_text', 'qtype_gapfill'), 0));
-    $settings_page->add(new admin_setting_configcheckbox('qtype_gapfill/fixedgapsize',
+    $settings->add(new admin_setting_configcheckbox('qtype_gapfill/fixedgapsize',
         get_string('fixedgapsize', 'qtype_gapfill'),
         get_string('fixedgapsizeset_text', 'qtype_gapfill') , 0));
-    $settings_page->add(new admin_setting_configcheckbox('qtype_gapfill/casesensitive',
+    $settings->add(new admin_setting_configcheckbox('qtype_gapfill/casesensitive',
         get_string('casesensitive', 'qtype_gapfill'),
-        get_string('casesensitive_text', 'qtype_gapfill') , 0));    
-    $settings_page->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
+        get_string('casesensitive_text', 'qtype_gapfill') , 0));
+    $settings->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
          get_string('delimitset', 'qtype_gapfill'),
          get_string('delimitset_text', 'qtype_gapfill'),
-         "[ ],{ },# #,@ @", PARAM_RAW, 20, 3));    
-    $ADMIN->add('qtype_gapfill_category', 
-            new admin_externalpage(
-                    'qtype_gapfill_import',
-                    'Import Examples',
-                    new moodle_url('/question/type/gapfill/import_examples.php'),
-                    'moodle/site:config'
-            ));
+         "[ ],{ },# #,@ @", PARAM_RAW, 20, 3));
 }
-
-
-
-
