@@ -168,7 +168,6 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
     }
 
     public function test_deferred_with_blanks() {
-
         // Create a gapfill question.
         $questiontext = "The [cat] sat on the [mat]";
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
@@ -183,6 +182,28 @@ class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_step_count(3);
         $this->check_current_state(question_state::$gradedpartial);
         $this->check_current_mark(1);
+    }
+    
+     public function test_extended_characters() {
+        /* Testing extended characters, including a word that ends with an accent
+         * there were issues using strtolower which only works with plain ascci.  
+         * This has been replaced with Moodles own core_text::strtolower($answergiven,'UTF-8');
+         * A full test would include regex on and off and case sensitivity on and off
+         */         
+        $questiontext = "Moscow is the capital of [Россия], The French word for boy is [garçon]. A word that
+                ends with an accent is [andrà]  ";
+        $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
+        $maxmark = 3;
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
+        // Check the initial state.
+        $this->check_current_state(question_state::$todo);
+        $this->check_current_mark(null);
+        $this->check_step_count(1);
+        $this->process_submission(array('p1' => 'Россия', 'p2' => 'garçon','p3' => 'andrà' ));
+        $this->quba->finish_all_questions();
+        $this->check_step_count(3);
+        $this->check_current_state(question_state::$gradedright);
+        $this->check_current_mark(3);
     }
 
     public function test_interactive_with_correct() {
