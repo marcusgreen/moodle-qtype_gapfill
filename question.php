@@ -240,8 +240,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
-            $answergiven = mb_strtolower($answergiven);
-            $rightanswer = mb_strtolower($rightanswer);
+            $answergiven = core_text::strtolower($answergiven,'UTF-8');
+            $rightanswer = core_text::strtolower($rightanswer,'UTF-8');
         }
 
         if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
@@ -273,8 +273,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 continue;
             }
             if (!$this->casesensitive == 1) {
-                $answergiven = mb_strtolower($answergiven);
-                $rightanswer = mb_strtolower($rightanswer);
+                $answergiven = core_text::strtolower($answergiven,'UTF-8');
+                $rightanswer = core_text::strtolower($rightanswer,'UTF-8');
             }
             if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $numright++;
@@ -297,8 +297,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $answergiven = $response[$this->field($place)];
             $rightanswer = $this->get_right_choice_for($place);
             if (!$this->casesensitive == 1) {
-                $answergiven = mb_strtolower($answergiven);
-                $rightanswer = mb_strtolower($rightanswer);
+                $answergiven = core_text::strtolower($answergiven);
+                $rightanswer = core_text::strtolower($rightanswer);
             }
             if (!$this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $response[$this->field($place)] = '';
@@ -389,9 +389,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $answergiven = htmlspecialchars_decode($answergiven);
 
         if ($disableregex == true) {
-            /* strcmp is case sensitive. If case sensitive is off both string and
+             /* strcmp is case sensitive. If case sensitive is off, both string and
              * pattern will come into function already converted to lower case with
-             * mb_strtolower
+             * core_text::strtolower
              */
 
             /* use the | operator without regular expressions. Useful for
