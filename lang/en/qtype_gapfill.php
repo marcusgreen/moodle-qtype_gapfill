@@ -67,3 +67,8 @@ $string['wronganswers'] = 'Distractors.';
 $string['wronganswers_help'] = 'List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
 $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
 $string['correctanswer'] = 'Correct answer';
+$string['coursenotfound']='Course not found, check the course shortname';
+$string['questioncatnotfound']='Question Category not found for course';
+$string['import']='Import';
+$string['cannotimport']='cannotimport';
+
