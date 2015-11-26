@@ -17,7 +17,7 @@
 
 /**
  * @package    qtype_gapfill
- * @copyright  2013 Marcus Green
+ * @copyright  2015 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once('../../../config.php');
@@ -35,8 +35,7 @@ class gapfill_import_form extends moodleform {
         $mform = $this->_form;
         $mform->addElement('text', 'course', 'Course');
         $mform->setType('course', PARAM_RAW);
-        $mform->setDefault('course', 'TC101X');
-        $mform->addElement('submit', 'submitbutton', 'Import');
+        $mform->addElement('submit', 'submitbutton', get_string('import', 'qtype_gapfill'));
     }
 
     public function validation($fromform, $data) {
@@ -45,9 +44,8 @@ class gapfill_import_form extends moodleform {
         global $DB;
         $courseid = $DB->get_records_sql($sql, array($fromform['course']));
         if (count($courseid) == 0) {
-            $errors['course'] = 'Course not found, check the course shortname';
+            $errors['course'] = get_string('coursenotfound', 'qtype_gapfill');
         }
-
         if ($errors) {
             return $errors;
         } else {
@@ -69,7 +67,7 @@ if ($fromform = $mform->get_data()) {
     $questioncat = array_shift($category);
 
     if ($questioncat == NULL) {
-        print_error('Question Category not found for course :' . $fromform->course, '', $PAGE->url);
+        print_error(get_string('questioncatnotfound', 'qtype_gapfill') . $fromform->course, '', $PAGE->url);
     }
 
     $qformat = new qformat_xml();
@@ -81,12 +79,12 @@ if ($fromform = $mform->get_data()) {
     echo $OUTPUT->header();
     // Do anything before that we need to
     if (!$qformat->importpreprocess()) {
-        print_error('cannotimport', '', $thispageurl->out);
+        print_error(get_string('cannotimport', 'qtype_gapfill'), '', $thispageurl->out);
     }
 
     // Process the uploaded file
     if (!$qformat->importprocess($category)) {
-        print_error('cannotimport', '', $PAGE->url);
+        print_error(get_string('cannotimport', 'qtype_gapfill'), '', $PAGE->url);
     } else {
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
