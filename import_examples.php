@@ -35,6 +35,8 @@ class gapfill_import_form extends moodleform {
         $mform = $this->_form;
         $mform->addElement('text', 'course', 'Course');
         $mform->setType('course', PARAM_RAW);
+        $mform->addHelpButton('course', 'course', 'qtype_gapfill');
+
         $mform->addElement('submit', 'submitbutton', get_string('import', 'qtype_gapfill'));
     }
 
