@@ -48,8 +48,8 @@ if (is_siteadmin()) {
     $ADMIN->add('qtype_gapfill_category',
             new admin_externalpage(
                     'qtype_gapfill_import',
-                    'Import Examples',
-                    new moodle_url('/question/type/gapfill/import_examples.php'),
+                     get_string('importexamples', 'qtype_gapfill'),
+                     new moodle_url('/question/type/gapfill/import_examples.php'),
                     'moodle/site:config'
             ));
 }
