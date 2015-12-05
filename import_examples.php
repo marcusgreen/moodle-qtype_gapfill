@@ -58,8 +58,8 @@ class gapfill_import_form extends moodleform {
 
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id contextid from {course}  c
-        join {context}  ctx on ctx.instanceid=c.id
+    $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id as contextid from {course} c
+        join {context} ctx on ctx.instanceid=c.id
         join {question_categories} qcat on qcat.contextid=ctx.id
         and ctx.contextlevel=50 and c.shortname =?';
 
