@@ -74,3 +74,4 @@ $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
 $string['course_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the '
         . 'file example_questions.xml in the gapfill question type folder.';
+$string['importexamples'] = "Import Examples";
