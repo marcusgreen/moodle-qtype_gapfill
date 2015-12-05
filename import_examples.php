@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -59,8 +58,8 @@ class gapfill_import_form extends moodleform {
 
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    $sql = 'Select qcat.id as qcatid, c.id,c.shortname,ctx.id as contextid from {course} as c 
-        join {context} as ctx on ctx.instanceid=c.id
+    $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id contextid from {course}  c
+        join {context}  ctx on ctx.instanceid=c.id
         join {question_categories} qcat on qcat.contextid=ctx.id
         and ctx.contextlevel=50 and c.shortname =?';
 
@@ -68,7 +67,7 @@ if ($fromform = $mform->get_data()) {
 
     $questioncat = array_shift($category);
 
-    if ($questioncat == NULL) {
+    if ($questioncat == null) {
         print_error(get_string('questioncatnotfound', 'qtype_gapfill') . $fromform->course, '', $PAGE->url);
     }
 
@@ -79,12 +78,12 @@ if ($fromform = $mform->get_data()) {
     $qformat->setFilename($file);
     $qformat->setCategory($questioncat);
     echo $OUTPUT->header();
-    // Do anything before that we need to
+    // Do anything before that we need to.
     if (!$qformat->importpreprocess()) {
         print_error(get_string('cannotimport', 'qtype_gapfill'), '', $thispageurl->out);
     }
 
-    // Process the uploaded file
+    // Process the uploaded file.
     if (!$qformat->importprocess($category)) {
         print_error(get_string('cannotimport', 'qtype_gapfill'), '', $PAGE->url);
     } else {
