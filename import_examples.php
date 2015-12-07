@@ -25,28 +25,52 @@ require_once($CFG->libdir . '/xmlize.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 
-
 admin_externalpage_setup('qtype_gapfill_import');
 
 class gapfill_import_form extends moodleform {
+    private $course=null;
+    public  $questioncategory=null;
 
     protected function definition() {
         $mform = $this->_form;
         $mform->addElement('text', 'course', 'Course');
         $mform->setType('course', PARAM_RAW);
         $mform->addHelpButton('course', 'course', 'qtype_gapfill');
-
         $mform->addElement('submit', 'submitbutton', get_string('import', 'qtype_gapfill'));
     }
-
+ 
+    public function get_qcat($courseshortname){
+        global $DB;    
+        $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id as contextid from {course} c
+        join {context} ctx on ctx.instanceid=c.id
+        join {question_categories} qcat on qcat.contextid=ctx.id
+        and ctx.contextlevel=50 and c.shortname =?';
+        $category = $DB->get_records_sql($sql, array($courseshortname));  
+        return $category;
+    }
+    
+  
     public function validation($fromform, $data) {
         $errors = array();
-        $sql = 'select id from {course} where shortname =?';
         global $DB;
-        $courseid = $DB->get_records_sql($sql, array($fromform['course']));
-        if (count($courseid) == 0) {
+        $courseshortname=$fromform['course'];
+        $sql = 'select id from {course} where shortname =?';
+     
+        $this->course = $DB->get_records_sql($sql, array($courseshortname));
+     
+        if (count($this->course) == 0) {
             $errors['course'] = get_string('coursenotfound', 'qtype_gapfill');
+        } else{
+         $this->questioncategory=$this->get_qcat($courseshortname);
+
+         if (count($this->questioncategory) == 0) {
+             $course=array_shift($this->course);
+             $url= new moodle_url('/question/edit.php?courseid='.$course->id);
+             $erstring='Question category not found, click <a href='.$url.'>here</a> to initialise';
+             $errors['course']=$erstring;
+         }
         }
+
         if ($errors) {
             return $errors;
         } else {
@@ -55,7 +79,6 @@ class gapfill_import_form extends moodleform {
     }
 
 }
-
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
     $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id as contextid from {course} c
