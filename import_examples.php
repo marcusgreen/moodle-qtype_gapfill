@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -28,72 +29,61 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
 admin_externalpage_setup('qtype_gapfill_import');
 
 class gapfill_import_form extends moodleform {
-    private $course=null;
-    public  $questioncategory=null;
+
+    public $course = null;
+    public $questioncategory = null;
+    public $doimport = false;
 
     protected function definition() {
         $mform = $this->_form;
-        $mform->addElement('text', 'course', 'Course');
-        $mform->setType('course', PARAM_RAW);
-        $mform->addHelpButton('course', 'course', 'qtype_gapfill');
+        $mform->addElement('text', 'courseshortname', 'Course Shortname');
+        $mform->setType('courseshortname', PARAM_RAW);
+        $mform->addHelpButton('courseshortname', 'courseshortname', 'qtype_gapfill');
         $mform->addElement('submit', 'submitbutton', get_string('import', 'qtype_gapfill'));
     }
- 
-    public function get_qcat($courseshortname){
-        global $DB;    
+
+    public function get_data() {
+        $fromform= parent::get_submitted_data();
+        if($fromform){
+        global $DB;
         $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id as contextid from {course} c
         join {context} ctx on ctx.instanceid=c.id
         join {question_categories} qcat on qcat.contextid=ctx.id
         and ctx.contextlevel=50 and c.shortname =?';
-        $category = $DB->get_records_sql($sql, array($courseshortname));  
-        return $category;
+            $category = $DB->get_records_sql($sql, array($fromform->courseshortname));
+            $this->questioncategory = array_shift($category);
+            $sql = 'select id from {course} where shortname =?';
+            $this->course = $DB->get_records_sql($sql, array($fromform->courseshortname));
+        }
+        parent::get_data();
     }
-    
-  
+
     public function validation($fromform, $data) {
         $errors = array();
-        global $DB;
-        $courseshortname=$fromform['course'];
-        $sql = 'select id from {course} where shortname =?';
-     
-        $this->course = $DB->get_records_sql($sql, array($courseshortname));
-     
         if (count($this->course) == 0) {
-            $errors['course'] = get_string('coursenotfound', 'qtype_gapfill');
-        } else{
-         $this->questioncategory=$this->get_qcat($courseshortname);
-
-         if (count($this->questioncategory) == 0) {
-             $course=array_shift($this->course);
-             $url= new moodle_url('/question/edit.php?courseid='.$course->id);
-             $erstring='Question category not found, click <a href='.$url.'>here</a> to initialise';
-             $errors['course']=$erstring;
-         }
+            $errors['courseshortname'] = get_string('coursenotfound', 'qtype_gapfill');
+        } else {
+            if (count($this->questioncategory) == 0) {
+                $course = array_shift($this->course);
+                $url = new moodle_url('/question/edit.php?courseid=' . $course->id);
+                $erstring = 'Question category not found, click <a href=' . $url . '>here</a> to initialise';
+                $errors['courseshortname'] = $erstring;
+            }
         }
 
         if ($errors) {
             return $errors;
         } else {
+            $this->doimport = true;
             return true;
         }
     }
 
 }
+
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
-if ($fromform = $mform->get_data()) {
-    $sql = 'Select qcat.id qcatid, c.id,c.shortname,ctx.id as contextid from {course} c
-        join {context} ctx on ctx.instanceid=c.id
-        join {question_categories} qcat on qcat.contextid=ctx.id
-        and ctx.contextlevel=50 and c.shortname =?';
-
-    $category = $DB->get_records_sql($sql, array($fromform->course));
-
-    $questioncat = array_shift($category);
-
-    if ($questioncat == null) {
-        print_error(get_string('questioncatnotfound', 'qtype_gapfill') . $fromform->course, '', $PAGE->url);
-    }
-
+$mform->get_data();
+if ($mform->doimport === true) {
     $qformat = new qformat_xml();
     $categorycontext = context::instance_by_id($questioncat->contextid);
     $questioncat->context = $categorycontext;
@@ -115,7 +105,6 @@ if ($fromform = $mform->get_data()) {
         return;
     }
 }
-
-echo $OUTPUT->header();
+ echo $OUTPUT->header();
 $mform->display();
 echo $OUTPUT->footer();
