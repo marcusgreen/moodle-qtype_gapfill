@@ -31,32 +31,40 @@ admin_externalpage_setup('qtype_gapfill_import');
 
 class gapfill_import_form extends moodleform {
 
+    public $questioncategory;
+
     protected function definition() {
         $mform = $this->_form;
         $mform->addElement('text', 'courseshortname', 'Course');
         $mform->setType('courseshortname', PARAM_RAW);
-        $mform->setDefault('courseshortname', 'TC101X');
         $mform->addElement('submit', 'submitbutton', 'Import');
     }
-public function get_question_category($courseshortname){
+
+    public function get_question_category($courseshortname) {
         global $DB;
+        /* parent=0 means where you have multiple categories it is at the top */
         $sql = 'Select qcat.id id, c.id courseid,c.shortname,ctx.id as contextid from {course} as c 
         join {context} as ctx on ctx.instanceid=c.id
         join {question_categories} qcat on qcat.contextid=ctx.id
-        and ctx.contextlevel=50 and c.shortname =?';
+        and ctx.contextlevel=50 and qcat.parent=0 and c.shortname =?';
+        $category = $DB->get_records_sql($sql, array($courseshortname));
+        $category = array_shift($category);
+        return $category;
+    }
 
-         $category = $DB->get_records_sql($sql, array($courseshortname));
-         $category = array_shift($category);
-         return $category;
-    
-}
     public function validation($fromform, $data) {
         $errors = array();
-        $sql = 'select id from {course} where shortname =?';
         global $DB;
+        $sql = 'select id from {course} where shortname =?';
         $courseid = $DB->get_records_sql($sql, array($fromform['courseshortname']));
         if (count($courseid) == 0) {
-            $errors['course'] = 'Course not found, check the course shortname';
+            $errors['courseshortname'] = get_string('coursenotfound','qtype_gapfill');
+        } else {
+            $this->questioncategory = $this->get_question_category($fromform['courseshortname']);
+             if (count($this->questioncategory) == 0) {
+                $url = new moodle_url('/question/edit.php?courseid=' . array_shift($courseid)->id);
+                $errors['courseshortname'] = get_string('questioncatnotfound', 'qtype_gapfill', $url->out());
+            }
         }
 
         if ($errors) {
@@ -70,17 +78,9 @@ public function get_question_category($courseshortname){
 
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    
-    $category=$mform->get_question_category($fromform->courseshortname);
+    $category = $mform->questioncategory;
     $categorycontext = context::instance_by_id($category->contextid);
-    $categorycontext=$categorycontext->get_parent_context();
-
-    $category->context = $categorycontext;  
-
-
-    if ($category == NULL) {
-        print_error('Question Category not found for course :' . $fromform->course, '', $PAGE->url);
-    }
+    $category->context = $categorycontext;
 
     $qformat = new qformat_xml();
     $file = $CFG->dirroot . '/question/type/gapfill/sample_questions.xml';
@@ -90,12 +90,12 @@ if ($fromform = $mform->get_data()) {
     echo $OUTPUT->header();
     // Do anything before that we need to
     if (!$qformat->importpreprocess()) {
-        print_error('cannotimport', '', $thispageurl->out);
+        print_error('cannotimport', 'qtype_gapfill', $PAGE->out);
     }
 
     // Process the uploaded file
     if (!$qformat->importprocess($category)) {
-        print_error('cannotimport', '', $PAGE->url);
+        print_error(get_string('cannotimport',''), '', $PAGE->url);
     } else {
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
