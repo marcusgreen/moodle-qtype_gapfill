@@ -97,6 +97,7 @@ if ($fromform = $mform->get_data()) {
     if (!$qformat->importprocess($category)) {
         print_error(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
+        /* after the import offer a link to go to the course and view the questions */
         $visitquestions = new moodle_url('/question/edit.php?courseid=' . $mform->course->id);
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
