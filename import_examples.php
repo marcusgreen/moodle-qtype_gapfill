@@ -15,8 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Import sample Gapfill questions from xml file. This does
+ * the same as the standard xml import but easier
  * @package    qtype_gapfill
- * @copyright  2013 Marcus Green
+ * @copyright  2015 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once('../../../config.php');
@@ -29,7 +31,6 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
 admin_externalpage_setup('qtype_gapfill_import');
 
 class gapfill_import_form extends moodleform {
-
     public $questioncategory;
     public $course;
 
