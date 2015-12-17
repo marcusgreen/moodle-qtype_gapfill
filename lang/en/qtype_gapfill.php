@@ -68,7 +68,7 @@ $string['wronganswers_help'] = 'List of incorrect words designed to distract fro
 $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
 $string['correctanswer'] = 'Correct answer';
 $string['coursenotfound'] = 'Course not found, check the course shortname';
-$string['questioncatnotfound'] = 'Question category not found, click click <a href={$a}>here</a> to initialise';
+$string['questioncatnotfound'] = 'Question category not found, click click <a href={$a}>here</a> to initialise, then the browser back button';
 $string['import'] = 'Import';
 $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
