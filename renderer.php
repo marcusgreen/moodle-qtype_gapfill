@@ -54,7 +54,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $markedgaps = $question->get_markedgaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
-                $output .= $this->embedded_element($qa, $place, $options, $markedgaps, $options);
+                $output .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
@@ -70,8 +70,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $output;
     }
 
-    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps,
-            question_display_options $options) {
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
