@@ -1,4 +1,5 @@
-Gapfill question type V1.9 for Moodle 
+###Gapfill question type V2.0 for Moodle 
+###Under development do not use on a production site
 
 A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices. Teachers can define the 
 question with square braces to define the missing words. For example
