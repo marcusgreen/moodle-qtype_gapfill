@@ -1,8 +1,0 @@
-Version 1.6 of the Moodle Gapfill question type contributed by Marcus Green
-When fixed gapsize the width of a gap such as [cat|tiger] will be the width of tiger not cat|tiger, i.e. 5 not 9
-
-When display right answer is selected in the quiz settings the correct answer will be displayed within the question delimiters.
-If the correct answer is [cat] and you enter[dog] the answer will show dog [cat] (with dog in red followed by a tick). 
-Thanks to Gordon McLeod of Glasgow University for inspiring this feature.
-
-When using deferred feedback zero marks were given overall when any gaps were blank. This is now fixed
