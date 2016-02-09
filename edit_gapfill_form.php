@@ -36,14 +36,34 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answer;
     public $answerdisplay;
     public $delimitchars;
-
+    
     protected function definition_inner($mform) {
+        global $PAGE;
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->js('/question/type/gapfill/questionedit.js');
+
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
         $mform->removeelement('generalfeedback');
 
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
+            $mform->removeelement('questiontext');
+            $questiontext="<div class='mavg'>this is questiontext</div>";
+    
+            $mform->addElement('html', '<div class="static_qtx">');
+            $mform->addElement('static', 'static_questiontext', 'Question text*', $questiontext);
+            $mform->addElement('html', '</div>');
+
+            $mform->addElement('html', '<div class="qtx">');
+            $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
+            $mform->setType('questiontext', PARAM_RAW);
+            $mform->addRule('questiontext', null, 'required', null, 'client');
+            $mform->addElement('html', '</div>');
+        $mform->addElement('button', 'gapfeedback', 'Add Gap Feedback');
+       // $mform->addElement('button', 'editquestion', 'Edit Question');
+
 
         $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1),
                 $this->editoroptions);
