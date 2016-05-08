@@ -5,16 +5,33 @@
     padding-left:1px;
     padding-right:1px;
     background:white;
-    vertical-align:middle;
+    /*vertical-align:middle;*/
     color:black;
     border-radius:4px;
 }
+.static_icons{
+    display: block;
+    min-height:40px;
+    background-color:lightgray;
+    border-color:black;
+    border:solid black 1px;
+    border-bottom:none;
+}
+#new-feedback-for{
+    margin-left:0px;
+}
+.gfinput{
+    width:100%;
+}
 .static_qtx{
     display:none;
+    border:gray 1px
+
 }
 .mavg{
         border:solid black 1px;
-        padding:2px;
+        padding-left:4px;
+        padding-top:2px;
 }
 .que.gapfill span.draggable.answers{
     height:1.3em;

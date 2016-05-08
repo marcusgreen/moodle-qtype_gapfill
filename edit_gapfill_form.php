@@ -38,10 +38,49 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $delimitchars;
     
     protected function definition_inner($mform) {
+        
+  $formcode='
+<div style="display:none" >
+<div id="gapfeedback-form" title="Gap feedback">
+  <form>
+    <fieldset>
+      <label for="name">Gap Text</label>
+      <input type="text" name="name" id="gaptext"  disabled  class="text ui-widget-content ui-corner-all">
+     
+<label for="incorrectfeedback">Incorrect Feedback</label>
+      <input type="text" name="incorrectfeedback" id="incorrectfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      
+      <label for="correctfeedback">Correct Feedback</label>
+      <input type="text" name="correctfeedback" id="correctfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+       
+      <label for="response">Response </label>
+      <input type="text" name="response" id="response[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      
+<label for="feedback">Feedback</label>
+      <input type="text" name="feedback" id="feedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+        
+    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+  <button id="new-feedback-for">New Response</button>
+
+</div>
+  <button id="add-feedback">OK</button>
+</div>
+';
+        
         global $PAGE;
         $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('ui');        
+        $PAGE->requires->jquery_plugin('rangy-core','qtype_gapfill');
+        $PAGE->requires->jquery_plugin('rangy-inputs','qtype_gapfill');
+        $PAGE->requires->jquery_plugin('ui-css');
+      
+
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
+
+
+        $mform->addElement('html', $formcode);
 
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
@@ -50,20 +89,17 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
             $mform->removeelement('questiontext');
-            $questiontext="<div class='mavg'>this is questiontext</div>";
+            $questiontext="<div class='static_icons'>.</div><div class='mavg'>This is questiontext</div>";
     
-            $mform->addElement('html', '<div class="static_qtx">');
-            $mform->addElement('static', 'static_questiontext', 'Question text*', $questiontext);
-            $mform->addElement('html', '</div>');
-
-            $mform->addElement('html', '<div class="qtx">');
+  
             $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
             $mform->setType('questiontext', PARAM_RAW);
             $mform->addRule('questiontext', null, 'required', null, 'client');
-            $mform->addElement('html', '</div>');
-        $mform->addElement('button', 'gapfeedback', 'Add Gap Feedback');
-       // $mform->addElement('button', 'editquestion', 'Edit Question');
+            
+            $mform->addElement('html', '<div class="xstatic_qtx">');
 
+      
+        $mform->addElement('button', 'gapfeedback', 'Add Gap Feedback');
 
         $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1),
                 $this->editoroptions);

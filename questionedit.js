@@ -22,22 +22,68 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$("#id_gapfeedback").click(function (event) {
-    if ($(".qtx").css("display") !== "none") {
-      //  $(".static_qtx").css("visibility", "visible");
-      //  $(".qtx").css("visibility", "hidden");
-        $(".mavg").height($(".qtx").height());
-       // var offset= $(".qtx").offset();
-        
-        $(".static_qtx").css("display", "block");
-        $(".qtx").css("display", "none");
-        $("#id_gapfeedback").attr('value', 'Edit Question');
-       // alert($("#id_questiontext").val());
-    } else {
-        //$(".static_qtx").css("visibility", "hidden");
-        //$(".qtx").css("visibility", "visible");
-        $(".static_qtx").css("display", "none");
-        $(".qtx").css("display", "block");
-        $("#id_gapfeedback").attr('value', 'Add Gap Feedback');
+$("#new-feedback-for").on("click", function () {
+    var $somevalue=1;
+    $("#gapfeedback-form").append(
+            '<label for="name">Response </label> <input id=new-feedback-for type=text class="gfinput" />'+
+            '<label for="name">Feedback </label> <input id=new-feedback-for type=text class="gfinput"/>'
+            );
+});
+
+
+$("#fitem_id_questiontext").on("click", function () {
+    $the_text = $("#id_questiontexteditable").text();
+    // alert($the_text);
+    rangy.init();
+    $sel = rangy.getSelection();
+    $qtext = $sel.anchorNode.nodeValue;
+    $clickpoint = $sel.focusOffset;
+    x = $clickpoint;
+
+    $leftdelim = null;
+    for (var x = $clickpoint; x > 0; x--)
+    {
+        if ($qtext.charAt(x) === "]") {
+            break;
+        }
+        if ($qtext.charAt(x) === "[") {
+            $leftdelim = x + 1;
+            break;
+        }
     }
+
+    $rightdelim = null;
+    for (var x = $clickpoint; x < $qtext.length; x++)
+    {
+        if ($qtext.charAt(x) === "[") {
+            break;
+        }
+        if ($qtext.charAt(x) === "]") {
+            $rightdelim = x;
+            break;
+        }
+    }
+
+    $gaptext = null;
+    if ($leftdelim != null) {
+        if ($rightdelim != null) {
+            $gaptext = $the_text.substring($leftdelim, $rightdelim);
+            $("#gaptext").val($gaptext);
+            $("#correctfeedback").focus();
+            $("#gapfeedback-form").dialog({
+                height: 500,
+                width: 650,
+                modal: true,
+                buttons: [
+                    {
+                       text: "OK",
+                    }
+                ]
+            });
+
+
+        }
+    }
+
+
 });

@@ -34,6 +34,11 @@
  * @copyright  2013 Petr Skoda  {@link http://skodak.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 $plugins = array(
-    'ui.touch-punch' => array('files' => array('jquery-ui.touch-punch.js'))
+    'ui' => array('files' => array('jquery-ui-1.11.4.custom/jquery-ui-1.11.4.min.js')),
+    'ui-css'  => array('files' => array('jquery-ui-themes/theme/cupertino/jquery-ui.min.css')),
+    'ui.touch-punch' => array('files' => array('jquery-ui.touch-punch.js')),
+    'rangy-core' => array('files' => array('rangy/lib/rangy-core.js')),
+    'rangy-inputs' => array('files' => array('rangy-inputs/rangyinputs-jquery-src.js'))
 );
