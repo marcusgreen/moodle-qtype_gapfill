@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -36,10 +37,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answer;
     public $answerdisplay;
     public $delimitchars;
-    
+
     protected function definition_inner($mform) {
-        
-  $formcode='
+
+        $formcode = '
 <div style="display:none" >
 <div id="gapfeedback-form" title="Gap feedback">
   <form>
@@ -48,34 +49,34 @@ class qtype_gapfill_edit_form extends question_edit_form {
       <input type="text" name="name" id="gaptext"  disabled  class="text ui-widget-content ui-corner-all">
      
 <label for="incorrectfeedback">Incorrect Feedback</label>
-      <input type="text" name="incorrectfeedback" id="incorrectfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      <input type="text" name="incorrectfeedback_0" id="incorrectfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
       
       <label for="correctfeedback">Correct Feedback</label>
-      <input type="text" name="correctfeedback" id="correctfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      <input type="text" name="correctfeedback_0" id="correctfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
        
       <label for="response">Response </label>
-      <input type="text" name="response" id="response[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      <input type="text" name="response_0" id="response[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
       
 <label for="feedback">Feedback</label>
-      <input type="text" name="feedback" id="feedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      <input type="text" name="feedback_0" id="feedback[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
         
     <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
     </fieldset>
   </form>
-  <button id="new-feedback-for">New Response</button>
+  <button id="new-response">New Response</button>
 
 </div>
   <button id="add-feedback">OK</button>
 </div>
 ';
-        
+
         global $PAGE;
         $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');        
-        $PAGE->requires->jquery_plugin('rangy-core','qtype_gapfill');
-        $PAGE->requires->jquery_plugin('rangy-inputs','qtype_gapfill');
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('rangy-core', 'qtype_gapfill');
+        $PAGE->requires->jquery_plugin('rangy-inputs', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('ui-css');
-      
+
 
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
 
@@ -88,21 +89,20 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
-            $mform->removeelement('questiontext');
-            $questiontext="<div class='static_icons'>.</div><div class='mavg'>This is questiontext</div>";
-    
-  
-            $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
-            $mform->setType('questiontext', PARAM_RAW);
-            $mform->addRule('questiontext', null, 'required', null, 'client');
-            
-            $mform->addElement('html', '<div class="xstatic_qtx">');
+        $mform->removeelement('questiontext');
+        $questiontext = "<div class='static_icons'>.</div><div class='mavg'>This is questiontext</div>";
 
-      
+
+        $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
+        $mform->setType('questiontext', PARAM_RAW);
+        $mform->addRule('questiontext', null, 'required', null, 'client');
+
+        $mform->addElement('html', '<div class="xstatic_qtx">');
+
+
         $mform->addElement('button', 'gapfeedback', 'Add Gap Feedback');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1),
-                $this->editoroptions);
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
