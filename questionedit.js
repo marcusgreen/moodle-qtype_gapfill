@@ -22,24 +22,42 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$("#new-feedback-for").on("click", function () {
-    var $somevalue=1;
-    $("#gapfeedback-form").append(
-            '<label for="name">Response </label> <input id=new-feedback-for type=text class="gfinput" />'+
-            '<label for="name">Feedback </label> <input id=new-feedback-for type=text class="gfinput"/>'
-            );
-});
 
+var feedback_text = '[{"gaptext":"cat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"bat","feedback":"no not bat"},\n\
+{"gaptext":"mat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"rug","feedback":"no not rug"}]';
+
+
+$feedback = JSON.parse(feedback_text);
+
+function get_feedback($gaptext,$index){
+        for(index=0;index< $feedback.length;index++){
+        if($feedback[index]["gaptext"]==$gaptext){
+            alert($feeedback[index]["correct"]);
+        }
+      
+    }
+    
+}
+
+$("#new-response").on("click", function () {
+
+    var $feedbackcount = 1;
+    $("#gapfeedback-form").append(
+            '<label for="name">Response </label> \n\
+            <input id=response[' + $feedbackcount + '] name=response_' + $feedbackcount + ' type=text class="gfinput" />' +
+            '<label for="name">Feedback </label> \n\
+            <input id=feedback[' + $feedbackcount + '] name=response_' + $feedbackcount + ' type=text class="gfinput"/>'
+            );
+    $("#new-feedback-for").focus();
+});
 
 $("#fitem_id_questiontext").on("click", function () {
     $the_text = $("#id_questiontexteditable").text();
-    // alert($the_text);
     rangy.init();
     $sel = rangy.getSelection();
     $qtext = $sel.anchorNode.nodeValue;
     $clickpoint = $sel.focusOffset;
     x = $clickpoint;
-
     $leftdelim = null;
     for (var x = $clickpoint; x > 0; x--)
     {
@@ -63,25 +81,23 @@ $("#fitem_id_questiontext").on("click", function () {
             break;
         }
     }
-
+    
     $gaptext = null;
     if ($leftdelim != null) {
         if ($rightdelim != null) {
             $gaptext = $the_text.substring($leftdelim, $rightdelim);
+            x=get_feedback($gaptext,0);
             $("#gaptext").val($gaptext);
-            $("#correctfeedback").focus();
             $("#gapfeedback-form").dialog({
                 height: 500,
                 width: 650,
                 modal: true,
                 buttons: [
                     {
-                       text: "OK",
+                        text: "OK",
                     }
                 ]
             });
-
-
         }
     }
 
