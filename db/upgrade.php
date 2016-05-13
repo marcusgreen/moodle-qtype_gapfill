@@ -76,8 +76,19 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $table = new xmldb_table('question_gapfill');
         $dbman->add_field($table, $field);
     }
+    
+    if( !$dbman->table_exists('question_gapfill_feedback')){
+            $table = new xmldb_table('question_gapfill_feedback');
+            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE, null, null, null);
+            $table->add_field('question', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, null, null);
+            $table->add_field('answerid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NULL, null, null, null, '');
+            $table->add_field('response', XMLDB_TYPE_CHAR, '255', null, XMLDB_NULL, null, null, null, '');
+            $table->add_field('feedback', XMLDB_TYPE_CHAR, '255', null, XMLDB_NULL, null, null, null, '');
+            $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'), null, null);
+            $status = $dbman->create_table($table);
+     }
     // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2006082518, 'qtype', 'gapfill');
+    upgrade_plugin_savepoint(true, 2006082519, 'qtype', 'gapfill');
 
     return;
 }
