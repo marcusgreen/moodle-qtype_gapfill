@@ -53,18 +53,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
       
       <label for="correctfeedback">Correct Feedback</label>
       <input type="text" name="correctfeedback_0" id="correctfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
-       
-      <label for="response">Response </label>
-      <input type="text" name="response_0" id="response[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
-      
-<label for="feedback">Feedback</label>
-      <input type="text" name="feedback_0" id="feedback[0]" value="" class="gfinput ui-widget-content ui-corner-all"> 
-        
-    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-    </fieldset>
-  </form>
-  <button id="new-response">New Response</button>
-
 </div>
   <button id="add-feedback">OK</button>
 </div>
@@ -76,6 +64,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery_plugin('rangy-core', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('rangy-inputs', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('ui-css');
+        $PAGE->requires->jquery_plugin('jsform','qtype_gapfill');
+
 
 
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
