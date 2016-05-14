@@ -23,21 +23,27 @@
  */
 
 
-var feedback_text = '[{"gaptext":"cat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"bat","feedback":"no not bat"},\n\
-{"gaptext":"mat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"rug","feedback":"no not rug"}]';
+/*var feedback_text = '[{"gaptext":"cat","index":"0","correct":"that is the right answer","incorrect":"wildly wrong answer","response":"bat","feedback":"no not bat"},\n\
+ {"gaptext":"mat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"rug","feedback":"no not rug"}]'; */
 
 
-$feedback = JSON.parse(feedback_text);
 
-function get_feedback($gaptext,$index){
-        for(index=0;index< $feedback.length;index++){
-        if($feedback[index]["gaptext"]==$gaptext){
-            alert($feeedback[index]["correct"]);
+
+//var $feedback = JSON.parse(feedback_text);
+
+var $feedback = [];
+
+function get_feedback($gaptext, $index) {
+    retval = null;
+    for (var fb in $feedback) {
+        if (fb === $gaptext) {
+            retval = $feedback[$gaptext];
         }
-      
     }
-    
+    return retval;
 }
+
+
 
 $("#new-response").on("click", function () {
 
@@ -81,20 +87,40 @@ $("#fitem_id_questiontext").on("click", function () {
             break;
         }
     }
-    
+
     $gaptext = null;
     if ($leftdelim != null) {
         if ($rightdelim != null) {
             $gaptext = $the_text.substring($leftdelim, $rightdelim);
-            x=get_feedback($gaptext,0);
+            $fb = get_feedback($gaptext, 0);
+            if ($fb !== null) {
+                $("#incorrectfeedback").val($fb["incorrect"]);
+                $("#correctfeedback").val($fb["correct"]);
+                $("#response_0").val($fb["response"]);
+                $("#feedback_0").val($fb["feedback"]);
+            } else {
+                $("#incorrectfeedback").val("");
+                $("#correctfeedback").val("");
+                $("#response_0").val("");
+                $("#feedback_0").val("");
+            }
             $("#gaptext").val($gaptext);
             $("#gapfeedback-form").dialog({
-                height: 500,
+                height: 350,
                 width: 650,
                 modal: true,
                 buttons: [
                     {
                         text: "OK",
+                        click: function () {
+                            $feedback[$gaptext] = {
+                                incorrect: $("#incorrectfeedback").val(),
+                                correct: $("#correctfeedback").val(),
+                                gaptext: $gaptext
+                            };
+                            $(this).dialog("close");
+                        }
+
                     }
                 ]
             });
