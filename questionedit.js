@@ -33,17 +33,36 @@
 
 var $feedback = [];
 
-function get_feedback($gaptext, $index) {
+function get_feedback($gaptext, gapinstance) {
     retval = null;
     for (var fb in $feedback) {
-        if (fb === $gaptext) {
-            retval = $feedback[$gaptext];
+        if ($feedback[fb].gaptext === $gaptext && $feedback[fb].gapinstance === gapinstance) {
+            retval = $feedback[fb];
         }
     }
     return retval;
 }
 
-
+function add_or_update($gaptext, gapinstance) {
+    found = null;
+    for (var fb in $feedback) {
+        if ($feedback[fb].gaptext === $gaptext && $feedback[fb].gapinstance === gapinstance) {
+            $feedback[fb].incorrect = $("#incorrectfeedback").val(),
+                    $feedback[fb].correctfeedback = $("#correctfeedback").val(),
+                    found = $feedback[fb];
+        }
+    }
+    if (found === null) {
+        $feedback.push({
+            incorrect: $("#incorrectfeedback").val(),
+            correct: $("#correctfeedback").val(),
+            gaptext: $gaptext,
+            gapinstance: gapinstance
+        });
+    } else {
+        console.log('repeat so update');
+    }
+}
 
 $("#new-response").on("click", function () {
 
@@ -88,11 +107,17 @@ $("#fitem_id_questiontext").on("click", function () {
         }
     }
 
+
     $gaptext = null;
     if ($leftdelim != null) {
         if ($rightdelim != null) {
             $gaptext = $the_text.substring($leftdelim, $rightdelim);
-            $fb = get_feedback($gaptext, 0);
+            /* Stores where it is in the string, e.g. if it is the only one it will be 0, if there are two it 
+             * will be 1 etc etc
+             */
+            var uptothisgap = $qtext.substr(0, $leftdelim);
+            var gapinstance = uptothisgap.split($gaptext).length - 1;
+            $fb = get_feedback($gaptext, gapinstance);
             if ($fb !== null) {
                 $("#incorrectfeedback").val($fb["incorrect"]);
                 $("#correctfeedback").val($fb["correct"]);
@@ -113,11 +138,7 @@ $("#fitem_id_questiontext").on("click", function () {
                     {
                         text: "OK",
                         click: function () {
-                            $feedback[$gaptext] = {
-                                incorrect: $("#incorrectfeedback").val(),
-                                correct: $("#correctfeedback").val(),
-                                gaptext: $gaptext
-                            };
+                            add_or_update($gaptext, gapinstance);
                             $(this).dialog("close");
                         }
 
@@ -128,4 +149,5 @@ $("#fitem_id_questiontext").on("click", function () {
     }
 
 
-});
+}
+);
