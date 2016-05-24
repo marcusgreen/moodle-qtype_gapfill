@@ -58,7 +58,6 @@ $gapfeedbackform = '
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('rangy-core', 'qtype_gapfill');
-        $PAGE->requires->jquery_plugin('rangy-inputs', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('ui-css');
         $PAGE->requires->jquery_plugin('jsform', 'qtype_gapfill');
 
