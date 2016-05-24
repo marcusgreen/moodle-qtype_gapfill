@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
+/** 
  * JavaScript code for the gapfill question type.
  *
  * @package    qtype
@@ -22,86 +22,74 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* the data is stored in a hidden field */
+var feedbackdata = ($("[name='gapfeedbackdata']").val());
+var $feedback = JSON.parse(feedbackdata);
 
-/*var feedback_text = '[{"gaptext":"cat","index":"0","correct":"that is the right answer","incorrect":"wildly wrong answer","response":"bat","feedback":"no not bat"},\n\
- {"gaptext":"mat","index":"0","correct":"that is correct","incorrect":"wrong answer","response":"rug","feedback":"no not rug"}]'; */
-
-
-
-
-//var $feedback = JSON.parse(feedback_text);
-
-var $feedback = [];
-
-function get_feedback($gaptext, gapinstance) {
+function get_feedback($gaptext, gapoffset) {
     retval = null;
     for (var fb in $feedback) {
-        if ($feedback[fb].gaptext === $gaptext && $feedback[fb].gapinstance === gapinstance) {
-            retval = $feedback[fb];
+        if ($feedback[fb].gaptext === $gaptext) {
+            if ($feedback[fb].gapoffset == gapoffset) {
+                retval = $feedback[fb];
+            }
         }
     }
     return retval;
 }
 
-function add_or_update($gaptext, gapinstance) {
+function add_or_update($gaptext, gapoffset) {
     found = null;
     for (var fb in $feedback) {
-        if ($feedback[fb].gaptext === $gaptext && $feedback[fb].gapinstance === gapinstance) {
-            $feedback[fb].incorrect = $("#incorrectfeedback").val(),
-                    $feedback[fb].correctfeedback = $("#correctfeedback").val(),
+        if ($feedback[fb].gaptext === $gaptext && $feedback[fb].gapoffset == gapoffset) {
+            $feedback[fb].incorrect = $("#incorrect").val(),
+                    $feedback[fb].correct = $("#correct").val(),
                     found = $feedback[fb];
         }
     }
     if (found === null) {
-        $feedback.push({
-            incorrect: $("#incorrectfeedback").val(),
-            correct: $("#correctfeedback").val(),
+        /* if there is no record for this gap add one 
+         * a combination of gaptext and offset will be unique*/
+        $feedback[$gaptext+gapoffset]=  {
+            question: $('#id').val(),
+            incorrect: $("#incorrect").val(),
+            correct: $("#correct").val(),
             gaptext: $gaptext,
-            gapinstance: gapinstance
-        });
-    } else {
-        console.log('repeat so update');
+            gapoffset: gapoffset
+        };
     }
 }
 
-$("#new-response").on("click", function () {
-
-    var $feedbackcount = 1;
-    $("#gapfeedback-form").append(
-            '<label for="name">Response </label> \n\
-            <input id=response[' + $feedbackcount + '] name=response_' + $feedbackcount + ' type=text class="gfinput" />' +
-            '<label for="name">Feedback </label> \n\
-            <input id=feedback[' + $feedbackcount + '] name=response_' + $feedbackcount + ' type=text class="gfinput"/>'
-            );
-    $("#new-feedback-for").focus();
-});
-
 $("#fitem_id_questiontext").on("click", function () {
     $the_text = $("#id_questiontexteditable").text();
+    delimitchars = $("#id_delimitchars").val();
+    /*l and r for left and right */
+    l = delimitchars.substr(0, 1);
+    r = delimitchars.substr(1, 1);
     rangy.init();
     $sel = rangy.getSelection();
     $qtext = $sel.anchorNode.nodeValue;
     $clickpoint = $sel.focusOffset;
-    x = $clickpoint;
+    /* find the character num of the left delimiter*/
     $leftdelim = null;
     for (var x = $clickpoint; x > 0; x--)
     {
-        if ($qtext.charAt(x) === "]") {
-            break;
-        }
-        if ($qtext.charAt(x) === "[") {
+        if ($qtext.charAt(x) === l) {
             $leftdelim = x + 1;
             break;
         }
+        if ($qtext.charAt(x) === r) {
+            break;
+        }
     }
-
+    /* find the character num of the right delimiter*/
     $rightdelim = null;
     for (var x = $clickpoint; x < $qtext.length; x++)
     {
-        if ($qtext.charAt(x) === "[") {
+        if ($qtext.charAt(x) === l) {
             break;
         }
-        if ($qtext.charAt(x) === "]") {
+        if ($qtext.charAt(x) === r) {
             $rightdelim = x;
             break;
         }
@@ -109,25 +97,21 @@ $("#fitem_id_questiontext").on("click", function () {
 
 
     $gaptext = null;
-    if ($leftdelim != null) {
-        if ($rightdelim != null) {
+    if ($leftdelim !== null) {
+        if ($rightdelim !== null) {
             $gaptext = $the_text.substring($leftdelim, $rightdelim);
             /* Stores where it is in the string, e.g. if it is the only one it will be 0, if there are two it 
              * will be 1 etc etc
              */
             var uptothisgap = $qtext.substr(0, $leftdelim);
-            var gapinstance = uptothisgap.split($gaptext).length - 1;
-            $fb = get_feedback($gaptext, gapinstance);
+            var gapoffset = uptothisgap.split($gaptext).length - 1;
+            $fb = get_feedback($gaptext, gapoffset);
             if ($fb !== null) {
-                $("#incorrectfeedback").val($fb["incorrect"]);
-                $("#correctfeedback").val($fb["correct"]);
-                $("#response_0").val($fb["response"]);
-                $("#feedback_0").val($fb["feedback"]);
+                $("#incorrect").val($fb["incorrect"]);
+                $("#correct").val($fb["correct"]);
             } else {
-                $("#incorrectfeedback").val("");
-                $("#correctfeedback").val("");
-                $("#response_0").val("");
-                $("#feedback_0").val("");
+                $("#incorrect").val("");
+                $("#correct").val("");
             }
             $("#gaptext").val($gaptext);
             $("#gapfeedback-form").dialog({
@@ -138,7 +122,9 @@ $("#fitem_id_questiontext").on("click", function () {
                     {
                         text: "OK",
                         click: function () {
-                            add_or_update($gaptext, gapinstance);
+                            add_or_update($gaptext, gapoffset);
+                            var JSONstr = JSON.stringify($feedback);
+                            $("[name='gapfeedbackdata']").val(JSONstr);
                             $(this).dialog("close");
                         }
 
@@ -147,7 +133,5 @@ $("#fitem_id_questiontext").on("click", function () {
             });
         }
     }
-
-
 }
 );
