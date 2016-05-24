@@ -77,3 +77,10 @@ $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions'
 $string['courseshortname_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the '
         . 'file example_questions.xml in the gapfill question type folder.';
 $string['importexamples'] = "Import Examples";
+$string['gapfeedback'] = "Gap Feedback";
+$string['gaptext'] = "Gap Text";
+$string['incorrectfeedback'] = "Feedback for an incorrect response";
+$string['correctfeedback'] = "Feedback for a correct response";
+$string['ok'] = "OK";
+
+
