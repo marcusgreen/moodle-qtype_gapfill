@@ -39,42 +39,39 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $delimitchars;
 
     protected function definition_inner($mform) {
-
-        $formcode = '
+$gapfeedbackform = '
 <div style="display:none" >
-<div id="gapfeedback-form" title="Gap feedback">
+<div id="gapfeedback-form" title="'.get_string('gapfeedback', 'qtype_gapfill').'">
   <form>
     <fieldset>
-      <label for="name">Gap Text</label>
-      <input type="text" name="name" id="gaptext"  disabled  class="text ui-widget-content ui-corner-all">
-     
-<label for="incorrectfeedback">Incorrect Feedback</label>
-      <input type="text" name="incorrectfeedback_0" id="incorrectfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
-      
-      <label for="correctfeedback">Correct Feedback</label>
-      <input type="text" name="correctfeedback_0" id="correctfeedback" value="" class="gfinput ui-widget-content ui-corner-all"> 
+      <label for="name">'.get_string('gaptext', 'qtype_gapfill').'</label>
+      <input type="text" name="name" id="gaptext"  disabled  class="text ui-widget-content ui-corner-all">     
+<label for="incorrectfeedback">'.get_string('incorrectfeedback', 'qtype_gapfill').'</label>
+      <input type="text" name="incorrectfeedback" id="incorrect" value="" class="gfinput ui-widget-content ui-corner-all">       
+      <label for="correctfeedback">'.get_string('correctfeedback', 'qtype_gapfill').'</label>
+      <input type="text" name="correctfeedback" id="correct" value="" class="gfinput ui-widget-content ui-corner-all"> 
 </div>
-  <button id="add-feedback">OK</button>
+  <button id="add-feedback">'.get_string('ok', 'qtype_gapfill').'</button>
 </div>
 ';
-
         global $PAGE;
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('rangy-core', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('rangy-inputs', 'qtype_gapfill');
         $PAGE->requires->jquery_plugin('ui-css');
-        $PAGE->requires->jquery_plugin('jsform','qtype_gapfill');
-
-
+        $PAGE->requires->jquery_plugin('jsform', 'qtype_gapfill');
 
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
 
-
-        $mform->addElement('html', $formcode);
+        $mform->addElement('html', $gapfeedbackform);
 
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
+
+        $mform->addElement('hidden','gapfeedbackdata');
+        $mform->setType('gapfeedbackdata',PARAM_RAW);
+        
         $mform->removeelement('generalfeedback');
 
         // Default mark will be set to 1 * number of fields.
@@ -82,13 +79,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->removeelement('questiontext');
         $questiontext = "<div class='static_icons'>.</div><div class='mavg'>This is questiontext</div>";
 
-
         $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
         $mform->setType('questiontext', PARAM_RAW);
         $mform->addRule('questiontext', null, 'required', null, 'client');
 
         $mform->addElement('html', '<div class="xstatic_qtx">');
-
 
         $mform->addElement('button', 'gapfeedback', 'Add Gap Feedback');
 
@@ -163,8 +158,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
     }
 
     public function set_data($question) {
-        /* accessing the form in this way is probably not correct style */
         $wronganswers = $this->get_wrong_answers($question);
+        $this->_form->getElement('gapfeedbackdata')->setValue(($question->gapfeedbackdata));
         $this->_form->getElement('wronganswers')->setValue(array('text' => $wronganswers));
         parent::set_data($question);
     }
