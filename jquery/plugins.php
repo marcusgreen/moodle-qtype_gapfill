@@ -40,7 +40,6 @@ $plugins = array(
     'ui-css'  => array('files' => array('jquery-ui-themes/theme/cupertino/jquery-ui.min.css')),
     'ui.touch-punch' => array('files' => array('jquery-ui.touch-punch.js')),
     'rangy-core' => array('files' => array('rangy/lib/rangy-core.js')),
-    'rangy-inputs' => array('files' => array('rangy-inputs/rangyinputs-jquery-src.js')),
     'jsform' => array('files' => array('jquery.jsForm.js'))
 
 );
