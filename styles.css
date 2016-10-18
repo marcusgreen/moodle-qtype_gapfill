@@ -1,11 +1,10 @@
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input.droptarget{
-    height:1.3em;
+    height:1.1em;
     border:1px solid black;
     padding-left:1px;
     padding-right:1px;
     background:white;
-    vertical-align:middle;
     color:black;
     border-radius:4px;
 }
