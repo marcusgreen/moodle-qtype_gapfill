@@ -43,10 +43,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $this->allanswers = unserialize($seranswers);
         $output = '';
         if ($question->answerdisplay == "dragdrop") {
-            $ddclass = " draggable answers ";
             foreach ($this->allanswers as $potentialanswer) {
                 if (!preg_match($question->blankregex, trim($potentialanswer))) {
-                    $output .= '<span class= "' . $ddclass . '">' . $potentialanswer . "</span>&nbsp;";
+                    $output .= '<span class= " draggable answers ">' . $potentialanswer . "</span>&nbsp;";
                 }
             }
             $output .= "<br/><br/>";
