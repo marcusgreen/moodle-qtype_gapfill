@@ -350,8 +350,8 @@ class qtype_gapfill extends question_type {
         }
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers['text'] != '') {
-                /* remove any trailing commas */
-                $question->wronganswers['text'] = rtrim($question->wronganswers['text'], ',');
+                /* split by commas and trim white space */
+                $wronganswers = array_map('trim', explode(',',$question->wronganswers['text']));               
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
                 $wronganswers = preg_split($regex, $question->wronganswers['text'],
                         -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
