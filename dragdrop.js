@@ -27,6 +27,7 @@ $(function() {
         revert: false,
         helper: 'clone',
         cursor: 'pointer',
+        scroll: 'false',
 
         start: function(event, ui) {
             $(this).fadeTo('fast', 0.5);
