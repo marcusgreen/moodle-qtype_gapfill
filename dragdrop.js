@@ -22,31 +22,62 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
-$(function() {
+$(function () {
     $(".draggable").draggable({
         revert: false,
         helper: 'clone',
         cursor: 'pointer',
         scroll: 'false',
-
-        start: function(event, ui) {
+        start: function (event, ui) {
             $(this).fadeTo('fast', 0.5);
         },
-        stop: function(event, ui) {
-
+        stop: function (event, ui) {
             $(this).fadeTo(0, 1);
-           /*  $(this).css("text-decoration","line-through"); */
         }
+
     });
 
     $(".droptarget").droppable({
         hoverClass: 'active',
-        drop: function(event, ui) {
+        drop: function (event, ui) {
             this.value = $(ui.draggable).text();
-           /* $(ui.draggable).css("display","none");*/
-            $(this).css("background-color","white");
-            
-            
+            $(this).css("background-color", "white");
         }
+    });
+
+    /* For click to select instead of drag/drop */
+    var last_item_clicked = "";
+    $(".draggable").on("click", function (e) {
+        if ($(this).hasClass('picked')) {
+            /*if picked it set this must be a second
+             * click so set it back to show as unpicked
+             */
+            $(this).css('border','solid 1px');
+            $(".draggable").removeClass('picked');
+            last_item_clicked = "";
+        } else {
+            last_item_clicked = e.target.innerText;
+            /*set border to solid on all words */
+            $(".draggable").css('border','solid 1px');
+            /* remove border on selected item to 
+             * indicate it has been selected */
+            $(this).css('border', 'solid 0px');
+            /*picked is just a marker, it has no entry
+             * in css file
+             */
+            $(this).addClass('picked');
+        }
+    });
+
+    $(".droptarget").on("click", function (e) {
+        if (last_item_clicked !== "") {
+            e.target.value = last_item_clicked;
+            $(this).blur();
+        }
+        /*toggle picked status of item just 
+         * copied into droptarget */
+        $(".draggable").css('border', 'solid 1px');
+        $(".draggable").removeClass('picked');
+        last_item_clicked = "";
     });
 });
