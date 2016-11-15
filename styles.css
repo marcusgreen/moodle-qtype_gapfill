@@ -1,6 +1,5 @@
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input.droptarget{
-    height:1.3em;
     border:1px solid black;
     padding-left:1px;
     padding-right:1px;
@@ -10,7 +9,6 @@
 }
 
 .que.gapfill span.draggable.answers{
-    height:1.3em;
     vertical-align: middle;
     display: inline-block;
     margin:1px;
