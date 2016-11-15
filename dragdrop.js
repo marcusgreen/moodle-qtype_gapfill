@@ -71,7 +71,7 @@ $(function () {
 
     $(".droptarget").on("click", function (e) {
         if (last_item_clicked !== "") {
-            e.target.value = last_item_clicked;
+            this.value = last_item_clicked;
             $(this).blur();
         }
         /*toggle picked status of item just 
@@ -80,4 +80,5 @@ $(function () {
         $(".draggable").removeClass('picked');
         last_item_clicked = "";
     });
+    
 });
