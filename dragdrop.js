@@ -40,7 +40,7 @@ $(function () {
     $(".droptarget").droppable({
         hoverClass: 'active',
         drop: function (event, ui) {
-            this.value = $(ui.draggable).text();
+            $(this).value = $(ui.draggable).text();
             $(this).css("background-color", "white");
         }
     });
