@@ -42,6 +42,7 @@ incorrec answer was entered */
     background:white;
     color:black;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+    -webkit-appearance:menulist;
 }
 
 .gapfilltable td{
