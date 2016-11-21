@@ -212,7 +212,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     *  A question is gradable if at least one gap response is not blank 
+     * A question is gradable if at least one gap response is not blank
      */
     public function is_gradable_response(array $response) {
         foreach ($response as $key => $answergiven) {
@@ -368,7 +368,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * I'm not sure what this does, but I believe it is necessary. Possibly something to do 
+     * I'm not sure what this does, but I believe it is necessary. Possibly something to do
      * with including files such as images.
      *
      */

@@ -21,13 +21,14 @@
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once($CFG->dirroot . '/question/type/edit_question_form.php');
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot . '/question/type/edit_question_form.php');
+
 /**
  * gapfill editing form definition.
- * 
+ *
  * See http://docs.moodle.org/en/Development:lib/formslib.php for information
  * about the Moodle forms library, which is based on the HTML Quickform PEAR library.
  */
@@ -124,7 +125,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
     }
 
     /**
-     * Pull out a comma delimited string with the 
+     * Pull out a comma delimited string with the
      * wrong answers (distractors) in it from question->options->answers
      * @param type $question
      * @return type string

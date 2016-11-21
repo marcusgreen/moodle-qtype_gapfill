@@ -16,14 +16,16 @@
 
 /**
 /**
- * The language strings for component 'qtype_gapfill', language 'en' 
- *    
+ * The language strings for component 'qtype_gapfill', language 'en'
+ *
  * @copyright &copy; 2012 Marcus Green
  * @author marcusavgreen@gmail.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package qtype
  * @subpackage gapfill
  */
+defined('MOODLE_INTERNAL') || die();
+
 $string['casesensitive'] = 'Case Sensitive';
 $string['casesensitive_help'] = 'When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
 $string['casesensitive_text'] = 'An answer of CAT will will be treated as different to cat';

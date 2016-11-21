@@ -58,11 +58,11 @@ class qtype_gapfill extends question_type {
 
         // ...make sure jQuery version is high enough.
         // (required if Quiz is in a popup window)
-        //     Moodle 2.5 has jQuery 1.9.1
-        //     Moodle 2.6 has jQuery 1.10.2
-        //     Moodle 2.7 has jQuery 1.11.0
-        //     Moodle 2.8 has jQuery 1.11.1
-        //     Moodle 2.9 has jQuery 1.11.1.
+        // Moodle 2.5 has jQuery 1.9.1
+        // Moodle 2.6 has jQuery 1.10.2
+        // Moodle 2.7 has jQuery 1.11.0
+        // Moodle 2.8 has jQuery 1.11.1
+        // Moodle 2.9 has jQuery 1.11.1.
         if (method_exists($PAGE->requires, 'jquery')) {
             // Moodle >= 2.5.
             if ($version == '') {
@@ -316,7 +316,7 @@ class qtype_gapfill extends question_type {
      * been pulled from within the delimitchars e.g. the cat within [cat]
      * Wronganswers (distractors) has been pulled from a comma delimited edit
      * form field
-     * 
+     *
      * @param array $answerwords
      * @param type $question
      * @return type array
@@ -351,7 +351,7 @@ class qtype_gapfill extends question_type {
         if (property_exists($question, 'wronganswers')) {
             if ($question->wronganswers['text'] != '') {
                 /* split by commas and trim white space */
-                $wronganswers = array_map('trim', explode(',',$question->wronganswers['text']));               
+                $wronganswers = array_map('trim', explode(',', $question->wronganswers['text']));
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
                 $wronganswers = preg_split($regex, $question->wronganswers['text'],
                         -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
