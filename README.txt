@@ -32,5 +32,5 @@ Version 1.6 added display of the correct answer next to gaps with wrong answers 
 Version 1.7 updated jQuery, jQuery ui and touchpunch and the way they are called to work with Moodle 2.9
 Version 1.8 added casesensitive option in settings, plugin version information in xml export, | now works with regex off
 Version 1.9 added link in the admin interface to make it easy to import_example questions to a course
-Version 1.91 [.+] will make any text a valid answer and if left empty will not show the .+ as aftergap feedbak
-Version 1.92 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers:improvess display in feedback
+Version 1.91 [.+] will make any text a valid answer and if left empty will not show the .+ as aftergap feedback
+Version 1.92 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers:improves display in feedback
