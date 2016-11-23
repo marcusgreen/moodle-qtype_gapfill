@@ -1,5 +1,5 @@
 ###Version 1.92 of the Moodle Gapfill question type contributed by Marcus Green
-CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers which improves display in feedback for dropdowns
+CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers which improves display in feedback for dropdowns.
 Removed setting of height in em in styles.css which was breaking the display on iOS. 
 
 ###Version 1.91 of the Moodle Gapfill question type contributed by Marcus Green
