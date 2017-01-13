@@ -41,9 +41,8 @@ class qtype_gapfill_question_test extends UnitTestCase {
     public function test_get_expected_data() {
 
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-        $expected_data = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
-        $this->assertEquals($question->get_expected_data(), $expected_data);
-
+        $expecteddata = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
+        $this->assertEquals($question->get_expected_data(), $expecteddata);
     }
 
     public function test_field() {
@@ -81,24 +80,26 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_is_complete_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-
         $response = array('p1' => 'cat', 'p2' => 'mat');
 
         $this->assertTrue($question->is_complete_response($response));
 
         $response = array('p1' => 'cat');
+        $question->gapcount = 2;
         $this->assertFalse($question->is_complete_response($response));
 
         $this->assertFalse($question->is_complete_response(array()));
     }
     public function test_get_correct_response() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-        $this->assertEquals($question->get_correct_response(), array('p1'=>'cat', 'p2'=>'mat'));
+        $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
 
     public function test_get_validation_error() {
-        $question = qtype_gapfill_test_helper::make_question('gapfill');
-        $this->assertTrue(is_string($question->get_validation_error( array("") ) ));
+        $questiontext = 'The [cat] sat on the [mat]';
+        $question = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext);
+        $question->gapcount = 2;
+        $this->assertTrue(is_string($question->get_validation_error( array('p1' => '') ) ));
     }
 
 

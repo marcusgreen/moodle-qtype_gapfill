@@ -19,7 +19,7 @@
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2912 Marcus Green 
+ * @copyright  2912 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -33,16 +33,11 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
 
     $dbman = $DB->get_manager();
     if ($oldversion < 2006082505) {
-
         /* some fractions may be zero which will confuse the new way of marking */
-        $sql = "Update " . $CFG->prefix . "question_answers qa," . $CFG->prefix . "question q set
+        $sql = "Update {question_answers} qa, {question} q set
         qa.fraction='1' where q.id=qa.question and q.qtype='gapfill'";
-
         $DB->execute($sql);
-
-        $rs = $DB->get_recordset_sql("SELECT wronganswers, question
-                                        FROM {question_gapfill}");
-
+        $rs = $DB->get_recordset_sql("SELECT wronganswers, question   FROM {question_gapfill}");
         foreach ($rs as $gf) {
             if ($gf->wronganswers == '') {
                 continue;
@@ -57,25 +52,32 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
                 $answer->id = $DB->insert_record("question_answers", $answer);
             }
         }
-
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column wronganswers");
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill drop column shuffledanswers");
-
-        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1)
-            default 1 after casesensitive   ";
-        $DB->change_database_structure($sql);
-        $DB->change_database_structure("ALTER TABLE " . $CFG->prefix . "question_gapfill add column
-            'noduplicates' int(1) default 1 NULL ");
         $rs->close();
-    }
-    if ($oldversion == 2006082505) {
-        $sql = "ALTER TABLE " . $CFG->prefix . "question_gapfill add column noduplicates tinyint(1) default 1 af
-            ter casesensitive   ";
-        $DB->change_database_structure($sql);
+        $table = new xmldb_table('question_gapfill');
+        $field = new xmldb_field('shuffledanswers');
+        $dbman->drop_field($table, $field);
+        $field = new xmldb_field('wronganswers');
+        $dbman->drop_field($table, $field);
     }
 
+    if (!$dbman->field_exists('question_gapfill', 'noduplicates')) {
+        $field = new xmldb_field('noduplicates', XMLDB_TYPE_INTEGER, '1');
+        $table = new xmldb_table('question_gapfill');
+        $dbman->add_field($table, $field);
+    }
+
+    if (!$dbman->field_exists('question_gapfill', 'disableregex')) {
+        $field = new xmldb_field('disableregex', XMLDB_TYPE_INTEGER, '1');
+        $table = new xmldb_table('question_gapfill');
+        $dbman->add_field($table, $field);
+    }
+    if (!$dbman->field_exists('question_gapfill', 'fixedgapsize')) {
+        $field = new xmldb_field('fixedgapsize', XMLDB_TYPE_INTEGER, '1');
+        $table = new xmldb_table('question_gapfill');
+        $dbman->add_field($table, $field);
+    }
     // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2006082509, 'qtype', 'gapfill');
+    upgrade_plugin_savepoint(true, 2016100802, 'qtype', 'gapfill');
 
     return;
 }

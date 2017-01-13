@@ -24,81 +24,91 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
+/** Gapfill question type with type in gaps, draggable answers or dropdowns */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
-    public $correct_responses = array();
-    public $marked_responses = array();
+    public $correctresponses = array();
+    public $markedresponses = array();
+    public $allanswers = array();
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
 
-          $question = $qa->get_question();
+        $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
-
-            $PAGE->requires->js('/question/type/gapfill/jquery/jquery-1.4.2.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.core.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.widget.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.mouse.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.draggable.min.js');
-            $PAGE->requires->js('/question/type/gapfill/jquery/ui/jquery.ui.droppable.min.js');
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
-
-        $answers = $qa->get_step(0)->get_qt_var('_allanswers');
+        $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
+        $this->allanswers = unserialize($seranswers);
         $output = '';
         if ($question->answerdisplay == "dragdrop") {
-            $ddclass = " draggable answers ";
-            $answers = $this->get_answers('dragdrop', $answers);
-            foreach ($answers as $value) {
-                $output.= '<span class="' . $ddclass . '">' . $value . "</span>&nbsp";
+            foreach ($this->allanswers as $potentialanswer) {
+                if (!preg_match($question->blankregex, trim($potentialanswer))) {
+                    $output .= '<span class= " draggable answers ">' . $potentialanswer . "</span>&nbsp;";
+                }
             }
-            $output.="</br></br>";
+            $output .= "<br/><br/>";
         }
-        $marked_gaps = $question->get_marked_gaps($qa, $options);
+        $markedgaps = $question->get_markedgaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
-                $output.=$this->embedded_element($qa, $place, $options, $marked_gaps);
+                $output .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $output .= $question->format_text($fragment, $question->questiontextformat,
-                    $qa, 'question', 'questiontext', $question->id);
+            $output .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question',
+                    'questiontext', $question->id);
         }
+        $output .= "<br/>";
 
-        print ("<br/>");
         if ($qa->get_state() == question_state::$invalid) {
-            $output.= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' =>
-                                $output)), array('class' => 'validationerror'));
+            $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
+                    array('class' => 'validationerror'));
         }
         return $output;
     }
 
-    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $marked_gaps) {
-
+    public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
         $currentanswer = $qa->get_last_qt_var($fieldname);
-
+        $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
-        $size = strlen($rightanswer);
+        if ($question->fixedgapsize == 1) {
+            /* set all gaps to the size of the  biggest gap
+             */
+            $size = $question->maxgapsize;
+        } else {
+            /* otherwise set the size of an individual gap which might
+             * be less than the string width if it is in the form
+             * "[cat|dog|elephant] the width should be 8 and not 14
+             */
+            $size = $question->get_size($rightanswer);
+        }
 
         /* $options->correctness is really about it being ready to mark, */
-        $feedbackimage = "";
+        $aftergaptext = "";
         $inputclass = "";
-        if (($options->correctness) or ($options->numpartscorrect)) {
-            $gap = $marked_gaps['p' . $place];
+        if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
+            $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
+            /* fraction is always either 1 or 0 for correct or incorrect response */
             if ($fraction == 1) {
-                array_push($this->correct_responses, $response[$fieldname]);
-                $feedbackimage = $this->feedback_image($fraction);
-                /* sets the field background to green or yellow if fraction is 1 */
-                $inputclass = $this->get_input_class($marked_gaps, $qa, $fraction, $fieldname);
-            } else {
-                /* set background to red and image to cross if fraction is 0  */
-                $feedbackimage = $this->feedback_image($fraction);
+                array_push($this->correctresponses, $response[$fieldname]);
+                /* if the gap contains !! or  the response is (a correct) non blank */
+                if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction);
+                    /* sets the field background to green or yellow if fraction is 1 */
+                    $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
+                }
+            } else if ($fraction == 0) {
+                $aftergaptext = $this->get_aftergap_text($qa, $fraction);
+                if ($options->rightanswer == 1) {
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $rightanswer);
+                }
                 $inputclass = $this->feedback_class($fraction);
             }
         }
@@ -112,7 +122,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'class' => 'droppable ' . $inputclass
+            'class' => 'droptarget ' . $inputclass,
         );
 
         /* When previewing after a quiz is complete */
@@ -125,19 +135,41 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
             $inputattributes['class'] = $inputclass;
-            $answers = $qa->get_step(0)->get_qt_var('_allanswers');
-            $selectoptions = $this->get_answers('dropdown', $answers);
-            $selecthtml = html_writer::select($selectoptions, $inputname,
-                    $currentanswer, ' ', $inputattributes) . ' ' . $feedbackimage;
+            /* blank out the style put in previously */
+            $inputattributes['style'] = '';
+            $selectoptions = $this->get_dropdown_list();
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
+                    ' ', $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else {
-            return html_writer::empty_tag('input', $inputattributes) . $feedbackimage;
+            return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
     }
 
+    public function get_aftergap_text(question_attempt $qa, $fraction, $rightanswer = "") {
+        $aftergaptext = "";
+        if (($fraction == 0)&& ($rightanswer <> "")&& ($rightanswer <> ".+")) {
+            /* replace | operator with the word or */
+            $rightanswerdisplay = preg_replace("/\|/", get_string("or", "qtype_gapfill"), $rightanswer);
+            /* replace !! with the 'blank' */
+            $rightanswerdisplay = preg_replace("/\!!/", get_string("blank", "qtype_gapfill"), $rightanswerdisplay);
+            $question = $qa->get_question();
+            $delim = qtype_gapfill::get_delimit_array($question->delimitchars);
+            /* set background to red and image to cross if fraction is 0 (an incorrect response
+             * was given */
+            $aftergaptext = $this->feedback_image($fraction);
+            $aftergaptext .= "<span class='aftergapfeedback' title='" .
+                    get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
+                    $rightanswerdisplay . $delim["r"] . "</span>";
+        } else {
+            $aftergaptext = $this->feedback_image($fraction);
+        }
+        return $aftergaptext;
+    }
+
     /**
-     * 
-     * @param array $marked_gaps
+     *
+     * @param array $markedgaps
      * @param question_attempt $qa
      * @param type $fraction either 0 or 1 for correct or incorrect
      * @param type $fieldname p1, p2, p3 etc
@@ -145,11 +177,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * then check if this is a duplicated value and if it is set the background
      * to yellow.
      */
-    public function get_input_class(array $marked_gaps, question_attempt $qa, $fraction, $fieldname) {
+    public function get_input_class(array $markedgaps, question_attempt $qa, $fraction, $fieldname) {
         $response = $qa->get_last_qt_data();
         $question = $qa->get_question();
         $inputclass = $this->feedback_class($fraction);
-        foreach ($marked_gaps as $gap) {
+        foreach ($markedgaps as $gap) {
             if ($response[$fieldname] == $gap['value']) {
                 if ($gap['duplicate'] == 'true') {
                     if ($question->noduplicates == 1) {
@@ -168,31 +200,30 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     /**
      * @param type questionattemtp $qa
      * @return type string
-     * if noduplicates is set check if any responses 
+     * if noduplicates is set check if any responses
      * are duplicate values
      */
     public function get_duplicate_feedback(question_attempt $qa) {
         $question = $qa->get_question();
-        if ($question->noduplicates == 0 ) {
+        if ($question->noduplicates == 0) {
             return;
         }
-        $arr_unique = array_unique($this->correct_responses);
-        if (count($arr_unique) != count($this->correct_responses)) {
+        $arrunique = array_unique($this->correctresponses);
+        if (count($arrunique) != count($this->correctresponses)) {
             return get_string('duplicatepartialcredit', 'qtype_gapfill');
         }
     }
 
-    public function get_answers($answerdisplay, $answers) {
-        // Turn string into an array.
-        $answers = explode(",", $answers);
-        if ($answerdisplay == 'dragdrop') {
-            return $answers;
+    /* used to populate values that appear in dropdowns */
+
+    public function get_dropdown_list() {
+        /* convert things like &gt; to > etc */
+        foreach ($this->allanswers as $key => $value) {
+            $this->allanswers[$key] = htmlspecialchars_decode($value);
         }
-        if ($answerdisplay == 'dropdown') {
-            // Make the key and value the same in the array.
-            $answers = array_combine($answers, $answers);
-            return $answers;
-        }
+        // Make the key and value the same in the array.
+        $selectoptions = array_combine($this->allanswers, $this->allanswers);
+        return $selectoptions;
     }
 
     /* overriding base class method purely to return a string yougotnrightcount

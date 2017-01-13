@@ -90,12 +90,12 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
     }
 
     /**
-     * Processes the answer element (question answers).  This has been copied in from 
+     * Processes the answer element (question answers).  This has been copied in from
      * the parent restore_qtype class to allow the creation of duplicate
      * answers. These are a significant feature of this question type, see the
      * no duplicates feature in the documentation at
-     * http://docs.moodle.org/25/en//question/type/gapfill#No_Duplicates_Mode 
-     *  Previously it was throwing a debug error. This has been 'fixed' by 
+     * http://docs.moodle.org/25/en//question/type/gapfill#No_Duplicates_Mode
+     *  Previously it was throwing a debug error. This has been 'fixed' by
      * the addition of the IGNORE_MULTIPLE parameter to the call to get_field_sql.
      * However the docs seem to frown on the use of this parameter.
      */

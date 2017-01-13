@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Gapfill question definition class.
+ * Gapfill question definition class. This class is mainly about
+ * what happens at runtime, when the quesiton is part of a quiz
  *
  * @package    qtype
  * @subpackage gapfill
@@ -33,22 +34,46 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $answer;
     /* answerdisplay is a string of either gapfill,dropdown or drag drop */
     public $answerdisplay;
-    public $wronganswers;
     public $shuffledanswers;
     public $correctfeedback;
     public $noduplicates;
+    public $disableregex;
+    public $fixedgapsize;
+
+    /**
+     *
+     * @var int
+     */
+    public $maxgapsize;
+
+    /**
+     *
+     * @var string
+     */
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
     public $correctfeedbackformat;
     public $partiallycorrectfeedbackformat;
     public $incorrectfeedbackformat;
+
+    /**
+     * its a whole number, it's only called fraction because it is referred to that in core
+     * code
+     * @var int
+     */
     public $fraction;
+    public $gapcount;
+    /* wronganswers is used, but needs a name change to distractors at some point */
+    public $wronganswers;
 
     /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
     public $casesensitive;
 
     /** @var array of question_answer. */
     public $answers = array();
+    /* checks for gaps that get a mark for being left black i.e. [!!] */
+    public $blankregex = "/!.*!/";
+
 
     /* the characters indicating a field to fill i.e. [cat] creates
      * a field where the correct answer is cat
@@ -72,8 +97,39 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $allanswers = array();
 
     public function start_attempt(question_attempt_step $step, $variant) {
+        /* this is for multiple values in any order with the | (or operator)
+         * it takes the first occurance of an or, splits it into separate fields
+         * that will be draggable when answering. It then discards any subsequent
+         * fields with an | in it.
+         */
+        $done = false;
+        $temp = array();
+        /* array_unique is for when you have multiple identical answers separated
+         * by |, i.e. olympic medals as [gold|silve|bronze]
+         */
+        $this->allanswers = array_unique($this->allanswers);
+        foreach ($this->allanswers as $value) {
+            if (strpos($value, '|')) {
+                $temp = array_merge($temp, explode("|", $value));
+            } else {
+
+                array_push($temp, $value);
+            }
+        }
+        $this->allanswers = $temp;
         shuffle($this->allanswers);
-        $step->set_qt_var('_allanswers', implode(',', $this->allanswers));
+        $step->set_qt_var('_allanswers', serialize($this->allanswers));
+    }
+
+    /* get the length the correct answer and if the | is used
+     * the length of the longest of the correct answers
+     */
+
+    public function get_size($answer) {
+        $answer = htmlspecialchars_decode($answer);
+        $words = explode("|", $answer);
+        $maxlen = max(array_map('strlen', $words));
+        return $maxlen;
     }
 
     /**
@@ -95,28 +151,37 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * @param array $response  as might be passed to {@link grade_response()}
-     * @return string 
-     * Value returned will be written to responsesummary field of 
+     * @return string
+     * Value returned will be written to responsesummary field of
      * the question_attempts table
      */
     public function summarise_response(array $response) {
         $summary = "";
         foreach ($response as $key => $value) {
-            $summary.=" " . $value . " ";
+            $summary .= " " . $value . " ";
         }
         return $summary;
     }
 
+    /**
+     * Has the user put something in every gap?
+     * @param array $response
+     * @return boolean
+     */
     public function is_complete_response(array $response) {
-        /* checks that none of of the gaps is blanks */
-        foreach ($this->answers as $key => $value) {
-            $ans = array_shift($response);
-            if ($ans == "") {
-
-                return false;
+        $gapsfilled = 0;
+        $iscomplete = true;
+        foreach ($this->answers as $key => $rightanswer) {
+            $answergiven = array_shift($response);
+            if ((!($answergiven == "")) || (preg_match($this->blankregex, $rightanswer->answer))) {
+                $gapsfilled++;
             }
         }
-        return true;
+
+        if ($gapsfilled < $this->gapcount) {
+            $iscomplete = false;
+        }
+        return $iscomplete;
     }
 
     public function get_validation_error(array $response) {
@@ -126,7 +191,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * What is the correct value for the field 
+     * What is the correct value for the field
      */
     public function get_right_choice_for($place) {
         return $this->places[$place];
@@ -146,13 +211,20 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
+    /**
+     * A question is gradable if at least one gap response is not blank
+     */
     public function is_gradable_response(array $response) {
-        /* are there any fields still left blank */
-        return $this->is_complete_response($response);
+        foreach ($response as $key => $answergiven) {
+            if (($answergiven !== "")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * @return question_answer an answer that 
+     * @return question_answer an answer that
      * contains the a response that would get full marks.
      * used in preview mode
      */
@@ -168,10 +240,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
-            $answergiven = strtolower($answergiven);
-            $rightanswer = strtolower($rightanswer);
+            $answergiven = core_text::strtolower($answergiven, 'UTF-8');
+            $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
         }
-        if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
+
+        if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
+            return true;
+        } else if (($answergiven == "") && (preg_match($this->blankregex, $rightanswer))) {
             return true;
         } else {
             return false;
@@ -181,7 +256,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /**
      *
      * @param array $response Passed in from the submitted form
-     * @return array 
+     * @return array
      *
      * Find count of correct answers, used for displaying marks
      * for question. Compares answergiven with right/correct answer
@@ -189,24 +264,27 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function get_num_parts_right(array $response) {
         $numright = 0;
         foreach ($this->places as $place => $notused) {
-            if (!array_key_exists($this->field($place), $response)) {
+            $rightanswer = $this->get_right_choice_for($place);
+            if (!isset($response[$this->field($place)])) {
                 continue;
             }
             $answergiven = $response[$this->field($place)];
-            $rightanswer = $this->get_right_choice_for($place);
-            if (!$this->casesensitive == 1) {
-                $answergiven = strtolower($answergiven);
-                $rightanswer = strtolower($rightanswer);
+            if (!array_key_exists($this->field($place), $response)) {
+                continue;
             }
-            if ($this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
-                $numright+=1;
+            if (!$this->casesensitive == 1) {
+                $answergiven = core_text::strtolower($answergiven, 'UTF-8');
+                $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
+            }
+            if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
+                $numright++;
             }
         }
-        return array($numright, count($this->places));
+        return $numright;
     }
 
     /**
-     * Given a response, rest the parts that are wrong. Relevent in 
+     * Given a response, rest the parts that are wrong. Relevent in
      * interactive with multiple tries
      * @param array $response a response
      * @return array a cleaned up response with the wrong bits reset.
@@ -219,10 +297,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $answergiven = $response[$this->field($place)];
             $rightanswer = $this->get_right_choice_for($place);
             if (!$this->casesensitive == 1) {
-                $answergiven = strtolower($answergiven);
-                $rightanswer = strtolower($rightanswer);
+                $answergiven = core_text::strtolower($answergiven);
+                $rightanswer = core_text::strtolower($rightanswer);
             }
-            if (!$this->compare_string_with_wildcard($answergiven, $rightanswer, $this->casesensitive)) {
+            if (!$this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $response[$this->field($place)] = '';
             }
         }
@@ -233,13 +311,17 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         if ($this->noduplicates == 1) {
             /*
              * find unique values then keeping the same
-             * keys blank rest of the values
+             * keys but nonanswer in any duplicate non !! gaps
              */
             $au = array_unique($response);
+            /* Hash of flatted answer values is is guaranteed
+              not to to be an answer for any gap */
+            $nonanswer = hash('ripemd160', implode(' ', $this->places));
             foreach ($response as $key => $value) {
-                $response[$key] = '';
+                $response[$key] = $nonanswer;
             }
-            return array_merge($response, $au);
+            $response = array_merge($response, $au);
+            return $response;
         } else {
             return $response;
         }
@@ -247,18 +329,19 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
-        list($right, $total) = $this->get_num_parts_right($response);
-        $this->fraction = $right / $total;
+        $right = $this->get_num_parts_right($response);
+        $this->fraction = $right / $this->gapcount;
         $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
 
     // Required by the interface question_automatically_gradable_with_countback.
     public function compute_final_grade($responses, $totaltries) {
-        // Only applies in interactive mode.
-        $responses[0] = $this->discard_duplicates($responses[0]);
+        if ($this->noduplicates == 1) {
+            $responses[0] = $this->discard_duplicates($responses[0]);
+        }
         $totalscore = 0;
-        foreach ($this->places as $place => $notused) {
+        foreach (array_keys($this->places) as $place) {
             $fieldname = $this->field($place);
             $lastwrongindex = -1;
             $finallyright = false;
@@ -269,20 +352,26 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                     continue;
                 }
                 $resp = $response[$fieldname];
-                if (!$this->compare_string_with_wildcard($resp, $rcfp, $this->casesensitive)) {
+                if (!$this->compare_response_with_answer($resp, $rcfp, $this->disableregex)) {
                     $lastwrongindex = $i;
                     $finallyright = false;
                 } else {
                     $finallyright = true;
                 }
             }
+
             if ($finallyright) {
                 $totalscore += max(0, 1 - ($lastwrongindex + 1) * $this->penalty);
             }
         }
-        return $totalscore / count($this->places);
+        return $totalscore / $this->gapcount;
     }
 
+    /**
+     * I'm not sure what this does, but I believe it is necessary. Possibly something to do
+     * with including files such as images.
+     *
+     */
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
         if ($component == 'question' && in_array($filearea, array('correctfeedback',
                     'partiallycorrectfeedback', 'incorrectfeedback'))) {
@@ -294,68 +383,96 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
-    /* borrowed directly from the shortanswer question */
+    public function compare_response_with_answer($answergiven, $answer, $disableregex = false) {
+        /* converts things like &lt; into < */
+        $answer = htmlspecialchars_decode($answer);
+        $answergiven = htmlspecialchars_decode($answergiven);
 
-    public function compare_string_with_wildcard($string, $pattern, $casesensitive) {
-        /* answers with a positive grade must be anchored for strict match
-          incorrect answers are not strictly matched */
+        if ($disableregex == true) {
+             /* strcmp is case sensitive. If case sensitive is off, both string and
+             * pattern will come into function already converted to lower case with
+             * core_text::strtolower
+             */
 
-        /* If you want to escape all wildcards the following code
-         * will do it. But I default to leaving them into allow
-         * their use as part of the quetion. I escape forward slash
-         * because I create html questions with tag close match
-         * i.e. [/div]
-         * $pattern =preg_quote($pattern,'/');
+            /* use the | operator without regular expressions. Useful for
+             * programming languages or math related questions which use
+             * special characters such as ()and slashes. Introduced with
+             * gapfill 1.8
+             */
+            $correctness = false;
+            $answerparts = explode("|", $answer);
+
+            foreach ($answerparts as $answer) {
+                if (strcmp(trim($answergiven), trim($answer)) == 0) {
+                    $correctness = true;
+                } else if (preg_match($this->blankregex, $answer) && $answergiven == "") {
+                    $correctness = true;
+                }
+            }
+            return $correctness;
+        }
+
+        $pattern = str_replace('/', '\/', $answer);
+        $regexp = "";
+        /* if the gap contains | then only match complete words
+         * this is to avoid a situation where [cat|dog]
+         * would match catty or bigcat and adog and doggy
          */
-        $pattern = str_replace('/', '\/', $pattern);
+        if (strpos($pattern, "|")) {
+            $regexp = '/\b(' . $pattern . ')\b/u';
+        } else {
+            $regexp = '/^' . $pattern . '$/u';
+        }
 
-        $regexp = '/^' . $pattern . '$/u';
-
-        // Make the match insensitive if requested to.
-        if (!$casesensitive) {
+        // Make the match insensitive if requested to, not sure this is necessary.
+        if (!$this->casesensitive) {
             $regexp .= 'i';
         }
-        if (preg_match($regexp, trim($string))) {
+        /* the @ is to suppress warnings, e.g. someone forgot to turn off regex matching */
+        if (@preg_match($regexp, trim($answergiven))) {
             return true;
+        } else if (preg_match($this->blankregex, $answer) && $answergiven == "") {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public function get_marked_gaps(question_attempt $qa, question_display_options $options) {
-        $marked_gaps = array();
+    public function get_markedgaps(question_attempt $qa, question_display_options $options) {
+        $markedgaps = array();
         $question = $qa->get_question();
-        $correct_gaps = array();
-        foreach ($question->textfragments as $place => $fragment) {
+        $correctgaps = array();
+        foreach ($question->textfragments as $place => $notused) {
             if ($place < 1) {
                 continue;
             }
             $fieldname = $question->field($place);
             $rightanswer = $question->get_right_choice_for($place);
-            if (($options->correctness) or ($options->numpartscorrect)) {
+            if (($options->correctness) or ( $options->numpartscorrect)) {
                 $response = $qa->get_last_qt_data();
 
                 if (array_key_exists($fieldname, $response)) {
                     if ($question->is_correct_response($response[$fieldname], $rightanswer)) {
-                        $marked_gaps[$fieldname]['value'] = $response[$fieldname];
-                        $marked_gaps[$fieldname]['fraction'] = 1;
-                        $correct_gaps[] = $response[$fieldname];
+                        $markedgaps[$fieldname]['value'] = $response[$fieldname];
+                        $markedgaps[$fieldname]['fraction'] = 1;
+                        $correctgaps[] = $response[$fieldname];
                     } else {
-                        $marked_gaps[$fieldname]['value'] = $response[$fieldname];
-                        $marked_gaps[$fieldname]['fraction'] = 0;
+                        $markedgaps[$fieldname]['value'] = $response[$fieldname];
+                        $markedgaps[$fieldname]['fraction'] = 0;
                     }
                 }
             }
         }
-        $arr_unique = array_unique($correct_gaps);
-        $arr_duplicates = array_diff_assoc($correct_gaps, $arr_unique);
-        foreach ($marked_gaps as $fieldname => $gap) {
-
-            if (in_array($gap['value'], $arr_duplicates)) {
-                $marked_gaps[$fieldname]['duplicate'] = 'true';
+        $arrunique = array_unique($correctgaps);
+        $arrduplicates = array_diff_assoc($correctgaps, $arrunique);
+        foreach ($markedgaps as $fieldname => $gap) {
+            if (in_array($gap['value'], $arrduplicates)) {
+                $markedgaps[$fieldname]['duplicate'] = 'true';
             } else {
-                $marked_gaps[$fieldname]['duplicate'] = 'false';
+                $markedgaps[$fieldname]['duplicate'] = 'false';
             }
         }
-        return $marked_gaps;
+        return $markedgaps;
     }
 
 }
