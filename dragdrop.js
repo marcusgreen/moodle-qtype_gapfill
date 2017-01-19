@@ -23,6 +23,10 @@
  */
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 $(function () {
+    readonly = document.querySelectorAll('.readonly');
+    if (readonly.length > 0) {
+        return;
+    }
     $(".draggable").draggable({
         revert: false,
         helper: 'clone',
@@ -40,7 +44,7 @@ $(function () {
     $(".droptarget").droppable({
         hoverClass: 'active',
         drop: function (event, ui) {
-             this.value = $(ui.draggable).text();
+            this.value = $(ui.draggable).text();
             $(this).css("background-color", "white");
         }
     });
