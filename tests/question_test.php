@@ -37,7 +37,7 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_gapfill_question_test extends UnitTestCase {
+class qtype_gapfill_question_test extends advanced_testcase {
     public function test_get_expected_data() {
 
         $question = qtype_gapfill_test_helper::make_question('gapfill');
@@ -125,8 +125,8 @@ class qtype_gapfill_question_test extends UnitTestCase {
 
     public function test_get_right_choice_for_place() {
         $question = qtype_gapfill_test_helper::make_question('gapfill');
-        $this->assertEqual($question->get_right_choice_for(1), 'cat');
-        $this->assertNotEqual($question->get_right_choice_for(2), 'cat');
+        $this->assertEquals($question->get_right_choice_for(1), 'cat');
+        $this->assertNotEquals($question->get_right_choice_for(2), 'cat');
     }
 
     public function test_is_same_response() {
