@@ -127,7 +127,7 @@ class qtype_gapfill extends question_type {
                  */
                 $a->answer = stripslashes($a->answer);
             }
-            if (!in_array($a->answer, $question->allanswers)) {
+            if (!in_array($a->answer, $question->allanswers,true)) {
                 array_push($question->allanswers, $a->answer);
             }
             /* answer in this context means correct answers, i.e. where
