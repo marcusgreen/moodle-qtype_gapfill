@@ -33,6 +33,7 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * A "fill in the gaps" cloze style question type
  */
 class qtype_gapfill extends question_type {
+
     /* data used by export_to_xml (among other things possibly */
 
     public function extra_question_fields() {
@@ -66,7 +67,7 @@ class qtype_gapfill extends question_type {
         if (method_exists($PAGE->requires, 'jquery')) {
             // Moodle >= 2.5.
             if ($version == '') {
-                include($CFG->dirroot.'/lib/jquery/plugins.php');
+                include($CFG->dirroot . '/lib/jquery/plugins.php');
                 if (isset($plugins['jquery']['files'][0])) {
                     if (preg_match($search, $plugins['jquery']['files'][0], $matches)) {
                         $version = $matches[1];
@@ -74,7 +75,7 @@ class qtype_gapfill extends question_type {
                 }
             }
             if ($version == '') {
-                $filename = $CFG->dirroot.'/lib/jquery/jquery*.js';
+                $filename = $CFG->dirroot . '/lib/jquery/jquery*.js';
                 foreach (glob($filename) as $filename) {
                     if (preg_match($search, $filename, $matches)) {
                         $version = $matches[1];
@@ -95,15 +96,18 @@ class qtype_gapfill extends question_type {
             $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_gapfill');
         } else {
             // Moodle <= 2.6.
-            $jquery = '/question/type/' . $this->name().'/jquery';
-            $PAGE->requires->js($jquery.'/jquery-1.9.1.min.js', true);
-            $PAGE->requires->js($jquery.'/jquery-ui-1.11.4.min.js', true);
-            $PAGE->requires->js($jquery.'/jquery-ui.touch-punch.js', true);
-
+            $jquery = '/question/type/' . $this->name() . '/jquery';
+            $PAGE->requires->js($jquery . '/jquery-1.9.1.min.js', true);
+            $PAGE->requires->js($jquery . '/jquery-ui-1.11.4.min.js', true);
+            $PAGE->requires->js($jquery . '/jquery-ui.touch-punch.js', true);
         }
     }
 
-    /* populates fields such as combined feedback in the editing form */
+    /**
+     * 
+     * @global type moodle_database $DB
+     * @param type $question
+     */
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
@@ -127,14 +131,13 @@ class qtype_gapfill extends question_type {
                  */
                 $a->answer = stripslashes($a->answer);
             }
-            if (!in_array($a->answer, $question->allanswers,true)) {
+            if (!in_array($a->answer, $question->allanswers, true)) {
                 array_push($question->allanswers, $a->answer);
             }
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback,
-                        $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
                 $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
@@ -232,6 +235,7 @@ class qtype_gapfill extends question_type {
     /**
      * Save the units and the answers associated with this question.
      * @return boolean to indicate success or failure.
+     * @global moodle_database $DB;
      */
     public function save_question_options($question) {
         /* Save the extra data to your database tables from the
@@ -279,6 +283,12 @@ class qtype_gapfill extends question_type {
         $DB->update_record('question_gapfill', $options);
     }
 
+    /**
+     * 
+     * @global moodle_database $DB
+     * @param type $question
+     * @param array $answerfields
+     */
     public function update_question_answers($question, array $answerfields) {
         global $DB;
         $oldanswers = $DB->get_records('question_answers', array('question' => $question->id), 'id ASC');
@@ -353,8 +363,7 @@ class qtype_gapfill extends question_type {
                 /* split by commas and trim white space */
                 $wronganswers = array_map('trim', explode(',', $question->wronganswers['text']));
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'],
-                        -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
@@ -415,9 +424,9 @@ class qtype_gapfill extends question_type {
         $output .= '    <fixedgapsize>' . $question->options->fixedgapsize .
                 "</fixedgapsize>\n";
         $output .= '    <!-- Gapfill release:'
-                .$gapfillinfo->release .' version:'.$gapfillinfo->versiondisk .' Moodle version:'
-                .$CFG->version .' release:'.$CFG->release
-                ." -->\n";
+                . $gapfillinfo->release . ' version:' . $gapfillinfo->versiondisk . ' Moodle version:'
+                . $CFG->version . ' release:' . $CFG->release
+                . " -->\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
