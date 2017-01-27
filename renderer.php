@@ -131,7 +131,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
-            'class' => 'droptarget ' . $inputclass,
         );
 
         /* When previewing after a quiz is complete */
@@ -139,17 +138,23 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $readonly = array('disabled' => 'true');
             $inputattributes = array_merge($inputattributes, $readonly);
         }
-
+ 
         if ($question->answerdisplay == "dropdown") {
+            $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
             $inputattributes['size'] = "";
-            $inputattributes['class'] = $inputclass;
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, ' ', $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
-        } else {
+        } else if ($question->answerdisplay=="gapfill"){
+            /*it is a typetext (gapfill) question */
+            $inputattributes['class']='typetext '. $inputclass;
+            return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
+        }else{     
+            /* it is a drag/drop quesiton type */
+            $inputattributes['class'] = 'droptarget '.$inputclass;
             return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
     }
