@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_gapfill_test extends UnitTestCase {
+class qtype_gapfill_test extends advanced_testcase {
 
     public static $includecoverage = array(
         'question/type/questiontypebase.php',
@@ -89,7 +89,7 @@ class qtype_gapfill_test extends UnitTestCase {
     }
 
     public function test_squestionid_column_name() {
-        $this->assertTrue($this->qtype->questionid_column_name(), 'question');
+        $this->assertEquals($this->qtype->questionid_column_name(), 'question');
     }
 
     public function test_extra_question_fields() {

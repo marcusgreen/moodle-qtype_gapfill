@@ -51,7 +51,10 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         return $paths; // And we return the interesting paths.
     }
 
-    /**
+     /**
+     * 
+     * @global moodle_database $DB
+     * @param type $data
      * Process the qtype/gapfill element
      */
     public function process_gapfill($data) {
@@ -98,6 +101,10 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
      *  Previously it was throwing a debug error. This has been 'fixed' by
      * the addition of the IGNORE_MULTIPLE parameter to the call to get_field_sql.
      * However the docs seem to frown on the use of this parameter.
+     * 
+     * @global moodle_database $DB
+     * @param type $data
+     * @throws restore_step_exception
      */
     public function process_question_answer($data) {
         global $DB;

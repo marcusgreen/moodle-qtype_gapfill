@@ -59,7 +59,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'id' => '117',
                     'question' => '163',
                     'layout' => '0',
-                    'answerdisplay' => 'ddrop',
+                    'answerdisplay' => 'dragdrop',
                     'delimitchars' => '[]',
                     'casesensitive' => false,
                     'noduplicates' => '1',
