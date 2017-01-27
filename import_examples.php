@@ -31,6 +31,7 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
 admin_externalpage_setup('qtype_gapfill_import');
 
 class gapfill_import_form extends moodleform {
+
     public $questioncategory;
     public $course;
 
@@ -41,6 +42,12 @@ class gapfill_import_form extends moodleform {
         $mform->addElement('submit', 'submitbutton', 'Import');
     }
 
+    /**
+     * 
+     * @global moodle_database $DB
+     * @param type $courseshortname
+     * @return Array
+     */
     public function get_question_category($courseshortname) {
         global $DB;
         /* parent=0 means where you have multiple categories it is at the top */
@@ -52,7 +59,14 @@ class gapfill_import_form extends moodleform {
         $category = array_shift($category);
         return $category;
     }
-
+    
+    /**
+     * 
+     * @global moodle_database $DB
+     * @param type $fromform
+     * @param type $data
+     * @return boolean
+     */
     public function validation($fromform, $data) {
         $errors = array();
         global $DB;
