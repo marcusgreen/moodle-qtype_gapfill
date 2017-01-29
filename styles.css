@@ -42,7 +42,9 @@
 }
 
 .que.gapfill span.draggable.answers:hover{
-    background-color:linen;
+    box-shadow:0px 0px 0px;
+    -moz-box-shadow: 0px 0px 0px;
+    -webkit-box-shadow: 0px 0px 0px;
 } 
 
 /*Displays the correct answer in delimiters if an
