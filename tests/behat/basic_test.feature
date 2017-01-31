@@ -1,4 +1,4 @@
-@core @qtype @qtype_wordselect @_switch_window
+@core @qtype @qtype_gapfill @_switch_window
 Feature: Test all the basic functionality of this question type
   In order to evaluate students responses, As a teacher I need to
   create and preview wordselect (Select correct words) questions.
@@ -21,7 +21,7 @@ Feature: Test all the basic functionality of this question type
     And I navigate to "Question bank" node in "Course administration"
 
     # Create a new question.
-    And I add a "Word Select" question filling the form with:
+    And I add a "Gapfill" question filling the form with:
       | Question name             | Gapfill-001                   |
       | Introduction              | Select the verb in the following text  |
       | Question text             | The cat [sat] on the mat     |
@@ -124,7 +124,7 @@ Feature: Test all the basic functionality of this question type
     And I press "Start again with these options" 
     And I click on "select1" "text" 
     And I click on "select2" "text"
-    And I click on "word2" "text"
+        And I click on "word2" "text"
 
     And I press "Submit"      
     And I should see "Your answer is partially correct."
