@@ -23,7 +23,6 @@
  * @copyright 2016 Marcus Green
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
 require_once(__DIR__ . '/../../../../../lib/behat/behat_base.php');
@@ -36,27 +35,15 @@ require_once(__DIR__ . '/../../../../../lib/behat/behat_base.php');
  */
 class behat_qtype_gapfill extends behat_base {
 
-    
     /**
-     * Get the xpath for a given drag item.
-     * @param string $dragitem the text of the item to drag.
-     * @return string the xpath expression.
-     */
-   /* protected function drag_xpath($dragitem) {
-        return '//span[contains(@class, " drag ") and contains(., "' . $this->escape($dragitem) . '")]';
-    }
-    * */
-    
-    
-    /**
-     * Get the xpath for a given gap   
+     * Get the xpath for a given gap
      * @param string $dragitem the gap id number
      * @return string the xpath expression.
      */
     protected function drop_xpath($gapnumber) {
         return '//input[contains(@class, "droptarget ") and contains(@id, "_p' . $gapnumber . '")]';
     }
-    
+
     /**
      * Type some characters while focussed on a given gap.
      *
@@ -66,8 +53,8 @@ class behat_qtype_gapfill extends behat_base {
      * @Given /^I type "(?P<keys>[^"]*)" into gap "(?P<gap_number>\d+)" in the gapfill question$/
      */
     public function i_type_into_gap_in_the_gapfill_question($gapresponse, $gapnumber) {
-        $xpath=$this->drop_xpath($gapnumber);
+        $xpath = $this->drop_xpath($gapnumber);
         $this->execute('behat_forms::i_set_the_field_with_xpath_to', array($xpath, $gapresponse));
     }
-     
+
 }
