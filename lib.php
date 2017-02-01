@@ -37,7 +37,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param array $options additional options affecting the file serving
  * @global moodle_database $DB
  * @global type $CFG
- * 
+ *
  */
 function qtype_gapfill_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     global $DB, $CFG;
