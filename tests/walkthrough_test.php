@@ -37,24 +37,24 @@ require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
  */
 class qtype_gapfill_walkthrough_test extends qbehaviour_walkthrough_test_base {
 
-    
-    public function test_draggable_items(){
-        //this checks that the bug from line 130 of questiontype is fixed
-        //that line should read
-        //if (!in_array($a->answer, $question->allanswers,true)) {
-        //Without the final true only one draggable will display
-        $questiontext = "[1.0] [1.00]";  
+    public function test_draggable_items() {
+        /* This checks that the bug from line 130 of questiontype is fixed
+          that line should read
+          if (!in_array($a->answer, $question->allanswers,true)) {
+          Without the final true only one draggable will display */
+        $questiontext = "[1.0] [1.00]";
         $options = array(
             'disableregex' => 1,
             'noduplicates' => 0,
             'delimitchars' => '[]'
-            );
+        );
         $gapfill = qtype_gapfill_test_helper::make_question2('gapfill', $questiontext, null, $options);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         $this->check_output_contains('1.0');
         $this->check_output_contains('1.00');
     }
+
     public function test_deferred_feedback_unanswered() {
 
         // Create a gapfill question.
