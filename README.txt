@@ -34,4 +34,4 @@ Version 1.8 added casesensitive option in settings, plugin version information i
 Version 1.9 added link in the admin interface to make it easy to import_example questions to a course
 Version 1.91 [.+] will make any text a valid answer and if left empty will not show the .+ as aftergap feedback
 Version 1.92 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers:improves display in feedback
-Version 1.93 CSS to improve onfocus inputs, hover on draggable, fixed bug in draggables (#25 on github) and added divs etc ready for mobile app remote addon
+Version 1.93 onfocus CSS on inputs, hover on draggable, bugfix in draggables (#25 on github) divs etc ready for mobile app
