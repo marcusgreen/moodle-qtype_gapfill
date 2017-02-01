@@ -43,7 +43,7 @@ class gapfill_import_form extends moodleform {
     }
 
     /**
-     * 
+     *
      * @global moodle_database $DB
      * @param type $courseshortname
      * @return Array
@@ -59,9 +59,9 @@ class gapfill_import_form extends moodleform {
         $category = array_shift($category);
         return $category;
     }
-    
+
     /**
-     * 
+     *
      * @global moodle_database $DB
      * @param type $fromform
      * @param type $data
