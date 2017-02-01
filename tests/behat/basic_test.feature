@@ -23,9 +23,8 @@ Feature: Test all the basic functionality of this question type
     # Create a new question.
     And I add a "Gapfill" question filling the form with:
       | Question name             | Gapfill-001                   |
-      | Introduction              | Select the verb in the following text  |
-      | Question text             | The cat [sat] on the mat     |
-      | General feedback          | This is general feedback       |
+      | Question text             | The cat [sat] on the [mat]    |
+      | General feedback          | This is general feedback      |
       | Hint 1                    | First hint                    |
       | Hint 2                    | Second hint                   |
     Then I should see "Gapfill-001"
@@ -45,55 +44,34 @@ Feature: Test all the basic functionality of this question type
       | Right answer         | Shown |
     And I press "Start again with these options"
 
-    #Select all (both) correct options
-    #And I click on "select1" "text" 
-    #And I click on "select2" "text"
-    #And I press "Check"      
-    #And I should see "Your answer is correct."
+    #Enter both correct responses 
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "mat" into gap "2" in the gapfill question
+
+    And I press "Check"      
+    And I should see "Your answer is correct."
     And I should see "Mark 2.00 out of 2.00"
-    
-    #Select one incorrect option on the first attempt
+
+    #Enter one incorrect option on the first attempt
     #and all/both correct options on the second attempt
     ################################################
     #first attempt
     And I press "Start again with these options"
-    And I click on "select1" "text" 
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "xxx" into gap "2" in the gapfill question
+
     And I press "Check"      
     And I should see "Your answer is partially correct."
 
     ################################################
     #second attempt
     And I press "Try again"
-    And I click on "select1" "text" 
-    And I click on "select2" "text"
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "mat" into gap "2" in the gapfill question
+    
     And I press "Check"      
     And I should see "Your answer is correct."
     And I should see "Mark 1.67 out of 2.00"
-    And I wait "10" seconds
-    
-
-    ##################################################
-    # Immediate Feedback behaviour
-     And I set the following fields to these values:
-      | How questions behave | Immediate feedback |
-      | Marked out of        | 2                               |
-      | Marks                | Show mark and max               |
-      | Specific feedback    | Shown |
-      | Right answer         | Shown |
-    
-    And I press "Start again with these options" 
-    And I click on "select1" "text" 
-    And I click on "select2" "text"
-    And I press "Check"      
-    And I should see "Your answer is correct."
-    And I should see "Mark 2.00 out of 2.00"
-    And I wait "2" seconds
-    
-    And I press "Start again with these options" 
-    And I click on "select1" "text" 
-    And I press "Check"      
-    And I should see "Your answer is partially correct."
-    And I should see "Mark 1.00 out of 2.00"
     And I wait "2" seconds
     
 
@@ -107,34 +85,26 @@ Feature: Test all the basic functionality of this question type
       | Right answer         | Shown |
     
     And I press "Start again with these options" 
-    And I click on "select1" "text" 
-    And I click on "select2" "text"
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "mat" into gap "2" in the gapfill question
+
     And I press "Submit and finish"      
     And I should see "Your answer is correct."
     And I should see "Mark 2.00 out of 2.00"
     And I wait "5" seconds
 
     And I press "Start again with these options" 
-    And I click on "select1" "text" 
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "xxx" into gap "2" in the gapfill question
+
     And I press "Submit and finish"      
     And I should see "Your answer is partially correct."
     And I should see "Mark 1.00 out of 2.00"
     And I wait "5" seconds
-
+    
     And I press "Start again with these options" 
-    And I click on "select1" "text" 
-    And I click on "select2" "text"
-        And I click on "word2" "text"
-
-    And I press "Submit"      
-    And I should see "Your answer is partially correct."
-    And I should see "Mark 1.00 out of 2.00"
-    And I wait "5" seconds
-
-    And I press "Start again with these options" 
-    And I click on "word2" "text" 
-    And I click on "word3" "text"
-    And I click on "word2" "text"
+    And I type "xxx" into gap "1" in the gapfill question
+    And I type "yyy" into gap "2" in the gapfill question
   
     And I press "Submit and finish"      
     And I should see "Your answer is incorrect."
