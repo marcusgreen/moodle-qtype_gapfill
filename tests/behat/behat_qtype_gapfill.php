@@ -36,53 +36,38 @@ require_once(__DIR__ . '/../../../../../lib/behat/behat_base.php');
  */
 class behat_qtype_gapfill extends behat_base {
 
+    
     /**
      * Get the xpath for a given drag item.
      * @param string $dragitem the text of the item to drag.
      * @return string the xpath expression.
      */
-    protected function drag_xpath($dragitem) {
-        return '//span[contains(@class, " draggable ") and contains(., "' . $this->escape($dragitem) . '")]';
+   /* protected function drag_xpath($dragitem) {
+        return '//span[contains(@class, " drag ") and contains(., "' . $this->escape($dragitem) . '")]';
     }
-
+    * */
+    
+    
     /**
-     * Get the xpath for a given drop box.
-     * @param string $dragitem the number of the drop box.
+     * Get the xpath for a given gap   
+     * @param string $dragitem the gap id number
      * @return string the xpath expression.
      */
-    protected function drop_xpath($spacenumber) {
-        return '//span[contains(@class, " droptarget ") and contains(@class, "p' . $spacenumber . ' ")]';
+    protected function drop_xpath($gapnumber) {
+        return '//input[contains(@class, "droptarget ") and contains(@id, "_p' . $gapnumber . '")]';
     }
-
+    
     /**
-     * Drag the drag item with the given text to the given space.
+     * Type some characters while focussed on a given gap.
      *
-     * @param string $dragitem the text of the item to drag.
-     * @param int $spacenumber the number of the gap to drop into.
+     * @param string $gapresponse the text to enter into the gap
+     * @param int $gapnumber the number of the gap to type into.
      *
-     * @Given /^I drag "(?P<drag_item>[^"]*)" to space "(?P<space_number>\d+)" in the drag and drop into text question$/
+     * @Given /^I type "(?P<keys>[^"]*)" into gap "(?P<gap_number>\d+)" in the gapfill question$/
      */
-    public function i_drag_to_space_in_the_drag_and_drop_into_text_question($dragitem, $spacenumber) {
-        $generalcontext = behat_context_helper::get('behat_general');
-        $generalcontext->i_drag_and_i_drop_it_in($this->drag_xpath($dragitem),
-                'xpath_element', $this->drop_xpath($spacenumber), 'xpath_element');
+    public function i_type_into_gap_in_the_gapfill_question($gapresponse, $gapnumber) {
+        $xpath=$this->drop_xpath($gapnumber);
+        $this->execute('behat_forms::i_set_the_field_with_xpath_to', array($xpath, $gapresponse));
     }
-
-    /**
-     * Type some characters while focussed on a given space.
-     *
-     * @param string $keys the characters to type.
-     * @param int $spacenumber the number of the space to type into.
-     *
-     * @Given /^I type "(?P<keys>[^"]*)" into space "(?P<space_number>\d+)" in the drag and drop onto image question$/
-     */
-    public function i_type_into_space_in_the_drag_and_drop_into_text_question($keys, $spacenumber) {
-        $node = $this->get_selected_node('xpath_element', $this->drop_xpath($spacenumber));
-        $this->ensure_node_is_visible($node);
-        foreach (str_split($keys) as $key) {
-            $node->keyDown($key);
-            $node->keyPress($key);
-            $node->keyUp($key);
-        }
-    }
+     
 }
