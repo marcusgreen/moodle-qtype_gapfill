@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 141  -->
+<!-- question: 2  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -43,6 +43,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -64,7 +65,7 @@
     </hint>
   </question>
 
-<!-- question: 142  -->
+<!-- question: 3  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -129,6 +130,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -150,7 +152,7 @@
     </hint>
   </question>
 
-<!-- question: 143  -->
+<!-- question: 4  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -197,6 +199,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -218,7 +221,7 @@
     </hint>
   </question>
 
-<!-- question: 144  -->
+<!-- question: 5  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -257,6 +260,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -268,7 +272,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 145  -->
+<!-- question: 6  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
@@ -335,6 +339,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -346,7 +351,206 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 146  -->
+<!-- question: 22  -->
+  <question type="gapfill">
+    <name>
+      <text>Crossword</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Accross:</strong></p>
+<p>3:Capital city of the UK</p>
+<p>4 Grape based alcololic drink</p>
+<p><strong>Down</strong></p>
+<p>2.Celestial body visitied by Apollo 11</p>
+<p>1. Melody part of song (rhymes with 2 down)</p>
+<table class="text-center gapfillcol" border="1">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>1</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>[T]</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>[M]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>[U]</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>3</td>
+<td>[L]</td>
+<td>[O]</td>
+<td>[N]</td>
+<td>[D]</td>
+<td>[O]</td>
+<td>[N]</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>[O]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>[E]</td>
+</tr>
+<tr>
+<td>&nbsp;4 &nbsp;</td>
+<td>[W]</td>
+<td>[I]</td>
+<td>[N]</td>
+<td>[E]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>15.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>gapfill</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>T</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>M</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>U</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>L</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>O</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>N</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>D</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>O</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>N</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>O</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>E</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>W</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>I</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>N</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>E</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>gapfill</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <correctfeedback format="html">
+      <text>Your answer is correct.</text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text>Your answer is partially correct.</text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text>Your answer is incorrect.</text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 7  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -398,6 +602,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -419,7 +624,7 @@
     </hint>
   </question>
 
-<!-- question: 147  -->
+<!-- question: 8  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -492,6 +697,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -513,7 +719,7 @@
     </hint>
   </question>
 
-<!-- question: 148  -->
+<!-- question: 9  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -587,6 +793,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -598,7 +805,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 149  -->
+<!-- question: 10  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -662,6 +869,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -681,7 +889,7 @@
     </hint>
   </question>
 
-<!-- question: 150  -->
+<!-- question: 11  -->
   <question type="gapfill">
     <name>
       <text>Fixed Gapsize</text>
@@ -732,6 +940,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -743,7 +952,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 152  -->
+<!-- question: 12  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -783,6 +992,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -804,7 +1014,7 @@
     </hint>
   </question>
 
-<!-- question: 153  -->
+<!-- question: 13  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesHorizontal</text>
@@ -876,6 +1086,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -887,7 +1098,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 154  -->
+<!-- question: 14  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesVertical</text>
@@ -969,6 +1180,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -990,7 +1202,7 @@
     </hint>
   </question>
 
-<!-- question: 151  -->
+<!-- question: 15  -->
   <question type="gapfill">
     <name>
       <text>Images in tables (fruit)</text>
@@ -1053,6 +1265,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1064,7 +1277,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 155  -->
+<!-- question: 16  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -1155,6 +1368,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1166,7 +1380,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 156  -->
+<!-- question: 17  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -1206,6 +1420,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1217,7 +1432,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 157  -->
+<!-- question: 18  -->
   <question type="gapfill">
     <name>
       <text>Other scripts and accents</text>
@@ -1269,6 +1484,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1280,7 +1496,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 158  -->
+<!-- question: 19  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1344,6 +1560,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1355,7 +1572,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 159  -->
+<!-- question: 20  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1388,6 +1605,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1399,7 +1617,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 160  -->
+<!-- question: 21  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -1454,6 +1672,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
