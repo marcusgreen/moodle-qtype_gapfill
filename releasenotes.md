@@ -1,7 +1,6 @@
 ###Version 1.93 of the Moodle Gapfill question type contributed by Marcus Green
-CSS to give indication of onfocus in text imput boxes, subtle change in background color on hover
-over draggables. Other CSS tweaks to size of input and draggables. Fixed #25 on github
-
+Added remote addon code for the mobile app.CSS to give indication of onfocus in text imput boxes, subtle change in 
+background color on hover over draggables. Other CSS tweaks to size of input and draggables. Fixed #25 on github
 
 ###Version 1.92 of the Moodle Gapfill question type contributed by Marcus Green
 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers which improves display in feedback for dropdowns.
