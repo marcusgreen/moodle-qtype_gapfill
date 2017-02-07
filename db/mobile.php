@@ -17,12 +17,12 @@
 /**
  * Certificate module capability definition
  *
- * @package    qtype_wordselect
+ * @package    qtype_gapfill
  * @copyright  2016 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
 $addons = array(
-    "qtype_wordselect" => array()
+    "qtype_gapfill" => array()
 );
