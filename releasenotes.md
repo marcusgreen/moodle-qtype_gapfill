@@ -1,5 +1,7 @@
 ###Version 1.93 of the Moodle Gapfill question type contributed by Marcus Green
-Added remote addon code for the mobile app. CSS to give indication of onfocus in text imput boxes, subtle change in 
+This release was made possible through the support of Sojo University Japan. 
+http://www.sojo-u.ac.jp/en/ . Many thanks thanks to Elton LaClare.
+Added remote addon support for the Moodle mobile app. CSS to give indication of onfocus in text imput boxes, subtle change in 
 background color on hover over draggables. Other CSS tweaks to size of input and draggables. Fixed #25 on github
 
 ###Version 1.92 of the Moodle Gapfill question type contributed by Marcus Green
