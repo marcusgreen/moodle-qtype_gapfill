@@ -53,7 +53,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     if ($options->readonly) {
                         $cssclasses = " draggable answers readonly ";
                     }
-                    $output .= '<span id="pa:_' . $potentialanswerid++ . '" class= "' . $cssclasses . '">' .
+                    /*the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
+                    $output .= '<span id="pa:_'.$question->id.'_' . $potentialanswerid++ . '" class= "' . $cssclasses . '">' .
                             $potentialanswer . "</span>&nbsp;";
                 }
             }
