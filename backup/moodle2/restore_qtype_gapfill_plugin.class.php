@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    moodlecore
+ * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2011 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
  * needed to restore one gapfill qtype plugin. Also used if you click
  * the duplicate quiz button in a course.
  *
- * @copyright  2012 Marcus Green
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
