@@ -337,7 +337,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     // Required by the interface question_automatically_gradable_with_countback.
     public function compute_final_grade($responses, $totaltries) {
-        if (($this->noduplicates == 1) && (sizeof($responses)>0)) {
+        if (($this->noduplicates == 1) && (count($responses) > 0)) {
              $responses[0] = $this->discard_duplicates($responses[0]);
         }
         $totalscore = 0;

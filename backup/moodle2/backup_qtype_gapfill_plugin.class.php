@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2011 The Open University
@@ -35,7 +35,7 @@ defined('MOODLE_INTERNAL') || die();
 class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
 
     /**
-     * 
+     *
      * @return string the name of the plutin/question type
      */
     protected static function qtype_name() {
