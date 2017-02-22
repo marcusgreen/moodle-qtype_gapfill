@@ -1,6 +1,7 @@
 ###Version 1.94 of the Moodle Gapfill question type February 2017
 This is a minor release with a css fix and improvements to the mobile app code.
-Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus
+Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus.
+
 In the mobile app answer option selection is more obvious. For dragdrop
 questions there is now a prompt that says "Tap to select then tap to drop" as with
 the core question types. Thanks to Elton LaClare for the mobile app feedback.
