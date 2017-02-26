@@ -474,5 +474,4 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return $markedgaps;
     }
-
 }
