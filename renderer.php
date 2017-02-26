@@ -145,12 +145,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
-            $inputattributes['size'] = "";
+            unset($inputattributes["size"]);
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
-                    ' ', $inputattributes) . ' ' . $aftergaptext;
+                    array('' => ''), $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
