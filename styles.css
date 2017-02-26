@@ -8,12 +8,18 @@
     margin-top:1px;
     margin-bottom:1px;
 }
+
 /* glow a little around the border */
-.que.gapfill input.droptarget:hover :focus {
-    border: 1px solid #7bc1f7;
-    box-shadow: 0px 0px 8px #7bc1f7;
+.que.gapfill input.droptarget:hover {
     -moz-box-shadow: 0px 0px 8px #7bc1f7;
     -webkit-box-shadow: 0px 0px 8px #7bc1f7;
+    box-shadow: 0px 0px 8px #7bc1f7;
+
+}
+.que.gapfill input.droptarget:focus {
+    -moz-box-shadow: 0px 0px 8px #7bc1f7;
+    -webkit-box-shadow: 0px 0px 8px #7bc1f7;
+     box-shadow: 0px 0px 8px #7bc1f7;
 }
 
 .que.gapfill input.droptarget{
@@ -54,20 +60,13 @@ incorrec answer was entered */
     color:green;
 }
 
-/* styling the dropdowns */
+/* styling the dropdowns*/
 .que.gapfill select{
     border:1px solid black;
-    padding:1px;
+    padding-top:1px;
+    padding-bottom:1px;
     color:black;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
-    /*important in ios */
-    -webkit-appearance:menulist;
-}
-
-.que.gapfill.custom-select{
-    /*This is to overwrite the custom-select class
-    in Boost which seems to break the display of dropdown
-    lists */
 }
 
 .gapfilltable td{
