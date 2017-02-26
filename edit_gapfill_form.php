@@ -21,7 +21,6 @@
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
@@ -38,6 +37,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $answerdisplay;
     public $delimitchars;
 
+    /**
+     * Add gapfill specific form fields.
+     *
+     * @param object $mform the form being built.
+     */
     protected function definition_inner($mform) {
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
@@ -46,8 +50,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'), array('size' => 70, 'rows' => 1),
-                $this->editoroptions);
+        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
+                array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -143,6 +147,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
         return $wronganswers = rtrim($wronganswers, ',');
     }
 
+    /**
+     * Perform any preprocessing needed on the data passed to {@link set_data()}
+     * before it is used to initialise the form.
+     * @param object $question the data being passed to the form.
+     * @return object $question the modified data.
+     */
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_combined_feedback($question);
