@@ -1,6 +1,7 @@
 ###Version 1.94 of the Moodle Gapfill question type February 2017
 This is a minor release with a css fix and improvements to the mobile app code.
-Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus.
+Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus. Added
+fix to renderer.php so select shows down arrows on android mobile.
 
 In the mobile app answer option selection is more obvious. For dragdrop
 questions there is now a prompt that says "Tap to select then tap to drop" as with
@@ -9,6 +10,7 @@ the core question types. Thanks to Elton LaClare for the mobile app feedback.
 ###Version 1.93 of the Moodle Gapfill question type February 2017
 This release was made possible through the support of Sojo University Japan. 
 http://www.sojo-u.ac.jp/en/ . Many thanks to Elton LaClare and Rob Hirschel.
+
 Added remote addon support for the Moodle mobile app. CSS to give indication of onfocus in text imput boxes, subtle change in 
 background color on hover over draggables. Other CSS tweaks to size of input and draggables. Fixed #25 on github
 
