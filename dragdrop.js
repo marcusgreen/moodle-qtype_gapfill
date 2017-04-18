@@ -41,8 +41,8 @@ $(function () {
         hoverClass: 'active',
         drop: function (event, ui) {
             if($(ui.draggable).hasClass('readonly')){
-	                return;
-		}
+            return;
+	}
             this.value = $(ui.draggable).text();
             $(this).css("background-color", "white");
         }
