@@ -40,9 +40,9 @@ $(function () {
     $(".droptarget").droppable({
         hoverClass: 'active',
         drop: function (event, ui) {
-            if($(ui.draggable).hasClass('readonly')){
-            return;
-	}
+            if ($(ui.draggable).hasClass('readonly')) {
+                return;
+            }
             this.value = $(ui.draggable).text();
             $(this).css("background-color", "white");
         }
