@@ -38,7 +38,7 @@ class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex', 'fixedgapsize');
+            'noduplicates', 'disableregex', 'fixedgapsize','optionsaftertext');
     }
 
     /**
@@ -272,14 +272,19 @@ class qtype_gapfill extends question_type {
             $options->casesensitive = '';
             $options->noduplicates = '';
             $options->disableregex = '';
+            $options->fixedgapsize = '';
+            $options->optionsaftertext = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
+        
+   
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
         $options->fixedgapsize = $question->fixedgapsize;
+        $options->optionsaftertext = $question->optionsaftertext;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
@@ -425,6 +430,8 @@ class qtype_gapfill extends question_type {
                 "</disableregex>\n";
         $output .= '    <fixedgapsize>' . $question->options->fixedgapsize .
                 "</fixedgapsize>\n";
+        $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
+                "</optionsaftertext>\n";
         $output .= '    <!-- Gapfill release:'
                 . $gapfillinfo->release . ' version:' . $gapfillinfo->versiondisk . ' Moodle version:'
                 . $CFG->version . ' release:' . $CFG->release
