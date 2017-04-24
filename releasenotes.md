@@ -1,3 +1,8 @@
+###Version 1.95 of the Moodle Gapfill question type April 2017
+New setting optionsaftertext can be to show the draggable options after the text.
+Fixed a bug where if there were multiple questions on a single page the draggables would
+become disabled after the first submit.
+
 ###Version 1.94 of the Moodle Gapfill question type February 2017
 This is a minor release with a css fix and improvements to the mobile app code.
 Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus. Added
