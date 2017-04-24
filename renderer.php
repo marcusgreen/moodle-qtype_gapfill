@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -33,7 +33,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
-
         $question = $qa->get_question();
 
         if ($question->answerdisplay == "dragdrop") {
@@ -43,7 +42,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $this->allanswers = unserialize($seranswers);
         $output = '';
         /* required for the mobile app */
-        $output .= html_writer::empty_tag('div', array('class' => 'qtext'));
+        $answeroptions = html_writer::empty_tag('div', array('class' => 'qtext'));
         if ($question->answerdisplay == "dragdrop") {
             $potentialanswerid = 0;
             foreach ($this->allanswers as $potentialanswer) {
@@ -54,11 +53,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                         $cssclasses = " draggable answers readonly ";
                     }
                     /*the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
-                    $output .= '<span id="pa:_'.$question->id.'_' . $potentialanswerid++ . '" class= "' . $cssclasses . '">' .
+                    $answeroptions .= '<span id="pa:_'.$question->id.'_' . $potentialanswerid++ . '" class= "' . $cssclasses . '">' .
                             $potentialanswer . "</span>&nbsp;";
                 }
             }
-            $output .= "<br/><br/>";
+            $answeroptions .= "<br/><br/>";
         }
         $markedgaps = $question->get_markedgaps($qa, $options);
         foreach ($question->textfragments as $place => $fragment) {
@@ -72,7 +71,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
 
         $output .= "<br/>";
-
+        if ($question->optionsaftertext == true) {
+            $output .= $answeroptions;
+        } else {
+            $output = $answeroptions . $output;
+        }
         if ($qa->get_state() == question_state::$invalid) {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
                 => $output)), array('class' => 'validationerror'));
