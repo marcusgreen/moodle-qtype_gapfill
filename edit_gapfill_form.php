@@ -114,7 +114,14 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
 
-        // To add combined feedback (correct, partial and incorrect).
+        $mform->addElement('advcheckbox', 'optionsaftertext', get_string('optionsaftertext', 'qtype_gapfill'));
+        $mform->setDefault('optionsaftertext', $config->optionsaftertext);
+        
+
+        $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
+        $mform->setAdvanced('optionsaftertext');
+        
+// To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
 
         // Adds hinting features.
