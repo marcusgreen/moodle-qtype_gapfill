@@ -1,4 +1,4 @@
-Gapfill question type V1.94 for Moodle 
+Gapfill question type V1.95 for Moodle 
 
 A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices. Teachers can define the 
 question with square braces to define the missing words. For example
@@ -11,7 +11,7 @@ dropddropdown lists or javascript powered drag and drop functionality.
 
 This question type was written by Marcus Green
 
-This question type was created and tested under Moodle 2.9,3.0,3.1,3.2
+This question type was created and tested under Moodle 2.9,3.0,3.1,3.2,33
 
 It will not work with versions of moodle prior to 2.6.
 
@@ -23,6 +23,7 @@ Where moodle is webroot for your install.
 
 Go to Site Administration/Notifications
 
+Version 1.95 add aftergapfeedback option so draggables appear after text
 Version 1.94 fix for select dropdowns on webkit/android.Tap to select prompt in mobile app 
 Version 1.93 support for mobile app. onfocus CSS on inputs, hover on draggable, bugfix in draggables (#25 on github) 
 Version 1.92 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers:improves display in feedback
