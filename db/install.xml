@@ -14,8 +14,8 @@
         <FIELD NAME="noduplicates" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Discard any duplicate answers given. Useful where multiple fields can take the same value through the use of the or (|) operator." PREVIOUS="casesensitive" NEXT="disableregex"/>
         <FIELD NAME="disableregex" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="disable use of regular expressions for answer comparisons use plain strcmp" PREVIOUS="noduplicates" NEXT="fixedgapsize"/>        
         <FIELD NAME="fixedgapsize" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="all gaps set to the same size in the renderer" PREVIOUS="disableregex" NEXT="correctfeedback"/>
-        <FIELD NAME="optionsaftertext" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Show options after text" PREVIOUS="disableregex" NEXT="correctfeedback"/>
-        <FIELD NAME="correctfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="disableregex" NEXT="correctfeedbackformat"/>
+        <FIELD NAME="optionsaftertext" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Show options after text" PREVIOUS="fixedgapsize" NEXT="correctfeedback"/>
+        <FIELD NAME="correctfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="optionsaftertext" NEXT="correctfeedbackformat"/>
         <FIELD NAME="correctfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="correctfeedback" NEXT="partiallycorrectfeedback" />
         <FIELD NAME="partiallycorrectfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="correctfeedbackformat" NEXT="partiallycorrectfeedbackformat"/>
         <FIELD NAME="partiallycorrectfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="partiallycorrectfeedback" NEXT="incorrectfeedback"/>
