@@ -40,9 +40,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
-        $output = '';
-        /* required for the mobile app */
-        $answeroptions = html_writer::empty_tag('div', array('class' => 'qtext'));
+       
+        $output = html_writer::empty_tag('div', array('class' => 'qtext'));
+        $answeroptions='';
         if ($question->answerdisplay == "dragdrop") {
             $potentialanswerid = 0;
             foreach ($this->allanswers as $potentialanswer) {
