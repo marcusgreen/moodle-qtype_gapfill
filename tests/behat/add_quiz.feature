@@ -43,7 +43,6 @@ Feature: Add a quiz
     And I press "Attempt quiz now"
     Then I should see "Question 1"
     And I type "cat" into gap "1" in the gapfill question
-    #And I should see "Answer saved"
     And I press "Next page"
     Then I should see "Question 2"
     And I type "cow" into gap "1" in the gapfill question  
