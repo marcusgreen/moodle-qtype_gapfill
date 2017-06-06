@@ -93,33 +93,37 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('select', 'answerdisplay', get_string('answerdisplay', 'qtype_gapfill'), $answerdisplaytypes);
         $mform->addHelpButton('answerdisplay', 'answerdisplay', 'qtype_gapfill');
 
-        /* use plain string matching instead of regular expressions */
-        $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
-        $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
-        $mform->setDefault('disableregex', $config->disableregex);
-
+       
         /* sets all gaps to the size of the largest gap, avoids giving clues to the correct answer */
         $mform->addElement('advcheckbox', 'fixedgapsize', get_string('fixedgapsize', 'qtype_gapfill'));
         $mform->setDefault('disableregex', $config->fixedgapsize);
         $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
 
-        /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
+              
+        /* put draggable answer options after the text. They don't have to be dragged as far, handy on small screens */
+        $mform->addElement('advcheckbox', 'optionsaftertext', get_string('optionsaftertext', 'qtype_gapfill'));
+        $mform->setDefault('optionsaftertext', $config->optionsaftertext);
+        $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
+        
+         /* use plain string matching instead of regular expressions */
+        $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
+        $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
+        $mform->setDefault('disableregex', $config->disableregex);
+        $mform->setAdvanced('disableregex');
+
+        
+         /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
         $mform->setAdvanced('noduplicates');
 
+        /* Makes marking case sensitive so Cat is not the same as cat */
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
         $mform->setDefault('casesensitive', $config->casesensitive);
-
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
 
-        $mform->addElement('advcheckbox', 'optionsaftertext', get_string('optionsaftertext', 'qtype_gapfill'));
-        $mform->setDefault('optionsaftertext', $config->optionsaftertext);
-        
 
-        $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
-        $mform->setAdvanced('optionsaftertext');
         
 // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
