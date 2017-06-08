@@ -43,9 +43,31 @@ class behat_qtype_gapfill extends behat_base {
     protected function drop_xpath($gapnumber) {
         return '//input[contains(@class, "droptarget ") and contains(@id, "_p' . $gapnumber . '")]';
     }
-
+    
+     /**
+     * Get the xpath for a given drag item.
+     * @param string $dragitem the text of the item to drag.
+     * @return string the xpath expression.
+     */
+    protected function drag_xpath($dragitem) {
+          return '//span[(contains(@class,"draggable ") and contains(text(),"' . $dragitem . '"))]';
+    }
+    
     /**
-     * Type some characters while focussed on a given gap.
+     *  Drag an answer option into a given gap.
+     *
+     * @param string $dragitem  a potential answer
+     * @param int $gapnumber the number of the gap to type into.
+     *
+     * @When I drag :dragitem into gap :gapnumber in the gapfill question                                                                                                                 
+     */                                                                                                                                                                         
+    public function i_drag_into_gap_in_the_gapfill_question($dragitem, $gapnumber) {
+        $generalcontext = behat_context_helper::get('behat_general');
+        $generalcontext->i_drag_and_i_drop_it_in($this->drag_xpath($dragitem),
+                'xpath_element', $this->drop_xpath($gapnumber), 'xpath_element');
+    }
+    /**
+     * Type some characters while focused on a given gap.
      *
      * @param string $gapresponse the text to enter into the gap
      * @param int $gapnumber the number of the gap to type into.

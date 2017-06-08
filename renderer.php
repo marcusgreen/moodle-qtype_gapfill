@@ -41,8 +41,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
         $output = "";
-        /* required for the mobile app */
-      
         $answeroptions = '';
         if ($question->answerdisplay == "dragdrop") {
             $answeroptions=html_writer::empty_tag('div', array('class' => ' answeroptions '));
@@ -73,6 +71,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $questiontext .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question', 'questiontext', $question->id);
         }
           if ($question->optionsaftertext == true) {
+              /* this is to communicate with the mobile app */
               $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
          }
         $output .= "<br/>";
@@ -85,7 +84,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
                                 => $output)), array('class' => 'validationerror'));
         }
-        //$output .= html_writer::empty_tag('/div');
         return $output;
     }
 
