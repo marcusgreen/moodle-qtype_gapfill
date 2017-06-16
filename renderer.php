@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -43,7 +43,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $output = "";
         $answeroptions = '';
         if ($question->answerdisplay == "dragdrop") {
-            $answeroptions=html_writer::empty_tag('div', array('class' => ' answeroptions '));
+            $answeroptions = html_writer::empty_tag('div', array('class' => ' answeroptions '));
             $potentialanswerid = 0;
             foreach ($this->allanswers as $potentialanswer) {
                 if (!preg_match($question->blankregex, trim($potentialanswer))) {
@@ -54,7 +54,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     }
 
                     /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
-                    $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++ . '" class= "' . $cssclasses . '">' .
+                    $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++
+                            . '" class= "' . $cssclasses . '">' .
                             $potentialanswer . "</span>&nbsp;";
                 }
             }
@@ -68,12 +69,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $questiontext .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question', 'questiontext', $question->id);
+            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
+                    $qa, 'question', 'questiontext', $question->id);
         }
-          if ($question->optionsaftertext == true) {
+        if ($question->optionsaftertext == true) {
               /* this is to communicate with the mobile app */
               $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
-         }
+        }
         $output .= "<br/>";
         if ($question->optionsaftertext == true) {
             $output .= $questiontext . $answeroptions;
@@ -158,7 +160,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, array('' => ''), $inputattributes) . ' ' . $aftergaptext;
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
+                    array('' => ''), $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */

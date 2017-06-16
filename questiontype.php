@@ -38,7 +38,7 @@ class qtype_gapfill extends question_type {
 
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex', 'fixedgapsize','optionsaftertext');
+            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext');
     }
 
     /**
@@ -276,8 +276,7 @@ class qtype_gapfill extends question_type {
             $options->optionsaftertext = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
-        
-   
+
         $options->delimitchars = $question->delimitchars;
         $options->answerdisplay = $question->answerdisplay;
         $options->casesensitive = $question->casesensitive;
