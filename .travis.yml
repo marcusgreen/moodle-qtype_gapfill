@@ -12,7 +12,6 @@ php:
 
 env: 
   - MOODLE_BRANCH=master DB=mysqli IGNORE_PATHS=jquery
-  - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=jquery
   
 
 before_install:
