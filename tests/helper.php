@@ -65,6 +65,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'noduplicates' => '1',
                     'disableregex' => $poptions['disableregex'],
                     'fixedgapsize' => '0',
+                    'optionaftertext' => '',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
@@ -96,7 +97,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'defaultmark' => '1.0000000',
                     'penalty' => '0.3333333',
                     'maxmark' => '1.00000',
-                    'optionaftertext' => '',
                     'options' => $options
         );
 
