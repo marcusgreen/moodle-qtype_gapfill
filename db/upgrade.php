@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $oldversion the version we are upgrading from.
  */
 function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
-    global $CFG, $DB;
+    global $DB;
 
     $dbman = $DB->get_manager();
     if ($oldversion < 2006082505) {
