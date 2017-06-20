@@ -96,6 +96,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'defaultmark' => '1.0000000',
                     'penalty' => '0.3333333',
                     'maxmark' => '1.00000',
+                    'optionaftertext' => '',
                     'options' => $options
         );
 
