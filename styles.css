@@ -59,12 +59,12 @@ incorrec answer was entered */
 /* styling the dropdowns*/
 .que.gapfill select{
     border:1px solid black;
-    border-radius: 3px;
     color:black;
     padding-bottom:1px;
     padding-top:1px;
     -moz-border-radius: 3px; 
-    -webkit-border-radius: 3px; 
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .gapfilltable td{
