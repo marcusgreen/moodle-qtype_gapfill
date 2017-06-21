@@ -32,7 +32,7 @@ install:
 script:
   - moodle-plugin-ci phplint
   - moodle-plugin-ci csslint
-   - moodle-plugin-ci jshint
+  - moodle-plugin-ci jshint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
