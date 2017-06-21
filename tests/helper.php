@@ -72,6 +72,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'partiallycorrectfeedbackformat' => '0',
                     'incorrectfeedback' => 'Incorrect Feedback',
                     'incorrectfeedbackformat' => '0',
+                    'optionsaftertext' => false,
                     'answers' => $answers,
         );
 
@@ -121,6 +122,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->displayanswers = '1';
         $question->casesensitive = '1';
         $question->gapcount = '2';
+        $question->optionsaftertext = false;
+
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
 
         $question->places[1] = $answers[0];
@@ -144,6 +147,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->options->shuffledanswers = "mat,cat";
         $question->options->wronganswers = "bat,dog";
         $question->shuffledanswers = "mat,cat,bat,dog";
+        
 
         $answers = new stdClass;
 
