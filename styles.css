@@ -1,8 +1,8 @@
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input[type=text]{
     background:white;
-    border-radius:4px;
     border:1px solid black;
+    border-radius:4px;
     color:black;
     margin-bottom:1px;
     margin-top:1px;
