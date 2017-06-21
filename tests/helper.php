@@ -147,7 +147,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->options->shuffledanswers = "mat,cat";
         $question->options->wronganswers = "bat,dog";
         $question->shuffledanswers = "mat,cat,bat,dog";
-        
 
         $answers = new stdClass;
 
@@ -161,8 +160,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
     }
 
     /**
-     * Gets the question data for a shortanswer questionwith just the correct
-     * ansewer 'frog', and no other answer matching.
+     * Gets the question data for a shortanswer question with just the correct
+     * answer 'frog', and no other answer matching.
      * @return stdClass
      */
     public function get_gapfill_question_data_catmat() {
