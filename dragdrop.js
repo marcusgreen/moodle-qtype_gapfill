@@ -23,6 +23,7 @@
  */
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 /*global $ */
+/*jshint unused:false*/
 $(function () {
     $(".draggable").draggable({
         revert: false,
@@ -40,7 +41,7 @@ $(function () {
 
     $(".droptarget").droppable({
         hoverClass: 'active',
-        drop: function (event, ui) {
+        drop: function (event,ui) {
             if ($(ui.draggable).hasClass('readonly')) {
                 return;
             }
