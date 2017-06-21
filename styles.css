@@ -29,7 +29,6 @@
 .que.gapfill span.draggable.answers{
     background:white;
     border:solid 1px;
-    box-shadow: 3px 3px 4px #000;
     cursor: pointer;
     display: inline-block;
     margin:1px;
@@ -43,6 +42,7 @@
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
     vertical-align: middle;
     -webkit-box-shadow: 3px 3px 4px #000;
+     box-shadow: 3px 3px 4px #000;
     z-index: 3;
 }
 
@@ -62,9 +62,9 @@ incorrec answer was entered */
 
 /* styling the dropdowns*/
 .que.gapfill select{
+    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     border:1px solid black;
     color:black;
-    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     padding-top:1px;
     padding-bottom:1px;
 }
