@@ -11,15 +11,15 @@
 
 /* glow a little around the border */
 .que.gapfill input.droptarget:hover {
-    -moz-box-shadow: 0px 0px 8px #7bc1f7;
-    -webkit-box-shadow: 0px 0px 8px #7bc1f7;
-    box-shadow: 0px 0px 8px #7bc1f7;
+    -moz-box-shadow: 0 0 8px #7bc1f7;
+    -webkit-box-shadow: 0 0 8px #7bc1f7;
+    box-shadow: 0 0 8px #7bc1f7;
 
 }
 .que.gapfill input.droptarget:focus {
-    -moz-box-shadow: 0px 0px 8px #7bc1f7;
-    -webkit-box-shadow: 0px 0px 8px #7bc1f7;
-     box-shadow: 0px 0px 8px #7bc1f7;
+    -moz-box-shadow: 0 0 8px #7bc1f7;
+    -webkit-box-shadow: 0 0 8px #7bc1f7;
+     box-shadow: 0 0 8px #7bc1f7;
 }
 
 .que.gapfill input.droptarget{
