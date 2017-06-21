@@ -1,12 +1,12 @@
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input[type=text]{
-    border:1px solid black;
-    padding:1px;
     background:white;
-    color:black;
     border-radius:4px;
+    border:1px solid black;
+    color:black;
     margin-top:1px;
     margin-bottom:1px;
+    padding:1px;  
 }
 
 /* glow a little around the border */
@@ -55,9 +55,9 @@
 /*Displays the correct answer in delimiters if an
 incorrec answer was entered */
 .que.gapfill span.aftergapfeedback {
+    color:green;
     font-style: italic;
     font-weight:bold;
-    color:green;
 }
 
 /* styling the dropdowns*/
