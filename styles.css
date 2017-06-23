@@ -58,7 +58,7 @@ incorrec answer was entered */
 
 /* styling the dropdowns*/
 .que.gapfill select{
-    border:1px solid black;
+    border: solid black thin;
     color:black;
     padding-bottom:1px;
     padding-top:1px;
