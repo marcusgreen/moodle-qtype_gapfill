@@ -8,7 +8,7 @@
     </category>
   </question>
 
-<!-- question: 2  -->
+<!-- question: 127  -->
   <question type="gapfill">
     <name>
       <text>Alternative_Delimiters</text>
@@ -31,6 +31,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>0</text>
       <feedback format="moodle_auto_format">
@@ -43,7 +44,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -65,7 +67,7 @@
     </hint>
   </question>
 
-<!-- question: 3  -->
+<!-- question: 128  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderDDrop</text>
@@ -88,6 +90,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>gold|silver|bronze</text>
       <feedback format="moodle_auto_format">
@@ -130,7 +133,8 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -152,7 +156,7 @@
     </hint>
   </question>
 
-<!-- question: 4  -->
+<!-- question: 129  -->
   <question type="gapfill">
     <name>
       <text>AnyOrderGapfill</text>
@@ -175,6 +179,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>gold|silver|bronze</text>
       <feedback format="moodle_auto_format">
@@ -199,7 +204,8 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -221,7 +227,7 @@
     </hint>
   </question>
 
-<!-- question: 5  -->
+<!-- question: 130  -->
   <question type="gapfill">
     <name>
       <text>CaseSensitive</text>
@@ -242,6 +248,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>Cat</text>
       <feedback format="moodle_auto_format">
@@ -260,7 +267,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -272,7 +280,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 6  -->
+<!-- question: 131  -->
   <question type="gapfill">
     <name>
       <text>Correct_empty_gaps with !!</text>
@@ -309,6 +317,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>dog</text>
       <feedback format="moodle_auto_format">
@@ -339,7 +348,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -351,7 +361,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 22  -->
+<!-- question: 132  -->
   <question type="gapfill">
     <name>
       <text>Crossword</text>
@@ -442,6 +452,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>T</text>
       <feedback format="moodle_auto_format">
@@ -538,7 +549,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="html">
       <text>Your answer is correct.</text>
     </correctfeedback>
@@ -550,7 +562,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 7  -->
+<!-- question: 133  -->
   <question type="gapfill">
     <name>
       <text>Disable RegEx for Math, HTML and Code questions</text>
@@ -578,6 +590,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>+</text>
       <feedback format="moodle_auto_format">
@@ -602,7 +615,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -624,7 +638,7 @@
     </hint>
   </question>
 
-<!-- question: 8  -->
+<!-- question: 134  -->
   <question type="gapfill">
     <name>
       <text>DragAndDrop</text>
@@ -633,13 +647,13 @@
       <text><![CDATA[<table border="0">
 <tbody>
 <tr>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAAA7CAIAAABNBbvxAAASNElEQVRogc2a91dT2b7A+TPufe/du3TePGec0VnO3Ln3Wq4NsYyOiFhHitLGURHREaUpCjasVAuEYhCUpmKkSQokJIEkJCE9pLeTftJOens/HG+GhxHRwXl+116LlbXCPt/P/tb9PYkJfwSx2WwCPp/L5Xo8no+x/9skZt53hCCIw2SAOq3T4ZDJZPO+/ywyzzChUGgEh1Py2DYd4IEcAAA4nc75fcQsMp8wwWBwkslkEfFaAQdUKVwW0Gq16PX6eXzE7DKfMAaDgYwdEhKHAc6kSSZ2mAx2q0Wn0wUCgXl8yiwyDzDBYNAJOQRc9gj6FX3wpQiPUTFpBrEQ9jStVvuHedqHw4RCIZfLBajkmOfItlu59Zez+5+0TqK6+dgBBY2s5XNAlcJtt2k0agiC5lHjWeQDYXRaYAw32Nf5qOXWmeoTmx8U7D57IovU3kLvbuMNoqRjBA2bYZKJnWbTlECgVCrnV+m3yfvBhEIhEDQPD6Cunjh4cte6msKM2lM/VmbHVhamlZcUEpvvUTuQ7N7nolGsiknTiwQaEX/oWTN6AOX3+z8SwHR5DxiXy0UnE66eTM9YtzhlxcKi5I338/dWZsfW5G75JWlrW8V1/IOK8daGyZ4OIXZQSiHyiNiWG7nVORtftlaLRKI/oIDOCUav14uFvGfIB2cObE5eviB5+YK0NYtundxfk7u5Mjv27pmd+3asb712cbj2JunhfXp3G3sQReppbbl2tDI7tjI7tvlShslkAgDgY6e1GKvVSqPR+nue9vd0U8hEQKP2eb2BQCAUCvn9foNO++p5++2zv+TuWpsZuwQmSV6+IH3dl/fPZ8C6VuXt3p2wCVlWhK28SmyopbQ/7G+uaDiXVHU8rjI7tup4XF3hvqHBfsr4WAsSSSKRAADw+/2hUGj+YSQSicFguJCbFbf4T1u++UvqlhWlp48+qr87ikOjOlpP/7QpZeVnEYbk5QsOrVn086ZlaWsWXTmaeDcvofL4hhu5ibt2/lh7Iaf/dimurvJ5bendk1urcuLu5e2oOZ1YefqnC5kJv2z57lzWrvobF9oeNrzo6RkfHzcYDC6Xa55hhEKh2+3G9L9M2bw8bvGf4LV12YKDP6wqyNqfu2fDdJhDqxddPrrrXnH6mf1xmbFLLh3e+eBc6t2ipMt5GZWn4pEXs7rvXqk8e/DasR3XjiWUZW7LPxCXtWHp9LPI27+x7talF8+fGQwGtVqt1+vn0UQxXC7X6XTabDYyduja2RM7ly/e9PV/wEjbvl34c0LsiV3rIzxZcUuR1080Fu1qKjucs33lodWLjm759kJm/P3SnLrSY1eP7zsRvzxrw9KM9V+lr1ucuuq/p2NEVkbskporxWQy2efzgSAokUicTue8IMWw2WybzWa32YxKmZROQTXXlRxOyvhh1bZvP4ORDm5ZlbsnLm3NouTlC37ds7blaiYiP76hcGddyc9Ht34fVd13rpz4ld2dHXAx9fv9SqVSq9X+fq+L4XA4ZrPZbNADIoGUSuYMviQ/bkZVXb996vBP6/8G8xz6YdXZ1O1pa7+8e/5IQ1Ei4mI6oiCx8fz+W6eT09Z+8WE87a1ILpcb0cNisUglEpGQ/3tMFKNSqSQSiV6tVnJZQuLw5MunZOQD9J3LvVeKnlw8W5adlrhi8aYl/3lkzw9VF8+0lh9D5Mcjy4+3XT+GyI9HXkorTNkCK1eQsXtGqnhzpaxYmLLys4OrPs9L2nq5rJTBYMCqB4NBnRaovlx4/czPFALW43F/IAwEQXw+TzElFE9QuNhB2tPHhPrqwesXekvP9paexdXcaL5RdnT3hsu5yc3XchoKdyLy45EXD7RUnEcU7EDkxzddPnx487Lk5QsqSwvykre9DSMj7pukDd8lb/7noe2r0xM3rln198zMdCaTabFYwuGwWim/c/7krwc2/Xpg04Vf9vQ/e2K1Wj/ARDGhUEguk/GZdAGJMDmIGn+CHL57e+Da+VcVV4bqqwcR5Z1VBY1l6Y3n9iDy4+HVWJTYef8isiwVkR/fWLzneu6B5OULLuemHzu4N2P9VzOtsfKznD1xmUm74uO3fv31F//11z//5a9/XrZsSVlpCZlM1mg04XCYzaBWXcrv7Xr0uL66MCOx9Oh+VDsSBM3vDRMOh9VqNYc+wR5GT6C6iS0ITO3NwfqK57XFyIupTef3IQoSIhiR1YMo66jKQxTsQBTsuF+UlBO/ouDgjm2b1hzbsWoGzLGday4XnspOXJe+8dujuzdl7ovPPvBjxpbvzx7cjh56BcO43S6L2eTz+VwuJ4NCrrlaWHY8pQtZZ7fZ3hsGAAA8up+O7h/vbiM03huqvdl+J+9NgOmr7cax5w1X22/lNBQmPCxNKT++N//QjoTtm4/E/2s6SerKzzNil0aNpdzENf0vUTDMDPH7/XwuGzuA4nG5Vqt17k1QTDgc1uv1L5quv2pvHutqwz2oelV352FpyuwwiMKEjsrTqMcP2itONRTufFR57nHDveLTOb9s/ft0jbO2r07d/M/UVf/zJkxx2g4sBh0VZjqVTqeDa+tcYfx+/6sn1c1lGb0Pa4ldrR01r4N79tVQmPDkZvaLxqudNYWTxEGHw8GgkApSf3xtk1WfnzqwNXHdPw6uXfwmSdbGbwafd/B4vNlhwuFwMBj0er1ms1mj0bwzJbzumsfwrxAFCY1Fux+WpTcURgmSt62WstT2uyWMcYLf7w8EAkPPHmfFLU3916IzhxKO7P0hbfWiN0ky1y9pr69yu918Pt9s/j9RHgwGozpVKBQyGAxWq3VOMBwOu7Fo19wZZpgI1XQNslvD4bBKLiv5eXdq3N/SEuLS1n6ZsmLhodWLUlYsjJCkrf2isviEWiEDQZBOpweDwYgqfr9frX7rHdvpdOr1+tnj5zUMi0mLmrXmuNquZoh4k/DRolFP07f848i+rZkblj66d3uciB/s6bx/pfBO4dG68mI06qlWo3K73UQi0eFwRA7e4/GIxWIIgoLB4HTC6cYhkUizB89rGBoROyeYgoSmkn0tpSnNF5Pqi/fXF+9/XTrP72NRifBWEAQ9RT44d3jfyd3rp4SCiCoRFV0uF4VC0Wq18Eefz2cwGBQKRSAQ8Pv9VqvVaDRG5RkbG6PRaEaj8W2N6WsY6iim+VJ6w/kDM5AainY1lWbW5ic/KMtuKEm5fz6l5Pi+5ITY9cuXrvzuyw2rvrt5JhmRH99VlWfUqeGtAoGAUCgQsOj4QVRUnxGJRDweD76fGQwGlUplsVj8fr/FYlGr1QaD4W2jqfHxcblcrtVqlUpl1O+8hqHTKPeKM25k779zKrW+YDdshPrCvTVnUgsTvr+ds/fhpTREwc76/ISaX7ffytlyI2f7jZOJt0/tbC4/jriY3ttyG4J+8xm9Xm80GqMOMSAIGh8fV6lUIAiKxWIQBL1er9vtViqVer3e7XbPEhVsNpvD4TidTq/XK5VKrVbrDAO+hgFBsOZCTsWJhJKkDdcO76jN23P3zP4LKZtOb/66PGtb48WDb7pc0/m9rdePdNUUPLlzCt/X5nb/1h16PB61Wh2ZYASDQYfDAYIgCIJMJnNwcJDP58PXGKvVqlarJycnNRqN2WzW6XTT95khoVCov79fr9d7PJ5gMKjVag0Gw3Se3wYa3e2ttUVplXlJOWsX5m1b9uvmr8/tXVOdtw9RvP/NitleXTiGeS4VsjVqJZ9BUkiFcOACKhWDMDLW/7Kv44kOAOCdvV6vTqcTi8Uymayzs5PL5YrF4tHRUQKBQKVShUIhCIIWi8Vqtfp8vreRwKJWq/F4vMPh8Pv9KpVKq9VGh1EoFJ2PW5vu3b6Sk5q36atLGdsQ5w7UR8sKbbdOSqZ4JpPJbre7XC6PxwMHgGxKgHnUiLl3e6DqOqnvhevfbh0KhTQajUwme/HiRXV1dU9PDxqNlsvlOp3ObDZDEOTxeDweD3wZkUqltre3ZH6/n0AgKJVKgUBgt9uju1k4HHY4HKMEAg6DeYKsR1w9gTj3hkH+vbobyhUKucFgAEEQ5vF6vYFAQC2XUYb6e6tv9ldeEzJp0x9jt9u5XG5LS8vExASbzRYIBHw+XyQSTU1NyeVylUqlVqvfaZbIoQ8PD0d98/MbTDAY5PP5WAxmGINpb6ptuJKNKJxZRptKDrRW5I8M9cIXXZjHbDbDQQm3HgrRFKrhnkzAn/4Yp9NJoVAwGAybzWaxWAKBQC6X6/V6m80GB8BcMGCRyWSvXr2K1KjoMOFw2Ov1kslkLAYzMowbwWG6Hzc/qixqKj3UWJL06GZOZ1MFmYDjcdgikUghl6tUKoVCwWAwOByOzWaDeQKBQDAY5LBYAj4f9kCPx8NisTo6Onp7e0dGRqhUqlgsht3daDRardbIQcwRxmq1ymSyqKly5kTT7XZTqVT00NAwFksiEvF4fN/Lnj7UUzwePzk5yeFw+Hw+j8sdGBgYGBjo6enp7OxkMpk6nQ7m8Xg8NptNoVDY7XbYeQQCAQaDYbFYIAiGQiGz2Uyn0+VyuVqthmPGZrO5XK73GgtqNJqo048o41m4Rxojk/t6ewl4PJlMplAoExMTDAYDg8Egkci6urqenh4kEnnr1q3W1lYOhwMnVpPJJBKJZDIZBEGwZvBW0x/s9/uFQiGXw1EqlQAAwI7qcDhmrzAzBO4S5gQTearNZmOz2SQSCYPBNDc3l5eXV1RUdHd14bDY9vZ2NBpNpVIJBEJ7e3tXV9fo6CiVStVoNHa7HfYut9ut0WgsFsuMI/f7/VNTUwwGQyKRqFQq2NkgCPJ6vXM0TigUkkgkUWC8Xq/JZJpxeE6nEwRBk8lkMpn0er1SqUQPDdXX1bU/eYJEIpubmvr6+kgkkkwmMxqNKpUKgiAAACQSiUwmk8vlGo1Go9HMsMkMcbvdYrFYIBAoFIoPcLboMD6fz2q1AgCgUCiUSiWsisFggKsYfGY2m43JYDx+/PjmjRtNDQ2tra1oNJrFYrHZbKVSGUkscJtoNpstFssch5QQBDEYDL1eD4IgXHDm6GzRYeA/8K0I7lvhjBQMBt1ut8VikUgkAABotVo6nY5Go9va2np6eggEAplM5vP5cywOswidTler1Uaj0WKxwM42l8w2GwwsbrcbjmPYuzQajdFodDgcXC6XxWLJ5XKv1/s7VX9TdDodl8tVKpWRlsLn873Tqm+F8fl8cLsBX01tNpvNZoMzEgAAJBJJoVB8vDfGcL7m8Xg6nc5iscD5453GebebRc4D7nMZDAaTyXS73R/jxdAMMRqNfD4fjtW5lFEAAPR6vcvlmh5jUVIznGcmJibeOTqZX4Ez4fTMNsuXQ6EQCIJCoZDH40UcZyaMXq8nk8lSqfQPe3kfEafTyeFwImV09swWCoXgDsNgMMDvraxWa0w4HA4EAi6XS6vVUqlUOp3+x/jVm+J2uzkcTqRni1pGnU6nWCyWy+Visdjj8WiUiuGXPRqlAp6HxEAQJBaLGQwGl8s1m83v1cDOrygUCtbk5Cw9m8PhUCgU08NJp1HThzGEPpRMLBKJRDFCoVChUHzYK4R5FKlUymQwxGIx3LPBZdThcLhcLgAApFKpRCKRSSUul8uoBWijI5Gbn9fjkYlFVDKJzWbHBIPB/1+McDgMguAEjcblcuHrmlQqhZ3NaDTyeDytVhsIBDwuF59JgexWmwXEoXq4k8zIv/t8Pi6HQ6PR5v+XgB8gXq9XKBBQKRQ6nU4mkahUKpPJlMvlcKVmT9B0ABAMBAh9T8U8ZjgcdkIQHofTqFSRHSAI4vP5nwRMOByGIAiHww3jcBwORyAQcLlcCmVMKBSYTCbss64x/HAwGNRrlBza61Gj3W4njoxELgJ+v18ul38qMDKZjEgkjgwPE/H4YRxOKpVMUClKpcJoNI72v8T29/p8vmAw6J02iPL5fE6n0+l02u12+Lr2qcDw+Xw6nU7C4/vaHvW/RImmpoj4EZlMptPp8L0vMM+f2u326T2b3W4HAADugOFWIPwxfj37YcLj8WhUKroX1XG/hjxKmJqaYtCo4qkpAABoxFF0dwefx/N4PE6nE85sBoMhcp+NyKcCY7fbR0ZG+rvamytvMugTAj5/ampKJpXCYxMOmz1GJguFQqVSGQqF3pZ+PxWYcDgslUpfdHY8bWtlMBg8LlcoFIpEIg6HAzMYDIZ33p0+IZhAIKBSKsfIZBwOh8ViCQQCjUZTqVRz/9Xd/wL6rhAlywwN8QAAAABJRU5ErkJggg==" alt="" /></td>
+<td><img src="data:image/png;base64,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" alt=""></td>
 <td><span style="font-size: medium;">The complete phrase is "The cat sat on the mat". This question has been created simply by surrounding the "missing" words with square braces like this</span></td>
 </tr>
 </tbody>
 </table>
 <p><span style="font-size: medium;">The [cat] sat on the [mat]</span></p>
-<p><span style="font-size: medium;">Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser. Note the draggable clues are shuffled each time a new quiz session starts.<br /></span></p>
+<p><span style="font-size: medium;">Although this is a "drag and drop" version, you can simply type into the fields, which may be useful when using a mobile browser. Note the draggable clues are shuffled each time a new quiz session starts. The Options after text option has been checked so the draggable option answers appear after the text.<br></span></p>
 <p><span style="font-size: medium;">Drag the correct words into the gaps.</span></p>
 <p><span style="font-size: medium;">The {cat} sat on the {mat}</span></p>]]></text>
     </questiontext>
@@ -655,6 +669,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>1</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -697,7 +712,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>1</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -719,7 +735,7 @@
     </hint>
   </question>
 
-<!-- question: 9  -->
+<!-- question: 135  -->
   <question type="gapfill">
     <name>
       <text>DropDownMathSymbols</text>
@@ -745,6 +761,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[&gt;]]></text>
       <feedback format="moodle_auto_format">
@@ -793,7 +810,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -805,7 +823,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 10  -->
+<!-- question: 136  -->
   <question type="gapfill">
     <name>
       <text>DropDowns</text>
@@ -839,6 +857,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -869,7 +888,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -889,7 +909,7 @@
     </hint>
   </question>
 
-<!-- question: 11  -->
+<!-- question: 137  -->
   <question type="gapfill">
     <name>
       <text>Fixed Gapsize</text>
@@ -910,6 +930,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>kangaroo</text>
       <feedback format="moodle_auto_format">
@@ -940,7 +961,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -952,7 +974,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 12  -->
+<!-- question: 138  -->
   <question type="gapfill">
     <name>
       <text>Gapfill (no prompts)</text>
@@ -974,6 +996,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>cat</text>
       <feedback format="moodle_auto_format">
@@ -992,7 +1015,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1014,7 +1038,7 @@
     </hint>
   </question>
 
-<!-- question: 13  -->
+<!-- question: 139  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesHorizontal</text>
@@ -1044,6 +1068,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>tiger|lion</text>
       <feedback format="moodle_auto_format">
@@ -1086,7 +1111,8 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1098,7 +1124,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 14  -->
+<!-- question: 140  -->
   <question type="gapfill">
     <name>
       <text>GroupTablesVertical</text>
@@ -1132,6 +1158,7 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>tiger|lion</text>
       <feedback format="moodle_auto_format">
@@ -1180,7 +1207,8 @@
     <noduplicates>1</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1202,7 +1230,7 @@
     </hint>
   </question>
 
-<!-- question: 15  -->
+<!-- question: 141  -->
   <question type="gapfill">
     <name>
       <text>Images in tables (fruit)</text>
@@ -1235,6 +1263,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>apple</text>
       <feedback format="moodle_auto_format">
@@ -1265,7 +1294,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>1</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1277,7 +1307,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 16  -->
+<!-- question: 142  -->
   <question type="gapfill">
     <name>
       <text>Maths Operators</text>
@@ -1302,6 +1332,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[&gt;]]></text>
       <feedback format="moodle_auto_format">
@@ -1368,7 +1399,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1380,7 +1412,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 17  -->
+<!-- question: 143  -->
   <question type="gapfill">
     <name>
       <text>Multi Word Answers</text>
@@ -1402,6 +1434,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>black cat</text>
       <feedback format="moodle_auto_format">
@@ -1420,7 +1453,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1432,7 +1466,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 18  -->
+<!-- question: 144  -->
   <question type="gapfill">
     <name>
       <text>Other scripts and accents</text>
@@ -1454,6 +1488,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>Россия</text>
       <feedback format="moodle_auto_format">
@@ -1484,7 +1519,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="html">
       <text><![CDATA[<p>Your answer is correct.</p>]]></text>
     </correctfeedback>
@@ -1496,7 +1532,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 19  -->
+<!-- question: 145  -->
   <question type="gapfill">
     <name>
       <text>RegularExpressions</text>
@@ -1530,6 +1566,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>colou?rs?</text>
       <feedback format="moodle_auto_format">
@@ -1560,7 +1597,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1572,7 +1610,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 20  -->
+<!-- question: 146  -->
   <question type="gapfill">
     <name>
       <text>Troubleshooting</text>
@@ -1593,6 +1631,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text><![CDATA[<span>work</span>]]></text>
       <feedback format="moodle_auto_format">
@@ -1605,7 +1644,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>0</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
@@ -1617,7 +1657,7 @@
     </incorrectfeedback>
   </question>
 
-<!-- question: 21  -->
+<!-- question: 147  -->
   <question type="gapfill">
     <name>
       <text>UsingCommas</text>
@@ -1648,6 +1688,7 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>0</optionsaftertext>
     <answer fraction="100" format="moodle_auto_format">
       <text>blue, white, red</text>
       <feedback format="moodle_auto_format">
@@ -1672,7 +1713,8 @@
     <noduplicates>0</noduplicates>
     <disableregex>1</disableregex>
     <fixedgapsize>0</fixedgapsize>
-    <!-- Gapfill release:1.93 version:2017013100 Moodle version:2016112900 release:3.2rc4 (Build: 20161129) -->
+    <optionsaftertext>0</optionsaftertext>
+    <!-- Gapfill release:1.95 version:2017062601 Moodle version:2016052302.09 release:3.1.2+ (Build: 20161020) -->
     <correctfeedback format="moodle_auto_format">
       <text></text>
     </correctfeedback>
