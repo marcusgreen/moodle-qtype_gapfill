@@ -1,5 +1,5 @@
 ### Version 1.95 of the Moodle Gapfill question type June 2017
-New setting optionsaftertext can be to show the draggable options after the text. Thanks to Eltan LaClare for the inspiration to do this.
+New setting optionsaftertext can be to show the draggable options after the text. Thanks to Elton LaClare for the inspiration to do this.
 Fixed a bug where if there were multiple questions on a single page the draggables would
 become disabled after the first submit. Added behat featurefile add_quiz to test in 
 quiz rather than just in preview mode. Added dragging of selections (previously it was
