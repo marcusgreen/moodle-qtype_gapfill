@@ -1,12 +1,12 @@
-###Version 1.95 of the Moodle Gapfill question type April 2017
-New setting optionsaftertext can be to show the draggable options after the text.
+### Version 1.95 of the Moodle Gapfill question type June 2017
+New setting optionsaftertext can be to show the draggable options after the text. Thanks to Eltan LaClare for the inspiration to do this.
 Fixed a bug where if there were multiple questions on a single page the draggables would
 become disabled after the first submit. Added behat featurefile add_quiz to test in 
 quiz rather than just in preview mode. Added dragging of selections (previously it was
 only type in). Configured up .travis.yml so testing is run every time there is a 
 git commit. Made code tweaks to comply with results (e.g. csslint)
 
-###Version 1.94 of the Moodle Gapfill question type February 2017
+### Version 1.94 of the Moodle Gapfill question type February 2017
 This is a minor release with a css fix and improvements to the mobile app code.
 Thanks to Chris Kenniburg for the CSS fix to remove the comma before focus. Added
 fix to renderer.php so select element list shows down arrows on android mobile.
@@ -15,21 +15,21 @@ In the mobile app answer option selection is more obvious. For dragdrop
 questions there is now a prompt that says "Tap to select then tap to drop" as with
 the core question types. Thanks to Elton LaClare for the mobile app feedback.
 
-###Version 1.93 of the Moodle Gapfill question type February 2017
+### Version 1.93 of the Moodle Gapfill question type February 2017
 This release was made possible through the support of Sojo University Japan. 
 http://www.sojo-u.ac.jp/en/ . Many thanks to Elton LaClare and Rob Hirschel.
 
 Added remote addon support for the Moodle mobile app. CSS to give indication of onfocus in text imput boxes, subtle change in 
 background color on hover over draggables. Other CSS tweaks to size of input and draggables. Fixed #25 on github
 
-###Version 1.92 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.92 of the Moodle Gapfill question type contributed by Marcus Green
 CSS to improve dropdowns on chrome mobile, discard gaps in wrong answers which improves display in feedback for dropdowns.
 Removed setting of height in em in styles.css which was breaking the display on iOS. 
 
-###Version 1.91 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.91 of the Moodle Gapfill question type contributed by Marcus Green
 [.+] will make any text a valid answer and if left empty will not show the .+ as aftergap feedbak
 
-###Version 1.9 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.9 of the Moodle Gapfill question type contributed by Marcus Green
 
 In the admin interface there is now a link for importing the sample questions into a course.
 This is a convenience way of doing a standard XML file question import.
@@ -41,7 +41,7 @@ Mariapaola Cirelli, Ellen Spertus and others
 Fixed issue where in interactive mode an incorrect answer would show empty braces (typically [])
 where the answer in braces would have been shown in other modes.
 
-###Version 1.8 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.8 of the Moodle Gapfill question type contributed by Marcus Green
 Fixed a bug by adding checking for initialisation of array values. Discussed here
 https://moodle.org/mod/forum/discuss.php?d=314487#p1274939. Thanks to Ellen Spertus, 
 Al Rachels and others for the feedback on this.
@@ -57,7 +57,7 @@ when regular expression processing is turned off. This is handy for programming 
 and math questions that use characters treated as special such as \/?* etc.
 
 
-###Version 1.7 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.7 of the Moodle Gapfill question type contributed by Marcus Green
 This is maintenance version with no new features. The main purpose of this version is
 to ensure the question type will work with Moodle 2.9. This is required because the
 JQuery code in the previous version of Gapfill would not work with 2.9. The versions
@@ -70,7 +70,7 @@ tolower was used which would not work correctly with text containing accents.
 This has been changed to use mb_lower. Another issue was that a gap like 
 [cat|dog] would match bigcat and catty and adog and doggy. This is now fixed.
 
-###Version 1.6 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.6 of the Moodle Gapfill question type contributed by Marcus Green
 When fixed gapsize the width of a gap such as [cat|tiger] will be the width of tiger not cat|tiger, i.e. 5 not 9
 
 When display right answer is selected in the quiz settings the correct answer will be displayed within the question delimiters.
@@ -79,7 +79,7 @@ Thanks to Gordon McLeod of Glasgow University for inspiring this feature.
 
 When using deferred feedback zero marks were given overall when any gaps were blank. This is now fixed
 
-###Version 1.5 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.5 of the Moodle Gapfill question type contributed by Marcus Green
 This version has two significant new feature is the double knot or !! and the fixedgapsize setting. 
 The use of !! indicates that a gap can be left empty and considered a correct response.
 
@@ -92,7 +92,7 @@ The fixedgapsize settings makes all gaps the same size as the biggest. This stop
 
 The upgrade.php file has been tweaked to use XMLDB to fix issues with databases other than MySQL.
 
-###Version 1.4 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.4 of the Moodle Gapfill question type contributed by Marcus Green
 This release has one bug fix and one new feature. The new feature is support for drag and drop
 on touch enabled devices such as iphone, ipad and android. This is by adding in the JQuery touchpunch library into
 the renderer.php file. Many thanks to Adam Wojtkiewicz who suggested and tested this solution. 
@@ -106,7 +106,7 @@ The elevator pitch for this question type is as follows
 the missing words."
 
 
-###Version 1.3 of the Moodle Gapfill question type contributed by Marcus Green
+### Version 1.3 of the Moodle Gapfill question type contributed by Marcus Green
 The main new feature is disableregex which switches from regular expressions for 
 matching the given answer with the stored answer to do a plain string comparison. This
 can be useful for maths, HTML and programming questions. In this mode the characters that have a
