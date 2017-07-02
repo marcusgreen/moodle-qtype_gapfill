@@ -75,7 +75,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $table = new xmldb_table('question_gapfill');
         $dbman->add_field($table, $field);
     }
-    if ($oldversion < 2017062601) {
+      if (!$dbman->field_exists('question_gapfill', 'optionsaftertext')) {
         $field = new xmldb_field('optionsaftertext', XMLDB_TYPE_INTEGER, '1', null, true, null, 0, 'fixedgapsize');
         $table = new xmldb_table('question_gapfill');
         $dbman->add_field($table, $field);
