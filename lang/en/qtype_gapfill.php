@@ -25,7 +25,7 @@
  * @subpackage gapfill
  */
 defined('MOODLE_INTERNAL') || die();
-
+$string['additemsettings'] = 'Add Gap settings';
 $string['casesensitive'] = 'Case Sensitive';
 $string['casesensitive_help'] = 'When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
 $string['casesensitive_text'] = 'An answer of CAT will will be treated as different to cat';
@@ -61,6 +61,8 @@ $string['fixedgapsize'] = 'Fixed Gap Size';
 $string['fixedgapsize_help'] = 'When attempting the question all gaps will be set to the same size as the largest gap. This removes gap size as a clue to the correct answer, e.g. if the gaps are [red] and [yellow] it would be clear that the yellow went in the biggest gap';
 $string['fixedgapsizeset_text'] = 'Sets the size of every gap to that of the biggest gap';
 $string['delimitset'] = 'Delimit Chars';
+$string['itemsettingsbutton'] = 'Gap settings';
+$string['itemsettingserror'] = 'Generic error for items settings please replace';
 $string['moreoptions'] = 'More Options.';
 $string['blank'] = 'blank';
 $string['optionsaftertext'] = 'Options after text';

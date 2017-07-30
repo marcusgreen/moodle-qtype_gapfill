@@ -16,8 +16,7 @@
 
 /**
  * The editing form code for this question type.
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_gapfill
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -43,8 +42,37 @@ class qtype_gapfill_edit_form extends question_edit_form {
      * @param object $mform the form being built.
      */
     protected function definition_inner($mform) {
+        global $PAGE;
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('ui-css');
+       // $PAGE->requires->jquery_plugin('serialize-object', 'qtype_gapfill');
+        $PAGE->requires->strings_for_js(array('itemsettingserror','additemsettings','selected','notselected'), 'qtype_wordselect');
+        $PAGE->requires->js('/question/type/gapfill/questionedit.js');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
+       
+        $mform->removeelement('questiontext');
+        //$mform->removeelement('generalfeedback');
+        
+        /* popup for entering feedback for individual words */
+        $mform->addElement('html', '<div id="id_gap_settings_popup" title="'.get_string('additemsettings','qtype_gapfill').'" style="display:none;background-color:lightgrey" >');
+             
+        $mform->addElement('editor', 'selected', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+        $mform->addElement('editor', 'notselected', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+                
+        $mform->addElement('html', '</div>');
+        
+         /* presented for clicking on the gaps once they have been given numberical ids */
+        $mform->addElement('html', '<div id="id_questiontextfeedback" style="display:none;background-color:lightgrey" ></div>');
+
+        $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
+        $mform->setType('questiontext', PARAM_RAW);
+        $mform->addHelpButton('questiontext', 'questiontext', 'qtype_wordselect');
+         
+         $mform->addElement('button', 'itemsettings', get_string('itemsettingsbutton','qtype_gapfill'));
+        //$mform->addHelpButton('wordfeedback', 'feedback_button', 'qtype_wordselect');
+        
         $mform->removeelement('generalfeedback');
 
         // Default mark will be set to 1 * number of fields.
