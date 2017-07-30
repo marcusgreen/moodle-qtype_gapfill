@@ -33,6 +33,9 @@ $string['noduplicates'] = 'No Duplicates';
 $string['noduplicates_help'] = 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
 
 
+$string['correct'] = 'Feedback for correct.';
+$string['notcorrect'] = 'Feedback for incorrect.';
+
 $string['delimitchars'] = 'Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
@@ -83,3 +86,4 @@ $string['courseshortname'] = 'Course Shortname';
 $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions';
 $string['courseshortname_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the file example_questions.xml in the gapfill question type folder.';
 $string['importexamples'] = "Import Examples";
+

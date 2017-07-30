@@ -23,10 +23,10 @@
 
 
 /* the data is stored in a hidden field */
-var feedbackdata = ($("[name='wordfeedbackdata']").val());
+var feedbackdata = ($("[name='itemsettings_data']").val());
 var feedback = new Array();
 if (feedbackdata > "") {
-    var obj = JSON.parse(feedbackdata);
+    var obj = JSON.parse(settingsdata);
     for (var o in obj) {
         feedback.push(obj[o]);
     }
@@ -35,7 +35,7 @@ var itemkey = 0;
 
 /**
  * @param {object} item
- * @returns {Array|itemfeedback}
+ * @returns {Array|settingsdata}
  */
 function get_feedback(item) {
     itemfeedback = new Array();
@@ -57,21 +57,21 @@ function add_or_update(item) {
     for (var fb in feedback) {
         if (feedback[fb].word == item.text) {
             if (feedback[fb].offset == item.offset) {
-                feedback[fb].selected = $("#id_selectededitable").html();
-                feedback[fb].notselected = $("#id_notselectededitable").html();
+                feedback[fb].selected = $("#id_correcteditable").html();
+                feedback[fb].notselected = $("#id_notcorrecteditable").html();
                 found = true;
             }
         }
     }
     if (found == false) {
         /* if there is no record for this word add one 
-         * a combination of wordtext and offset will be unique*/
+         * a combination of text and offset will be unique*/
         itemkey++;
         var itemfeedback = {
             id: 'id' + itemkey,
             question: $("input[name=id]").val(),
-            selected: $("#id_selectededitable").html(),
-            notselected: $("#id_notselectededitable").html(),
+            selected: $("#id_corecteditable").html(),
+            notselected: $("#id_incorrecteditable").html(),
             word: item.text,
             offset: item.offset
         };
@@ -82,7 +82,7 @@ function add_or_update(item) {
 
 
 /* a click on the button */
-$("#id_itemsettings").on("click", function () {
+$("#id_itemsettings_button").on("click", function () {
     var atto_islive = ($(".editor_atto")).length;
     /* show error if Atto is not loaded. It might be because the page has not finished loading
      * or because plain text elements are being used or (perhaps less likely as time goes on)
@@ -101,7 +101,7 @@ $("#id_itemsettings").on("click", function () {
         var fbwidth = $("#id_questiontexteditable").css("width");
         $("#id_questiontexteditable").css("display", 'none');
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
-        $("#id_questiontextfeedback").css({
+        $("#id_itemsettings_canvas").css({
             position: "absolute",
             width: "100%",
             height: "100%",
@@ -115,23 +115,23 @@ $("#id_itemsettings").on("click", function () {
          $("id_questiontextfeedback").css('line-height','17.5pt');*/
 
         /* Copy the real html to the feedback editing html */
-        $("#id_questiontextfeedback").html($("#id_questiontexteditable").prop("innerHTML"));
-        wrapContent($("#id_questiontextfeedback")[0]);
-        $("#id_questiontextfeedback").css({height: fbheight, width: fbwidth});
-        $("#id_questiontextfeedback").addClass("editor_atto_content");
-        $("#id_gapfeedback").attr('value', 'Edit Question Text');
+        $("#id_itemsettings_canvas").html($("#id_questiontexteditable").prop("innerHTML"));
+        wrapContent($("#id_itemsettings_canvas")[0]);
+        $("#id_itemsettings_canvas").css({height: fbheight, width: fbwidth});
+        $("#id_itemsettings_canvas").addClass("editor_atto_content");
+        $("#id_itemsettings_button").html('Edit Question Text');
     } else {
         $("#id_questiontexteditable").css({display: "block", backgroundColor: "white"});
         $("#id_questiontexteditable").attr('contenteditable', 'true');
-        $("#id_questiontextfeedback").css("display", "none");
+        $("#id_itemsettings_canvas").css("display", "none");
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
         $("#id_feedback_popup").css("display", "none");
-        $("#id_gapfeedback").attr('value', 'Add Word Feedback');
+        $("#id_itemsettings_button").html('Add Gap Settings');
     }
 });
 
 /*A click on the text */
-$("#id_questiontextfeedback").on("click", function (e) {
+$("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
         var item = get_selected_item(e, delimitchars);
@@ -144,16 +144,16 @@ $("#id_questiontextfeedback").on("click", function (e) {
                 $("#id_selectededitable").html(itemfeedback[0].selected);
                 $("#id_notselectededitable").html(itemfeedback[0].notselected);
             }
-            $("label[for*='id_selected']").text(M.util.get_string("selected", "qtype_wordselect"));
-            $("label[for*='id_notselected']").text(M.util.get_string("notselected", "qtype_wordselect"));
-            var title = M.util.get_string("additemfeedback", "qtype_wordselect");
+            $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
+            $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
+            var title = M.util.get_string("additemsettings", "qtype_gapfill");
             title += ': ' + item.text;
-            var $popup = $("#id_feedback_popup");
+            var $popup = $("#id_itemsettings_popup");
             $popup.dialog({
                 position: {
                     my: 'right',
                     at: 'right',
-                    of: "#id_questiontextfeedback"
+                    of: "#id_itemsettings_canvas"
                 },
                 height: 500,
                 width: "70%",
@@ -206,32 +206,26 @@ function get_new_item() {
 
 /**
  * 
- * @param {string} event
- * @param {string} delimitchars
+ * @param {string} sel
+ * @returns {item}
  */
-function get_selected_item(event, delimitchars) {
-
-    item=get_new_item();
-    /* First get the selected string ignoring
-     * if there are delimiters embedded, e.g. if
-     * it ends with ]. (the end of a sentence)
-     */
-    item.text = event.target.innerText;
-
+function get_selected_item(e, delimitchars) {
+    /*l and r for left and right */
+    var l = delimitchars.substr(0, 1);
+    var r = delimitchars.substr(1, 1);
+    item = {text:e.target.innerText};
+    
     var startchar = item.text.substring(0, 1);
     var len = item.text.length;
-    var endchar = (item.text.substring(len - 1, len));
-    if (startchar === item.l) {
+    var endchar = (item.text.substring(len-1, len))
+    if (startchar == l) {
         item.text = item.text.substring(1, len);
     }
-    /*if the end of the string has an embedded delimiter,
-     * throw away the delimiter and all the string after it
-     */
-    var end_delim = item.text.indexOf(item.r);
-    if (end_delim > 0) {
-        item.text = item.text.substring(0, end_delim);
+    var len = item.text.length;
+    if (endchar == r) {
+        item.text = item.text.substring(0, len - 1)
     }
-    item.offset = event.target.id;
+    item.offset = e.target.id;
     return item;
 }
 
