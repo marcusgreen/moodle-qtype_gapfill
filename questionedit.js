@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /** 
- * JavaScript code for the wordselect question type.
+ * JavaScript code for the gapfill question type.
  *
  * @package    qtype_gapfill
  * @copyright  2017 Marcus Green
@@ -23,7 +23,7 @@
 
 
 /* the data is stored in a hidden field */
-var feedbackdata = ($("[name='itemsettings_data']").val());
+var feedbackdata = ($("[name='itemsettingsdata']").val());
 var feedback = new Array();
 if (feedbackdata > "") {
     var obj = JSON.parse(settingsdata);
@@ -57,8 +57,8 @@ function add_or_update(item) {
     for (var fb in feedback) {
         if (feedback[fb].word == item.text) {
             if (feedback[fb].offset == item.offset) {
-                feedback[fb].selected = $("#id_correcteditable").html();
-                feedback[fb].notselected = $("#id_notcorrecteditable").html();
+                feedback[fb].correct = $("#id_correcteditable").html();
+                feedback[fb].notcorrect = $("#id_notcorrecteditable").html();
                 found = true;
             }
         }
@@ -70,8 +70,8 @@ function add_or_update(item) {
         var itemfeedback = {
             id: 'id' + itemkey,
             question: $("input[name=id]").val(),
-            selected: $("#id_corecteditable").html(),
-            notselected: $("#id_incorrecteditable").html(),
+            correct: $("#id_corecteditable").html(),
+            notcorrect: $("#id_incorrecteditable").html(),
             word: item.text,
             offset: item.offset
         };
@@ -165,11 +165,11 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                         click: function () {
                             feedback = add_or_update(item);
                             var JSONstr = JSON.stringify(feedback);
-                            $("[name='wordfeedbackdata']").val(JSONstr);
+                            $("[name='itemsettingsdata']").val(JSONstr);
                             $(this).dialog("close");
                             /*set editable to true as it is checked at the start of click */
                             $("#id_questiontexteditable").attr('contenteditable', 'true');
-                            $("#id_wordfeedback").click();
+                            $("#id_itemsettings_button").click();
                         }
                     }
                 ]
