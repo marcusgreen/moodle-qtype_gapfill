@@ -57,6 +57,7 @@ function Settings() {
 }
 
 function Item(e, delimitchars) {
+    this.questionid=$("input[name=id]").val(),
     this.text = e.target.innerText;
     this.delimitchars = delimitchars;
     /*l and r for left and right */
@@ -65,8 +66,11 @@ function Item(e, delimitchars) {
     this.startchar = this.text.substring(0, 1);
     this.len = this.text.length;
     this.endchar = this.text.substring(this.len - 1, this.len);
-    item.offset = e.target.id;
+    this.offset = e.target.id;
     this.text_nodelim;
+    this.feedback ={};
+    this.feedback.correct=$("#id_corecteditable").html(),
+    this.feedback.notcorrect=$("#id_notcorrecteditable").html(),
     this.get_text_nodelim = function () {
         if (this.startchar == this.l) {
             this.text_nodelim = this.text.substring(1, this.len);
@@ -79,10 +83,10 @@ function Item(e, delimitchars) {
     }
 
     itemsettings = new Array();
-    this.get_feedback = function (item) {
+    this.get_itemsettings = function () {
         for (var set in settings) {
-            if (settings[set].itemtext == item.text) {
-                if (settings[set].offset == item.offset) {
+            if (settings[set].itemtext == this.text) {
+                if (settings[set].offset == this.offset) {
                     itemsettings[0] = settings[set];
                 }
             }
@@ -114,9 +118,9 @@ function add_or_update(item) {
         itemkey++;
         var itemfeedback = {
             id: 'id' + itemkey,
-            question: $("input[name=id]").val(),
-            correct: $("#id_corecteditable").html(),
-            notcorrect: $("#id_incorrecteditable").html(),
+            questionid: $("input[name=id]").val(),
+            correct: $("#id_correcteditable").html(),
+            notcorrect: $("#id_notcorrecteditable").html(),
             itemtext: item.text,
             offset: item.offset
         };
@@ -181,18 +185,22 @@ $("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
        //var i = new Item();
-       var S = new Settings();
-       S.get_selected_item(e,delimitchars);
+      // var S = new Settings();
+      // var item= S.get_selected_item(e,delimitchars);
+       var item = new Item(e, delimitchars);
+
        
-       var item = get_selected_item(e, delimitchars);
+       //var item = get_selected_item(e, delimitchars);
+       
         if (!(isNaN(e.target.id))) {
-            itemsettings = get_feedback(item);
+            itemsettings = item.get_itemsettings();
+            //itemsettings = get_feedback(item);
             if (itemsettings == null || itemsettings.length == 0) {
                 $("#id_correcteditable").html('');
-                $("#id_notcorrectededitable").html('');
+                $("#id_notcorrecteditable").html('');
             } else {
                 $("#id_correcteditable").html(itemsettings[0].correct);
-                $("#id_nocorrectededitable").html(itemfeedback[0].notcorrect);
+                $("#id_nocorrectededitable").html(itemsettings[0].notcorrect);
             }
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
@@ -260,6 +268,7 @@ function get_new_item() {
  * @returns {item}
  */
 function get_selected_item(e, delimitchars) {
+    return;
     /*l and r for left and right */
 
     
