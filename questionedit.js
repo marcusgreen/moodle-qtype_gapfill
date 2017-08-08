@@ -24,7 +24,10 @@
 
 /* the data is stored in a hidden field */
 var settingsdata = ($("[name='itemsettingsdata']").val());
+
+
 var settings = new Array();
+var gaps = new Array();
 if (settingsdata > "") {
     var obj = JSON.parse(settingsdata);
     for (var o in obj) {
@@ -40,7 +43,7 @@ var itemkey = 0;
 function get_feedback(item) {
     itemsettings = new Array();
     for (var set in settings) {
-        if (settings[set].itemtext == item.text) {
+        if (settings[set].text == item.text) {
             if (settings[set].offset == item.offset) {
                 itemsettings[0] = settings[set];
             }
@@ -50,14 +53,8 @@ function get_feedback(item) {
 }
 /**************************************************************/
 
-function Settings() {
-    this.get_selected_item = function (e, delimitchars) {
-        item = new Item(e, delimitchars);
-    };
-}
-
 function Item(e, delimitchars) {
-    this.questionid=$("input[name=id]").val(),
+    this.questionid = $("input[name=id]").val(),
     this.text = e.target.innerText;
     this.delimitchars = delimitchars;
     /*l and r for left and right */
@@ -66,69 +63,64 @@ function Item(e, delimitchars) {
     this.startchar = this.text.substring(0, 1);
     this.len = this.text.length;
     this.endchar = this.text.substring(this.len - 1, this.len);
-    this.offset = e.target.id;
-    this.text_nodelim;
-    this.feedback ={};
-    this.feedback.correct=$("#id_corecteditable").html(),
-    this.feedback.notcorrect=$("#id_notcorrecteditable").html(),
-    this.get_text_nodelim = function () {
-        if (this.startchar == this.l) {
-            this.text_nodelim = this.text.substring(1, this.len);
-        }
-        if (this.endchar == this.r) {
-            len = this.text_nodelim.length;
-            this.text_nodelim = this.text_nodelim.substring(0, len - 1)
-        }
-        return this.text_nodelim;
-    }
+    this.id = e.target.id;
+    this.text_nodelim = '';
+    this.instance = 0;
+    this.feedback = {};
+    this.feedback.correct = $("#id_corecteditable").html(),
+            this.feedback.notcorrect = $("#id_notcorrecteditable").html(),
+            this.get_text_nodelim = function () {
+                if (this.startchar == this.l) {
+                    this.text_nodelim = this.text.substring(1, this.len);
+                }
+                if (this.endchar == this.r) {
+                    len = this.text_nodelim.length;
+                    this.text_nodelim = this.text_nodelim.substring(0, len - 1)
+                }
+                return this.text_nodelim;
+            }
 
     itemsettings = new Array();
     this.get_itemsettings = function () {
+        this.get_text_nodelim();
         for (var set in settings) {
-            if (settings[set].itemtext == this.text) {
-                if (settings[set].offset == this.offset) {
+            var instance = this.id.substr(this.id.indexOf("_")+1);
+            var set_instance = settings[set].id.substr(this.id.indexOf("_")+1);
+            if (settings[set].text == this.text) {
+                if (set_instance == instance) {
                     itemsettings[0] = settings[set];
                 }
             }
         }
         return itemsettings;
     };
-}
-
-
-
-/**
- * @param {object} item
- * @returns {Array|feedback}
- */
-function add_or_update(item) {
-    found = false;
-    for (var set in settings) {
-        if (settings[set].itemtext == item.text) {
-            if (settings[set].offset == item.offset) {
-                settings[set].correct = $("#id_correcteditable")[0].innerHTML;
-                settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
-                found = true;
+    this.update_json = function () {
+        found = false;
+        for (var set in settings) {
+            if (settings[set].text == this.text) {
+                if (settings[set].offset == this.offset) {
+                    settings[set].correct = $("#id_correcteditable")[0].innerHTML;
+                    settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
+                    found = true;
+                }
             }
         }
-    }
-    if (found == false) {
-        /* if there is no record for this word add one 
-         * a combination of text and offset will be unique*/
-        itemkey++;
-        var itemfeedback = {
-            id: 'id' + itemkey,
-            questionid: $("input[name=id]").val(),
-            correct: $("#id_correcteditable").html(),
-            notcorrect: $("#id_notcorrecteditable").html(),
-            itemtext: item.text,
-            offset: item.offset
-        };
-        settings.push(itemfeedback);
-    }
-    return settings;
+        if (found == false) {
+            /* if there is no record for this word add one 
+             * a combination of text and offset will be unique*/
+            itemkey++;
+            var itemfeedback = {
+                id: this.id,
+                questionid: $("input[name=id]").val(),
+                correct: $("#id_correcteditable").html(),
+                notcorrect: $("#id_notcorrecteditable").html(),
+                text: this.text,
+            };
+            settings.push(itemfeedback);
+        }
+        return JSON.stringify(settings);
+    };
 }
-
 
 
 /* a click on the button */
@@ -161,8 +153,6 @@ $("#id_itemsettings_button").on("click", function () {
             color: "black",
             display: "block"
         }).appendTo(ed).css("position", "relative");
-        /* $("id_questiontextfeedback").addClass($(ed).attr('class'));
-         $("id_questiontextfeedback").css('line-height','17.5pt');*/
 
         /* Copy the real html to the feedback editing html */
         $("#id_itemsettings_canvas").html($("#id_questiontexteditable").prop("innerHTML"));
@@ -184,17 +174,9 @@ $("#id_itemsettings_button").on("click", function () {
 $("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
-       //var i = new Item();
-      // var S = new Settings();
-      // var item= S.get_selected_item(e,delimitchars);
-       var item = new Item(e, delimitchars);
-
-       
-       //var item = get_selected_item(e, delimitchars);
-       
-        if (!(isNaN(e.target.id))) {
+        var item = new Item(e, delimitchars);
+        if ((e.target.id)>"") {
             itemsettings = item.get_itemsettings();
-            //itemsettings = get_feedback(item);
             if (itemsettings == null || itemsettings.length == 0) {
                 $("#id_correcteditable").html('');
                 $("#id_notcorrecteditable").html('');
@@ -205,7 +187,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
             var title = M.util.get_string("additemsettings", "qtype_gapfill");
-            title += ': ' + item.text;
+            title += ': ' + item.get_text_nodelim();
             var $popup = $("#id_itemsettings_popup");
             $popup.dialog({
                 position: {
@@ -221,8 +203,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     {
                         text: "OK",
                         click: function () {
-                            feedback = add_or_update(item);
-                            var JSONstr = JSON.stringify(feedback);
+                            var JSONstr = item.update_json();
                             $("[name='itemsettingsdata']").val(JSONstr);
                             $(this).dialog("close");
                             /*set editable to true as it is checked at the start of click */
@@ -262,41 +243,6 @@ function get_new_item() {
     return item;
 }
 
-/**
- * 
- * @param {string} sel
- * @returns {item}
- */
-function get_selected_item(e, delimitchars) {
-    return;
-    /*l and r for left and right */
-
-    
-    var l = delimitchars.substr(0, 1);
-    var r = delimitchars.substr(1, 1);
-    item = {text: e.target.innerText};
-
-    var startchar = item.text.substring(0, 1);
-    var len = item.text.length;
-    var endchar = (item.text.substring(len - 1, len))
-    
-    var i = new Item(e, delimitchars);
-    
-    var  xyz = i.get_text_nodelim();
-    
-
-    if (startchar == l) {
-        item.text = item.text.substring(1, len);
-    }
-    var len = item.text.length;
-    if (endchar == r) {
-        item.text = item.text.substring(0, len - 1)
-    }
-    item.offset = e.target.id;
-    return item;
-}
-
-
 function toArray(obj) {
     var arr = [];
     for (var i = 0, iLen = obj.length; i < iLen; i++) {
@@ -313,6 +259,7 @@ var wrapContent = (function () {
 
     return function (el) {
         var count = 0;
+        gaps = [];
         // If element provided, start there, otherwise use the body
         el = el && el.parentNode ? el : document.body;
 
@@ -322,12 +269,7 @@ var wrapContent = (function () {
             count = 0;
         }
         var frag, parent, text;
-        // var re = /\S+/;
-        //var re =  /\[([^)]+)\]/;
-        var re = /.*?\[(.*?)\]/;
-        // var re = /\[([^\[\]]*)\]|\]\./;
-        //var re = /(?<=\[)[^]]+(?=\])/;
-        //var re =/(\s+)|([A-z]+)|(\.)/
+        var regex = /.*?\[(.*?)\]/;
         var sp, span = document.createElement('span');
 
         // Tag names of elements to skip, there are more to add
@@ -352,7 +294,7 @@ var wrapContent = (function () {
                     frag = document.createDocumentFragment();
                     for (var j = 0, jLen = text.length; j < jLen; j++) {
                         // If not whitespace, wrap it and append to the fragment
-                        if (re.test(text[j])) {
+                        if (regex.test(text[j])) {
                             sp = span.cloneNode(false);
                             sp.id = count++;
                             /*what does this class do? */
@@ -364,7 +306,18 @@ var wrapContent = (function () {
                             item.stripdelim();
 
                             if (get_feedback(item) > '') {
-                                sp.className = 'item hasfeedback'
+                                sp.className = 'item hasfeedback';
+                            }
+                            if (item.text > '') {
+                                var count=0;
+                                for(var i=0; i < gaps.length; ++i){
+                                        if(gaps[i] == item.text){
+                                            count++;
+                                        }
+                                }
+                                item.offset=item.offset +'_'+ count;
+                                sp.id=item.offset;
+                                gaps.push(item.text);
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);
