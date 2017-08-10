@@ -42,10 +42,14 @@ var itemkey = 0;
  */
 function get_feedback(item) {
     itemsettings = new Array();
+    var id = item.id;
+    var item_instance = id.substr(id.indexOf("_")+1);    
     for (var set in settings) {
         if (settings[set].text == item.text) {
-            if (settings[set].offset == item.offset) {
-                itemsettings[0] = settings[set];
+          id=settings[set].id; 
+          set_instance = id.substr(id.indexOf("_")+1); 
+          if (set_instance == item_instance){
+                itemsettings = settings[set];
             }
         }
     }
@@ -295,16 +299,14 @@ var wrapContent = (function () {
                         // If not whitespace, wrap it and append to the fragment
                         if (regex.test(text[j])) {
                             sp = span.cloneNode(false);
-                            sp.id = count++;
+                            count++;
                             /*what does this class do? */
                             sp.className = 'item';
 
                             item = get_new_item();
                             item.text = text[j];
-                            item.offset = sp.id;
-                            item.stripdelim();
+                            //item.stripdelim();
 
-                            
                             if (item.text > '') {
                                 var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
@@ -312,12 +314,13 @@ var wrapContent = (function () {
                                             instance++;
                                         }
                                 }
-                                item.offset='id'+item.offset +'_'+ instance;
-                                sp.id=item.offset;
-                                if (get_feedback(item) > '') {
-                                sp.className = 'item hasfeedback';
-                            }
-                                gaps.push(item.text);
+                                item.id='id'+count +'_'+ instance;
+                                sp.id=item.id;
+                                var fb = get_feedback(item);
+                                if ((fb.correct >"") || (fb.notcorrect >"")){
+                                        sp.className = 'item hasfeedback';
+                                 }
+                                 gaps.push(item.text);
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);

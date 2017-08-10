@@ -1,3 +1,8 @@
+.hasfeedback{
+    font-style: italic;
+}
+
+
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input[type=text]{
     background:white;
