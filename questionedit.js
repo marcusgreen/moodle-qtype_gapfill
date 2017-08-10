@@ -55,6 +55,8 @@ function get_feedback(item) {
 
 function Item(e, delimitchars) {
     this.questionid = $("input[name=id]").val(),
+    this.id = e.target.id;
+    this.instance = this.id.substr(this.id.indexOf("_")+1);
     this.text = e.target.innerText;
     this.delimitchars = delimitchars;
     /*l and r for left and right */
@@ -63,9 +65,7 @@ function Item(e, delimitchars) {
     this.startchar = this.text.substring(0, 1);
     this.len = this.text.length;
     this.endchar = this.text.substring(this.len - 1, this.len);
-    this.id = e.target.id;
     this.text_nodelim = '';
-    this.instance = 0;
     this.feedback = {};
     this.feedback.correct = $("#id_corecteditable").html(),
             this.feedback.notcorrect = $("#id_notcorrecteditable").html(),
@@ -84,10 +84,9 @@ function Item(e, delimitchars) {
     this.get_itemsettings = function () {
         this.get_text_nodelim();
         for (var set in settings) {
-            var instance = this.id.substr(this.id.indexOf("_")+1);
             var set_instance = settings[set].id.substr(this.id.indexOf("_")+1);
             if (settings[set].text == this.text) {
-                if (set_instance == instance) {
+                if (set_instance == this.instance) {
                     itemsettings[0] = settings[set];
                 }
             }
@@ -98,7 +97,7 @@ function Item(e, delimitchars) {
         found = false;
         for (var set in settings) {
             if (settings[set].text == this.text) {
-                if (settings[set].offset == this.offset) {
+                if ((settings[set].id.substr(this.id.indexOf("_")+1) == this.instance)) {
                     settings[set].correct = $("#id_correcteditable")[0].innerHTML;
                     settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
                     found = true;
@@ -175,14 +174,14 @@ $("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
         var item = new Item(e, delimitchars);
-        if ((e.target.id)>"") {
+        if ((e.target.id.substr(0,2)=='id')) {
             itemsettings = item.get_itemsettings();
             if (itemsettings == null || itemsettings.length == 0) {
                 $("#id_correcteditable").html('');
                 $("#id_notcorrecteditable").html('');
             } else {
                 $("#id_correcteditable").html(itemsettings[0].correct);
-                $("#id_nocorrectededitable").html(itemsettings[0].notcorrect);
+                $("#id_notcorrecteditable").html(itemsettings[0].notcorrect);
             }
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
@@ -305,18 +304,19 @@ var wrapContent = (function () {
                             item.offset = sp.id;
                             item.stripdelim();
 
-                            if (get_feedback(item) > '') {
-                                sp.className = 'item hasfeedback';
-                            }
+                            
                             if (item.text > '') {
-                                var count=0;
+                                var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
                                         if(gaps[i] == item.text){
-                                            count++;
+                                            instance++;
                                         }
                                 }
-                                item.offset=item.offset +'_'+ count;
+                                item.offset='id'+item.offset +'_'+ instance;
                                 sp.id=item.offset;
+                                if (get_feedback(item) > '') {
+                                sp.className = 'item hasfeedback';
+                            }
                                 gaps.push(item.text);
                             }
                             sp.appendChild(document.createTextNode(text[j]));
