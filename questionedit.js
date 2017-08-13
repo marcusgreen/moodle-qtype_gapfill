@@ -57,11 +57,9 @@ function get_feedback(item) {
 }
 /**************************************************************/
 
-function Item(e, delimitchars) {
+function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val(),
-    this.id = e.target.id;
-    this.instance = this.id.substr(this.id.indexOf("_")+1);
-    this.text = e.target.innerText;
+    this.text = text;
     this.delimitchars = delimitchars;
     /*l and r for left and right */
     this.l = delimitchars.substr(0, 1);
@@ -85,23 +83,26 @@ function Item(e, delimitchars) {
             }
 
     itemsettings = new Array();
-    this.get_itemsettings = function () {
+    this.get_itemsettings = function (e) {
+        var id = e.target.id;
+        instance=id.substr(id.indexOf("_")+1);
         this.get_text_nodelim();
         for (var set in settings) {
-            var set_instance = settings[set].id.substr(this.id.indexOf("_")+1);
+            var set_instance = settings[set].id.substr(id.indexOf("_")+1);
             if (settings[set].text == this.text) {
-                if (set_instance == this.instance) {
+                if (set_instance == instance) {
                     itemsettings[0] = settings[set];
                 }
             }
         }
         return itemsettings;
     };
-    this.update_json = function () {
+    this.update_json = function (e) {
         found = false;
+        var id = e.target.id;
         for (var set in settings) {
             if (settings[set].text == this.text) {
-                if ((settings[set].id.substr(this.id.indexOf("_")+1) == this.instance)) {
+                if ((settings[set].id.substr(id.indexOf("_")+1) == this.instance)) {
                     settings[set].correct = $("#id_correcteditable")[0].innerHTML;
                     settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
                     found = true;
@@ -113,7 +114,7 @@ function Item(e, delimitchars) {
              * a combination of text and offset will be unique*/
             itemkey++;
             var itemfeedback = {
-                id: this.id,
+                id: id,
                 questionid: $("input[name=id]").val(),
                 correct: $("#id_correcteditable").html(),
                 notcorrect: $("#id_notcorrecteditable").html(),
@@ -177,9 +178,9 @@ $("#id_itemsettings_button").on("click", function () {
 $("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
-        var item = new Item(e, delimitchars);
+        var item = new Item(e.target.innerHTML,delimitchars);
         if ((e.target.id.substr(0,2)=='id')) {
-            itemsettings = item.get_itemsettings();
+            itemsettings = item.get_itemsettings(e);
             if (itemsettings == null || itemsettings.length == 0) {
                 $("#id_correcteditable").html('');
                 $("#id_notcorrecteditable").html('');
@@ -206,7 +207,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     {
                         text: "OK",
                         click: function () {
-                            var JSONstr = item.update_json();
+                            var JSONstr = item.update_json(e);
                             $("[name='itemsettingsdata']").val(JSONstr);
                             $(this).dialog("close");
                             /*set editable to true as it is checked at the start of click */
@@ -220,31 +221,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
     }
 });
 
-function get_new_item() {
-    delimitchars = $("#id_delimitchars").val();
-    /*l and r for left and right */
-    var l = delimitchars.substr(0, 1);
-    var r = delimitchars.substr(1, 1);
-    var item = {
-        text: '',
-        offset: null,
-        l: l,
-        r: r,
-        stripdelim: function () {
-            var len = this.text.length;
-            var startchar = this.text.indexOf(item.l);
-            if (startchar > -1) {
-                this.text = this.text.substring(startchar + 1, len);
-            }
-            var endchar = this.text.indexOf(item.r);
-            if (endchar > -1) {
-                this.text = this.text.substring(0, endchar);
-            }
-            return this.text;
-        }
-    };
-    return item;
-}
+
 
 function toArray(obj) {
     var arr = [];
@@ -258,7 +235,7 @@ function toArray(obj) {
 // Wrap the words of an element and child elements in a span
 // Recurs over child elements, add an ID and class to the wrapping span
 // Does not affect elements with no content, or those to be excluded
-var wrapContent = (function () {
+var wrapContent = (function (delimitchars) {
 
     return function (el) {
         var count = 0;
@@ -300,13 +277,10 @@ var wrapContent = (function () {
                         if (regex.test(text[j])) {
                             sp = span.cloneNode(false);
                             count++;
-                            /*what does this class do? */
                             sp.className = 'item';
 
-                            item = get_new_item();
-                            item.text = text[j];
-                            //item.stripdelim();
-
+                            item = new Item(text[j],$("#id_delimitchars").val());
+                            
                             if (item.text > '') {
                                 var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
