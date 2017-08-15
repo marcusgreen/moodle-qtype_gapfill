@@ -83,15 +83,15 @@ function Item(text, delimitchars) {
             }
 
     itemsettings = new Array();
-    this.get_itemsettings = function (e) {
-        var id = e.target.id;
+    this.get_itemsettings = function (target) {
+        var id = target.id;
         instance=id.substr(id.indexOf("_")+1);
         this.get_text_nodelim();
         for (var set in settings) {
             var set_instance = settings[set].id.substr(id.indexOf("_")+1);
             if (settings[set].text == this.text) {
                 if (set_instance == instance) {
-                    itemsettings[0] = settings[set];
+                    itemsettings = settings[set];
                 }
             }
         }
@@ -180,13 +180,13 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML,delimitchars);
         if ((e.target.id.substr(0,2)=='id')) {
-            itemsettings = item.get_itemsettings(e);
+            itemsettings = item.get_itemsettings(e.target);
             if (itemsettings == null || itemsettings.length == 0) {
                 $("#id_correcteditable").html('');
                 $("#id_notcorrecteditable").html('');
             } else {
-                $("#id_correcteditable").html(itemsettings[0].correct);
-                $("#id_notcorrecteditable").html(itemsettings[0].notcorrect);
+                $("#id_correcteditable").html(itemsettings.correct);
+                $("#id_notcorrecteditable").html(itemsettings.notcorrect);
             }
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
@@ -278,9 +278,7 @@ var wrapContent = (function (delimitchars) {
                             sp = span.cloneNode(false);
                             count++;
                             sp.className = 'item';
-
-                            item = new Item(text[j],$("#id_delimitchars").val());
-                            
+                            item = new Item(text[j],$("#id_delimitchars").val());                            
                             if (item.text > '') {
                                 var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
@@ -290,8 +288,8 @@ var wrapContent = (function (delimitchars) {
                                 }
                                 item.id='id'+count +'_'+ instance;
                                 sp.id=item.id;
-                                var fb = get_feedback(item);
-                                if ((fb.correct >"") || (fb.notcorrect >"")){
+                               var is = item.get_itemsettings(item);                               
+                                if ((is.correct >"") || (is.notcorrect >"")){
                                         sp.className = 'item hasfeedback';
                                  }
                                  gaps.push(item.text);
