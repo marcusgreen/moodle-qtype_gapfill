@@ -252,6 +252,8 @@ class qtype_gapfill extends question_type {
 
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
         $this->update_question_gapfill($question, $options, $context);
+        $this->update_gap_settings($question, $options, $context);
+
         $this->save_hints($question, true);
         return true;
     }
@@ -380,7 +382,33 @@ class qtype_gapfill extends question_type {
         }
         return $answerfields;
     }
-
+    /**
+     * Take the data from the hidden form field and write to the settings table
+     * The first/main type of data is per gap feedback. Other data relating to 
+     * settings for a gap may be added later
+     * 
+     * @global moodle_database $DB
+     * @param array $formdata
+     */
+public function update_gap_settings(stdClass $formdata) {
+        global $DB;        
+        $oldsettings = $DB->get_records('question_gapfill_settings', array('question' => $formdata->id));
+        $newsettings = json_decode($formdata->itemsettingsdata, true);
+          if ($newsettings != null) {
+             foreach ($newsettings as $set) { 
+                $setting = new stdClass();
+                $setting->question = $formdata->id;
+                $setting->itemid = $set['id'];
+                $setting->text = $set['text'];
+                $setting->correctfeedback = $set['correct'];
+                $setting->notcorrectfeedback = $set['notcorrect'];
+                $DB->insert_record('question_gapfill_settings', $setting);            }
+        }
+        foreach ($oldsettings as $os) {
+            $DB->delete_records('question_gapfill_settings', array('id' => $os->id));
+        }
+    }
+ 
     protected function make_hint($hint) {
         return question_hint_with_parts::load_from_record($hint);
     }

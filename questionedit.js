@@ -34,29 +34,6 @@ if (settingsdata > "") {
         settings.push(obj[o]);
     }
 }
-var itemkey = 0;
-
-/**
- * @param {object} item
- * @returns {Array|settingsdata}
- */
-function get_feedback(item) {
-    itemsettings = new Array();
-    var id = item.id;
-    var item_instance = id.substr(id.indexOf("_")+1);    
-    for (var set in settings) {
-        if (settings[set].text == item.text) {
-          id=settings[set].id; 
-          set_instance = id.substr(id.indexOf("_")+1); 
-          if (set_instance == item_instance){
-                itemsettings = settings[set];
-            }
-        }
-    }
-    return itemsettings;
-}
-/**************************************************************/
-
 function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val(),
     this.text = text;
@@ -64,33 +41,34 @@ function Item(text, delimitchars) {
     /*l and r for left and right */
     this.l = delimitchars.substr(0, 1);
     this.r = delimitchars.substr(1, 1);
-    this.startchar = this.text.substring(0, 1);
     this.len = this.text.length;
+    this.startchar = this.text.substring(0, 1);
+    /*for checking if the end char is the right delimiter */
     this.endchar = this.text.substring(this.len - 1, this.len);
     this.text_nodelim = '';
     this.feedback = {};
     this.feedback.correct = $("#id_corecteditable").html(),
-            this.feedback.notcorrect = $("#id_notcorrecteditable").html(),
-            this.get_text_nodelim = function () {
-                if (this.startchar == this.l) {
+    this.feedback.notcorrect = $("#id_notcorrecteditable").html();
+    this.get_text_nodelim = function () {
+                if (this.startchar === this.l) {
                     this.text_nodelim = this.text.substring(1, this.len);
                 }
-                if (this.endchar == this.r) {
+                if (this.endchar === this.r) {
                     len = this.text_nodelim.length;
-                    this.text_nodelim = this.text_nodelim.substring(0, len - 1)
+                    this.text_nodelim = this.text_nodelim.substring(0, len - 1);
                 }
                 return this.text_nodelim;
             }
-
     itemsettings = new Array();
     this.get_itemsettings = function (target) {
         var id = target.id;
+        /*The instance, normally 0 but incremented if a gap has the ame text as another*/
         instance=id.substr(id.indexOf("_")+1);
         this.get_text_nodelim();
         for (var set in settings) {
             var set_instance = settings[set].id.substr(id.indexOf("_")+1);
-            if (settings[set].text == this.text) {
-                if (set_instance == instance) {
+            if (settings[set].text === this.text) {
+                if (set_instance === instance) {
                     itemsettings = settings[set];
                 }
             }
@@ -101,24 +79,23 @@ function Item(text, delimitchars) {
         found = false;
         var id = e.target.id;
         for (var set in settings) {
-            if (settings[set].text == this.text) {
-                if ((settings[set].id.substr(id.indexOf("_")+1) == this.instance)) {
+            if (settings[set].text === this.text) {
+                if ((settings[set].id.substr(id.indexOf("_")+1) === this.instance)) {
                     settings[set].correct = $("#id_correcteditable")[0].innerHTML;
                     settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
                     found = true;
                 }
             }
         }
-        if (found == false) {
+        if (found === false) {
             /* if there is no record for this word add one 
              * a combination of text and offset will be unique*/
-            itemkey++;
             var itemfeedback = {
                 id: id,
                 questionid: $("input[name=id]").val(),
                 correct: $("#id_correcteditable").html(),
                 notcorrect: $("#id_notcorrecteditable").html(),
-                text: this.text,
+                text: this.text
             };
             settings.push(itemfeedback);
         }
@@ -179,9 +156,9 @@ $("#id_itemsettings_canvas").on("click", function (e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable) {
         delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML,delimitchars);
-        if ((e.target.id.substr(0,2)=='id')) {
+        if ((e.target.id.substr(0,2)==='id')) {
             itemsettings = item.get_itemsettings(e.target);
-            if (itemsettings == null || itemsettings.length == 0) {
+            if (itemsettings === null || itemsettings.length === 0) {
                 $("#id_correcteditable").html('');
                 $("#id_notcorrecteditable").html('');
             } else {
@@ -245,7 +222,7 @@ var wrapContent = (function (delimitchars) {
 
         // Get all child nodes as a static array
         var node, nodes = toArray(el.childNodes);
-        if (el.id == "id_questiontextfeedback" && (count > 0)) {
+        if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
         }
         var frag, parent, text;
@@ -260,11 +237,11 @@ var wrapContent = (function (delimitchars) {
         for (var i = 0, iLen = nodes.length; i < iLen; i++) {
             node = nodes[i];
             // If it's an element, call wrapContent
-            if (node.nodeType == 1 && !(node.tagName.toLowerCase() in skip)) {
+            if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
                 wrapContent(node);
 
                 // If it's a text node, wrap words
-            } else if (node.nodeType == 3) {
+            } else if (node.nodeType === 3) {
                 // Match sequences of whitespace and non-whitespace
                 // text = node.data.match(/\s+|\S+/g);
                 text = node.data.match(/(\s+)|([A-z]+)|(\.)/g);
@@ -282,7 +259,7 @@ var wrapContent = (function (delimitchars) {
                             if (item.text > '') {
                                 var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
-                                        if(gaps[i] == item.text){
+                                        if(gaps[i] === item.text){
                                             instance++;
                                         }
                                 }

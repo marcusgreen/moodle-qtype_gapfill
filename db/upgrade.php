@@ -75,13 +75,23 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $table = new xmldb_table('question_gapfill');
         $dbman->add_field($table, $field);
     }
-      if (!$dbman->field_exists('question_gapfill', 'optionsaftertext')) {
+    if (!$dbman->field_exists('question_gapfill', 'optionsaftertext')) {
         $field = new xmldb_field('optionsaftertext', XMLDB_TYPE_INTEGER, '1', null, true, null, 0, 'fixedgapsize');
         $table = new xmldb_table('question_gapfill');
         $dbman->add_field($table, $field);
     }
-    // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2017070201, 'qtype', 'gapfill');
+    if (!$dbman->table_exists('question_gapfill_settings')) {
+        $table = new xmldb_table('question_gapfill_settings');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '1', null, null, true,null);
+        $table->add_field('question', XMLDB_TYPE_CHAR, '10', null, true, null,null);
+        $table->add_field('itemid', XMLDB_TYPE_CHAR, '10', null, true, null,null);
+        $table->add_field('text', XMLDB_TYPE_CHAR, '255', null, true, null,null);
+        $table->add_field('correctfeedback', XMLDB_TYPE_TEXT, '350', null, true, null,null);
+        $table->add_field('notcorrectfeedback', XMLDB_TYPE_TEXT, '350', null, true, null,null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 
-    return;
+        $dbman->create_table($table);
+        }
+    // Gapfill savepoint reached.
+    upgrade_plugin_savepoint(true, 2017070207, 'qtype', 'gapfill');
 }
