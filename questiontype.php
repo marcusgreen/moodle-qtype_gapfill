@@ -401,7 +401,7 @@ public function update_gap_settings(stdClass $formdata) {
                 $setting->itemid = $set['id'];
                 $setting->text = $set['text'];
                 $setting->correctfeedback = $set['correct'];
-                $setting->notcorrectfeedback = $set['notcorrect'];
+                $setting->incorrectfeedback = $set['incorrect'];
                 $DB->insert_record('question_gapfill_settings', $setting);            }
         }
         foreach ($oldsettings as $os) {

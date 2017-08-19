@@ -34,7 +34,7 @@ $string['noduplicates_help'] = 'When checked, each answer must be unique, useful
 
 
 $string['correct'] = 'Feedback for correct.';
-$string['notcorrect'] = 'Feedback for incorrect.';
+$string['incorrect'] = 'Feedback for incorrect.';
 
 $string['delimitchars'] = 'Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';

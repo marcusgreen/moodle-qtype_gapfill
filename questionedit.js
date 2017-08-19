@@ -48,7 +48,7 @@ function Item(text, delimitchars) {
     this.text_nodelim = '';
     this.feedback = {};
     this.feedback.correct = $("#id_corecteditable").html(),
-    this.feedback.notcorrect = $("#id_notcorrecteditable").html();
+    this.feedback.incorrect = $("#id_incorrecteditable").html();
     this.get_text_nodelim = function () {
                 if (this.startchar === this.l) {
                     this.text_nodelim = this.text.substring(1, this.len);
@@ -82,7 +82,7 @@ function Item(text, delimitchars) {
             if (settings[set].text === this.text) {
                 if ((settings[set].id.substr(id.indexOf("_")+1) === this.instance)) {
                     settings[set].correct = $("#id_correcteditable")[0].innerHTML;
-                    settings[set].notcorrect = $("#id_notcorrecteditable")[0].innerHTML;
+                    settings[set].incorrect = $("#id_incorrecteditable")[0].innerHTML;
                     found = true;
                 }
             }
@@ -94,7 +94,7 @@ function Item(text, delimitchars) {
                 id: id,
                 questionid: $("input[name=id]").val(),
                 correct: $("#id_correcteditable").html(),
-                notcorrect: $("#id_notcorrecteditable").html(),
+                incorrect: $("#id_incorrecteditable").html(),
                 text: this.text
             };
             settings.push(itemfeedback);
@@ -160,13 +160,13 @@ $("#id_itemsettings_canvas").on("click", function (e) {
             itemsettings = item.get_itemsettings(e.target);
             if (itemsettings === null || itemsettings.length === 0) {
                 $("#id_correcteditable").html('');
-                $("#id_notcorrecteditable").html('');
+                $("#id_incorrecteditable").html('');
             } else {
                 $("#id_correcteditable").html(itemsettings.correct);
-                $("#id_notcorrecteditable").html(itemsettings.notcorrect);
+                $("#id_incorrecteditable").html(itemsettings.incorrect);
             }
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
-            $("label[for*='id_notcorrect']").text(M.util.get_string("notcorrect", "qtype_gapfill"));
+            $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
             var title = M.util.get_string("additemsettings", "qtype_gapfill");
             title += ': ' + item.get_text_nodelim();
             var $popup = $("#id_itemsettings_popup");
@@ -266,7 +266,7 @@ var wrapContent = (function (delimitchars) {
                                 item.id='id'+count +'_'+ instance;
                                 sp.id=item.id;
                                var is = item.get_itemsettings(item);                               
-                                if ((is.correct >"") || (is.notcorrect >"")){
+                                if ((is.correct >"") || (is.incorrect >"")){
                                         sp.className = 'item hasfeedback';
                                  }
                                  gaps.push(item.text);

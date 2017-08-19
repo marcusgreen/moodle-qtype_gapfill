@@ -47,7 +47,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('ui-css');
        // $PAGE->requires->jquery_plugin('serialize-object', 'qtype_gapfill');
-        $PAGE->requires->strings_for_js(array('itemsettingserror','additemsettings','correct','notcorrect'), 'qtype_gapfill');
+        $PAGE->requires->strings_for_js(array('itemsettingserror','additemsettings','correct','incorrect'), 'qtype_gapfill');
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
@@ -60,7 +60,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('html', '<div id="id_itemsettings_popup" title="'.get_string('additemsettings','qtype_gapfill').'" style="display:none;background-color:lightgrey" >');
              
         $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
-        $mform->addElement('editor', 'notcorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+        $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
                 
         $mform->addElement('html', '</div>');
         

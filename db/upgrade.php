@@ -87,11 +87,11 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $table->add_field('itemid', XMLDB_TYPE_CHAR, '10', null, true, null,null);
         $table->add_field('text', XMLDB_TYPE_CHAR, '255', null, true, null,null);
         $table->add_field('correctfeedback', XMLDB_TYPE_TEXT, '350', null, true, null,null);
-        $table->add_field('notcorrectfeedback', XMLDB_TYPE_TEXT, '350', null, true, null,null);
+        $table->add_field('incorrectfeedback', XMLDB_TYPE_TEXT, '350', null, true, null,null);
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 
         $dbman->create_table($table);
         }
     // Gapfill savepoint reached.
-    upgrade_plugin_savepoint(true, 2017070207, 'qtype', 'gapfill');
+    upgrade_plugin_savepoint(true, 2017070209, 'qtype', 'gapfill');
 }
