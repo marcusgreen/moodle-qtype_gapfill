@@ -111,7 +111,9 @@ class qtype_gapfill extends question_type {
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
+        $question->options->itemsettingsdata=$this->get_itemsettings($question);
         parent::get_question_options($question);
+ 
     }
 
     /* called when previewing or at runtime in a quiz */
@@ -146,16 +148,26 @@ class qtype_gapfill extends question_type {
             }
         }
     }
+    public function get_itemsettings($question) {
+        global $DB;
+        return json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
+    }
 
-    /*
-     *  Called when previewing a question or when displayed in a quiz
-     *  (not from within the editing form)
+    
+    /**
+     * Called when previewing a question or when displayed in a quiz
+     *  (not from within the editing form)  
+     * 
+     * @param question_definition $question
+     * @param type $questiondata
      */
-
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
+        //$question->itemsettingsdata=$this->get_itemsettings($question);
+      
+
         $question->places = array();
         $counter = 1;
         $question->maxgapsize = 0;
@@ -390,9 +402,9 @@ class qtype_gapfill extends question_type {
      * @global moodle_database $DB
      * @param array $formdata
      */
-public function update_gap_settings(stdClass $formdata) {
+public function update_item_settings(stdClass $formdata,$table) {
         global $DB;        
-        $oldsettings = $DB->get_records('question_gapfill_settings', array('question' => $formdata->id));
+        $oldsettings = $DB->get_records($table, array('question' => $formdata->id));
         $newsettings = json_decode($formdata->itemsettingsdata, true);
           if ($newsettings != null) {
              foreach ($newsettings as $set) { 

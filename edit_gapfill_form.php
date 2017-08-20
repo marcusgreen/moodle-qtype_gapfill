@@ -156,9 +156,20 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $this->add_interactive_settings(true, true);
     }
 
+        public function get_itemsettingsdata(stdClass $question){
+        if (property_exists($question->options, 'itemsettingsdata')) {
+            return $question->options->itemsettingsdata;
+        } else {
+            return "";
+        }
+    }
     public function set_data($question) {
         /* accessing the form in this way is probably not correct style */
         $wronganswers = $this->get_wrong_answers($question);
+          /* this gets manipulated by javascript */
+        $settingsdata = $this->get_itemsettingsdata($question);
+        $this->_form->getElement('itemsettingsdata')->setValue($settingsdata);
+
         $this->_form->getElement('wronganswers')->setValue(array('text' => $wronganswers));
         parent::set_data($question);
     }
