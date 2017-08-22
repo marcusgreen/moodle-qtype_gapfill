@@ -26,16 +26,16 @@
 var settingsdata = ($("[name='itemsettingsdata']").val());
 
 
-var settings = new Array();
+var settings = [];
 var gaps = new Array();
 if (settingsdata > "") {
-    var obj = JSON.parse(settingsdata);
+    obj = JSON.parse(settingsdata);
     for (var o in obj) {
         settings.push(obj[o]);
     }
 }
 function Item(text, delimitchars) {
-    this.questionid = $("input[name=id]").val(),
+    this.questionid = $("input[name=id]").val();
     this.text = text;
     this.delimitchars = delimitchars;
     /*l and r for left and right */
@@ -61,13 +61,14 @@ function Item(text, delimitchars) {
             }
     itemsettings = new Array();
     this.get_itemsettings = function (target) {
-        var id = target.id;
+        var itemid = target.id;
         /*The instance, normally 0 but incremented if a gap has the ame text as another*/
-        instance=id.substr(id.indexOf("_")+1);
-        this.get_text_nodelim();
+        instance=itemid.substr(itemid.indexOf("_")+1);
         for (var set in settings) {
-            var set_instance = settings[set].id.substr(id.indexOf("_")+1);
-            if (settings[set].text === this.text) {
+            var startofinstance= settings[set].itemid.indexOf("_");
+            var set_instance = settings[set].itemid.substr(startofinstance+1);
+            text = this.get_text_nodelim(this.text);
+            if (settings[set].text === text) {
                 if (set_instance === instance) {
                     itemsettings = settings[set];
                 }
@@ -81,23 +82,23 @@ function Item(text, delimitchars) {
         for (var set in settings) {
             if (settings[set].text === this.text) {
                 if ((settings[set].id.substr(id.indexOf("_")+1) === this.instance)) {
-                    settings[set].correct = $("#id_correcteditable")[0].innerHTML;
-                    settings[set].incorrect = $("#id_incorrecteditable")[0].innerHTML;
+                    settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+                    settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
                     found = true;
                 }
             }
         }
-        if (found === false) {
+        if(found === false) {
             /* if there is no record for this word add one 
              * a combination of text and offset will be unique*/
-            var itemfeedback = {
-                id: id,
+            var itemsettings = {
+                itemid: id,
                 questionid: $("input[name=id]").val(),
-                correct: $("#id_correcteditable").html(),
-                incorrect: $("#id_incorrecteditable").html(),
-                text: this.text
+                correctfeedback: $("#id_correcteditable").html(),
+                incorrectfeedback: $("#id_incorrecteditable").html(),
+                text: this.get_text_nodelim(this.text)
             };
-            settings.push(itemfeedback);
+            settings.push(itemsettings);
         }
         return JSON.stringify(settings);
     };
@@ -146,7 +147,7 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_questiontexteditable").attr('contenteditable', 'true');
         $("#id_itemsettings_canvas").css("display", "none");
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
-        $("#id_feedback_popup").css("display", "none");
+        $("#id_settings_popup").css("display", "none");
         $("#id_itemsettings_button").html('Add Gap Settings');
     }
 });
@@ -162,8 +163,8 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                 $("#id_correcteditable").html('');
                 $("#id_incorrecteditable").html('');
             } else {
-                $("#id_correcteditable").html(itemsettings.correct);
-                $("#id_incorrecteditable").html(itemsettings.incorrect);
+                $("#id_correcteditable").html(itemsettings.correctfeedback);
+                $("#id_incorrecteditable").html(itemsettings.incorrectfeedback);
             }
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));

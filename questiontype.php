@@ -104,7 +104,8 @@ class qtype_gapfill extends question_type {
     }
 
     /**
-     *
+     * Called during question editing
+     * 
      * @global type moodle_database $DB
      * @param type $question
      */
@@ -113,7 +114,6 @@ class qtype_gapfill extends question_type {
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
         $question->options->itemsettingsdata=$this->get_itemsettings($question);
         parent::get_question_options($question);
- 
     }
 
     /* called when previewing or at runtime in a quiz */
@@ -165,9 +165,7 @@ class qtype_gapfill extends question_type {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
-        //$question->itemsettingsdata=$this->get_itemsettings($question);
-      
-
+        $question->itemsettingsdata=$this->get_itemsettings($question);
         $question->places = array();
         $counter = 1;
         $question->maxgapsize = 0;
@@ -264,7 +262,7 @@ class qtype_gapfill extends question_type {
 
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
         $this->update_question_gapfill($question, $options, $context);
-        $this->update_gap_settings($question, $options, $context);
+        $this->update_item_settings($question,'question_gapfill_settings');
 
         $this->save_hints($question, true);
         return true;
@@ -410,10 +408,10 @@ public function update_item_settings(stdClass $formdata,$table) {
              foreach ($newsettings as $set) { 
                 $setting = new stdClass();
                 $setting->question = $formdata->id;
-                $setting->itemid = $set['id'];
+                $setting->itemid = $set['itemid'];
                 $setting->text = $set['text'];
-                $setting->correctfeedback = $set['correct'];
-                $setting->incorrectfeedback = $set['incorrect'];
+                $setting->correctfeedback = $set['correctfeedback'];
+                $setting->incorrectfeedback = $set['incorrectfeedback'];
                 $DB->insert_record('question_gapfill_settings', $setting);            }
         }
         foreach ($oldsettings as $os) {

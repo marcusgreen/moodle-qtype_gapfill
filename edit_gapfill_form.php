@@ -69,10 +69,9 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
         $mform->setType('questiontext', PARAM_RAW);
-        $mform->addHelpButton('questiontext', 'questiontext', 'qtype_wordselect');
+        $mform->addHelpButton('questiontext', 'questiontext', 'qtype_gapfill');
          
-         $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton','qtype_gapfill'));
-        //$mform->addHelpButton('wordfeedback', 'feedback_button', 'qtype_wordselect');
+        $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton','qtype_gapfill'));
         
         $mform->removeelement('generalfeedback');
 
@@ -156,9 +155,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $this->add_interactive_settings(true, true);
     }
 
-        public function get_itemsettingsdata(stdClass $question){
-        if (property_exists($question->options, 'itemsettingsdata')) {
-            return $question->options->itemsettingsdata;
+        public function get_itemsettingsdata(stdClass $question){  
+        if (property_exists($question, 'options')) {
+           if(property_exists($question->options,'itemsettingsdata')){ 
+              return $question->options->itemsettingsdata;
+           }
         } else {
             return "";
         }

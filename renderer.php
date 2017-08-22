@@ -30,10 +30,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public $correctresponses = array();
     public $markedresponses = array();
     public $allanswers = array();
+    public $itemsettings;
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
         $question = $qa->get_question();
+        $this->itemsettings = json_decode($question->itemsettingsdata);
 
         if ($question->answerdisplay == "dragdrop") {
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
@@ -93,9 +95,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
+ 
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
+        $itemsettings = $this->get_itemsettings($rightanswer);
         if ($question->fixedgapsize == 1) {
             /* set all gaps to the size of the  biggest gap
              */
@@ -115,19 +119,20 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
+
             /* fraction is always either 1 or 0 for correct or incorrect response */
             if ($fraction == 1) {
                 array_push($this->correctresponses, $response[$fieldname]);
                 /* if the gap contains !! or  the response is (a correct) non blank */
                 if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
-                    $aftergaptext = $this->get_aftergap_text($qa, $fraction);
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
-                $aftergaptext = $this->get_aftergap_text($qa, $fraction);
+                $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings);
                 if ($options->rightanswer == 1) {
-                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $rightanswer);
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings, $rightanswer);
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
@@ -174,7 +179,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    public function get_aftergap_text(question_attempt $qa, $fraction, $rightanswer = "") {
+    public function get_aftergap_text(question_attempt $qa, $fraction,$itemsettings, $rightanswer = "") {
+
         $aftergaptext = "";
         if (($fraction == 0) && ($rightanswer <> "") && ($rightanswer <> ".+")) {
             /* replace | operator with the word or */
@@ -189,10 +195,31 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $aftergaptext .= "<span class='aftergapfeedback' title='" .
                     get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
                     $rightanswerdisplay . $delim["r"] . "</span>";
+            $aftergaptext .= $this->get_feedback($itemsettings,false);
         } else {
             $aftergaptext = $this->feedback_image($fraction);
+            $aftergaptext .= $this->get_feedback($itemsettings,true);
         }
         return $aftergaptext;
+    }
+    protected function get_feedback($settings,$correctness){
+        var_dump($settings);
+        exit();
+        if($correctness){
+            
+            return $settings->correctfeedback;
+        }else{
+            return $settings->incorrectfeedback;
+        }
+    }
+    protected function get_itemsettings ($rightanswer) {   
+        $itemsettings = new stdClass();
+        foreach($this->itemsettings as $set){
+            if($set->text==$rightanswer){
+                $itemsettings=$set;
+            }
+        }
+       return $itemsettings;
     }
 
     /**
