@@ -203,10 +203,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $aftergaptext;
     }
     protected function get_feedback($settings,$correctness){
-        var_dump($settings);
-        exit();
-        if($correctness){
-            
+        if($correctness){            
             return $settings->correctfeedback;
         }else{
             return $settings->incorrectfeedback;
