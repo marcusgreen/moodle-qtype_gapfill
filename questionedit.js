@@ -63,16 +63,17 @@ function Item(text, delimitchars) {
     itemsettings = new Array();
     this.get_itemsettings = function (target) {
         var itemid = target.id;
+        var underscore=itemid.indexOf("_");
+        var id = itemid.substr(2,underscore);
+        id = id.substr(0,id.indexOf("_"));
         /*The instance, normally 0 but incremented if a gap has the ame text as another*/
-        this.instance=itemid.substr(itemid.indexOf("_")+1);
+        this.instance=itemid.substr(underscore+1);
         for (var set in settings) {
             var startofinstance= settings[set].itemid.indexOf("_");
             var set_instance = settings[set].itemid.substr(startofinstance+1);
             text = this.stripdelim();
             if (settings[set].text === text) {
-                if (set_instance === this.instance) {
                     itemsettings = settings[set];
-                }
             }
         }
         return itemsettings;
@@ -84,12 +85,10 @@ function Item(text, delimitchars) {
             if (settings[set].text === this.stripdelim()){
                 var startofinstance= settings[set].itemid.indexOf("_");
                 var set_instance = settings[set].itemid.substr(startofinstance+1);
-                if ((set_instance === this.instance)) {
                     settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
                     settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
                     found = true;
                 }
-            }
         }
         if(found === false) {
             /* if there is no record for this word add one 

@@ -2,6 +2,17 @@
     font-style: italic;
 }
 
+.gapfeedbackincorrect{
+    background: #faa;
+    border-radius:0.25em;
+    background-color:#faa;
+}
+
+.gapfeedbackcorrect{
+    background: #afa;
+    border-radius:0.25em;
+    background-color:#afa;;
+}
 
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input[type=text]{
@@ -99,7 +110,6 @@ incorrec answer was entered */
 .que.gapfill input.correctduplicate{
     background-color: #FFFF00;
 }
-
 .que.gapfill input.correct{
     background-color: #afa;
 }

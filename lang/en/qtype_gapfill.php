@@ -79,7 +79,7 @@ $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->
 $string['correctanswer'] = 'Correct answer';
 $string['coursenotfound'] = 'Course not found, check the course shortname';
 $string['questioncatnotfound'] = 'Question category not found, click click <a href={$a}>here</a> to initialise, then the browser back button';
-$string['import'] = 'Import';
+$string['importexamples'] = 'Import';
 $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
 $string['courseshortname'] = 'Course Shortname';

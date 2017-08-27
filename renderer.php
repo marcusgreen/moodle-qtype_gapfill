@@ -65,24 +65,24 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
         $markedgaps = $question->get_markedgaps($qa, $options);
+
         foreach ($question->textfragments as $place => $fragment) {
             if ($place > 0) {
                 $questiontext .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
-                    $qa, 'question', 'questiontext', $question->id);
+            $questiontext .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question', 'questiontext', $question->id);
         }
         if ($question->optionsaftertext == true) {
-              /* this is to communicate with the mobile app */
-              $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
+            /* this is to communicate with the mobile app */
+            $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
         }
         $output .= "<br/>";
         if ($question->optionsaftertext == true) {
             $output .= $questiontext . $answeroptions;
         } else {
-            $output .= $answeroptions. $questiontext;
+            $output .= $answeroptions . $questiontext;
         }
         if ($qa->get_state() == question_state::$invalid) {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
@@ -95,11 +95,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
- 
+
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
-        $itemsettings = $this->get_itemsettings($rightanswer);
+        $itemsettings = $this->get_itemsettings($place, $rightanswer);
         if ($question->fixedgapsize == 1) {
             /* set all gaps to the size of the  biggest gap
              */
@@ -125,14 +125,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 array_push($this->correctresponses, $response[$fieldname]);
                 /* if the gap contains !! or  the response is (a correct) non blank */
                 if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
-                    $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings);
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
-                $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings);
+                $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
                 if ($options->rightanswer == 1) {
-                    $aftergaptext = $this->get_aftergap_text($qa, $fraction,$itemsettings, $rightanswer);
+                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
@@ -148,7 +148,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'id' => $inputname,
             'size' => $size,
         );
-
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
             $readonly = array('disabled' => 'true');
@@ -165,8 +164,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
-                    array('' => ''), $inputattributes) . ' ' . $aftergaptext;
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, array('' => ''), $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
@@ -179,7 +177,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    public function get_aftergap_text(question_attempt $qa, $fraction,$itemsettings, $rightanswer = "") {
+    public function get_aftergap_text(question_attempt $qa, $fraction, $itemsettings, $rightanswer = "") {
 
         $aftergaptext = "";
         if (($fraction == 0) && ($rightanswer <> "") && ($rightanswer <> ".+")) {
@@ -195,28 +193,33 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $aftergaptext .= "<span class='aftergapfeedback' title='" .
                     get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
                     $rightanswerdisplay . $delim["r"] . "</span>";
-            $aftergaptext .= $this->get_feedback($itemsettings,false);
+            $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >".$this->get_feedback($itemsettings, false)."</span>";
         } else {
             $aftergaptext = $this->feedback_image($fraction);
-            $aftergaptext .= $this->get_feedback($itemsettings,true);
+            $aftergaptext .= " <span class='gapfeedbackcorrect' title='feedback' >".$this->get_feedback($itemsettings, true)."</span>";
         }
         return $aftergaptext;
     }
-    protected function get_feedback($settings,$correctness){
-        if($correctness){            
-            return $settings->correctfeedback;
-        }else{
-            return $settings->incorrectfeedback;
+
+    protected function get_feedback($settings, $correctness) {
+     if($settings==null){
+         return "";
+     }
+        $stripexcptions = "<b><i><u><strike><font>";
+        if ($correctness) {
+            return strip_tags($settings->correctfeedback,$stripexcptions);
+
+        } else {
+            return strip_tags($settings->incorrectfeedback,$stripexcptions);
         }
     }
-    protected function get_itemsettings ($rightanswer) {   
-        $itemsettings = new stdClass();
-        foreach($this->itemsettings as $set){
-            if($set->text==$rightanswer){
-                $itemsettings=$set;
+
+    protected function get_itemsettings($place, $rightanswer) {
+        foreach ($this->itemsettings as $set) {
+            if ($set->text == $rightanswer) {
+                return $set;
             }
         }
-       return $itemsettings;
     }
 
     /**
@@ -281,7 +284,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     /* overriding base class method purely to return a string yougotnrightcount
      * instead of default yougotnright
      */
-
     protected function num_parts_correct(question_attempt $qa) {
         $a = new stdClass();
         list($a->num, $a->outof) = $qa->get_question()->get_num_parts_right(

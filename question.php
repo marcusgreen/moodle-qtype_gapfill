@@ -119,6 +119,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $this->allanswers = $temp;
         shuffle($this->allanswers);
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
+       
     }
 
     /* get the length the correct answer and if the | is used
@@ -235,9 +236,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return $response;
     }
+    
+ public function  get_instances(){
+        foreach ($this->places as $place => $answer) {
+            $response[$this->field($place)] = $answer;
+        }
+    }
 
     /* called from within renderer in interactive mode */
-
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = core_text::strtolower($answergiven, 'UTF-8');

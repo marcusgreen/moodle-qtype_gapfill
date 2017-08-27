@@ -123,8 +123,7 @@ class qtype_gapfill extends question_type {
         if (empty($questiondata->options->answers)) {
             return;
         }
-
-        foreach ($questiondata->options->answers as $a) {
+       foreach ($questiondata->options->answers as $a) {
             if (strstr($a->fraction, '1') == false) {
                 /* if this is a wronganswer/distractor strip any
                  * backslashes, this allows escaped backslashes to
