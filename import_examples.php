@@ -99,7 +99,7 @@ if ($fromform = $mform->get_data()) {
     $category->context = $categorycontext;
 
     $qformat = new qformat_xml();
-    $file = $CFG->dirroot . '/question/type/gapfill/sample_questions.xml';
+    $file = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/gapfill_examples.xml';
     $qformat->setFilename($file);
 
     $qformat->setCategory($category);

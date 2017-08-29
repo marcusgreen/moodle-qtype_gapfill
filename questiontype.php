@@ -268,7 +268,6 @@ class qtype_gapfill extends question_type {
     }
 
     /* runs from question editing form */
-
     public function update_question_gapfill($question, $options, $context) {
         global $DB;
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
@@ -402,9 +401,9 @@ class qtype_gapfill extends question_type {
 public function update_item_settings(stdClass $formdata,$table) {
         global $DB;        
         $oldsettings = $DB->get_records($table, array('question' => $formdata->id));
-        $newsettings = json_decode($formdata->itemsettingsdata, true);
-          if ($newsettings != null) {
-             foreach ($newsettings as $set) { 
+        if (isset($formdata->itemsettingsdata)){
+             $newsettings = json_decode($formdata->itemsettingsdata, true);
+               foreach ($newsettings as $set) { 
                 $setting = new stdClass();
                 $setting->question = $formdata->id;
                 $setting->itemid = $set['itemid'];
