@@ -53,7 +53,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setType('reload', PARAM_RAW);
        
         $mform->removeelement('questiontext');
-        $mform->addElement('text', 'itemsettingsdata','',array('size'=>'80'));
+        $mform->addElement('hidden', 'itemsettingsdata','',array('size'=>'80'));
         $mform->setType('itemsettingsdata', PARAM_RAW);
         
         /* popup for entering feedback for individual words */
