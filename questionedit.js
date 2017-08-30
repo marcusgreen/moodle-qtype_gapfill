@@ -134,8 +134,12 @@ $("#id_itemsettings_button").on("click", function () {
             top: 0,
             left: 0,
             background: "lightgrey",
-            color: "black",
-            display: "block"
+            color: "#55595c",
+            padding: ".5rem .75rem",
+            "line-height": "1.25",
+            display: "block",
+            border: "1px solid rgba(0,0,0,.15)",
+            "border-radius": ".25rem"
         }).appendTo(ed).css("position", "relative");
 
         /* Copy the real html to the feedback editing html */
@@ -150,7 +154,7 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_itemsettings_canvas").css("display", "none");
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
         $("#id_settings_popup").css("display", "none");
-        $("#id_itemsettings_button").html('Add Gap Settings');
+        $("#id_itemsettings_button").html(additemsettings);
     }
 });
 
@@ -171,7 +175,8 @@ $("#id_itemsettings_canvas").on("click", function (e) {
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
             var title = M.util.get_string("additemsettings", "qtype_gapfill");
-            title += ': ' + item.stripdelim();
+            /* the html jquery call will turn any encoded entities such as &gt; to htmel, i.e. > */
+            title += ': ' + $("<div/>").html(item.stripdelim()).text();
             var $popup = $("#id_itemsettings_popup");
             $popup.dialog({
                 position: {
@@ -211,7 +216,6 @@ function toArray(obj) {
     return arr;
 }
 
-
 // Wrap the words of an element and child elements in a span
 // Recurs over child elements, add an ID and class to the wrapping span
 // Does not affect elements with no content, or those to be excluded
@@ -229,7 +233,11 @@ var wrapContent = (function (delimitchars) {
             count = 0;
         }
         var frag, parent, text;
-        var regex = /.*?\[(.*?)\]/;
+        var delimitchars = $("#id_delimitchars").val();
+        var l=delimitchars.substring(0,1);
+        var r=delimitchars.substring(1,2);
+        var regex_bydelim = /\[(.*?)\]/;
+        var regex = new RegExp("(\\"+l+".*?\\"+r+")","g");
         var sp, span = document.createElement('span');
 
         // Tag names of elements to skip, there are more to add
@@ -247,8 +255,10 @@ var wrapContent = (function (delimitchars) {
             } else if (node.nodeType === 3) {
                 // Match sequences of whitespace and non-whitespace
                 // text = node.data.match(/\s+|\S+/g);
-                text = node.data.match(/(\s+)|([A-z]+)|(\.)/g);
-
+               // text = node.data.match(/(\s+)|([A-z\!]+)|(\.)/g);
+                var textsplit = new RegExp("(\\"+l+".*?\\"+r+")","g");
+                text = node.data.split(textsplit); 
+               //ext2= node.data.match(/.*?\[(.*?)\]/);
                 if (text) {
                     // Create a fragment, handy suckers these
                     frag = document.createDocumentFragment();
