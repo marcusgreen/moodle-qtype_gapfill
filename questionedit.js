@@ -154,7 +154,7 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_itemsettings_canvas").css("display", "none");
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
         $("#id_settings_popup").css("display", "none");
-        $("#id_itemsettings_button").html(additemsettings);
+        $("#id_itemsettings_button").html( M.util.get_string("additemsettings", "qtype_gapfill"));
     }
 });
 
