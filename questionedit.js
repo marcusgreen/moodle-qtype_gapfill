@@ -34,6 +34,7 @@ if (settingsdata > "") {
         settings.push(obj[o]);
     }
 }
+  
 function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
     this.text = text;
@@ -61,7 +62,7 @@ function Item(text, delimitchars) {
                 return this.text_nodelim;
             }
     itemsettings = new Array();
-    this.get_itemsettings = function (target) {
+    Item.prototype.get_itemsettings = function (target) {
         var itemid = target.id;
         var underscore=itemid.indexOf("_");
         var id = itemid.substr(2,underscore);
@@ -258,7 +259,6 @@ var wrapContent = (function (delimitchars) {
                // text = node.data.match(/(\s+)|([A-z\!]+)|(\.)/g);
                 var textsplit = new RegExp("(\\"+l+".*?\\"+r+")","g");
                 text = node.data.split(textsplit); 
-               //ext2= node.data.match(/.*?\[(.*?)\]/);
                 if (text) {
                     // Create a fragment, handy suckers these
                     frag = document.createDocumentFragment();
@@ -268,7 +268,7 @@ var wrapContent = (function (delimitchars) {
                             sp = span.cloneNode(false);
                             count++;
                             sp.className = 'item';
-                            item = new Item(text[j],$("#id_delimitchars").val());                            
+                            var item = new Item(text[j],$("#id_delimitchars").val()); 
                             if (item.text > '') {
                                 var instance=0;
                                 for(var i=0; i < gaps.length; ++i){
