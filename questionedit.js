@@ -279,7 +279,7 @@ var wrapContent = (function (delimitchars) {
                                 item.id='id'+count +'_'+ instance;
                                 sp.id=item.id;
                                var is = item.get_itemsettings(item);                               
-                                if ((is.correct >"") || (is.incorrect >"")){
+                                if ((is.correctfeedback >"") || (is.incorrectfeedback >"")){
                                         sp.className = 'item hasfeedback';
                                  }
                                  gaps.push(item.text);
