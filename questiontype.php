@@ -403,6 +403,9 @@ public function update_item_settings(stdClass $formdata,$table) {
         $oldsettings = $DB->get_records($table, array('question' => $formdata->id));
         if (isset($formdata->itemsettingsdata)){
              $newsettings = json_decode($formdata->itemsettingsdata, true);
+             if(!isset($newsettings)){
+                 return;
+             }
                foreach ($newsettings as $set) { 
                 $setting = new stdClass();
                 $setting->question = $formdata->id;
