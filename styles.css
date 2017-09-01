@@ -1,5 +1,7 @@
 .hasfeedback{
     font-style: italic;
+    border: solid thin black;
+    background: lightblue;
 }
 
 .gapfeedbackincorrect{
