@@ -17,7 +17,7 @@
 }
 
 /* the gap where answers are dropped/keyed in */
-.que.gapfill input[type=text]{
+.que.gapfill.qtext input[type=text]{
     background:white;
     border: solid black thin;
     border-radius:4px;
@@ -75,7 +75,7 @@ incorrec answer was entered */
 }
 
 /* styling the dropdowns*/
-.que.gapfill select{
+.que.gapfill.qtext select{
     border: solid black thin;
     color:black;
     padding-bottom:1px;
