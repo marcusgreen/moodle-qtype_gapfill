@@ -34,6 +34,7 @@ $string['noduplicates_help'] = 'When checked, each answer must be unique, useful
 
 
 $string['correct'] = 'Feedback for correct.';
+$string['editquestiontext'] = 'Edit question text';
 $string['incorrect'] = 'Feedback for incorrect.';
 
 $string['delimitchars'] = 'Delimit characters';

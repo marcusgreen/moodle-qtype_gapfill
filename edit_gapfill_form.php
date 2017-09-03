@@ -50,7 +50,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         
        // $PAGE->requires->jquery_plugin('serialize-object', 'qtype_gapfill');
-        $PAGE->requires->strings_for_js(array('itemsettingserror','additemsettings','correct','incorrect'), 'qtype_gapfill');
+        $PAGE->requires->strings_for_js(array('itemsettingserror','editquestiontext','additemsettings','correct','incorrect'), 'qtype_gapfill');
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);

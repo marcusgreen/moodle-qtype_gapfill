@@ -20,12 +20,11 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/*The following lines suppress errors when css lint runs via travis */
-/*global $ */
-/*jshint unused:false*/
+
 
 /* the data is stored in a hidden field */
 var settingsdata = ($("[name='itemsettingsdata']").val());
+
 
 var settings = [];
 var gaps = new Array();
@@ -35,7 +34,7 @@ if (settingsdata > "") {
         settings.push(obj[o]);
     }
 }
-
+  
 function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
     this.text = text;
@@ -49,33 +48,33 @@ function Item(text, delimitchars) {
     this.endchar = this.text.substring(this.len - 1, this.len);
     this.text_nodelim = '';
     this.feedback = {};
-    this.instance = 0;
+    this.instance=0;
     this.feedback.correct = $("#id_corecteditable").html(),
-            this.feedback.incorrect = $("#id_incorrecteditable").html();
+    this.feedback.incorrect = $("#id_incorrecteditable").html();
     this.stripdelim = function () {
-        if (this.startchar === this.l) {
-            this.text_nodelim = this.text.substring(1, this.len);
-        }
-        if (this.endchar === this.r) {
-            len = this.text_nodelim.length;
-            this.text_nodelim = this.text_nodelim.substring(0, len - 1);
-        }
-        return this.text_nodelim;
-    }
+                if (this.startchar === this.l) {
+                    this.text_nodelim = this.text.substring(1, this.len);
+                }
+                if (this.endchar === this.r) {
+                    len = this.text_nodelim.length;
+                    this.text_nodelim = this.text_nodelim.substring(0, len - 1);
+                }
+                return this.text_nodelim;
+            }
     itemsettings = new Array();
     Item.prototype.get_itemsettings = function (target) {
         var itemid = target.id;
-        var underscore = itemid.indexOf("_");
-        var id = itemid.substr(2, underscore);
-        id = id.substr(0, id.indexOf("_"));
-        /*The instance, normally 0 but incremented if a gap has the same text as another*/
-        this.instance = itemid.substr(underscore + 1);
+        var underscore=itemid.indexOf("_");
+        var id = itemid.substr(2,underscore);
+        id = id.substr(0,id.indexOf("_"));
+        /*The instance, normally 0 but incremented if a gap has the ame text as another*/
+        this.instance=itemid.substr(underscore+1);
         for (var set in settings) {
-            var startofinstance = settings[set].itemid.indexOf("_");
-            var set_instance = settings[set].itemid.substr(startofinstance + 1);
+            var startofinstance= settings[set].itemid.indexOf("_");
+            var set_instance = settings[set].itemid.substr(startofinstance+1);
             text = this.stripdelim();
             if (settings[set].text === text) {
-                itemsettings = settings[set];
+                    itemsettings = settings[set];
             }
         }
         return itemsettings;
@@ -84,15 +83,15 @@ function Item(text, delimitchars) {
         found = false;
         var id = e.target.id;
         for (var set in settings) {
-            if (settings[set].text === this.stripdelim()) {
-                var startofinstance = settings[set].itemid.indexOf("_");
-                var set_instance = settings[set].itemid.substr(startofinstance + 1);
-                settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
-                settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
-                found = true;
-            }
+            if (settings[set].text === this.stripdelim()){
+                var startofinstance= settings[set].itemid.indexOf("_");
+                var set_instance = settings[set].itemid.substr(startofinstance+1);
+                    settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+                    settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
+                    found = true;
+                }
         }
-        if (found === false) {
+        if(found === false) {
             /* if there is no record for this word add one 
              * a combination of text and offset will be unique*/
             var itemsettings = {
@@ -122,8 +121,13 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_error_itemsettings")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
         return;
     }
-    if ($('#id_questiontexteditable').get(0).isContentEditable) {      
-        var attributestocopy =[
+    if ($('#id_questiontexteditable').get(0).isContentEditable) {
+        $("#id_questiontexteditable").attr('contenteditable', 'false');
+        $("#fitem_id_questiontext").find('button').attr("disabled", 'true');
+        var fbheight = $("#id_questiontexteditable").css("height");
+        var fbwidth = $("#id_questiontexteditable").css("width");
+        $("#id_questiontexteditable").css("display", 'none');
+           var attributestocopy =[
             'position',
             'width',
             'height',
@@ -131,70 +135,56 @@ $("#id_itemsettings_button").on("click", function () {
             'left',
             'background',
             'padding',
-            'display',
             'border',
             'border-radius',
             'min-height',
-            'line-height',
             'height'
            ];
- 
         $('#id_itemsettings_canvas').copyCSS("#id_questiontexteditable",attributestocopy);
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
         $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
         $("#id_itemsettings_canvas").css({
-            "line-height": "1.25"
+            "line-height": "1.25",
+            "display": "block",
+            "background": "lightgrey"
         });
-        $("#id_questiontexteditable").attr('contenteditable', 'false');
-        $("#fitem_id_questiontext").find('button').attr("disabled", 'true');
-        var fbheight = $("#id_questiontexteditable").css("height");
-        var fbwidth = $("#id_questiontexteditable").css("width");
-        $("#id_questiontexteditable").css("display", 'none');
 
-
-        /*  $("#id_itemsettings_canvas").css({
-         position: "absolute",
-         width: "100%",
-         height: "100%",
-         top: 0,
-         left: 0,
-         background: "lightgrey",
-         color: "#55595c",
-         padding: ".5rem .75rem",
-         "line-height": "1.25",
-         display: "block",
-         border: "1px solid rgba(0,0,0,.15)",
-         "border-radius": ".25rem"
-         }).appendTo(ed).css("position", "relative");
-         */
+       /* $("#id_itemsettings_canvas").css({
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            background: "lightgrey",
+            color: "#55595c",
+            padding: ".5rem .75rem",
+            "line-height": "1.25",
+            display: "block",
+            border: "1px solid rgba(0,0,0,.15)",
+            "border-radius": ".25rem"
+        }).appendTo(ed).css("position", "relative");*/       
 
         /* Copy the real html to the feedback editing html */
         $("#id_itemsettings_canvas").html($("#id_questiontexteditable").prop("innerHTML"));
         wrapContent($("#id_itemsettings_canvas")[0]);
-        $("#id_itemsettings_canvas").attr('contenteditable','false');
-
-        wrapContent($("#id_itemsettings_canvas")[0]);
         $("#id_itemsettings_canvas").css({height: fbheight, width: fbwidth});
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
-        $("#id_itemsettings_canvas").css({background: "lightgrey", display: "block"});
-        $("#id_itemsettings_button").html('Edit Question Text');
+        $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
     } else {
         $("#id_questiontexteditable").css({display: "block", backgroundColor: "white"});
         $("#id_questiontexteditable").attr('contenteditable', 'true');
         $("#id_itemsettings_canvas").css("display", "none");
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
         $("#id_settings_popup").css("display", "none");
-        $("#id_itemsettings_button").html(M.util.get_string("additemsettings", "qtype_gapfill"));
+        $("#id_itemsettings_button").html( M.util.get_string("additemsettings", "qtype_gapfill"));
     }
 });
 
 /*A click on the text */
 $("#id_itemsettings_canvas").on("click", function (e) {
-    if (!$('#id_questiontexteditable').get(0).isContentEditable) {
-        /*gaps will have an id in the form of id followed by one or more digits and an underscore */
-        if (e.target.id.match(/^id[0-9]_/)) {
-            delimitchars = $("#id_delimitchars").val();
-            var item = new Item(e.target.innerHTML, delimitchars);
+    if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
+        delimitchars = $("#id_delimitchars").val();
+        var item = new Item(e.target.innerHTML,delimitchars);
             itemsettings = item.get_itemsettings(e.target);
             if (itemsettings === null || itemsettings.length === 0) {
                 $("#id_correcteditable").html('');
@@ -233,8 +223,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     }
                 ]
             });
-        }
-    }
+     }
 });
 
 
@@ -251,13 +240,11 @@ function toArray(obj) {
 // Recurs over child elements, add an ID and class to the wrapping span
 // Does not affect elements with no content, or those to be excluded
 var wrapContent = (function (delimitchars) {
-
     return function (el) {
         var count = 0;
         gaps = [];
         // If element provided, start there, otherwise use the body
         el = el && el.parentNode ? el : document.body;
-
         // Get all child nodes as a static array
         var node, nodes = toArray(el.childNodes);
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
@@ -265,30 +252,25 @@ var wrapContent = (function (delimitchars) {
         }
         var frag, parent, text;
         var delimitchars = $("#id_delimitchars").val();
-        var l = delimitchars.substring(0, 1);
-        var r = delimitchars.substring(1, 2);
+        var l=delimitchars.substring(0,1);
+        var r=delimitchars.substring(1,2);
         var regex_bydelim = /\[(.*?)\]/;
-        var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
+        var regex = new RegExp("(\\"+l+".*?\\"+r+")","g");
         var sp, span = document.createElement('span');
 
         // Tag names of elements to skip, there are more to add
         var skip = {'script': '', 'button': '', 'input': '', 'select': '',
             'textarea': '', 'option': ''};
-
         // For each child node...
         for (var i = 0, iLen = nodes.length; i < iLen; i++) {
             node = nodes[i];
             // If it's an element, call wrapContent
             if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
-                wrapContent(node);
-
+                wrapContent(node);                
                 // If it's a text node, wrap words
             } else if (node.nodeType === 3) {
-                // Match sequences of whitespace and non-whitespace
-                // text = node.data.match(/\s+|\S+/g);
-                // text = node.data.match(/(\s+)|([A-z\!]+)|(\.)/g);
-                var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
-                text = node.data.split(textsplit);
+                var textsplit = new RegExp("(\\"+l+".*?\\"+r+")","g");
+                text = node.data.split(textsplit); 
                 if (text) {
                     // Create a fragment, handy suckers these
                     frag = document.createDocumentFragment();
@@ -298,21 +280,21 @@ var wrapContent = (function (delimitchars) {
                             sp = span.cloneNode(false);
                             count++;
                             sp.className = 'item';
-                            var item = new Item(text[j], $("#id_delimitchars").val());
+                            var item = new Item(text[j],$("#id_delimitchars").val()); 
                             if (item.text > '') {
-                                var instance = 0;
-                                for (var i = 0; i < gaps.length; ++i) {
-                                    if (gaps[i] === item.text) {
-                                        instance++;
-                                    }
+                                var instance=0;
+                                for(var i=0; i < gaps.length; ++i){
+                                        if(gaps[i] === item.text){
+                                            instance++;
+                                        }
                                 }
-                                item.id = 'id' + count + '_' + instance;
-                                sp.id = item.id;
-                                var is = item.get_itemsettings(item);
-                                if ((is.correctfeedback > "") || (is.incorrectfeedback > "")) {
-                                    sp.className = 'item hasfeedback';
-                                }
-                                gaps.push(item.text);
+                                item.id='id'+count +'_'+ instance;
+                                sp.id=item.id;
+                               var is = item.get_itemsettings(item);                               
+                                if ((is.correctfeedback >"") || (is.incorrecfeedbackt >"")){
+                                        sp.className = 'item hasfeedback';
+                                 }
+                                 gaps.push(item.text);
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);
