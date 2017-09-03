@@ -112,7 +112,7 @@ class qtype_gapfill extends question_type {
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
-        $question->options->itemsettingsdata=$this->get_itemsettings($question);
+        $question->options->itemsettingsdata = $this->get_itemsettings($question);
         parent::get_question_options($question);
     }
 
@@ -123,7 +123,7 @@ class qtype_gapfill extends question_type {
         if (empty($questiondata->options->answers)) {
             return;
         }
-       foreach ($questiondata->options->answers as $a) {
+        foreach ($questiondata->options->answers as $a) {
             if (strstr($a->fraction, '1') == false) {
                 /* if this is a wronganswer/distractor strip any
                  * backslashes, this allows escaped backslashes to
@@ -138,8 +138,7 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction,
-                        $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
                 $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
@@ -147,12 +146,12 @@ class qtype_gapfill extends question_type {
             }
         }
     }
+
     public function get_itemsettings($question) {
         global $DB;
         return json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
     }
 
-    
     /**
      * Called when previewing a question or when displayed in a quiz
      *  (not from within the editing form)  
@@ -164,7 +163,7 @@ class qtype_gapfill extends question_type {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
-        $question->itemsettingsdata=$this->get_itemsettings($question);
+        $question->itemsettingsdata = $this->get_itemsettings($question);
         $question->places = array();
         $counter = 1;
         $question->maxgapsize = 0;
@@ -261,13 +260,14 @@ class qtype_gapfill extends question_type {
 
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
         $this->update_question_gapfill($question, $options, $context);
-        $this->update_item_settings($question,'question_gapfill_settings');
+        $this->update_item_settings($question, 'question_gapfill_settings');
 
         $this->save_hints($question, true);
         return true;
     }
 
     /* runs from question editing form */
+
     public function update_question_gapfill($question, $options, $context) {
         global $DB;
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
@@ -378,8 +378,7 @@ class qtype_gapfill extends question_type {
                 /* split by commas and trim white space */
                 $wronganswers = array_map('trim', explode(',', $question->wronganswers['text']));
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1,
-                        PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
@@ -390,6 +389,7 @@ class qtype_gapfill extends question_type {
         }
         return $answerfields;
     }
+
     /**
      * Take the data from the hidden form field and write to the settings table
      * The first/main type of data is per gap feedback. Other data relating to 
@@ -398,28 +398,28 @@ class qtype_gapfill extends question_type {
      * @global moodle_database $DB
      * @param array $formdata
      */
-public function update_item_settings(stdClass $formdata,$table) {
-        global $DB;        
+    public function update_item_settings(stdClass $formdata, $table) {
+        global $DB;
         $oldsettings = $DB->get_records($table, array('question' => $formdata->id));
-        if (isset($formdata->itemsettingsdata)){
-             $newsettings = json_decode($formdata->itemsettingsdata, true);
-             if(!isset($newsettings)){
-                 return;
-             }
-               foreach ($newsettings as $set) { 
-                $setting = new stdClass();
-                $setting->question = $formdata->id;
-                $setting->itemid = $set['itemid'];
-                $setting->text = $set['text'];
-                $setting->correctfeedback = $set['correctfeedback'];
-                $setting->incorrectfeedback = $set['incorrectfeedback'];
-                $DB->insert_record('question_gapfill_settings', $setting);            }
-        }
-        foreach ($oldsettings as $os) {
-            $DB->delete_records('question_gapfill_settings', array('id' => $os->id));
+        if (isset($formdata->itemsettingsdata)) {
+            $newsettings = json_decode($formdata->itemsettingsdata, true);
+            if (isset($newsettings)) {
+                foreach ($newsettings as $set) {
+                    $setting = new stdClass();
+                    $setting->question = $formdata->id;
+                    $setting->itemid = $set['itemid'];
+                    $setting->text = $set['text'];
+                    $setting->correctfeedback = $set['correctfeedback'];
+                    $setting->incorrectfeedback = $set['incorrectfeedback'];
+                    $DB->insert_record('question_gapfill_settings', $setting);
+                }
+            }
+            foreach ($oldsettings as $os) {
+                $DB->delete_records('question_gapfill_settings', array('id' => $os->id));
+            }
         }
     }
- 
+
     protected function make_hint($hint) {
         return question_hint_with_parts::load_from_record($hint);
     }

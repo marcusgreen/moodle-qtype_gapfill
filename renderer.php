@@ -31,9 +31,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public $markedresponses = array();
     public $allanswers = array();
     public $itemsettings;
+    public $displayoptions;
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
+        $this->displayoptions=$options;
         $question = $qa->get_question();
         $this->itemsettings = json_decode($question->itemsettingsdata);
 
@@ -88,6 +90,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
                                 => $output)), array('class' => 'validationerror'));
         }
+        $output .= html_writer::end_div();
+
         return $output;
     }
 
@@ -178,7 +182,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     public function get_aftergap_text(question_attempt $qa, $fraction, $itemsettings, $rightanswer = "") {
-
         $aftergaptext = "";
         if (($fraction == 0) && ($rightanswer <> "") && ($rightanswer <> ".+")) {
             /* replace | operator with the word or */
@@ -205,10 +208,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      if($settings==null){
          return "";
      }
+     if(!$this->displayoptions->correctness){
+         return "";
+     }
+        /*The atto editor tends to inject various tags that will not look good 
+         * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
+         */
         $stripexcptions = "<b><i><u><strike><font>";
         if ($correctness) {
             return strip_tags($settings->correctfeedback,$stripexcptions);
-
         } else {
             return strip_tags($settings->incorrectfeedback,$stripexcptions);
         }

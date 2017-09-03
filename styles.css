@@ -4,6 +4,21 @@
     background: lightblue;
 }
 
+.attobackground{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: lightgrey;
+            color: #55595c;
+            padding: .5rem .75rem;
+            line-height: 1.25;
+            display: block;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: .25rem;
+}
+
 .gapfeedbackincorrect{
     background: #faa;
     border-radius:0.25em;
@@ -17,7 +32,7 @@
 }
 
 /* the gap where answers are dropped/keyed in */
-.que.gapfill.qtext input[type=text]{
+.que.gapfill input[type=text]{
     background:white;
     border: solid black thin;
     border-radius:4px;
