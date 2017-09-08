@@ -79,6 +79,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('questiontext', 'questiontext', 'qtype_gapfill');
          
         $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton','qtype_gapfill'));
+        $mform->addHelpButton('itemsettings_button', 'itemsettings_button', 'qtype_gapfill');
         
         $mform->removeelement('generalfeedback');
 

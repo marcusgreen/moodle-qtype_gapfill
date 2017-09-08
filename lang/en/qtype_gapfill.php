@@ -42,6 +42,8 @@ $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Gapfill.';
+$string['itemsettings_button']='Item settings';
+$string['itemsettings_button_help']='Clicking this toggles settings mode. Click on a delimited gap word to popup the settings form';
 
 $string['displaygapfill'] = 'gapfill';
 $string['displaydropdown'] = 'dropdown';
