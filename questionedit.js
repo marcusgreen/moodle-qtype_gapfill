@@ -20,6 +20,8 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+/*global $ */
+/*jshint unused:false*/
 
 
 /* the data is stored in a hidden field */
@@ -51,6 +53,14 @@ function Item(text, delimitchars) {
     this.instance=0;
     this.feedback.correct = $("#id_corecteditable").html(),
     this.feedback.incorrect = $("#id_incorrecteditable").html();
+    Item.prototype.striptags = function(text){
+        /*this is not a perfect way of stripping html but it may be good enough */
+        if(text === undefined){ 
+            return "";
+        }
+        var regex = /(<([^>]+)>)/ig;
+        return text.replace(regex, "");
+    }
     this.stripdelim = function () {
                 if (this.startchar === this.l) {
                     this.text_nodelim = this.text.substring(1, this.len);
@@ -67,11 +77,10 @@ function Item(text, delimitchars) {
         var underscore=itemid.indexOf("_");
         var id = itemid.substr(2,underscore);
         id = id.substr(0,id.indexOf("_"));
-        /*The instance, normally 0 but incremented if a gap has the ame text as another*/
+        /*The instance, normally 0 but incremented if a gap has the ame text as another
+         * instance is not currently used*/
         this.instance=itemid.substr(underscore+1);
         for (var set in settings) {
-            var startofinstance= settings[set].itemid.indexOf("_");
-            var set_instance = settings[set].itemid.substr(startofinstance+1);
             text = this.stripdelim();
             if (settings[set].text === text) {
                     itemsettings = settings[set];
@@ -84,16 +93,13 @@ function Item(text, delimitchars) {
         var id = e.target.id;
         for (var set in settings) {
             if (settings[set].text === this.stripdelim()){
-                var startofinstance= settings[set].itemid.indexOf("_");
-                var set_instance = settings[set].itemid.substr(startofinstance+1);
                     settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
                     settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
                     found = true;
                 }
         }
         if(found === false) {
-            /* if there is no record for this word add one 
-             * a combination of text and offset will be unique*/
+            /* if there is no record for this word add one */
             var itemsettings = {
                 itemid: id,
                 questionid: $("input[name=id]").val(),
@@ -121,26 +127,14 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_error_itemsettings")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
         return;
     }
+    $(".atto_html_button").attr("disabled",'true');
     if ($('#id_questiontexteditable').get(0).isContentEditable) {
         $("#id_questiontexteditable").attr('contenteditable', 'false');
         $("#fitem_id_questiontext").find('button').attr("disabled", 'true');
-        var fbheight = $("#id_questiontexteditable").css("height");
-        var fbwidth = $("#id_questiontexteditable").css("width");
-        $("#id_questiontexteditable").css("display", 'none');
-           var attributestocopy =[
-            'position',
-            'width',
-            'height',
-            'top',
-            'left',
-            'background',
-            'padding',
-            'border',
-            'border-radius',
-            'min-height',
-            'height'
-           ];
-        $('#id_itemsettings_canvas').copyCSS("#id_questiontexteditable",attributestocopy);
+        var settingformheight = $("#id_questiontexteditable").css("height");
+        var settingformwidth = $("#id_questiontexteditable").css("width");
+        $("#id_questiontexteditable").css("display", 'none');           
+        $('#id_itemsettings_canvas').copyCSS("#id_questiontexteditable");
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
         $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
         $("#id_itemsettings_canvas").css({
@@ -149,27 +143,16 @@ $("#id_itemsettings_button").on("click", function () {
             "background": "lightgrey"
         });
 
-       /* $("#id_itemsettings_canvas").css({
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            top: 0,
-            left: 0,
-            background: "lightgrey",
-            color: "#55595c",
-            padding: ".5rem .75rem",
-            "line-height": "1.25",
-            display: "block",
-            border: "1px solid rgba(0,0,0,.15)",
-            "border-radius": ".25rem"
-        }).appendTo(ed).css("position", "relative");*/       
-
         /* Copy the real html to the feedback editing html */
         $("#id_itemsettings_canvas").html($("#id_questiontexteditable").prop("innerHTML"));
-        wrapContent($("#id_itemsettings_canvas")[0]);
-        $("#id_itemsettings_canvas").css({height: fbheight, width: fbwidth});
+        $("#id_itemsettings_canvas").css({height: settingformheight, width: settingformwidth});
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
         $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
+        /* disable the buttons on questiontext but not on the feedback form */
+        $('#questiontext [class^=atto_]').attr("disabled",'true');
+        /*wrapContent should be the last on this block as it sometimes falls over with an error */
+         wrapContent($("#id_itemsettings_canvas")[0]);
+
     } else {
         $("#id_questiontexteditable").css({display: "block", backgroundColor: "white"});
         $("#id_questiontexteditable").attr('contenteditable', 'true');
@@ -177,11 +160,17 @@ $("#id_itemsettings_button").on("click", function () {
         $("#fitem_id_questiontext").find('button').removeAttr("disabled");
         $("#id_settings_popup").css("display", "none");
         $("#id_itemsettings_button").html( M.util.get_string("additemsettings", "qtype_gapfill"));
+        $('[class^=atto_]').removeAttr("disabled");
+
     }
 });
 
 /*A click on the text */
 $("#id_itemsettings_canvas").on("click", function (e) {
+    /*
+     * questiontext needs to be edditable and the target must start 
+     * with id followed by one or more digits and an underscore 
+     * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML,delimitchars);
@@ -196,7 +185,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
             $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
             $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
             var title = M.util.get_string("additemsettings", "qtype_gapfill");
-            /* the html jquery call will turn any encoded entities such as &gt; to htmel, i.e. > */
+            /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
             title += ': ' + $("<div/>").html(item.stripdelim()).text();
             var $popup = $("#id_itemsettings_popup");
             $popup.dialog({
@@ -239,7 +228,7 @@ function toArray(obj) {
 // Wrap the words of an element and child elements in a span
 // Recurs over child elements, add an ID and class to the wrapping span
 // Does not affect elements with no content, or those to be excluded
-var wrapContent = (function (delimitchars) {
+var wrapContent = (function () {
     return function (el) {
         var count = 0;
         gaps = [];
@@ -250,14 +239,12 @@ var wrapContent = (function (delimitchars) {
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
         }
-        var frag, parent, text;
+        var frag, text;
         var delimitchars = $("#id_delimitchars").val();
         var l=delimitchars.substring(0,1);
         var r=delimitchars.substring(1,2);
-        var regex_bydelim = /\[(.*?)\]/;
         var regex = new RegExp("(\\"+l+".*?\\"+r+")","g");
         var sp, span = document.createElement('span');
-
         // Tag names of elements to skip, there are more to add
         var skip = {'script': '', 'button': '', 'input': '', 'select': '',
             'textarea': '', 'option': ''};
@@ -290,9 +277,9 @@ var wrapContent = (function (delimitchars) {
                                 }
                                 item.id='id'+count +'_'+ instance;
                                 sp.id=item.id;
-                               var is = item.get_itemsettings(item);                               
-                                if ((is.correctfeedback >"") || (is.incorrecfeedbackt >"")){
-                                        sp.className = 'item hasfeedback';
+                                var is = item.get_itemsettings(item);  
+                                if (((item.striptags(is.correctfeedback) > "") || (item.striptags(is.incorrectfeedback)> ""))) {
+                                        sp.className = 'hasfeedback';
                                  }
                                  gaps.push(item.text);
                             }
@@ -306,7 +293,9 @@ var wrapContent = (function (delimitchars) {
                     }
                 }
                 // Replace the original node with the fragment
-                node.parentNode.replaceChild(frag, node);
+                //if(node.parentNode !==null){
+                    node.parentNode.replaceChild(frag, node);
+              //}
             }
         }
     };
