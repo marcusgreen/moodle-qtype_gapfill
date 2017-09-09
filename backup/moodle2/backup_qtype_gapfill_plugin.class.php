@@ -64,14 +64,13 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
             'fixedgapsize', 'optionsaftertext', 'correctfedback', 'correctfeddbackformat', 'partiallycorrectfeedback',
             'partiallycorrectfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat'));
-        
-        $gapsettings=new backup_nested_element('question_gapfill_settings',array('id)'),'questionid','itemid',
-                'text','correctfeedback','incorrectfeedback');
+
+        $gapsettings = new backup_nested_element('question_gapfill_settings', array('id)'), 'questionid', 'itemid',
+                'text', 'correctfeedback', 'incorrectfeedback');
 
         // Now the own qtype tree.
         $pluginwrapper->add_child($gapfill);
         $pluginwrapper->add_child($gapsettings);
-
 
         // Set source to populate the data.
         $gapfill->set_source_table('question_gapfill',

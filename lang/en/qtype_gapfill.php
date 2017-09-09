@@ -32,7 +32,6 @@ $string['casesensitive_text'] = 'An answer of CAT will will be treated as differ
 $string['noduplicates'] = 'No Duplicates';
 $string['noduplicates_help'] = 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
 
-
 $string['correct'] = 'Feedback for correct.';
 $string['editquestiontext'] = 'Edit question text';
 $string['incorrect'] = 'Feedback for incorrect.';
@@ -42,8 +41,8 @@ $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Gapfill.';
-$string['itemsettings_button']='Item settings';
-$string['itemsettings_button_help']='Clicking this toggles settings mode. Click on a delimited gap word to popup the settings form';
+$string['itemsettings_button'] = 'Item settings';
+$string['itemsettings_button_help'] = 'Clicking this toggles settings mode. Click on a delimited gap word to popup the settings form';
 
 $string['displaygapfill'] = 'gapfill';
 $string['displaydropdown'] = 'dropdown';

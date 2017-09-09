@@ -46,48 +46,47 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('ui-css');
-        $PAGE->requires->jquery_plugin('copycss','qtype_gapfill');
+        $PAGE->requires->jquery_plugin('copycss', 'qtype_gapfill');
 
-        
-       // $PAGE->requires->jquery_plugin('serialize-object', 'qtype_gapfill');
-        $PAGE->requires->strings_for_js(array('itemsettingserror','editquestiontext','additemsettings','correct','incorrect'), 'qtype_gapfill');
+        $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
+            'correct', 'incorrect'), 'qtype_gapfill');
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
-       
+
         $mform->removeelement('questiontext');
         /*for storing the json containing the settings data */
-        $mform->addElement('hidden', 'itemsettingsdata','',array('size'=>'80'));
+        $mform->addElement('hidden', 'itemsettingsdata', '', array('size' => '80'));
         $mform->setType('itemsettingsdata', PARAM_RAW);
-        
+
         /* popup for entering feedback for individual words */
-        $mform->addElement('html', '<div id="id_itemsettings_popup" title="'.get_string('additemsettings','qtype_gapfill').'" style="display:none;background-color:lightgrey" >');
-             
+        $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
+                . '" style="display:none;background-color:lightgrey" >');
+
         $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
         $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
-                
+
         $mform->addElement('html', '</div>');
-        
-         /* presented for clicking on the gaps once they have been given numberical ids */
+
+        /* presented for clicking on the gaps once they have been given numberical ids */
         $mform->addElement('html', '<div id="id_itemsettings_canvas" style="display:none;background-color:lightgrey" ></div>');
-      
-        
+
         $mform->addElement('html', '<div id="questiontext" >');
-        $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10), $this->editoroptions);
+        $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10),
+                $this->editoroptions);
         $mform->addElement('html', '</div>');
 
         $mform->setType('questiontext', PARAM_RAW);
         $mform->addHelpButton('questiontext', 'questiontext', 'qtype_gapfill');
-         
-        $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton','qtype_gapfill'));
+
+        $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton', 'qtype_gapfill'));
         $mform->addHelpButton('itemsettings_button', 'itemsettings_button', 'qtype_gapfill');
-        
+
         $mform->removeelement('generalfeedback');
 
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        
         $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
                 array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
@@ -165,15 +164,16 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $this->add_interactive_settings(true, true);
     }
 
-        public function get_itemsettingsdata(stdClass $question){  
+    public function get_itemsettingsdata(stdClass $question) {
         if (property_exists($question, 'options')) {
-           if(property_exists($question->options,'itemsettingsdata')){ 
-              return $question->options->itemsettingsdata;
-           }
+            if (property_exists($question->options, 'itemsettingsdata')) {
+                return $question->options->itemsettingsdata;
+            }
         } else {
             return "";
         }
     }
+
     public function set_data($question) {
         /* accessing the form in this way is probably not correct style */
         $wronganswers = $this->get_wrong_answers($question);

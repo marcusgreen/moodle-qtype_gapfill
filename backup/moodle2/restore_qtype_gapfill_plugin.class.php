@@ -47,10 +47,6 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         // We use get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/gapfill');
         $paths[] = new restore_path_element($elename, $elepath);
-        
-          
-        
-        
 
         return $paths; // And we return the interesting paths.
     }

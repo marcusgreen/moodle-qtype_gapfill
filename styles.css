@@ -39,7 +39,7 @@
     color:black;
     margin-bottom:1px;
     margin-top:1px;
-    padding:1px;  
+    padding:1px;
 }
 
 /* glow a little around the border */
@@ -95,7 +95,7 @@ incorrec answer was entered */
     color:black;
     padding-bottom:1px;
     padding-top:1px;
-    -moz-border-radius: 3px; 
+    -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
 }

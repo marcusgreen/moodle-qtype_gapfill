@@ -105,7 +105,7 @@ class qtype_gapfill extends question_type {
 
     /**
      * Called during question editing
-     * 
+     *
      * @global type moodle_database $DB
      * @param type $question
      */
@@ -138,7 +138,8 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction, $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction,
+                        $a->feedback, $a->feedbackformat);
                 $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
@@ -154,8 +155,8 @@ class qtype_gapfill extends question_type {
 
     /**
      * Called when previewing a question or when displayed in a quiz
-     *  (not from within the editing form)  
-     * 
+     *  (not from within the editing form)
+     *
      * @param question_definition $question
      * @param type $questiondata
      */
@@ -378,7 +379,8 @@ class qtype_gapfill extends question_type {
                 /* split by commas and trim white space */
                 $wronganswers = array_map('trim', explode(',', $question->wronganswers['text']));
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split($regex, $question->wronganswers['text'],
+                        -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
                 $wronganswerfields = array();
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
@@ -392,9 +394,9 @@ class qtype_gapfill extends question_type {
 
     /**
      * Take the data from the hidden form field and write to the settings table
-     * The first/main type of data is per gap feedback. Other data relating to 
+     * The first/main type of data is per gap feedback. Other data relating to
      * settings for a gap may be added later
-     * 
+     *
      * @global moodle_database $DB
      * @param array $formdata
      */

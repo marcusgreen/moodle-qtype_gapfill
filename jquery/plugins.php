@@ -26,5 +26,4 @@ defined('MOODLE_INTERNAL') || die();
 $plugins = array(
     'ui.touch-punch' => array('files' => array('jquery-ui.touch-punch.js')),
     'copycss' => array('files' => array('copycss.js'))
-    
 );

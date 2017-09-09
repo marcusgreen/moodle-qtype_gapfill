@@ -35,7 +35,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
-        $this->displayoptions=$options;
+        $this->displayoptions = $options;
         $question = $qa->get_question();
         $this->itemsettings = json_decode($question->itemsettingsdata);
 
@@ -74,7 +74,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $questiontext .= $question->format_text($fragment, $question->questiontextformat, $qa, 'question', 'questiontext', $question->id);
+            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
+                    $qa, 'question', 'questiontext', $question->id);
         }
         if ($question->optionsaftertext == true) {
             /* this is to communicate with the mobile app */
@@ -168,7 +169,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* blank out the style put in previously */
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
-            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer, array('' => ''), $inputattributes) . ' ' . $aftergaptext;
+            $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
+                    array('' => ''), $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
@@ -196,29 +198,31 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $aftergaptext .= "<span class='aftergapfeedback' title='" .
                     get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
                     $rightanswerdisplay . $delim["r"] . "</span>";
-            $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >".$this->get_feedback($itemsettings, false)."</span>";
+            $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >"
+                    .$this->get_feedback($itemsettings, false)."</span>";
         } else {
             $aftergaptext = $this->feedback_image($fraction);
-            $aftergaptext .= " <span class='gapfeedbackcorrect' title='feedback' >".$this->get_feedback($itemsettings, true)."</span>";
+            $aftergaptext .= " <span class='gapfeedbackcorrect' title='feedback' >".
+                    $this->get_feedback($itemsettings, true)."</span>";
         }
         return $aftergaptext;
     }
 
     protected function get_feedback($settings, $correctness) {
-     if($settings==null){
-         return "";
-     }
-     if(!$this->displayoptions->correctness){
-         return "";
-     }
-        /*The atto editor tends to inject various tags that will not look good 
+        if ($settings == null) {
+            return "";
+        }
+        if (!$this->displayoptions->correctness) {
+            return "";
+        }
+        /*The atto editor tends to inject various tags that will not look good
          * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
          */
         $stripexcptions = "<b><i><u><strike><font>";
         if ($correctness) {
-            return strip_tags($settings->correctfeedback,$stripexcptions);
+            return strip_tags($settings->correctfeedback, $stripexcptions);
         } else {
-            return strip_tags($settings->incorrectfeedback,$stripexcptions);
+            return strip_tags($settings->incorrectfeedback, $stripexcptions);
         }
     }
 
