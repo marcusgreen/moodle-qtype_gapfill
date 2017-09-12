@@ -149,7 +149,7 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
         $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
         /* disable the buttons on questiontext but not on the feedback form */
-        $('#questiontext [class^=atto_]').attr("disabled",'true');
+       // $('#questiontext [class^=atto_]').attr("disabled",'true');
         /*wrapContent should be the last on this block as it sometimes falls over with an error */
          wrapContent($("#id_itemsettings_canvas")[0]);
 
@@ -196,7 +196,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                 },
                 height: 500,
                 width: "70%",
-                modal: true,
+                modal: false,
                 title: title,
                 buttons: [
                     {

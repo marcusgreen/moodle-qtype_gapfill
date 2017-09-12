@@ -218,7 +218,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /*The atto editor tends to inject various tags that will not look good
          * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
          */
-        $stripexcptions = "<b><i><u><strike><font>";
+        $stripexcptions = "<a><b><i><u><strike><font>";
         if ($correctness) {
             return strip_tags($settings->correctfeedback, $stripexcptions);
         } else {
