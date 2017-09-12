@@ -18,8 +18,7 @@
  * Gapfill question definition class. This class is mainly about
  * what happens at runtime, when the quesiton is part of a quiz
  *
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_gapfill
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -121,10 +120,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 
-    /* get the length the correct answer and if the | is used
-     * the length of the longest of the correct answers
-     */
+    
 
+    /**
+     * get the length of the correct answer and if the | is used
+     * the length of the longest of the correct answers        
+     * @param string $answer
+     * @return number
+     */
     public function get_size($answer) {
         $answer = htmlspecialchars_decode($answer);
         $words = explode("|", $answer);
@@ -139,9 +142,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function field($place) {
         return 'p' . $place;
     }
-
+    /**
+     * get expected data types (?)
+     * @return array
+     */
     public function get_expected_data() {
-        /* it may make more sense to think of this as get expected data types */
         $data = array();
         foreach ($this->places as $key => $value) {
             $data['p' . $key] = PARAM_RAW_TRIMMED;
@@ -192,11 +197,22 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * What is the correct value for the field
+     * 
+     * @param number $place
+     * @return number
      */
     public function get_right_choice_for($place) {
         return $this->places[$place];
     }
 
+    /**
+     * 
+     * @param array $prevresponse
+     * @param array $newresponse
+     * @return boolean
+     * 
+     * Don't change answer if it is the same
+     */
     public function is_same_response(array $prevresponse, array $newresponse) {
         /* if you are moving from viewing one question to another this will
          * discard the processing if the answer has not changed. If you don't
@@ -213,6 +229,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * A question is gradable if at least one gap response is not blank
+     * 
+     * @param array $response
+     * @return boolean
      */
     public function is_gradable_response(array $response) {
         foreach ($response as $key => $answergiven) {

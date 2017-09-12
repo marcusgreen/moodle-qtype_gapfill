@@ -21,8 +21,7 @@
  * @copyright &copy; 2012 Marcus Green
  * @author marcusavgreen@gmail.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package qtype
- * @subpackage gapfill
+ * @package qtype_gapfill
  */
 defined('MOODLE_INTERNAL') || die();
 $string['additemsettings'] = 'Add Gap settings';

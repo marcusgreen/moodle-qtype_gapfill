@@ -17,7 +17,7 @@
 /**
  * The editing form code for this question type.
  * @package    qtype_gapfill
- * @copyright  2012 Marcus Green
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -105,7 +105,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
         // The delimiting characters around fields.
-
         $config = get_config('qtype_gapfill');
         /* turn  config->delimitchars into an array) */
         $delimitchars = explode(",", $config->delimitchars);
@@ -132,10 +131,9 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         /* sets all gaps to the size of the largest gap, avoids giving clues to the correct answer */
         $mform->addElement('advcheckbox', 'fixedgapsize', get_string('fixedgapsize', 'qtype_gapfill'));
-        $mform->setDefault('disableregex', $config->fixedgapsize);
-        $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
+         $mform->addHelpButton('fixedgapsize', 'fixedgapsize', 'qtype_gapfill');
 
-        /* put draggable answer options after the text. They don't have to be dragged as far, handy on small screens */
+         /* put draggable answer options after the text. They don't have to be dragged as far, handy on small screens */
         $mform->addElement('advcheckbox', 'optionsaftertext', get_string('optionsaftertext', 'qtype_gapfill'));
         $mform->setDefault('optionsaftertext', $config->optionsaftertext);
         $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
@@ -164,6 +162,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $this->add_interactive_settings(true, true);
     }
 
+    /**
+     * item settings such as feedback for correct and incorrect responses
+     * @param stdClass $question
+     * @return stringitem
+     */
     public function get_itemsettingsdata(stdClass $question) {
         if (property_exists($question, 'options')) {
             if (property_exists($question->options, 'itemsettingsdata')) {
@@ -174,13 +177,17 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
     }
 
+     /**
+     * Load in existing data as form defaults.
+     * 
+     * @param mixed $question object or array of default values
+     */
     public function set_data($question) {
         /* accessing the form in this way is probably not correct style */
         $wronganswers = $this->get_wrong_answers($question);
           /* this gets manipulated by javascript */
         $settingsdata = $this->get_itemsettingsdata($question);
         $this->_form->getElement('itemsettingsdata')->setValue($settingsdata);
-
         $this->_form->getElement('wronganswers')->setValue(array('text' => $wronganswers));
         parent::set_data($question);
     }
@@ -188,8 +195,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
     /**
      * Pull out a comma delimited string with the
      * wrong answers (distractors) in it from question->options->answers
-     * @param type $question
-     * @return type string
+     * @param stdClass $question
+     * @return  string comma separated string
      */
     public function get_wrong_answers($question) {
         $wronganswers = "";
@@ -201,7 +208,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
                 }
             }
         }
-        return $wronganswers = rtrim($wronganswers, ',');
+        return rtrim($wronganswers, ',');
     }
 
     /**
@@ -221,7 +228,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
         return $question;
     }
-
+  /**
+     * Check the question text is valid, specifically that
+     * it contains at lease one gap (text surrounded by delimiters
+   * * as in [cat]
+     *
+     * @param array $fromform
+     * @param array $data
+     * @return boolean
+     */
     public function validation($fromform, $data) {
         $errors = array();
         /* don't save the form if there are no fields defined */
@@ -235,7 +250,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
             return true;
         }
     }
-
+    
+    /**
+     * Name of this question type
+     * @return string
+     */
     public function qtype() {
         return 'gapfill';
     }

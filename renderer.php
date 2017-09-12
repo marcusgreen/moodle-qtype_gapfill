@@ -17,14 +17,18 @@
 /**
  * gapfill question renderer class.
  *
- * @package    qtype
- * @subpackage gapfill
- * @copyright &copy; 2012 Marcus Green
+ * @package    qtype_ordering
+ * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
-/** Gapfill question type with type in gaps, draggable answers or dropdowns */
+/**
+ * Generates the output for gapfill questions
+ *
+ *@copyright  2017 Marcus Green
+ *@license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
     public $correctresponses = array();
@@ -32,7 +36,17 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public $allanswers = array();
     public $itemsettings;
     public $displayoptions;
-
+    
+    
+    /**
+     * Generate the display of the formulation part of the question shown at runtime
+     * in a quiz.  This is the area that contains the question text with gaps, and the  
+     * draggable potential answers and . 
+     *      
+     * @param question_attempt $qa the question attempt to display.
+     * @param question_display_options $options controls what should and should not be displayed.
+     * @return string HTML fragment.
+     */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
         $this->displayoptions = $options;
@@ -95,7 +109,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         return $output;
     }
-
+    
+    /**
+     * 
+     * @param question_attempt $qa
+     * @param number $place
+     * @param question_display_options $options
+     * @param array or null $markedgaps
+     * @return string
+     */    
     public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
@@ -218,7 +240,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /*The atto editor tends to inject various tags that will not look good
          * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
          */
-        $stripexcptions = "<a><b><i><u><strike><font>";
+        $stripexcptions = "<hr><a><b><i><u><strike><font>";
         if ($correctness) {
             return strip_tags($settings->correctfeedback, $stripexcptions);
         } else {
