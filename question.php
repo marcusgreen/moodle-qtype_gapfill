@@ -100,7 +100,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * be needed later in the step and doing initialisation
      * 
      * @param question_attempt_step $step
-     * @param type $variant
+     * @param number $variant (apparently not used)
      */
     public function start_attempt(question_attempt_step $step, $variant) {
         /* this is for multiple values in any order with the | (or operator)
@@ -143,7 +143,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * @param int $key stem number
+     * returns string of place key value prepended with p, i.e. p0 or p1 etc
+     * @param int $place stem number 
      * @return string the question-type variable name.
      */
     public function field($place) {
@@ -257,10 +258,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return false;
     }
 
+     
     /**
-     * @return question_answer an answer that
-     * contains the a response that would get full marks.
-     * used in preview mode
+     * Return array containing answers that would get full marks
+     * 
+     * @return array
      */
     public function get_correct_response() {
         $response = array();
@@ -383,10 +385,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * Calculate grade
+     * Calculate grade and returns an array in the form 
+     * array(2) (
+     *[0] => (int) 1
+     *[1] => question_state_gradedright object etc etc etc
      * 
      * @param array $response
-     * @return type
+     * @return array
      */
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
@@ -434,10 +439,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $totalscore / $this->gapcount;
     }
 
-    /**
-     * I'm not sure what this does, but I believe it is necessary. Possibly something to do
-     * with including files such as images.
-     *
+  
+     /**
+     * Checks whether the users is allow to be served a particular file.
+     * Component and filearea refers to fields in the mdl_files table
+     * 
+     * @param question_attempt $qa the question attempt being displayed.
+     * @param question_display_options $options the options that control display of the question.
+     * @param string $component the name of the component we are serving files for.
+     * @param string $filearea the name of the file area.
+     * @param array $args the remaining bits of the file path.
+     * @param bool $forcedownload whether the user must be forced to download the file.
+     * @return bool true if the user can access this file.
      */
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
         if ($component == 'question' && in_array($filearea, array('correctfeedback',
@@ -512,7 +525,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
-
+    /**
+     * get an array with information about marking of gap in the form
+     * array(1) (  [p1] => array(3)(
+     *  [value] => (string) 0    
+     *  [fraction] => (int) 1
+     *  [duplicate] => (string) false
+     * ))
+     * 
+     * @param question_attempt $qa
+     * @param question_display_options $options
+     * @return array
+     */
     public function get_markedgaps(question_attempt $qa, question_display_options $options) {
         $markedgaps = array();
         $question = $qa->get_question();
