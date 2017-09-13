@@ -29,7 +29,7 @@ var settingsdata = ($("[name='itemsettingsdata']").val());
 
 
 var settings = [];
-var gaps = new Array();
+var gaps = [];
 if (settingsdata > "") {
     obj = JSON.parse(settingsdata);
     for (var o in obj) {

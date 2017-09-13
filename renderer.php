@@ -111,11 +111,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
     
     /**
+     * Construct the gaps, e.g. textentry or dropdowns and
+     * set the state accordingly
      * 
      * @param question_attempt $qa
      * @param number $place
      * @param question_display_options $options
-     * @param array or null $markedgaps
+     * @param array  $markedgaps
      * @return string
      */    
     public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {

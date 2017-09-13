@@ -94,7 +94,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
     public $allanswers = array();
-
+    
+     /**
+     * Start a new attempt at this question, storing any information that will
+     * be needed later in the step and doing initialisation
+     * 
+     * @param question_attempt_step $step
+     * @param type $variant
+     */
     public function start_attempt(question_attempt_step $step, $variant) {
         /* this is for multiple values in any order with the | (or operator)
          * it takes the first occurance of an or, splits it into separate fields
@@ -155,10 +162,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * @param array $response  as might be passed to {@link grade_response()}
-     * @return string
      * Value returned will be written to responsesummary field of
      * the question_attempts table
+     * 
+     * @param array $response
+     * @return string
      */
     public function summarise_response(array $response) {
         $summary = "";
@@ -189,6 +197,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $iscomplete;
     }
 
+    /**
+     * Returns prompt asking for answer. Called from renderer 
+     * if question state is invalid. 
+     * 
+     * @param array $response
+     * @return string
+     */
     public function get_validation_error(array $response) {
         if (!$this->is_gradable_response($response)) {
             return get_string('pleaseenterananswer', 'qtype_gapfill');
@@ -255,13 +270,23 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $response;
     }
 
+    /**
+     * TODO
+     * I am not convinced this is actually used anywhere
+     */
     public function  get_instances() {
         foreach ($this->places as $place => $answer) {
             $response[$this->field($place)] = $answer;
         }
     }
-
-    /* called from within renderer in interactive mode */
+   
+    /**
+     * called from within renderer in interactive mode 
+     * 
+     * @param string $answergiven
+     * @param string $rightanswer
+     * @return boolean
+     */
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = core_text::strtolower($answergiven, 'UTF-8');
@@ -330,7 +355,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return $response;
     }
-
+    
+    /**
+     * Useful with multiple correct answers per gap, e.g. gold|bronze|silver
+     * This code ensures that only one correct answer gets mark credit
+     * @param array $response
+     * @return array
+     */
     public function discard_duplicates(array $response) {
         if ($this->noduplicates == 1) {
             /*
@@ -351,6 +382,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
+    /**
+     * Calculate grade
+     * 
+     * @param array $response
+     * @return type
+     */
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
         $right = $this->get_num_parts_right($response);
@@ -358,8 +395,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
-
-    // Required by the interface question_automatically_gradable_with_countback.
+    
+    /**
+     * Required by the interface question_automatically_gradable_with_countback.
+     * 
+     * @param array $responses
+     * @param array $totaltries
+     * @return number
+     */
     public function compute_final_grade($responses, $totaltries) {
         if (($this->noduplicates == 1) && (count($responses) > 0)) {
              $responses[0] = $this->discard_duplicates($responses[0]);
@@ -406,7 +449,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return parent::check_file_access($qa, $options, $component, $filearea, $args, $forcedownload);
         }
     }
-
+    
+    /**
+     * Compare the answer given with the correct answer, does it match?
+     * 
+     * @param string $answergiven
+     * @param string $answer
+     * @param boolean $disableregex
+     * @return boolean
+     */
     public function compare_response_with_answer($answergiven, $answer, $disableregex = false) {
         /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
