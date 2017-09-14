@@ -17,8 +17,8 @@
 /**
  * gapfill question renderer class.
  *
- * @package    qtype_ordering
- * @copyright  2012 Marcus Green
+ * @package    qtype_gapfill
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -26,8 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Generates the output for gapfill questions
  *
- *@copyright  2017 Marcus Green
- *@license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  2017 Marcus Green
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
@@ -36,13 +36,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public $allanswers = array();
     public $itemsettings;
     public $displayoptions;
-    
-    
+
     /**
      * Generate the display of the formulation part of the question shown at runtime
-     * in a quiz.  This is the area that contains the question text with gaps, and the  
-     * draggable potential answers and . 
-     *      
+     * in a quiz.  This is the area that contains the question text with gaps, and the
+     * draggable potential answers
+     *
      * @param question_attempt $qa the question attempt to display.
      * @param question_display_options $options controls what should and should not be displayed.
      * @return string HTML fragment.
@@ -109,17 +108,17 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         return $output;
     }
-    
+
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
      * set the state accordingly
-     * 
+     *
      * @param question_attempt $qa
      * @param number $place
      * @param question_display_options $options
      * @param array  $markedgaps
      * @return string
-     */    
+     */
     public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
@@ -128,7 +127,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
-        $itemsettings = $this->get_itemsettings($place, $rightanswer);
+        $itemsettings = $this->get_itemsettings($rightanswer);
         if ($question->fixedgapsize == 1) {
             /* set all gaps to the size of the  biggest gap
              */
@@ -207,6 +206,16 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
+    /**
+     * What appears after a gap once it is marked, e.g. a tick a cross or feedback
+     * on the answer
+     *
+     * @param question_attempt $qa
+     * @param number $fraction
+     * @param array $itemsettings
+     * @param string $rightanswer
+     * @return string
+     */
     public function get_aftergap_text(question_attempt $qa, $fraction, $itemsettings, $rightanswer = "") {
         $aftergaptext = "";
         if (($fraction == 0) && ($rightanswer <> "") && ($rightanswer <> ".+")) {
@@ -232,6 +241,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $aftergaptext;
     }
 
+    /**
+     * Get feedback for correct or incorrect response
+     *
+     * @param array $settings
+     * @param boolean $correctness
+     * @return string
+     */
     protected function get_feedback($settings, $correctness) {
         if ($settings == null) {
             return "";
@@ -249,8 +265,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return strip_tags($settings->incorrectfeedback, $stripexcptions);
         }
     }
-
-    protected function get_itemsettings($place, $rightanswer) {
+    /**
+     * Get the item settings for this gap based on the gap text
+     * If you have duplicate gaps it will not distinguish between them
+     *
+     * @param string $rightanswer
+     * @return array
+     */
+    protected function get_itemsettings($rightanswer) {
         foreach ($this->itemsettings as $set) {
             if ($set->text == $rightanswer) {
                 return $set;
@@ -259,14 +281,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     /**
+     * set the feedback class to green unless noduplicates is set
+     * then check if this is a duplicated value and if it is set the background
+     * to yellow.
      *
      * @param array $markedgaps
      * @param question_attempt $qa
-     * @param type $fraction either 0 or 1 for correct or incorrect
-     * @param type $fieldname p1, p2, p3 etc
-     * @return string set the feedback class to green unless noduplicates is set
-     * then check if this is a duplicated value and if it is set the background
-     * to yellow.
+     * @param number $fraction either 0 or 1 for correct or incorrect
+     * @param string $fieldname p1, p2, p3 etc
+     * @return string
      */
     public function get_input_class(array $markedgaps, question_attempt $qa, $fraction, $fieldname) {
         $response = $qa->get_last_qt_data();
@@ -284,15 +307,23 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $inputclass;
     }
 
+    /**
+     * Get feedback/hint information
+     *
+     * @param question_attempt $qa
+     * @return string
+     */
     public function specific_feedback(question_attempt $qa) {
         return $this->combined_feedback($qa) . $this->get_duplicate_feedback($qa);
     }
 
     /**
-     * @param type questionattemtp $qa
-     * @return type string
      * if noduplicates is set check if any responses
      * are duplicate values
+     *
+     * @param question_attempt $qa
+     * @return string
+     *
      */
     public function get_duplicate_feedback(question_attempt $qa) {
         $question = $qa->get_question();
@@ -305,8 +336,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
     }
 
-    /* used to populate values that appear in dropdowns */
-
+    /**
+     * populate values that appear in dropdowns
+     *
+     * @return array
+     */
     public function get_dropdown_list() {
         /* convert things like &gt; to > etc */
         foreach ($this->allanswers as $key => $value) {
@@ -317,8 +351,12 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $selectoptions;
     }
 
-    /* overriding base class method purely to return a string yougotnrightcount
-     * instead of default yougotnright
+    /**
+     * overriding base class method purely to return a string
+     * yougotnrightcount instead of default yougotnright
+     *
+     * @param question_attempt $qa
+     * @return string
      */
     protected function num_parts_correct(question_attempt $qa) {
         $a = new stdClass();

@@ -94,11 +94,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
     public $allanswers = array();
-    
-     /**
+
+    /**
      * Start a new attempt at this question, storing any information that will
      * be needed later in the step and doing initialisation
-     * 
+     *
      * @param question_attempt_step $step
      * @param number $variant (apparently not used)
      */
@@ -127,11 +127,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 
-    
-
     /**
      * get the length of the correct answer and if the | is used
-     * the length of the longest of the correct answers        
+     * the length of the longest of the correct answers
      * @param string $answer
      * @return number
      */
@@ -144,7 +142,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * returns string of place key value prepended with p, i.e. p0 or p1 etc
-     * @param int $place stem number 
+     * @param int $place stem number
      * @return string the question-type variable name.
      */
     public function field($place) {
@@ -165,7 +163,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /**
      * Value returned will be written to responsesummary field of
      * the question_attempts table
-     * 
+     *
      * @param array $response
      * @return string
      */
@@ -199,9 +197,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * Returns prompt asking for answer. Called from renderer 
-     * if question state is invalid. 
-     * 
+     * Returns prompt asking for answer. Called from renderer
+     * if question state is invalid.
+     *
      * @param array $response
      * @return string
      */
@@ -213,7 +211,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * What is the correct value for the field
-     * 
+     *
      * @param number $place
      * @return number
      */
@@ -222,11 +220,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * 
+     *
      * @param array $prevresponse
      * @param array $newresponse
      * @return boolean
-     * 
+     *
      * Don't change answer if it is the same
      */
     public function is_same_response(array $prevresponse, array $newresponse) {
@@ -245,7 +243,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * A question is gradable if at least one gap response is not blank
-     * 
+     *
      * @param array $response
      * @return boolean
      */
@@ -258,10 +256,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return false;
     }
 
-     
     /**
      * Return array containing answers that would get full marks
-     * 
+     *
      * @return array
      */
     public function get_correct_response() {
@@ -281,10 +278,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $response[$this->field($place)] = $answer;
         }
     }
-   
+
     /**
-     * called from within renderer in interactive mode 
-     * 
+     * called from within renderer in interactive mode
+     *
      * @param string $answergiven
      * @param string $rightanswer
      * @return boolean
@@ -357,7 +354,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return $response;
     }
-    
+
     /**
      * Useful with multiple correct answers per gap, e.g. gold|bronze|silver
      * This code ensures that only one correct answer gets mark credit
@@ -385,11 +382,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * Calculate grade and returns an array in the form 
+     * Calculate grade and returns an array in the form
      * array(2) (
-     *[0] => (int) 1
-     *[1] => question_state_gradedright object etc etc etc
-     * 
+     * [0] => (int) 1
+     * [1] => question_state_gradedright object etc etc etc
+     *
      * @param array $response
      * @return array
      */
@@ -400,10 +397,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $grade = array($this->fraction, question_state::graded_state_for_fraction($this->fraction));
         return $grade;
     }
-    
+
     /**
      * Required by the interface question_automatically_gradable_with_countback.
-     * 
+     *
      * @param array $responses
      * @param array $totaltries
      * @return number
@@ -439,11 +436,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $totalscore / $this->gapcount;
     }
 
-  
-     /**
+    /**
      * Checks whether the users is allow to be served a particular file.
      * Component and filearea refers to fields in the mdl_files table
-     * 
+     *
      * @param question_attempt $qa the question attempt being displayed.
      * @param question_display_options $options the options that control display of the question.
      * @param string $component the name of the component we are serving files for.
@@ -462,10 +458,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return parent::check_file_access($qa, $options, $component, $filearea, $args, $forcedownload);
         }
     }
-    
+
     /**
      * Compare the answer given with the correct answer, does it match?
-     * 
+     *
      * @param string $answergiven
      * @param string $answer
      * @param boolean $disableregex
@@ -528,11 +524,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     /**
      * get an array with information about marking of gap in the form
      * array(1) (  [p1] => array(3)(
-     *  [value] => (string) 0    
+     * [value] => (string) 0
      *  [fraction] => (int) 1
      *  [duplicate] => (string) false
      * ))
-     * 
+     *
      * @param question_attempt $qa
      * @param question_display_options $options
      * @return array

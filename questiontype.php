@@ -18,7 +18,7 @@
  * The question type class for the gapfill question type.
  *
  * @package    qtype_ga[fo;;
- * @copyright &copy; 2012 Marcus Green
+ * @copyright &copy; 2017 Marcus Green
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 defined('MOODLE_INTERNAL') || die();
@@ -119,8 +119,8 @@ class qtype_gapfill extends question_type {
 
 
     /**
-     * called when previewing or at runtime in a quiz 
-     * 
+     * called when previewing or at runtime in a quiz
+     *
      * @param question_definition $question
      * @param type $questiondata
      * @param type $forceplaintextanswers
@@ -155,10 +155,10 @@ class qtype_gapfill extends question_type {
             }
         }
     }
-    
+
     /**
      * Get settings e.g. feedback for correct and incorrect responses
-     * 
+     *
      * @global moodle_database $DB
      * @param qtype_gapfill_question object $question
      * @return string (json encoded string)
@@ -175,7 +175,7 @@ class qtype_gapfill extends question_type {
      * @param question_definition $question
      * @param type $questiondata
      */
-     protected function initialise_question_instance(question_definition $question, $questiondata) {
+    protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
@@ -231,11 +231,11 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-      
+
     /**
      * chop the delimit string into a two element array
      * this might be better done on initialisation
-     * 
+     *
      * @param string $delimitchars
      * @return array
      */
@@ -246,9 +246,9 @@ class qtype_gapfill extends question_type {
         return $delimitarray;
     }
 
-     /**
-     * it really does need to be static 
-     * 
+    /**
+     * it really does need to be static
+     *
      * @param type $delimitchars
      * @param type $questiontext
      * @return array
@@ -293,8 +293,8 @@ class qtype_gapfill extends question_type {
 
 
     /**
-     * Writes to the database, runs from question editing form 
-     * 
+     * Writes to the database, runs from question editing form
+     *
      * @global moodle_database $DB
      * @param stdClass $question
      * @param stdClass $options
@@ -454,7 +454,7 @@ class qtype_gapfill extends question_type {
     }
     /**
      * Called from within questiontypebase
-     * 
+     *
      * @param  @param object $row with $row->hint, ->shownumcorrect and ->clearwrong set.
      * @return question_hint_with_parts
      */
@@ -467,7 +467,7 @@ class qtype_gapfill extends question_type {
      * @param int $questionid the question being moved.
      * @param int $oldcontextid the context it is moving from.
      * @param int $newcontextid the context it is moving to.
-     * 
+     *
      */
     public function move_files($questionid, $oldcontextid, $newcontextid) {
         /* Thanks to Jean-Michel Vedrine for pointing out the need for this and delete_files function */
@@ -476,7 +476,7 @@ class qtype_gapfill extends question_type {
         $this->move_files_in_hints($questionid, $oldcontextid, $newcontextid);
     }
 
-     /**
+    /**
      * Delete all the files belonging to this question.Seems the same as in the parent
      * @param int $questionid the question being deleted.
      * @param int $contextid the context the question is in.
@@ -496,7 +496,7 @@ class qtype_gapfill extends question_type {
     }
 
     /**
-     * 
+     *
      * @param array $data
      * @param stdClass $question (might be an array)
      * @param qformat_xml $format
@@ -513,9 +513,9 @@ class qtype_gapfill extends question_type {
         return $question;
     }
 
-     /**
+    /**
      * Export question to the Moodle XML format
-     * 
+     *
      * @global object $CFG
      * @param object $question
      * @param qformat_xml $format

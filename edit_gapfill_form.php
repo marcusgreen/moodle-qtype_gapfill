@@ -177,9 +177,9 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
     }
 
-     /**
+    /**
      * Load in existing data as form defaults.
-     * 
+     *
      * @param mixed $question object or array of default values
      */
     public function set_data($question) {
@@ -228,10 +228,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
         return $question;
     }
-  /**
+    /**
      * Check the question text is valid, specifically that
      * it contains at lease one gap (text surrounded by delimiters
-   * * as in [cat]
+     * as in [cat]
      *
      * @param array $fromform
      * @param array $data
@@ -250,7 +250,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
             return true;
         }
     }
-    
     /**
      * Name of this question type
      * @return string
