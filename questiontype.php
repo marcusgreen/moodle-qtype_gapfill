@@ -17,8 +17,7 @@
 /**
  * The question type class for the gapfill question type.
  *
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_ga[fo;;
  * @copyright &copy; 2012 Marcus Green
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
@@ -34,8 +33,10 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  */
 class qtype_gapfill extends question_type {
 
-    /* data used by export_to_xml (among other things possibly */
-
+    /**
+     * data used by export_to_xml (among other things possibly
+     * @return array
+     */
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
             'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext');
@@ -116,8 +117,15 @@ class qtype_gapfill extends question_type {
         parent::get_question_options($question);
     }
 
-    /* called when previewing or at runtime in a quiz */
 
+    /**
+     * called when previewing or at runtime in a quiz 
+     * 
+     * @param question_definition $question
+     * @param type $questiondata
+     * @param type $forceplaintextanswers
+     * @return type
+     */
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
@@ -147,7 +155,14 @@ class qtype_gapfill extends question_type {
             }
         }
     }
-
+    
+    /**
+     * Get settings e.g. feedback for correct and incorrect responses
+     * 
+     * @global moodle_database $DB
+     * @param qtype_gapfill_question object $question
+     * @return string (json encoded string)
+     */
     public function get_itemsettings($question) {
         global $DB;
         return json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
@@ -160,7 +175,7 @@ class qtype_gapfill extends question_type {
      * @param question_definition $question
      * @param type $questiondata
      */
-    protected function initialise_question_instance(question_definition $question, $questiondata) {
+     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
@@ -216,10 +231,14 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
-    /* chop the delimit string into a two element array
+      
+    /**
+     * chop the delimit string into a two element array
      * this might be better done on initialisation
+     * 
+     * @param string $delimitchars
+     * @return array
      */
-
     public static function get_delimit_array($delimitchars) {
         $delimitarray = array();
         $delimitarray["l"] = substr($delimitchars, 0, 1);
@@ -227,8 +246,13 @@ class qtype_gapfill extends question_type {
         return $delimitarray;
     }
 
-    /* it really does need to be static */
-
+     /**
+     * it really does need to be static 
+     * 
+     * @param type $delimitchars
+     * @param type $questiontext
+     * @return array
+     */
     public static function get_gaps($delimitchars, $questiontext) {
         /* l for left delimiter r for right delimiter
          * defaults to []
@@ -267,8 +291,15 @@ class qtype_gapfill extends question_type {
         return true;
     }
 
-    /* runs from question editing form */
 
+    /**
+     * Writes to the database, runs from question editing form 
+     * 
+     * @global moodle_database $DB
+     * @param stdClass $question
+     * @param stdClass $options
+     * @param context_course_object $context
+     */
     public function update_question_gapfill($question, $options, $context) {
         global $DB;
         $options = $DB->get_record('question_gapfill', array('question' => $question->id));
@@ -421,11 +452,23 @@ class qtype_gapfill extends question_type {
             }
         }
     }
-
+    /**
+     * Called from within questiontypebase
+     * 
+     * @param  @param object $row with $row->hint, ->shownumcorrect and ->clearwrong set.
+     * @return question_hint_with_parts
+     */
     protected function make_hint($hint) {
         return question_hint_with_parts::load_from_record($hint);
     }
 
+    /**
+     * Move all the files belonging to this question from one context to another.
+     * @param int $questionid the question being moved.
+     * @param int $oldcontextid the context it is moving from.
+     * @param int $newcontextid the context it is moving to.
+     * 
+     */
     public function move_files($questionid, $oldcontextid, $newcontextid) {
         /* Thanks to Jean-Michel Vedrine for pointing out the need for this and delete_files function */
         parent::move_files($questionid, $oldcontextid, $newcontextid);
@@ -433,16 +476,33 @@ class qtype_gapfill extends question_type {
         $this->move_files_in_hints($questionid, $oldcontextid, $newcontextid);
     }
 
+     /**
+     * Delete all the files belonging to this question.Seems the same as in the parent
+     * @param int $questionid the question being deleted.
+     * @param int $contextid the context the question is in.
+     */
     protected function delete_files($questionid, $contextid) {
         parent::delete_files($questionid, $contextid);
         $this->delete_files_in_combined_feedback($questionid, $contextid);
         $this->delete_files_in_hints($questionid, $contextid);
     }
 
+    /**
+     * The name of the key column in the foreign table (might have been questionid instead)
+     * @return string
+     */
     public function questionid_column_name() {
         return 'question';
     }
 
+    /**
+     * 
+     * @param array $data
+     * @param stdClass $question (might be an array)
+     * @param qformat_xml $format
+     * @param type $extra
+     * @return boolean
+     */
     public function import_from_xml($data, $question, qformat_xml $format, $extra = null) {
         if (!isset($data['@']['type']) || $data['@']['type'] != 'gapfill') {
             return false;
@@ -453,6 +513,15 @@ class qtype_gapfill extends question_type {
         return $question;
     }
 
+     /**
+     * Export question to the Moodle XML format
+     * 
+     * @global object $CFG
+     * @param object $question
+     * @param qformat_xml $format
+     * @param object $extra
+     * @return string
+     */
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         global $CFG;
         $pluginmanager = core_plugin_manager::instance();
