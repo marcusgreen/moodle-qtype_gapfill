@@ -208,7 +208,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                         $("#id_questiontexteditable").attr('contenteditable', 'true');
                         $("#id_itemsettings_button").click();
                     }
-           }
+            }
             ]
         });
     }
@@ -231,7 +231,7 @@ var wrapContent = (function () {
         gaps = [];
         // If element provided, start there, otherwise use the body.
         el = el && el.parentNode ? el : document.body;
-        // Get all child nodes as a static array,
+        // Get all child nodes as a static array.
         var node, nodes = toArray(el.childNodes);
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
@@ -248,10 +248,10 @@ var wrapContent = (function () {
         // For each child node...
         for (var i = 0, iLen = nodes.length; i < iLen; i++) {
             node = nodes[i];
-            // If it's an element, call wrapContent
+            // If it's an element, call wrapContent.
             if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
                 wrapContent(node);
-                // If it's a text node, wrap words
+                // If it's a text node, wrap words.
             } else if (node.nodeType === 3) {
                 var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
                 text = node.data.split(textsplit);
@@ -282,7 +282,7 @@ var wrapContent = (function () {
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);
-                            // Otherwise, just append it to the fragment
+                            // Otherwise, just append it to the fragment.
                         } else {
                             frag.appendChild(document.createTextNode(text[j]));
                         }
