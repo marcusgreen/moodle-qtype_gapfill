@@ -541,6 +541,8 @@ class qtype_gapfill extends question_type {
                 "</fixedgapsize>\n";
         $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
                 "</optionsaftertext>\n";
+        $output .= '    <itemsettingsdata>' . $question->options->itemsettingsdata .
+                "</itemsettingsdata>\n";
         $output .= '    <!-- Gapfill release:'
                 . $gapfillinfo->release . ' version:' . $gapfillinfo->versiondisk . ' Moodle version:'
                 . $CFG->version . ' release:' . $CFG->release
