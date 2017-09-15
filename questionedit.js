@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/** 
+/**
  * JavaScript code for the gapfill question type.
  *
  * @package    qtype_gapfill
@@ -30,7 +30,7 @@ var settingsdata = ($("[name='itemsettingsdata']").val());
 var settings = [];
 var gaps = [];
 if (settingsdata > "") {
-   var obj = JSON.parse(settingsdata);
+    var obj = JSON.parse(settingsdata);
     for (var o in obj) {
         settings.push(obj[o]);
     }
@@ -88,7 +88,7 @@ function Item(text, delimitchars) {
         return itemsettings;
     };
     this.update_json = function (e) {
-       var found = false;
+        var found = false;
         var id = e.target.id;
         for (var set in settings) {
             if (settings[set].text === this.stripdelim()) {
@@ -167,11 +167,11 @@ $("#id_itemsettings_button").on("click", function() {
 /* A click on the text */
 $("#id_itemsettings_canvas").on("click", function (e) {
     /*
-     * questiontext needs to be edditable and the target must start 
-     * with id followed by one or more digits and an underscore 
+     * questiontext needs to be edditable and the target must start
+     * with id followed by one or more digits and an underscore
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
-       var delimitchars = $("#id_delimitchars").val();
+        var delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML, delimitchars);
         var itemsettings = item.get_itemsettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
@@ -208,7 +208,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                         $("#id_questiontexteditable").attr('contenteditable', 'true');
                         $("#id_itemsettings_button").click();
                     }
-                }
+           }
             ]
         });
     }
@@ -222,16 +222,16 @@ function toArray(obj) {
     return arr;
 }
 
-// Wrap the words of an element and child elements in a span
-// Recurs over child elements, add an ID and class to the wrapping span
-// Does not affect elements with no content, or those to be excluded
+// Wrap the words of an element and child elements in a span.
+// Recurs over child elements, add an ID and class to the wrapping span.
+// Does not affect elements with no content, or those to be excluded.
 var wrapContent = (function () {
     return function (el) {
         var count = 0;
         gaps = [];
-        // If element provided, start there, otherwise use the body
+        // If element provided, start there, otherwise use the body.
         el = el && el.parentNode ? el : document.body;
-        // Get all child nodes as a static array
+        // Get all child nodes as a static array,
         var node, nodes = toArray(el.childNodes);
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
@@ -242,7 +242,7 @@ var wrapContent = (function () {
         var r = delimitchars.substring(1, 2);
         var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
         var sp, span = document.createElement('span');
-        // Tag names of elements to skip, there are more to add
+        // Tag names of elements to skip, there are more to add.
         var skip = {'script': '', 'button': '', 'input': '', 'select': '',
             'textarea': '', 'option': ''};
         // For each child node...
@@ -256,10 +256,10 @@ var wrapContent = (function () {
                 var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
                 text = node.data.split(textsplit);
                 if (text) {
-                    // Create a fragment, handy suckers these
+                    // Create a fragment, handy suckers these.
                     frag = document.createDocumentFragment();
                     for (var j = 0, jLen = text.length; j < jLen; j++) {
-                        // If not whitespace, wrap it and append to the fragment
+                        // If not whitespace, wrap it and append to the fragment.
                         if (regex.test(text[j])) {
                             sp = span.cloneNode(false);
                             count++;
@@ -288,7 +288,7 @@ var wrapContent = (function () {
                         }
                     }
                 }
-                // Replace the original node with the fragment
+                // Replace the original node with the fragment.
                 node.parentNode.replaceChild(frag, node);
             }
         }
