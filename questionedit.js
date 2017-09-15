@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/** 
+/**
  * JavaScript code for the gapfill question type.
  *
  * @package    qtype_gapfill
@@ -31,7 +31,7 @@ var settingsdata = ($("[name='itemsettingsdata']").val());
 var settings = [];
 var gaps = [];
 if (settingsdata > "") {
-    obj = JSON.parse(settingsdata);
+    var obj = JSON.parse(settingsdata);
     for (var o in obj) {
         settings.push(obj[o]);
     }
@@ -168,13 +168,13 @@ $("#id_itemsettings_button").on("click", function () {
 /*A click on the text */
 $("#id_itemsettings_canvas").on("click", function (e) {
     /*
-     * questiontext needs to be edditable and the target must start 
+     * questiontext needs to be edditable and the target must start
      * with id followed by one or more digits and an underscore 
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML, delimitchars);
-        itemsettings = item.get_itemsettings(e.target);
+        var itemsettings = item.get_itemsettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
             $("#id_incorrecteditable").html('');
@@ -225,9 +225,10 @@ function toArray(obj) {
     return arr;
 }
 
-// Wrap the words of an element and child elements in a span
-// Recurs over child elements, add an ID and class to the wrapping span
-// Does not affect elements with no content, or those to be excluded
+/* Wrap the words of an element and child elements in a span
+ Recurs over child elements, add an ID and class to the wrapping span
+Does not affect elements with no content, or those to be 
+*/
 var wrapContent = (function () {
     return function (el) {
         var count = 0;
@@ -293,9 +294,7 @@ var wrapContent = (function () {
                     }
                 }
                 // Replace the original node with the fragment
-                //if(node.parentNode !==null){
                 node.parentNode.replaceChild(frag, node);
-                //}
             }
         }
     };
