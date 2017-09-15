@@ -20,18 +20,17 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/*global $ */
-/*jshint unused:false*/
+/* global $ */
+/* jshint unused:false*/
 
 
 /* the data is stored in a hidden field */
 var settingsdata = ($("[name='itemsettingsdata']").val());
 
-
 var settings = [];
 var gaps = [];
 if (settingsdata > "") {
-    obj = JSON.parse(settingsdata);
+   var obj = JSON.parse(settingsdata);
     for (var o in obj) {
         settings.push(obj[o]);
     }
@@ -41,12 +40,12 @@ function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
     this.text = text;
     this.delimitchars = delimitchars;
-    /*l and r for left and right */
+    /* l and r for left and right */
     this.l = delimitchars.substr(0, 1);
     this.r = delimitchars.substr(1, 1);
     this.len = this.text.length;
     this.startchar = this.text.substring(0, 1);
-    /*for checking if the end char is the right delimiter */
+    /* for checking if the end char is the right delimiter */
     this.endchar = this.text.substring(this.len - 1, this.len);
     this.text_nodelim = '';
     this.feedback = {};
@@ -60,7 +59,7 @@ function Item(text, delimitchars) {
         }
         var regex = /(<([^>]+)>)/ig;
         return text.replace(regex, "");
-    }
+    };
     this.stripdelim = function () {
         if (this.startchar === this.l) {
             this.text_nodelim = this.text.substring(1, this.len);
@@ -70,7 +69,7 @@ function Item(text, delimitchars) {
             this.text_nodelim = this.text_nodelim.substring(0, len - 1);
         }
         return this.text_nodelim;
-    }
+    };
     var itemsettings = [];
     Item.prototype.get_itemsettings = function (target) {
         var itemid = target.id;
@@ -89,7 +88,7 @@ function Item(text, delimitchars) {
         return itemsettings;
     };
     this.update_json = function (e) {
-        found = false;
+       var found = false;
         var id = e.target.id;
         for (var set in settings) {
             if (settings[set].text === this.stripdelim()) {
@@ -115,7 +114,7 @@ function Item(text, delimitchars) {
 
 
 /* a click on the button */
-$("#id_itemsettings_button").on("click", function () {
+$("#id_itemsettings_button").on("click", function() {
     var atto_islive = ($(".editor_atto")).length;
     /* show error if Atto is not loaded. It might be because the page has not finished loading
      * or because plain text elements are being used or (perhaps less likely as time goes on)
@@ -165,16 +164,16 @@ $("#id_itemsettings_button").on("click", function () {
     }
 });
 
-/*A click on the text */
+/* A click on the text */
 $("#id_itemsettings_canvas").on("click", function (e) {
     /*
      * questiontext needs to be edditable and the target must start 
      * with id followed by one or more digits and an underscore 
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
-        delimitchars = $("#id_delimitchars").val();
+       var delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML, delimitchars);
-        itemsettings = item.get_itemsettings(e.target);
+        var itemsettings = item.get_itemsettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
             $("#id_incorrecteditable").html('');
@@ -214,8 +213,6 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         });
     }
 });
-
-
 
 function toArray(obj) {
     var arr = [];
@@ -285,7 +282,6 @@ var wrapContent = (function () {
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);
-
                             // Otherwise, just append it to the fragment
                         } else {
                             frag.appendChild(document.createTextNode(text[j]));
@@ -293,9 +289,7 @@ var wrapContent = (function () {
                     }
                 }
                 // Replace the original node with the fragment
-                //if(node.parentNode !==null){
                 node.parentNode.replaceChild(frag, node);
-                //}
             }
         }
     };
