@@ -169,7 +169,7 @@ $("#id_itemsettings_button").on("click", function () {
 $("#id_itemsettings_canvas").on("click", function (e) {
     /*
      * questiontext needs to be edditable and the target must start
-     * with id followed by one or more digits and an underscore 
+     * with id followed by one or more digits and an underscore
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
@@ -209,7 +209,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                         $("#id_questiontexteditable").attr('contenteditable', 'true');
                         $("#id_itemsettings_button").click();
                     }
-                }
+           }
             ]
         });
     }
@@ -233,9 +233,9 @@ var wrapContent = (function () {
     return function (el) {
         var count = 0;
         gaps = [];
-        // If element provided, start there, otherwise use the body
+        // If element provided, start there, otherwise use the body.
         el = el && el.parentNode ? el : document.body;
-        // Get all child nodes as a static array
+        // Get all child nodes as a static array.
         var node, nodes = toArray(el.childNodes);
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
@@ -246,13 +246,13 @@ var wrapContent = (function () {
         var r = delimitchars.substring(1, 2);
         var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
         var sp, span = document.createElement('span');
-        // Tag names of elements to skip, there are more to add
+        // Tag names of elements to skip, there are more to add.
         var skip = {'script': '', 'button': '', 'input': '', 'select': '',
             'textarea': '', 'option': ''};
         // For each child node...
         for (var i = 0, iLen = nodes.length; i < iLen; i++) {
             node = nodes[i];
-            // If it's an element, call wrapContent
+            // If it's an element, call wrapContent.
             if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
                 wrapContent(node);
                 // If it's a text node, wrap words
@@ -260,10 +260,10 @@ var wrapContent = (function () {
                 var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
                 text = node.data.split(textsplit);
                 if (text) {
-                    // Create a fragment, handy suckers these
+                    // Create a fragment, handy suckers these.
                     frag = document.createDocumentFragment();
                     for (var j = 0, jLen = text.length; j < jLen; j++) {
-                        // If not whitespace, wrap it and append to the fragment
+                        // If not whitespace, wrap it and append to the fragment.
                         if (regex.test(text[j])) {
                             sp = span.cloneNode(false);
                             count++;
@@ -293,7 +293,7 @@ var wrapContent = (function () {
                         }
                     }
                 }
-                // Replace the original node with the fragment
+                // Replace the original node with the fragment.
                 node.parentNode.replaceChild(frag, node);
             }
         }
