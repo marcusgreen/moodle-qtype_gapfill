@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multi-answer question type upgrade code.
+ * Gapfill question type upgrade code.
  *
  * @package    qtype_gapfill
  * @copyright  2017 Marcus Green

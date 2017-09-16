@@ -126,7 +126,7 @@ $("#id_itemsettings_button").on("click", function() {
         $("#id_error_itemsettings")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
         return;
     }
-    $(".atto_html_button").attr("disabled", 'true');
+    $("#questiontext .atto_html_button").attr("disabled", 'true');
     if ($('#id_questiontexteditable').get(0).isContentEditable) {
         $("#id_questiontexteditable").attr('contenteditable', 'false');
         $("#fitem_id_questiontext").find('button').attr("disabled", 'true');
@@ -148,7 +148,6 @@ $("#id_itemsettings_button").on("click", function() {
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
         $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
         /* disable the buttons on questiontext but not on the feedback form */
-        // $('#questiontext [class^=atto_]').attr("disabled",'true');
         /*wrapContent should be the last on this block as it sometimes falls over with an error */
         wrapContent($("#id_itemsettings_canvas")[0]);
 
@@ -183,6 +182,9 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         }
         $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
         $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
+        $('#id_itemsettings_popup .atto_image_button').attr("disabled",'true');
+        $('#id_itemsettings_popup .atto_media_button').attr("disabled",'true');
+        $('#id_itemsettings_popup .atto_managefiles_button').attr("disabled",'true');
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
         /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
@@ -202,6 +204,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     text: "OK",
                     click: function () {
                         var JSONstr = item.update_json(e);
+                        $('[class^=atto_]').removeAttr("disabled");
                         $("[name='itemsettingsdata']").val(JSONstr);
                         $(this).dialog("close");
                         /*set editable to true as it is checked at the start of click */
