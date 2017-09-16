@@ -7,7 +7,7 @@ cache:
     - $HOME/.composer/cache
 
 php: 
- - 5.6
+# - 5.6
  - 7.0
 
 addons:
@@ -32,8 +32,8 @@ install:
   - moodle-plugin-ci install
 script:
   - moodle-plugin-ci phplint
- # - moodle-plugin-ci csslint
-  - moodle-plugin-ci stylelint
+  - moodle-plugin-ci csslint
+ # - moodle-plugin-ci stylelint
   - moodle-plugin-ci jshint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd

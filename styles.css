@@ -1,22 +1,23 @@
 .hasfeedback{
-    font-style: italic;
-    border: solid thin black;
     background: lightblue;
+    border: solid thin black;
+    font-style: italic;
+
 }
 
 .attobackground{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: lightgrey;
-            color: #55595c;
-            padding: .5rem .75rem;
-            line-height: 1.25;
-            display: block;
-            border: 1px solid rgba(0,0,0,.15);
-            border-radius: .25rem;
+    background: lightgrey;
+    border-radius: .25rem;
+    border: 1px solid rgba(0,0,0,.15);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #55595c;
+    padding: .5rem .75rem;
+    line-height: 1.25;
+    display: block;
 }
 
 .gapfeedbackincorrect{
