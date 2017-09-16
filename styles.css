@@ -35,7 +35,7 @@
 .que.gapfill input[type=text]{
     background:white;
     border: solid black thin;
-    border-radius:4px;
+    border-radius: 4px;
     color:black;
     margin-bottom:1px;
     margin-top:1px;
@@ -106,7 +106,7 @@ incorrec answer was entered */
 }
 
 .gapfillfirstcol {
-    background-color:#BCBBBB;
+    background-color: #bcbbbb;
 }
 
 .gapfillcol{
@@ -125,7 +125,7 @@ incorrec answer was entered */
 }
 
 .que.gapfill input.correctduplicate{
-    background-color: #FFFF00;
+    background-color: #ffff00;
 }
 .que.gapfill input.correct{
     background-color: #afa;

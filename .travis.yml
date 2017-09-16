@@ -33,6 +33,7 @@ install:
 script:
   - moodle-plugin-ci phplint
  # - moodle-plugin-ci csslint
+  - moodle-plugin-ci stylelint
   - moodle-plugin-ci jshint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
