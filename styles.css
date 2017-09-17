@@ -29,7 +29,8 @@
 .gapfeedbackcorrect{
     background: #afa;
     border-radius:0.25em;
-    background-color:#afa;;
+    background-color:#afa;
+    box-shadow:  2px 2px #7bc1f7;
 }
 
 /* the gap where answers are dropped/keyed in */
