@@ -47,6 +47,10 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         // We use get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/gapfill');
         $paths[] = new restore_path_element($elename, $elepath);
+        
+        $elename = 'gapsetting';
+        $elepath = $this->get_pathfor('/gapsettings/gapsetting');
+        $paths[] = new restore_path_element($elename, $elepath);
 
         return $paths; // And we return the interesting paths.
     }
@@ -79,6 +83,34 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         }
     }
 
+    /**
+      *
+      * @global moodle_database $DB
+      * @param type $data
+      * Process the qtype/gapfill element
+      */
+    public function process_gapsetting($data) {
+        global $DB;
+
+        $data = (object) $data;
+        $oldid = $data->id;
+
+        // Detect if the question is created or mapped.
+        $oldquestionid = $this->get_old_parentid('question');
+        $newquestionid = $this->get_new_parentid('question');
+        $questioncreated = $this->get_mappingid('question_created', $oldquestionid) ? true : false;
+
+        // If the question has been created by restore, we need to create its question_gapfill too.
+        if ($questioncreated) {
+            // Adjust value to link back to the questions table.
+            $data->question = $newquestionid;
+            // Insert record.
+            $newitemid = $DB->insert_record('question_gapfill_settings', $data);
+            // Create mapping (needed for decoding links).
+            $this->set_mapping('question_gapfill_settings', $oldid, $newitemid);
+        }
+        
+    }
     /**
      * Return the contents of this qtype to be processed by the links decoder
      */
