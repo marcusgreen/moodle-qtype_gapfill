@@ -32,7 +32,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="itemid" TYPE="text" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The id (including instance) of each gap" />
-        <FIELD NAME="text" TYPE="text" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="text of the gap including delimiter" />
+        <FIELD NAME="gaptext" TYPE="text" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="text of the gap including delimiter" />
         <FIELD NAME="correctfeedback" TYPE="text" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Feedback displayed for correct response" />
         <FIELD NAME="incorrectfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Feedback displayed for incorrect response" />
       </FIELDS>

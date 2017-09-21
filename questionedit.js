@@ -38,37 +38,37 @@ if (settingsdata > "") {
 
 function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
-    this.text = text;
+    this.gaptext = text;
     this.delimitchars = delimitchars;
     /* l and r for left and right */
     this.l = delimitchars.substr(0, 1);
     this.r = delimitchars.substr(1, 1);
-    this.len = this.text.length;
-    this.startchar = this.text.substring(0, 1);
+    this.len = this.gaptext.length;
+    this.startchar = this.gaptext.substring(0, 1);
     /* for checking if the end char is the right delimiter */
-    this.endchar = this.text.substring(this.len - 1, this.len);
-    this.text_nodelim = '';
+    this.endchar = this.gaptext.substring(this.len - 1, this.len);
+    this.gaptext_nodelim = '';
     this.feedback = {};
     this.instance = 0;
-    this.feedback.correct = $("#id_corecteditable").html(),
-            this.feedback.incorrect = ($("#id_incorrecteditable").html());
-    Item.prototype.striptags = function (text) {
+    this.feedback.correct = $("#id_corecteditable").html();
+    this.feedback.incorrect = $("#id_incorrecteditable").html();
+    Item.prototype.striptags = function (gaptext) {
         /*this is not a perfect way of stripping html but it may be good enough */
-        if (text === undefined) {
+        if (gaptext === undefined) {
             return "";
         }
         var regex = /(<([^>]+)>)/ig;
-        return text.replace(regex, "");
+        return gaptext.replace(regex, "");
     };
     this.stripdelim = function () {
         if (this.startchar === this.l) {
-            this.text_nodelim = this.text.substring(1, this.len);
+            this.gaptext_nodelim = this.gaptext.substring(1, this.len);
         }
         if (this.endchar === this.r) {
-            var len = this.text_nodelim.length;
-            this.text_nodelim = this.text_nodelim.substring(0, len - 1);
+            var len = this.gaptext_nodelim.length;
+            this.gaptext_nodelim = this.gaptext_nodelim.substring(0, len - 1);
         }
-        return this.text_nodelim;
+        return this.gaptext_nodelim;
     };
     var itemsettings = [];
     Item.prototype.get_itemsettings = function (target) {
@@ -76,12 +76,12 @@ function Item(text, delimitchars) {
         var underscore = itemid.indexOf("_");
         var id = itemid.substr(2, underscore);
         id = id.substr(0, id.indexOf("_"));
-        /*The instance, normally 0 but incremented if a gap has the ame text as another
+        /*The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
         for (var set in settings) {
             text = this.stripdelim();
-            if (settings[set].text === text) {
+            if (settings[set].gaptext === text) {
                 itemsettings = settings[set];
             }
         }
@@ -91,7 +91,7 @@ function Item(text, delimitchars) {
         var found = false;
         var id = e.target.id;
         for (var set in settings) {
-            if (settings[set].text === this.stripdelim()) {
+            if (settings[set].gaptext === this.stripdelim()) {
                 settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
                 settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
                 found = true;
@@ -104,7 +104,7 @@ function Item(text, delimitchars) {
                 questionid: $("input[name=id]").val(),
                 correctfeedback: $("#id_correcteditable").html(),
                 incorrectfeedback: $("#id_incorrecteditable").html(),
-                text: this.stripdelim()
+                gaptext: this.stripdelim()
             };
             settings.push(itemsettings);
         }
@@ -268,7 +268,7 @@ var wrapContent = (function () {
                             count++;
                             sp.className = 'item';
                             var item = new Item(text[j], $("#id_delimitchars").val());
-                            if (item.text > '') {
+                            if (item.gaptext > '') {
                                 var instance = 0;
                                 for (var k = 0; k < gaps.length; ++k) {
                                     if (gaps[k] === item.text) {
@@ -281,7 +281,7 @@ var wrapContent = (function () {
                                 if (((item.striptags(is.correctfeedback) > "") || (item.striptags(is.incorrectfeedback) > ""))) {
                                     sp.className = 'hasfeedback';
                                 }
-                                gaps.push(item.text);
+                                gaps.push(item.gaptext);
                             }
                             sp.appendChild(document.createTextNode(text[j]));
                             frag.appendChild(sp);

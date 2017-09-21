@@ -165,7 +165,8 @@ class qtype_gapfill extends question_type {
      */
     public function get_itemsettings($question) {
         global $DB;
-        return json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
+        $itemsettings= json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
+        return $itemsettings;
     }
 
     /**
@@ -441,7 +442,7 @@ class qtype_gapfill extends question_type {
                     $setting = new stdClass();
                     $setting->question = $formdata->id;
                     $setting->itemid = $set['itemid'];
-                    $setting->text = $set['text'];
+                    $setting->gaptext = $set['gaptext'];
                     $setting->correctfeedback = $set['correctfeedback'];
                     $setting->incorrectfeedback = $set['incorrectfeedback'];
                     $DB->insert_record('question_gapfill_settings', $setting);

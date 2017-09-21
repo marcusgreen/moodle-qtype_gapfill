@@ -274,7 +274,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      */
     protected function get_itemsettings($rightanswer) {
         foreach ($this->itemsettings as $set) {
-            if ($set->text == $rightanswer) {
+            if ($set->gaptext == $rightanswer) {
                 return $set;
             }
         }

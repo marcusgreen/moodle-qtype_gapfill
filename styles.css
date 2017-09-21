@@ -22,12 +22,14 @@
 
 .gapfeedbackincorrect{
     background: #faa;
+    color: darkslategray;
     border-radius:0.25em;
     background-color:#faa;
 }
 
 .gapfeedbackcorrect{
     background: #afa;
+    color: darkslategray;
     border-radius:0.25em;
     background-color:#afa;
     box-shadow:  2px 2px #7bc1f7;

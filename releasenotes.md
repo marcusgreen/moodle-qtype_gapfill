@@ -1,3 +1,10 @@
+### Version 1.96 of the Moodle Gapfill question type Sep 2017
+Per gap feedback. This is a significant new feature and allows the creation of feedback that is
+displayed dependent on if the student gave a correct or incorrect response on a per-gap basis The feedback is
+entered by clicking a new button Gap settings which is shown under the quesiton text field. This
+toggles the screen to a grey color and makes the text uneditable. Clicking a "gap" pops up a dialog
+with fields for correct or incorrect response. Substantial improvements to amount of phpdoc comments
+
 ### Version 1.95 of the Moodle Gapfill question type June 2017
 New setting optionsaftertext can be to show the draggable options after the text. Thanks to Elton LaClare for the inspiration to do this.
 Fixed a bug where if there were multiple questions on a single page the draggables would
