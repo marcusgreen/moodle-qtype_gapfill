@@ -425,34 +425,39 @@ class qtype_gapfill extends question_type {
     }
 
     /**
-     * Take the data from the hidden form field and write to the settings table
+     * Take the data from the hidden form field or file import and write to the settings table
      * The first/main type of data is per gap feedback. Other data relating to
      * settings for a gap may be added later
      *
      * @global moodle_database $DB
      * @param array $formdata
      */
-    public function update_item_settings(stdClass $formdata, $table) {
+    public function update_item_settings(stdClass $question, $table) {
         global $DB;
-        $oldsettings = $DB->get_records($table, array('question' => $formdata->id));
-        if (isset($formdata->itemsettingsdata)) {
-            $newsettings = json_decode($formdata->itemsettingsdata, true);
-            if (isset($newsettings)) {
-                foreach ($newsettings as $set) {
-                    $setting = new stdClass();
-                    $setting->question = $formdata->id;
-                    $setting->itemid = $set['itemid'];
-                    $setting->gaptext = $set['gaptext'];
-                    $setting->correctfeedback = $set['correctfeedback'];
-                    $setting->incorrectfeedback = $set['incorrectfeedback'];
-                    $DB->insert_record('question_gapfill_settings', $setting);
-                }
-            }
-            foreach ($oldsettings as $os) {
-                $DB->delete_records('question_gapfill_settings', array('id' => $os->id));
+        $oldsettings = $DB->get_records($table, array('question' => $question->id));
+        $newsettings = [];
+        if (isset($question->itemsettingsdata) && (!isset($question->isimport))) {
+            $newsettings = json_decode($question->itemsettingsdata, true);
+        }
+        if (isset($question->itemsettingsdata) && (isset($question->isimport))) {
+            $newsettings = $question->itemsettingsdata;
+        }
+        if (isset($newsettings)) {
+            foreach ($newsettings as $set) {
+                $setting = new stdClass();
+                $setting->question = $question->id;
+                $setting->itemid = $set['itemid'];
+                $setting->gaptext = $set['gaptext'];
+                $setting->correctfeedback = $set['correctfeedback'];
+                $setting->incorrectfeedback = $set['incorrectfeedback'];
+                $DB->insert_record('question_gapfill_settings', $setting);
             }
         }
+        foreach ($oldsettings as $os) {
+            $DB->delete_records('question_gapfill_settings', array('id' => $os->id));
+        }
     }
+
     /**
      * Called from within questiontypebase
      *
@@ -507,10 +512,23 @@ class qtype_gapfill extends question_type {
     public function import_from_xml($data, $question, qformat_xml $format, $extra = null) {
         if (!isset($data['@']['type']) || $data['@']['type'] != 'gapfill') {
             return false;
-        }
+        }            
+       
         $question = parent::import_from_xml($data, $question, $format, null);
         $format->import_combined_feedback($question, $data, true);
         $format->import_hints($question, $data, true, false, $format->get_format($question->questiontextformat));
+        $gapsettings = $data['#']['gapsetting'];
+        $question->gapsettings = array();
+        $question->isimport=true;
+        $question->itemsettingsdata = [];
+        foreach ($gapsettings as $key=>$setxml) {
+              //$question->itemsettingsdata[$key]=new stdClass();
+              $question->itemsettingsdata[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
+              $question->itemsettingsdata[$key]['question']= $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['itemid'] =  $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['correctfeedback']=$format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['incorrectfeedback']=$format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
+        }
         return $question;
     }
 
@@ -527,6 +545,9 @@ class qtype_gapfill extends question_type {
         global $CFG;
         $pluginmanager = core_plugin_manager::instance();
         $gapfillinfo = $pluginmanager->get_plugin_info('qtype_gapfill');
+        /*convert json into an object */
+        $question->options->itemsettingsdata = json_decode($question->options->itemsettingsdata);
+
         $output = parent::export_to_xml($question, $format);
         $output .= '    <delimitchars>' . $question->options->delimitchars .
                 "</delimitchars>\n";
@@ -542,8 +563,15 @@ class qtype_gapfill extends question_type {
                 "</fixedgapsize>\n";
         $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
                 "</optionsaftertext>\n";
-        $output .= '    <itemsettingsdata>' . $question->options->itemsettingsdata .
-                "</itemsettingsdata>\n";
+        foreach($question->options->itemsettingsdata as $set){
+            $output .="      <gapsetting>\n";
+            $output .='        <question>'.$set->question."</question>\n";
+            $output .='        <gaptext>'.$set->gaptext."</gaptext>\n";
+            $output .='        <itemid>'.$set->itemid."</itemid>\n";
+            $output .='        <correctfeedback>'.$set->correctfeedback."</correctfeedback>\n";
+            $output .='        <incorrectfeedback>'.$set->incorrectfeedback."</incorrectfeedback>\n";
+            $output .="     </gapsetting>\n";
+         }
         $output .= '    <!-- Gapfill release:'
                 . $gapfillinfo->release . ' version:' . $gapfillinfo->versiondisk . ' Moodle version:'
                 . $CFG->version . ' release:' . $CFG->release
