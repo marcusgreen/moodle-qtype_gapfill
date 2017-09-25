@@ -47,7 +47,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         // We use get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/gapfill');
         $paths[] = new restore_path_element($elename, $elepath);
-        
+
         $elename = 'gapsetting';
         $elepath = $this->get_pathfor('/gapsettings/gapsetting');
         $paths[] = new restore_path_element($elename, $elepath);
@@ -83,7 +83,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         }
     }
 
-    /**
+     /**
       *
       * @global moodle_database $DB
       * @param type $data
@@ -109,7 +109,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
             // Create mapping (needed for decoding links).
             $this->set_mapping('question_gapfill_settings', $oldid, $newitemid);
         }
-        
+
     }
     /**
      * Return the contents of this qtype to be processed by the links decoder

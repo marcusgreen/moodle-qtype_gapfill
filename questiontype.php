@@ -165,7 +165,7 @@ class qtype_gapfill extends question_type {
      */
     public function get_itemsettings($question) {
         global $DB;
-        $itemsettings= json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
+        $itemsettings = json_encode($DB->get_records('question_gapfill_settings', array('question' => $question->id)));
         return $itemsettings;
     }
 
@@ -512,22 +512,23 @@ class qtype_gapfill extends question_type {
     public function import_from_xml($data, $question, qformat_xml $format, $extra = null) {
         if (!isset($data['@']['type']) || $data['@']['type'] != 'gapfill') {
             return false;
-        }            
-       
+        }
+
         $question = parent::import_from_xml($data, $question, $format, null);
         $format->import_combined_feedback($question, $data, true);
         $format->import_hints($question, $data, true, false, $format->get_format($question->questiontextformat));
         $gapsettings = $data['#']['gapsetting'];
         $question->gapsettings = array();
-        $question->isimport=true;
+        $question->isimport = true;
         $question->itemsettingsdata = [];
-        foreach ($gapsettings as $key=>$setxml) {
-              //$question->itemsettingsdata[$key]=new stdClass();
+        foreach ($gapsettings as $key => $setxml) {
               $question->itemsettingsdata[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
-              $question->itemsettingsdata[$key]['question']= $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['itemid'] =  $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['correctfeedback']=$format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['incorrectfeedback']=$format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['correctfeedback']
+                      = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
+              $question->itemsettingsdata[$key]['incorrectfeedback']
+                      = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
         }
         return $question;
     }
@@ -563,15 +564,15 @@ class qtype_gapfill extends question_type {
                 "</fixedgapsize>\n";
         $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
                 "</optionsaftertext>\n";
-        foreach($question->options->itemsettingsdata as $set){
-            $output .="      <gapsetting>\n";
-            $output .='        <question>'.$set->question."</question>\n";
-            $output .='        <gaptext>'.$set->gaptext."</gaptext>\n";
-            $output .='        <itemid>'.$set->itemid."</itemid>\n";
-            $output .='        <correctfeedback>'.$set->correctfeedback."</correctfeedback>\n";
-            $output .='        <incorrectfeedback>'.$set->incorrectfeedback."</incorrectfeedback>\n";
-            $output .="     </gapsetting>\n";
-         }
+        foreach ($question->options->itemsettingsdata as $set) {
+            $output .= "      <gapsetting>\n";
+            $output .= '        <question>' . $set->question . "</question>\n";
+            $output .= '        <gaptext>' . $set->gaptext . "</gaptext>\n";
+            $output .= '        <itemid>' . $set->itemid . "</itemid>\n";
+            $output .= '        <correctfeedback>' . $set->correctfeedback . "</correctfeedback>\n";
+            $output .= '        <incorrectfeedback>' . $set->incorrectfeedback . "</incorrectfeedback>\n";
+            $output .= "     </gapsetting>\n";
+        }
         $output .= '    <!-- Gapfill release:'
                 . $gapfillinfo->release . ' version:' . $gapfillinfo->versiondisk . ' Moodle version:'
                 . $CFG->version . ' release:' . $CFG->release
