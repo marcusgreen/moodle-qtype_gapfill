@@ -278,8 +278,11 @@ var wrapContent = (function () {
                                 item.id = 'id' + count + '_' + instance;
                                 sp.id = item.id;
                                 var is = item.get_itemsettings(item);
-                                if (((item.striptags(is.correctfeedback) > "") || (item.striptags(is.incorrectfeedback) > ""))) {
-                                    sp.className = 'hasfeedback';
+                                if (item.striptags(is.correctfeedback) > "") {
+                                    sp.className = 'hascorrect';
+                                }
+                                  if (item.striptags(is.incorrectfeedback) > "") {
+                                    sp.className = sp.className +" "+'hasnotcorrect';
                                 }
                                 gaps.push(item.gaptext);
                             }

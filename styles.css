@@ -1,8 +1,11 @@
-.hasfeedback{
+.hascorrect{
     background: lightblue;
     border: solid thin black;
-    font-style: italic;
-
+}
+.hasnotcorrect{
+    border: solid thin black;
+    box-shadow:  3px 3px #7bc1f7;
+    font-style: italic
 }
 
 .attobackground{
@@ -24,6 +27,7 @@
     background: #faa;
     background-color:#faa;
     border-radius:0.25em;
+    box-shadow:  2px 2px #7bc1f7;
     color: darkslategray;
 
 }
