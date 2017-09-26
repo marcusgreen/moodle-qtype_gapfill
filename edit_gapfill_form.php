@@ -56,8 +56,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->removeelement('questiontext');
         /*for storing the json containing the settings data */
-        $mform->addElement('hidden', 'itemsettingsdata', '', array('size' => '80'));
-        $mform->setType('itemsettingsdata', PARAM_RAW);
+        $mform->addElement('hidden', 'itemsettings', '', array('size' => '80'));
+        $mform->setType('itemsettings', PARAM_RAW);
 
         /* popup for entering feedback for individual words */
         $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
@@ -165,10 +165,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
      * @param stdClass $question
      * @return stringitem
      */
-    public function get_itemsettingsdata(stdClass $question) {
+    public function get_itemsettings(stdClass $question) {
         if (property_exists($question, 'options')) {
-            if (property_exists($question->options, 'itemsettingsdata')) {
-                return $question->options->itemsettingsdata;
+            if (property_exists($question->options, 'itemsettings')) {
+                return $question->options->itemsettings;
             }
         } else {
             return "";
@@ -184,8 +184,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         /* accessing the form in this way is probably not correct style */
         $wronganswers = $this->get_wrong_answers($question);
           /* this gets manipulated by javascript */
-        $settingsdata = $this->get_itemsettingsdata($question);
-        $this->_form->getElement('itemsettingsdata')->setValue($settingsdata);
+        $settingsdata = $this->get_itemsettings($question);
+        $this->_form->getElement('itemsettings')->setValue($settingsdata);
         $this->_form->getElement('wronganswers')->setValue(array('text' => $wronganswers));
         parent::set_data($question);
     }

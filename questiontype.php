@@ -113,7 +113,7 @@ class qtype_gapfill extends question_type {
     public function get_question_options($question) {
         global $DB;
         $question->options = $DB->get_record('question_gapfill', array('question' => $question->id), '*', MUST_EXIST);
-        $question->options->itemsettingsdata = $this->get_itemsettings($question);
+        $question->options->itemsettings = $this->get_itemsettings($question);
         parent::get_question_options($question);
     }
 
@@ -180,7 +180,7 @@ class qtype_gapfill extends question_type {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
-        $question->itemsettingsdata = $this->get_itemsettings($question);
+        $question->itemsettings = $this->get_itemsettings($question);
         $question->places = array();
         $counter = 1;
         $question->maxgapsize = 0;
@@ -436,11 +436,11 @@ class qtype_gapfill extends question_type {
         global $DB;
         $oldsettings = $DB->get_records($table, array('question' => $question->id));
         $newsettings = [];
-        if (isset($question->itemsettingsdata) && (!isset($question->isimport))) {
-            $newsettings = json_decode($question->itemsettingsdata, true);
+        if (isset($question->itemsettings) && (!isset($question->isimport))) {
+            $newsettings = json_decode($question->itemsettings, true);
         }
-        if (isset($question->itemsettingsdata) && (isset($question->isimport))) {
-            $newsettings = $question->itemsettingsdata;
+        if (isset($question->itemsettings) && (isset($question->isimport))) {
+            $newsettings = $question->itemsettings;
         }
         if (isset($newsettings)) {
             foreach ($newsettings as $set) {
@@ -520,14 +520,14 @@ class qtype_gapfill extends question_type {
         $gapsettings = $data['#']['gapsetting'];
         $question->gapsettings = array();
         $question->isimport = true;
-        $question->itemsettingsdata = [];
+        $question->itemsettings = [];
         foreach ($gapsettings as $key => $setxml) {
-              $question->itemsettingsdata[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
-              $question->itemsettingsdata[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['correctfeedback']
+              $question->itemsettings[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
+              $question->itemsettings[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
+              $question->itemsettings[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
+              $question->itemsettings[$key]['correctfeedback']
                       = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
-              $question->itemsettingsdata[$key]['incorrectfeedback']
+              $question->itemsettings[$key]['incorrectfeedback']
                       = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
         }
         return $question;
@@ -547,7 +547,7 @@ class qtype_gapfill extends question_type {
         $pluginmanager = core_plugin_manager::instance();
         $gapfillinfo = $pluginmanager->get_plugin_info('qtype_gapfill');
         /*convert json into an object */
-        $question->options->itemsettingsdata = json_decode($question->options->itemsettingsdata);
+        $question->options->itemsettings = json_decode($question->options->itemsettings);
 
         $output = parent::export_to_xml($question, $format);
         $output .= '    <delimitchars>' . $question->options->delimitchars .
@@ -564,7 +564,7 @@ class qtype_gapfill extends question_type {
                 "</fixedgapsize>\n";
         $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
                 "</optionsaftertext>\n";
-        foreach ($question->options->itemsettingsdata as $set) {
+        foreach ($question->options->itemsettings as $set) {
             $output .= "      <gapsetting>\n";
             $output .= '        <question>' . $set->question . "</question>\n";
             $output .= '        <gaptext>' . $set->gaptext . "</gaptext>\n";

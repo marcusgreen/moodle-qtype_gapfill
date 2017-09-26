@@ -25,7 +25,7 @@
 
 
 /* the data is stored in a hidden field */
-var settingsdata = ($("[name='itemsettingsdata']").val());
+var settingsdata = ($("[name='itemsettings']").val());
 
 var settings = [];
 var gaps = [];
@@ -205,7 +205,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     click: function () {
                         var JSONstr = item.update_json(e);
                         $('[class^=atto_]').removeAttr("disabled");
-                        $("[name='itemsettingsdata']").val(JSONstr);
+                        $("[name='itemsettings']").val(JSONstr);
                         $(this).dialog("close");
                         /*set editable to true as it is checked at the start of click */
                         $("#id_questiontexteditable").attr('contenteditable', 'true');
