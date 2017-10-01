@@ -569,8 +569,8 @@ class qtype_gapfill extends question_type {
             $output .= '        <question>' . $set->question . "</question>\n";
             $output .= '        <gaptext>' . $set->gaptext . "</gaptext>\n";
             $output .= '        <itemid>' . $set->itemid . "</itemid>\n";
-            $output .= '        <correctfeedback>' . $set->correctfeedback . "</correctfeedback>\n";
-            $output .= '        <incorrectfeedback>' . $set->incorrectfeedback . "</incorrectfeedback>\n";
+            $output .= '        <correctfeedback><![CDATA[' . $set->correctfeedback . "]]></correctfeedback>\n";
+            $output .= '        <incorrectfeedback><![CDATA[' . $set->incorrectfeedback . "]]></incorrectfeedback>\n";
             $output .= "     </gapsetting>\n";
         }
         $output .= '    <!-- Gapfill release:'
