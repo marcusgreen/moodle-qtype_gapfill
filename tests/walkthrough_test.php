@@ -18,8 +18,7 @@
  * This file contains tests that walks a question through the interactive
  * behaviour.
  *
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_gapfill
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

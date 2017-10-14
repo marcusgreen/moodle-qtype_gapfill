@@ -18,8 +18,7 @@
  * Gapfill question definition class. This class is mainly about
  * what happens at runtime, when the quesiton is part of a quiz
  *
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_gapfill
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -96,6 +95,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $rightchoices;
     public $allanswers = array();
 
+    /**
+     * Start a new attempt at this question, storing any information that will
+     * be needed later in the step and doing initialisation
+     *
+     * @param question_attempt_step $step
+     * @param number $variant (apparently not used)
+     */
     public function start_attempt(question_attempt_step $step, $variant) {
         /* this is for multiple values in any order with the | (or operator)
          * it takes the first occurance of an or, splits it into separate fields
@@ -121,10 +127,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 
-    /* get the length the correct answer and if the | is used
+    /**
+     * get the length of the correct answer and if the | is used
      * the length of the longest of the correct answers
+     * @param string $answer
+     * @return number
      */
-
     public function get_size($answer) {
         $answer = htmlspecialchars_decode($answer);
         $words = explode("|", $answer);
@@ -133,15 +141,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * @param int $key stem number
+     * returns string of place key value prepended with p, i.e. p0 or p1 etc
+     * @param int $place stem number
      * @return string the question-type variable name.
      */
     public function field($place) {
         return 'p' . $place;
     }
-
+    /**
+     * get expected data types (?)
+     * @return array
+     */
     public function get_expected_data() {
-        /* it may make more sense to think of this as get expected data types */
         $data = array();
         foreach ($this->places as $key => $value) {
             $data['p' . $key] = PARAM_RAW_TRIMMED;
@@ -150,10 +161,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * @param array $response  as might be passed to {@link grade_response()}
-     * @return string
      * Value returned will be written to responsesummary field of
      * the question_attempts table
+     *
+     * @param array $response
+     * @return string
      */
     public function summarise_response(array $response) {
         $summary = "";
@@ -184,6 +196,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $iscomplete;
     }
 
+    /**
+     * Returns prompt asking for answer. Called from renderer
+     * if question state is invalid.
+     *
+     * @param array $response
+     * @return string
+     */
     public function get_validation_error(array $response) {
         if (!$this->is_gradable_response($response)) {
             return get_string('pleaseenterananswer', 'qtype_gapfill');
@@ -192,11 +211,22 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * What is the correct value for the field
+     *
+     * @param number $place
+     * @return number
      */
     public function get_right_choice_for($place) {
         return $this->places[$place];
     }
 
+    /**
+     *
+     * @param array $prevresponse
+     * @param array $newresponse
+     * @return boolean
+     *
+     * Don't change answer if it is the same
+     */
     public function is_same_response(array $prevresponse, array $newresponse) {
         /* if you are moving from viewing one question to another this will
          * discard the processing if the answer has not changed. If you don't
@@ -213,6 +243,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /**
      * A question is gradable if at least one gap response is not blank
+     *
+     * @param array $response
+     * @return boolean
      */
     public function is_gradable_response(array $response) {
         foreach ($response as $key => $answergiven) {
@@ -224,9 +257,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * @return question_answer an answer that
-     * contains the a response that would get full marks.
-     * used in preview mode
+     * Return array containing answers that would get full marks
+     *
+     * @return array
      */
     public function get_correct_response() {
         $response = array();
@@ -236,8 +269,23 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $response;
     }
 
-    /* called from within renderer in interactive mode */
+    /**
+     * TODO
+     * I am not convinced this is actually used anywhere
+     */
+    public function  get_instances() {
+        foreach ($this->places as $place => $answer) {
+            $response[$this->field($place)] = $answer;
+        }
+    }
 
+    /**
+     * called from within renderer in interactive mode
+     *
+     * @param string $answergiven
+     * @param string $rightanswer
+     * @return boolean
+     */
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = core_text::strtolower($answergiven, 'UTF-8');
@@ -307,6 +355,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $response;
     }
 
+    /**
+     * Useful with multiple correct answers per gap, e.g. gold|bronze|silver
+     * This code ensures that only one correct answer gets mark credit
+     * @param array $response
+     * @return array
+     */
     public function discard_duplicates(array $response) {
         if ($this->noduplicates == 1) {
             /*
@@ -327,6 +381,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
+    /**
+     * Calculate grade and returns an array in the form
+     * array(2) (
+     * [0] => (int) 1
+     * [1] => question_state_gradedright object etc etc etc
+     *
+     * @param array $response
+     * @return array
+     */
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
         $right = $this->get_num_parts_right($response);
@@ -335,7 +398,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         return $grade;
     }
 
-    // Required by the interface question_automatically_gradable_with_countback.
+    /**
+     * Required by the interface question_automatically_gradable_with_countback.
+     *
+     * @param array $responses
+     * @param array $totaltries
+     * @return number
+     */
     public function compute_final_grade($responses, $totaltries) {
         if (($this->noduplicates == 1) && (count($responses) > 0)) {
              $responses[0] = $this->discard_duplicates($responses[0]);
@@ -368,9 +437,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * I'm not sure what this does, but I believe it is necessary. Possibly something to do
-     * with including files such as images.
+     * Checks whether the users is allow to be served a particular file.
+     * Component and filearea refers to fields in the mdl_files table
      *
+     * @param question_attempt $qa the question attempt being displayed.
+     * @param question_display_options $options the options that control display of the question.
+     * @param string $component the name of the component we are serving files for.
+     * @param string $filearea the name of the file area.
+     * @param array $args the remaining bits of the file path.
+     * @param bool $forcedownload whether the user must be forced to download the file.
+     * @return bool true if the user can access this file.
      */
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
         if ($component == 'question' && in_array($filearea, array('correctfeedback',
@@ -383,6 +459,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
     }
 
+    /**
+     * Compare the answer given with the correct answer, does it match?
+     *
+     * @param string $answergiven
+     * @param string $answer
+     * @param boolean $disableregex
+     * @return boolean
+     */
     public function compare_response_with_answer($answergiven, $answer, $disableregex = false) {
         /* converts things like &lt; into < */
         $answer = htmlspecialchars_decode($answer);
@@ -437,7 +521,18 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
-
+    /**
+     * get an array with information about marking of gap in the form
+     * array(1) (  [p1] => array(3)(
+     * [value] => (string) 0
+     *  [fraction] => (int) 1
+     *  [duplicate] => (string) false
+     * ))
+     *
+     * @param question_attempt $qa
+     * @param question_display_options $options
+     * @return array
+     */
     public function get_markedgaps(question_attempt $qa, question_display_options $options) {
         $markedgaps = array();
         $question = $qa->get_question();

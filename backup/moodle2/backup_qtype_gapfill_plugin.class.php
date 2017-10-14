@@ -18,7 +18,7 @@
  *
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
- * @copyright  2011 The Open University
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -65,11 +65,21 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
             'partiallycorrectfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat'));
 
+        $gapsettings = new backup_nested_element('gapsettings');
+        $gapsetting = new backup_nested_element('gapsetting', array('id'), array('questionid', 'itemid',
+                'gaptext', 'correctfeedback', 'incorrectfeedback'));
+
         // Now the own qtype tree.
         $pluginwrapper->add_child($gapfill);
 
+        $pluginwrapper->add_child($gapsettings);
+        $gapsettings->add_child($gapsetting);
+
         // Set source to populate the data.
         $gapfill->set_source_table('question_gapfill',
+                array('question' => backup::VAR_PARENTID));
+         // Set source to populate the data.
+        $gapsetting->set_source_table('question_gapfill_settings',
                 array('question' => backup::VAR_PARENTID));
 
         // Don't need to annotate ids nor files.

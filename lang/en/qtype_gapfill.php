@@ -21,23 +21,27 @@
  * @copyright &copy; 2012 Marcus Green
  * @author marcusavgreen@gmail.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package qtype
- * @subpackage gapfill
+ * @package qtype_gapfill
  */
 defined('MOODLE_INTERNAL') || die();
-
+$string['additemsettings'] = 'Add Gap settings';
 $string['casesensitive'] = 'Case Sensitive';
 $string['casesensitive_help'] = 'When this is checked, if the correct answer is CAT, cat will be flagged as a wrong answer';
 $string['casesensitive_text'] = 'An answer of CAT will will be treated as different to cat';
 $string['noduplicates'] = 'No Duplicates';
 $string['noduplicates_help'] = 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
 
+$string['correct'] = 'Feedback for correct.';
+$string['editquestiontext'] = 'Edit question text';
+$string['incorrect'] = 'Feedback for incorrect.';
 
 $string['delimitchars'] = 'Delimit characters';
 $string['pluginnameediting'] = 'Editing Gap Fill.';
 $string['pluginnameadding'] = 'Adding a Gap Fill Question.';
 
 $string['gapfill'] = 'Gapfill.';
+$string['itemsettings_button'] = 'Item settings';
+$string['itemsettings_button_help'] = 'Clicking this toggles settings mode for entering per-gap settings such as feedback for correct or incorrect responses. Click on a delimited gap word to popup the settings form';
 
 $string['displaygapfill'] = 'gapfill';
 $string['displaydropdown'] = 'dropdown';
@@ -61,6 +65,8 @@ $string['fixedgapsize'] = 'Fixed Gap Size';
 $string['fixedgapsize_help'] = 'When attempting the question all gaps will be set to the same size as the largest gap. This removes gap size as a clue to the correct answer, e.g. if the gaps are [red] and [yellow] it would be clear that the yellow went in the biggest gap';
 $string['fixedgapsizeset_text'] = 'Sets the size of every gap to that of the biggest gap';
 $string['delimitset'] = 'Delimit Chars';
+$string['itemsettingsbutton'] = 'Gap settings';
+$string['itemsettingserror'] = 'Generic error for items settings please replace';
 $string['moreoptions'] = 'More Options.';
 $string['blank'] = 'blank';
 $string['optionsaftertext'] = 'Options after text';
@@ -74,10 +80,12 @@ $string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->
 $string['correctanswer'] = 'Correct answer';
 $string['coursenotfound'] = 'Course not found, check the course shortname';
 $string['questioncatnotfound'] = 'Question category not found, click click <a href={$a}>here</a> to initialise, then the browser back button';
-$string['import'] = 'Import';
+$string['importexamples'] = 'Import';
 $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
 $string['courseshortname'] = 'Course Shortname';
 $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions';
 $string['courseshortname_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the file example_questions.xml in the gapfill question type folder.';
-$string['importexamples'] = "Import Examples";
+$string['questiontext'] = "Question text";
+$string['questiontext_help'] = "Put delimiters around the words that will become the text";
+

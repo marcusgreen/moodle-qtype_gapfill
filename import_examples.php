@@ -34,7 +34,9 @@ class gapfill_import_form extends moodleform {
 
     public $questioncategory;
     public $course;
-
+    /**
+     * mini form for entering the import details
+     */
     protected function definition() {
         $mform = $this->_form;
         $mform->addElement('text', 'courseshortname', 'Course');
@@ -43,10 +45,12 @@ class gapfill_import_form extends moodleform {
     }
 
     /**
+     * Get the category to insert the questions. Can be tricky if the course
+     * has never been used previously as the category may not exist
      *
      * @global moodle_database $DB
-     * @param type $courseshortname
-     * @return Array
+     * @param string $courseshortname
+     * @return array
      */
     public function get_question_category($courseshortname) {
         global $DB;
@@ -61,10 +65,13 @@ class gapfill_import_form extends moodleform {
     }
 
     /**
+     * Check that the course exists and that it has a top level question category
+     * If if does not have the category prompt the user to visit the course which
+     * will create the category. TODO improve this bit.
      *
      * @global moodle_database $DB
-     * @param type $fromform
-     * @param type $data
+     * @param array $fromform
+     * @param array $data
      * @return boolean
      */
     public function validation($fromform, $data) {
@@ -99,7 +106,7 @@ if ($fromform = $mform->get_data()) {
     $category->context = $categorycontext;
 
     $qformat = new qformat_xml();
-    $file = $CFG->dirroot . '/question/type/gapfill/sample_questions.xml';
+    $file = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/gapfill_examples.xml';
     $qformat->setFilename($file);
 
     $qformat->setCategory($category);

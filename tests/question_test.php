@@ -17,9 +17,8 @@
 /**
  * Unit tests for the gapfill question definition class.
  *
- * @package    qtype
- * @subpackage gapfill
- * @copyright  2012 Marcus Green
+ * @package    qtype_gapfill
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
