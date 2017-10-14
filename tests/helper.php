@@ -143,7 +143,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->casesensitive = '1';
         $question->gapcount = '2';
         $question->optionsaftertext = false;
-        $question->itemsettings = '[{"id":"51","question":"256","itemid":"id1_0","text":"sat","correctfeedback":"OK<br>",'
+        $question->itemsettings = '[{"id":"51","question":"256","itemid":"id1_0","gaptext":"sat","correctfeedback":"OK<br>",'
                 . '"incorrectfeedback":"Wrong<br>"}]';
 
         $question->generalfeedback = 'congratulations on your knowledge of pets and floor covering';
