@@ -58,7 +58,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
      /**
       *
       * @global moodle_database $DB
-      * @param type $data
+      * @param array $data
       * Process the qtype/gapfill element
       */
     public function process_gapfill($data) {

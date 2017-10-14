@@ -25,11 +25,24 @@ defined('MOODLE_INTERNAL') || die();
 
 class qtype_gapfill_test_helper extends question_test_helper {
 
+    /**
+     *  must be implemented or class made abstract 
+     * 
+     * @return string
+     */
     public function get_test_questions() {
-        /* must be implemented or class made abstract */
         return array('catmat');
     }
 
+    /**
+     * Slight improvements over original make_question class
+     * 
+     * @param object $type
+     * @param string $questiontext
+     * @param boolean $casesensitive
+     * @param array $poptions
+     * @return qtype_gapfill
+     */
     public static function make_question2($type, $questiontext, $casesensitive = false, $poptions=array("noduplicates" => 0,
         'disableregex' => 0, 'delimitchars' => '[])')) {
         question_bank::load_question_definition_classes($type);
@@ -108,6 +121,13 @@ class qtype_gapfill_test_helper extends question_test_helper {
         return $question;
     }
 
+    /**
+     * First attempt at returning an instance of the class
+     * 
+     * @param string $type
+     * @param stdClass $answers
+     * @return \qtype_gapfill_question
+     */
     public static function make_question($type, $answers = array("cat", "mat")) {
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();

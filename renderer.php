@@ -30,11 +30,29 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
-
+    
+    /**
+     * responses that would be correct if submitted
+     * @var array 
+     */
     public $correctresponses = array();
-    public $markedresponses = array();
+    /**
+     * correct and distractor answers
+     * 
+     * @var array
+     */
     public $allanswers = array();
-    public $itemsettings;
+    /**
+     * Used to store the per-gap settings, e.g. feedback
+     * @var array
+     */
+    public $itemsettings=[];
+    /**
+     * all the options that controls how a question is displayed
+     * more about the question engine than this specific question type
+     * 
+     * @var all the options that controls how a question is displayed
+     */
     public $displayoptions;
 
     /**

@@ -35,8 +35,9 @@ defined('MOODLE_INTERNAL') || die();
 class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
 
     /**
-     *
      * @return string the name of the plugin/question type
+     * 
+     * @return string
      */
     protected static function qtype_name() {
         return 'gapfill';

@@ -17,8 +17,7 @@
 /**
  * Unit tests for the gapfill question type class.
  *
- * @package    qtype
- * @subpackage gapfill
+ * @package    qtype_gpfill
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -49,7 +48,11 @@ class qtype_gapfill_test extends advanced_testcase {
     protected function tearDown() {
         $this->qtype = null;
     }
-
+    /**
+     * template for common example of question instance
+     * @global type $USER
+     * @return \stdClass
+     */
     protected function get_test_question_data() {
         global $USER;
         $q = new stdClass();
