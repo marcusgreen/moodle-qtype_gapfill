@@ -26,8 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_gapfill_test_helper extends question_test_helper {
 
     /**
-     *  must be implemented or class made abstract 
-     * 
+     *  must be implemented or class made abstract
+     *
      * @return string
      */
     public function get_test_questions() {
@@ -36,7 +36,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
     /**
      * Slight improvements over original make_question class
-     * 
+     *
      * @param object $type
      * @param string $questiontext
      * @param boolean $casesensitive
@@ -123,7 +123,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
     /**
      * First attempt at returning an instance of the class
-     * 
+     *
      * @param string $type
      * @param stdClass $answers
      * @return \qtype_gapfill_question

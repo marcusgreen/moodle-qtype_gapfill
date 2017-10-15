@@ -1,4 +1,4 @@
-### Version 1.96 of the Moodle Gapfill question type Sep 2017
+### Version 1.96 of the Moodle Gapfill question type Oct 2017
 Per gap feedback. This is a significant new feature and allows the creation of feedback that is
 displayed dependent on if the student gave a correct or incorrect response on a per-gap basis The feedback is
 entered by clicking a new button Gap settings which is shown under the question text field. This

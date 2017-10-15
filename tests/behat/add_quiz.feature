@@ -22,7 +22,7 @@ Feature: Add a quiz
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Quiz" to section "1" and I fill the form with:
       | Name        | Gapfill single page quiz         |
-      | Description | Test Gapfill with more than one quesiton per page |
+      | Description | Test Gapfill with more than one question per page |
     And I follow "Gapfill single page quiz"
     And I navigate to "Edit settings" in current page administration
     And I expand all fieldsets
