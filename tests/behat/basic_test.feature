@@ -14,7 +14,7 @@ Feature: Test all the basic functionality of this question type
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
 
-  @javascript
+#  @javascript
   Scenario: Create, edit then preview a gapfill question.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage

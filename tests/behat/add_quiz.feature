@@ -92,7 +92,7 @@ And I add a "Gapfill" question to the "Gapfill single page quiz" quiz with:
     And I press "Finish attempt ..."
     And I press "Submit all and finish"
 
-  @javascript
+ # @javascript
   Scenario: Add and configure small quiz and perform an attempt as a student with Javascript enabled
     Then I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
     And I follow "Finish review"
