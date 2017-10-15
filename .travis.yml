@@ -13,6 +13,10 @@ php:
 addons:
   firefox: "47.0.1"
   postgresql: "9.3"
+    apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java8-set-default
 
 env: 
   - MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli IGNORE_PATHS=jquery
