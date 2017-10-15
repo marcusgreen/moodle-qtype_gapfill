@@ -114,7 +114,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $output .= "<br/>";
         if ($question->optionsaftertext == true) {
-            $output .= $questiontext . $answeroptions;
+            $output .= $questiontext . $answeroptions.'</div>';
         } else {
             $output .= $answeroptions . $questiontext;
         }
