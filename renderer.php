@@ -94,7 +94,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                             $potentialanswer . "</span>&nbsp;";
                 }
             }
-            $answeroptions .= "</div><br/><br/>";
+            $answeroptions .= "<br/><br/>";
         }
         $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
         $markedgaps = $question->get_markedgaps($qa, $options);
@@ -114,9 +114,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $output .= "<br/>";
         if ($question->optionsaftertext == true) {
-            $output .= $questiontext . $answeroptions.'</div>';
+            $output .= $questiontext . $answeroptions;
         } else {
-            $output .= $answeroptions . $questiontext;
+            $output .= $answeroptions .'</div>'. $questiontext;
         }
         if ($qa->get_state() == question_state::$invalid) {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
