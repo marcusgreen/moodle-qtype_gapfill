@@ -282,7 +282,7 @@ var wrapContent = (function () {
                                     sp.className = 'hascorrect';
                                 }
                                   if (item.striptags(is.incorrectfeedback) > "") {
-                                    sp.className = sp.className +" "+'hasnotcorrect';
+                                    sp.className = sp.className + " " +'hasnotcorrect';
                                 }
                                 gaps.push(item.gaptext);
                             }
