@@ -176,9 +176,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
-                $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
+                $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings,$rightanswer);
                 if ($options->rightanswer == 1) {
-                    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
+                //    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
                 }
                 $inputclass = $this->feedback_class($fraction);
             }
