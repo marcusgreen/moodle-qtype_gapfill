@@ -14,7 +14,7 @@ Feature: Test all the basic functionality of this question type
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
 
-#  @javascript
+  @javascript
   Scenario: Create, edit then preview a gapfill question.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
@@ -32,6 +32,53 @@ Feature: Test all the basic functionality of this question type
     # Preview it.
     When I click on "Preview" "link" in the "Gapfill-001" "table_row"
     And I switch to "questionpreview" window
+
+    ##################################################
+    # Adaptive Mode No Penalties behaviour
+     And I set the following fields to these values:
+      | How questions behave | Adaptive mode (no penalties) |
+      | Marked out of        | 2                               |
+      | Marks                | Show mark and max               |
+      | Specific feedback    | Shown |
+      | Right answer         | Shown |
+    
+    And I press "Start again with these options" 
+ 
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "xxx" into gap "2" in the gapfill question
+
+    And I press "Check"      
+    And I should see "Your answer is partially correct."
+    And I should see "Mark 1.00 out of 2.00"
+    And I wait "1" seconds
+
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
+    
+    And I press "Check"      
+    And I should see "Your answer is correct."
+    #full marks because this mode imposes no penalties for incorrect attempts
+    And I should see "Mark 2.00 out of 2.00"
+    And I wait "1" seconds
+
+    And I press "Start again with these options" 
+    And I type "sat" into gap "1" in the gapfill question
+    And I type "xxx" into gap "2" in the gapfill question
+
+    And I press "Submit and finish"      
+    And I should see "Your answer is partially correct."
+    And I should see "Mark 1.00 out of 2.00"
+    And I wait "2" seconds
+    
+    And I press "Start again with these options" 
+    And I type "xxx" into gap "1" in the gapfill question
+    And I type "yyy" into gap "2" in the gapfill question
+  
+    And I press "Submit and finish"      
+    And I should see "Your answer is incorrect."
+    And I should see "Mark 0.00 out of 2.00"
+    And I wait "5" seconds
+
 
     #################################################
     #Interactive with multiple tries
