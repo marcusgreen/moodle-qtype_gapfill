@@ -133,7 +133,8 @@ $("#id_itemsettings_button").on("click", function() {
         var settingformheight = $("#id_questiontexteditable").css("height");
         var settingformwidth = $("#id_questiontexteditable").css("width");
         $("#id_questiontexteditable").css("display", 'none');
-        $('#id_itemsettings_canvas').copyCSS("#id_questiontexteditable");
+        /*copy the styles from attos editable area so the canvas looks the same (except gray) */
+        $('#id_itemsettings_canvas').css(copyStyles($("#id_questiontexteditable")));
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
         $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
         $("#id_itemsettings_canvas").css({
@@ -300,3 +301,49 @@ var wrapContent = (function () {
         }
     };
 }());
+function copyStyles(source) {
+    // the map to return with requested styles and values as KVP
+    var product = {};
+    // the style object from the DOM element we need to iterate through
+    var style;
+    // recycle the name of the style attribute
+    var name;
+    // prevent from empty selector
+    if (source.length) {
+        // otherwise, we need to get everything
+        var dom = source.get(0);
+        // standards
+        if (window.getComputedStyle) {
+            // convenience methods to turn css case ('background-image') to camel ('backgroundImage')
+            var pattern = /\-([a-z])/g;
+            var uc = function (a, b) {
+                return b.toUpperCase();
+            };
+            var camelize = function (string) {
+                return string.replace(pattern, uc);
+            };
+            // make sure we're getting a good reference
+            if (style = window.getComputedStyle(dom, null)) {
+                var camel, value;
+                for (var i = 0, l = style.length; i < l; i++) {
+                        name = style[i];
+                        camel = camelize(name);
+                        value = style.getPropertyValue(name);
+                        product[camel] = value;
+                }
+                
+            } else if (style = dom.currentStyle) {
+                for (name in style) {
+                    product[name] = style[name];
+                }
+            } else if (style = dom.style) {
+                for (name in style) {
+                    if (typeof style[name] != 'function') {
+                        product[name] = style[name];
+                    }
+                }
+            }
+            return product;
+        }
+    }
+}
