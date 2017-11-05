@@ -114,7 +114,7 @@ function Item(text, delimitchars) {
 
 
 /* a click on the button */
-$("#id_itemsettings_button").on("click", function() {
+$("#id_itemsettings_button").on("click", function () {
     var atto_islive = ($(".editor_atto")).length;
     /* show error if Atto is not loaded. It might be because the page has not finished loading
      * or because plain text elements are being used or (perhaps less likely as time goes on)
@@ -213,7 +213,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                             $("#id_questiontexteditable").attr('contenteditable', 'true');
                             $("#id_itemsettings_button").click();
                         }
-                    }
+                }
                 ]
             });
         });
@@ -284,8 +284,8 @@ var wrapContent = (function () {
                                 if (item.striptags(is.correctfeedback) > "") {
                                     sp.className = 'hascorrect';
                                 }
-                                  if (item.striptags(is.incorrectfeedback) > "") {
-                                    sp.className = sp.className + " " +'hasnotcorrect';
+                                if (item.striptags(is.incorrectfeedback) > "") {
+                                    sp.className = sp.className + " " + 'hasnotcorrect';
                                 }
                                 gaps.push(item.gaptext);
                             }
@@ -304,19 +304,18 @@ var wrapContent = (function () {
     };
 }());
 function copyStyles(source) {
-    // the map to return with requested styles and values as KVP
+    // The map to return with requested styles and values as KVP.
     var product = {};
-    // the style object from the DOM element we need to iterate through
+    // The style object from the DOM element we need to iterate through.
     var style;
-    // recycle the name of the style attribute
+    // Recycle the name of the style attribute.
     var name;
-    // prevent from empty selector
+    // Prevent from empty selector.
     if (source.length) {
-        // otherwise, we need to get everything
+        // Otherwise, we need to get everything.
         var dom = source.get(0);
-        // standards
         if (window.getComputedStyle) {
-            // convenience methods to turn css case ('background-image') to camel ('backgroundImage')
+            // Convenience methods to turn css case ('background-image') to camel ('backgroundImage').
             var pattern = /\-([a-z])/g;
             var uc = function (a, b) {
                 return b.toUpperCase();
@@ -324,7 +323,7 @@ function copyStyles(source) {
             var camelize = function (string) {
                 return string.replace(pattern, uc);
             };
-            // make sure we're getting a good reference
+            // Make sure we're getting a good reference.
             if (style = window.getComputedStyle(dom, null)) {
                 var camel, value;
                 for (var i = 0, l = style.length; i < l; i++) {
@@ -333,7 +332,6 @@ function copyStyles(source) {
                         value = style.getPropertyValue(name);
                         product[camel] = value;
                 }
-                
             } else if (style = dom.currentStyle) {
                 for (name in style) {
                     product[name] = style[name];
