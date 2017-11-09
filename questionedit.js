@@ -189,9 +189,8 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
         /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
-        var $popup = $("#id_itemsettings_popup");
         require(['jquery', 'jqueryui'], function ($, jqui) {
-            $popup.dialog({
+            $("#id_itemsettings_popup").dialog({
                 position: {
                     my: 'right',
                     at: 'right',
@@ -208,7 +207,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                             var JSONstr = item.update_json(e);
                             $('[class^=atto_]').removeAttr("disabled");
                             $("[name='itemsettings']").val(JSONstr);
-                            $(this).dialog("close");
+                            $(".ui-dialog-content").dialog("close");
                             /*set editable to true as it is checked at the start of click */
                             $("#id_questiontexteditable").attr('contenteditable', 'true');
                             $("#id_itemsettings_button").click();
