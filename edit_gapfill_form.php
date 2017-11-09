@@ -46,7 +46,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('ui-css');
-        $PAGE->requires->jquery_plugin('copycss', 'qtype_gapfill');
 
         $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'), 'qtype_gapfill');
