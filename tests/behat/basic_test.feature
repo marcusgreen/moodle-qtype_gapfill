@@ -27,7 +27,17 @@ Feature: Test all the basic functionality of this question type
       | General feedback          | This is general feedback      |
       | Hint 1                    | First hint                    |
       | Hint 2                    | Second hint                   |
+    
     Then I should see "Gapfill-001"
+    
+    When I click on "Edit" "link" in the "Gapfill-001" "table_row"
+    And I press "Gap settings" 
+    And I click on "//span[@id='id1_0']" "xpath_element"
+
+    And I set the field with xpath "//div[@id='id_correcteditable']" to "a correct response feedback"
+    And I set the field with xpath "//div[@id='id_incorrecteditable']" to "An incorrect response"
+    And I press "OK"
+    And I click on "#id_submitbutton" "css_element"
 
     # Preview it.
     When I click on "Preview" "link" in the "Gapfill-001" "table_row"
@@ -47,7 +57,8 @@ Feature: Test all the basic functionality of this question type
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
 
-    And I press "Check"      
+    And I press "Check"   
+    And I should see "a correct response feedback"   
     And I should see "Your answer is partially correct."
     And I should see "Mark 1.00 out of 2.00"
     And I wait "1" seconds
