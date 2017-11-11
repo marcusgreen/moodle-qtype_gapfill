@@ -323,7 +323,7 @@ function copyStyles(source) {
                 return string.replace(pattern, uc);
             };
             // Make sure we're getting a good reference.
-            if (style = window.getComputedStyle(dom, null)) {
+            if ((style = window.getComputedStyle(dom, null))) {
                 var camel, value;
                 for (var i = 0, l = style.length; i < l; i++) {
                         name = style[i];
@@ -331,11 +331,11 @@ function copyStyles(source) {
                         value = style.getPropertyValue(name);
                         product[camel] = value;
                 }
-            } else if (style = dom.currentStyle) {
+            } else if ((style = dom.currentStyle)) {
                 for (name in style) {
                     product[name] = style[name];
                 }
-            } else if (style = dom.style) {
+            } else if ((style = dom.style)) {
                 for (name in style) {
                     if (typeof style[name] != 'function') {
                         product[name] = style[name];
