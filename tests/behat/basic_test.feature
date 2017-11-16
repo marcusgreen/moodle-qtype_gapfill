@@ -43,6 +43,25 @@ Feature: Test all the basic functionality of this question type
     When I click on "Preview" "link" in the "Gapfill-001" "table_row"
     And I switch to "questionpreview" window
 
+ ##################################################
+    # Deferred Feedback behaviour with CBM
+     And I set the following fields to these values:
+      | How questions behave | Deferred feedback with CBM |
+      | Marked out of        | 2                               |
+      | Marks                | Show mark and max               |
+      | Specific feedback    | Shown |
+      | Right answer         | Shown |
+    
+    And I press "Start again with these options" 
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
+
+    And I press "Submit and finish"      
+    And I should see "Your answer is correct."
+    And I should see "CBM mark 2.00"
+    And I wait "5" seconds
+
+
     ##################################################
     # Adaptive Mode No Penalties behaviour
      And I set the following fields to these values:
