@@ -466,21 +466,19 @@ class qtype_gapfill extends question_type {
         $question = parent::import_from_xml($data, $question, $format, null);
         $format->import_combined_feedback($question, $data, true);
         $format->import_hints($question, $data, true, false, $format->get_format($question->questiontextformat));
-        $gapsettings = $data['#']['gapsetting'];
         $question->isimport = true;
         $question->itemsettings = [];
         if (isset($data['#']['gapsetting'])) {
             foreach ($data['#']['gapsetting'] as $key => $setxml) {
-                foreach ($gapsettings as $key => $setxml) {
-                    $question->itemsettings[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
-                    $question->itemsettings[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
-                    $question->itemsettings[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
-                    $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
-                    $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
-                }
+                $question->itemsettings[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
+                $question->itemsettings[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
+                $question->itemsettings[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
+                $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
+                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
             }
-            return $question;
         }
+        return $question;
+
     }
 
     /**
