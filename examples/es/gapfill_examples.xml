@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 0  -->
+  <question type="category">
+    <category>
+        <text>$course$/Default for GFT/Spanish Examples</text>
+
+    </category>
+  </question>
+
+<!-- question: 477  -->
+  <question type="gapfill">
+    <name>
+      <text>Example 1</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Este es un ejemplo de pregunta de llenar_hueco. Arrastre la palabra correcta al hueco correspondiente:<br><br>Tres tristes [tigres] tragan trigo en el [trigal].<br></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>1</optionsaftertext>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>tigres</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>trigal</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>microondas</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>amario</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>monitor</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>elefantes</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>leones</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>1</optionsaftertext>
+    <!-- Gapfill release:1.96 version:2017101400 Moodle version:2017111300 release:3.4 (Build: 20171113) -->
+    <correctfeedback format="html">
+      <text>Your answer is correct.</text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text>Your answer is partially correct.</text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text>Your answer is incorrect.</text>
+    </incorrectfeedback>
+  </question>
+
+<!-- question: 476  -->
+  <question type="gapfill">
+    <name>
+      <text>Images in tables (fruit)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<table class="gapfilltable" rules="rows" border="2"><colgroup> <col class="gapfillcol"> <col class="gapfillcol"> </colgroup>
+<tbody>
+<tr>
+<td><img src="http://vledevelop.co.uk/moodle/draftfile.php/5/user/draft/528777654/apple.png" alt="" height="51" width="40"></td>
+<td>[apple]</td>
+</tr>
+<tr>
+<td><img src="http://vledevelop.co.uk/moodle/draftfile.php/5/user/draft/528777654/pear.png" alt="" height="55" width="40"></td>
+<td>[pear]</td>
+</tr>
+</tbody>
+</table>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <answerdisplay>dragdrop</answerdisplay>
+    <delimitchars>[]</delimitchars>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>1</optionsaftertext>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>apple</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>pear</text>
+      <feedback format="moodle_auto_format">
+        <text></text>
+      </feedback>
+    </answer>
+    <delimitchars>[]</delimitchars>
+    <answerdisplay>dragdrop</answerdisplay>
+    <casesensitive>0</casesensitive>
+    <noduplicates>0</noduplicates>
+    <disableregex>0</disableregex>
+    <fixedgapsize>0</fixedgapsize>
+    <optionsaftertext>1</optionsaftertext>
+    <!-- Gapfill release:1.96 version:2017101400 Moodle version:2017111300 release:3.4 (Build: 20171113) -->
+    <correctfeedback format="html">
+      <text>Your answer is correct.</text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text>Your answer is partially correct.</text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text>Your answer is incorrect.</text>
+    </incorrectfeedback>
+  </question>
+
+</quiz>
