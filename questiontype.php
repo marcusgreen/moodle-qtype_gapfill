@@ -468,7 +468,6 @@ class qtype_gapfill extends question_type {
         $format->import_combined_feedback($question, $data, true);
         $format->import_hints($question, $data, true, false, $format->get_format($question->questiontextformat));
         $gapsettings = $data['#']['gapsetting'];
-        $question->gapsettings = array();
         $question->isimport = true;
         $question->itemsettings = [];
         foreach ($gapsettings as $key => $setxml) {
