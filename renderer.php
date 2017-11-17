@@ -106,7 +106,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
             $questiontext .= $question->format_text($fragment, $question->questiontextformat,
-                    $qa, 'question', 'questiontext', $question->id);
+                   $qa, 'question', 'questiontext', $question->id);
         }
         if ($question->optionsaftertext == true) {
             /* this is to communicate with the mobile app */
@@ -116,7 +116,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->optionsaftertext == true) {
             $output .= $questiontext . $answeroptions;
         } else {
-            $output .= $answeroptions .'</div>'. $questiontext;
+            if($question->answerdisplay=='gapfill' || $question->answerdisplay=='dropdown'){
+                  $output .= $answeroptions . $questiontext;
+            }else{
+               $output .= $answeroptions .'</div>'. $questiontext;
+            }
         }
         if ($qa->get_state() == question_state::$invalid) {
             $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
