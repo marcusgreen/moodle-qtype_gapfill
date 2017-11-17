@@ -481,8 +481,9 @@ class qtype_gapfill extends question_type {
             }
             return $question;
         }
+    }
 
-        /**
+    /**
      * Export question to the Moodle XML format
      *
      * @global object $CFG
