@@ -122,8 +122,8 @@ $("#id_itemsettings_button").on("click", function () {
      * but limiting to Atto keeps things straightforward and maintainable.
      */
     if (atto_islive < 1) {
-        $("#id_error_itemsettings").css({'display': 'inline', 'color': 'red'});
-        $("#id_error_itemsettings")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
+        $("#id_error_itemsettings_button").css({'display': 'inline', 'color': 'red'});
+        $("#id_error_itemsettings_button")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
         return;
     }
     $("#questiontext .atto_html_button").attr("disabled", 'true');
