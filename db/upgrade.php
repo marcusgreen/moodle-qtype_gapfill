@@ -82,14 +82,13 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     }
     if (!$dbman->table_exists('question_gapfill_settings')) {
         $table = new xmldb_table('question_gapfill_settings');
-        $table->add_field('id', XMLDB_TYPE_INTEGER, '1', null, null, true, null);
+		$table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('question', XMLDB_TYPE_CHAR, '10', null, true, null, null);
         $table->add_field('itemid', XMLDB_TYPE_CHAR, '10', null, true, null, null);
         $table->add_field('gaptext', XMLDB_TYPE_CHAR, '255', null, true, null, null);
         $table->add_field('correctfeedback', XMLDB_TYPE_TEXT, '350', null, true, null, null);
         $table->add_field('incorrectfeedback', XMLDB_TYPE_TEXT, '350', null, true, null, null);
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-
         $dbman->create_table($table);
     }
     // Gapfill savepoint reached.
