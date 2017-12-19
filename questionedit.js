@@ -122,8 +122,8 @@ $("#id_itemsettings_button").on("click", function () {
      * but limiting to Atto keeps things straightforward and maintainable.
      */
     if (atto_islive < 1) {
-        $("#id_error_itemsettings").css({'display': 'inline', 'color': 'red'});
-        $("#id_error_itemsettings")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
+        $("#id_error_itemsettings_button").css({'display': 'inline', 'color': 'red'});
+        $("#id_error_itemsettings_button")[0].innerHTML = M.util.get_string("itemsettingserror", "qtype_gapfill");
         return;
     }
     $("#questiontext .atto_html_button").attr("disabled", 'true');
@@ -138,7 +138,6 @@ $("#id_itemsettings_button").on("click", function () {
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
         $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
         $("#id_itemsettings_canvas").css({
-            "line-height": "1.25",
             "display": "block",
             "background": "lightgrey"
         });
@@ -148,6 +147,8 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_itemsettings_canvas").css({height: settingformheight, width: settingformwidth});
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
         $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
+        /*setting the height by hand gets around a quirk of MSIE */
+        $('#id_itemsettings_canvas').height($("#id_questiontexteditable").height());
         /* disable the buttons on questiontext but not on the feedback form */
         /*wrapContent should be the last on this block as it sometimes falls over with an error */
         wrapContent($("#id_itemsettings_canvas")[0]);

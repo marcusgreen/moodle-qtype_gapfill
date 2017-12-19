@@ -66,7 +66,7 @@ $string['fixedgapsize_help'] = 'When attempting the question all gaps will be se
 $string['fixedgapsizeset_text'] = 'Sets the size of every gap to that of the biggest gap';
 $string['delimitset'] = 'Delimit Chars';
 $string['itemsettingsbutton'] = 'Gap settings';
-$string['itemsettingserror'] = 'Generic error for items settings please replace';
+$string['itemsettingserror'] = 'Only works with Atto editor. Go to Editor preferences to switch to Atto';
 $string['moreoptions'] = 'More Options.';
 $string['blank'] = 'blank';
 $string['optionsaftertext'] = 'Options after text';
@@ -88,4 +88,8 @@ $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions'
 $string['courseshortname_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the file example_questions.xml in the gapfill question type folder.';
 $string['questiontext'] = "Question text";
 $string['questiontext_help'] = "Put delimiters around the words that will become the text";
-
+$string['example1'] = 'Drag the verbs into the gaps. He [laughed] and [sat] down';
+$string['distractor1']='blue,shoe,small';
+$string['example2'] = 'Select the verbs from the dropdowns. He [laughed] and [sat] down';
+$string['distractor2']='blue,shoe,small';
+$string['example3'] = 'Where does the kangaroo come from? [Australia]. The next gap will acceps either cat or dog [cat|dog]';
