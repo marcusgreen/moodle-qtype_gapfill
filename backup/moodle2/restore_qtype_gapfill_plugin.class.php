@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Gapfill question type restoration
+ * 
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2011 The Open University
@@ -23,9 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * restore plugin class that provides the necessary information
- * needed to restore one gapfill qtype plugin. Also used if you click
- * the duplicate quiz button in a course.
+ * Information to restore a backup of a gapfill question
+ * 
+ * Also used if you click the duplicate quiz button in a course.
  *
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -56,10 +58,10 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
     }
 
      /**
-      *
+      * Process the qtype/gapfill element
+      * 
       * @global moodle_database $DB
       * @param array $data
-      * Process the qtype/gapfill element
       */
     public function process_gapfill($data) {
         global $DB;
@@ -84,10 +86,10 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
     }
 
      /**
-      *
+      * Process the settings for individual gaps
+      * 
       * @global moodle_database $DB
-      * @param type $data
-      * Process the qtype/gapfill element
+      * @param array $data
       */
     public function process_gapsetting($data) {
         global $DB;
@@ -135,7 +137,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
      * However the docs seem to frown on the use of this parameter.
      *
      * @global moodle_database $DB
-     * @param type $data
+     * @param array $data
      * @throws restore_step_exception
      */
     public function process_question_answer($data) {

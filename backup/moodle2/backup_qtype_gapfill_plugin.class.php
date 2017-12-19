@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * Gapfill question type backup
+ * 
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2017 Marcus Green
@@ -25,17 +26,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
 /**
- * Provides the information to backup gapfill questions
+*
+ * Provides steps to perform one complete backup of a gapfill question instance
  *
- * @copyright  2012 Marcus Green
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
 
     /**
-     * @return string the name of the plugin/question type
+     * returns the name of the plugin/question type
      *
      * @return string
      */
