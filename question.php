@@ -19,19 +19,37 @@
  * what happens at runtime, when the quesiton is part of a quiz
  *
  * @package    qtype_gapfill
- * @copyright  2012 Marcus Green
+ * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
+defined('MOODLE_INTERNAL') || die();
+/**
+ * Gapfill question definition class. This class is mainly about
+ * what happens at runtime, when the quesiton is part of a quiz
+ *
+ * @package    qtype_gapfill
+ * @copyright  2017 Marcus Green
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
     /* Not actually using the countback bit at the moment, not sure what it does.
      * if you are trying to make sense of Moodle question code, check the following link
      * http://docs.moodle.org/dev/Question_engine
      */
-
+    
+  
+    /**
+     * Apparently not used
+     * 
+     * @var string
+     */
     public $answer;
-    /* answerdisplay is a string of either gapfill,dropdown or drag drop */
+
+    /**
+     * answerdisplay is a string of either gapfill,dropdown or drag drop 
+     * @var string 
+     */
     public $answerdisplay;
     public $shuffledanswers;
     public $correctfeedback;

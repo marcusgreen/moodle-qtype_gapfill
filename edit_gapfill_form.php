@@ -25,6 +25,9 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
 
 /**
+ * Editing form for the Gapfill question type
+ * @copyright Marcus Green 2017
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * gapfill editing form definition.
  *
  * See http://docs.moodle.org/en/Development:lib/formslib.php for information
@@ -32,8 +35,21 @@ require_once($CFG->dirroot . '/question/type/edit_question_form.php');
  */
 class qtype_gapfill_edit_form extends question_edit_form {
 
+    /**
+     * Doesn't seem to be used
+     * @var string
+     */
     public $answer;
+
+    /**
+     * Doesn't seem to be used
+     * @var string 
+      */
     public $answerdisplay;
+    /**
+     * Doesn't seem to be used
+     * @var string
+     */
     public $delimitchars;
 
     /**

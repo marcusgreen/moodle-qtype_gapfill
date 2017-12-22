@@ -27,6 +27,8 @@ require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/engine/lib.php');
 
 /**
+ * @copyright Marcus Green 2017 
+ * 
  * The gapfill question class
  * Load from database, and initialise class
  * A "fill in the gaps" cloze style question type
