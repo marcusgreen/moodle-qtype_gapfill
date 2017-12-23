@@ -48,7 +48,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery_plugin('ui-css');
 
         $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
-            'correct', 'incorrect'), 'qtype_gapfill');
+            'correct', 'incorrect','response','feedback'), 'qtype_gapfill');
         $PAGE->requires->js('/question/type/gapfill/questionedit.js');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
@@ -61,8 +61,19 @@ class qtype_gapfill_edit_form extends question_edit_form {
         /* popup for entering feedback for individual words */
         $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
                 . '" style="display:none;background-color:lightgrey" >');
-        $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
-        $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+        $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('button', 'more', 'Add Feedback for specific responses');
+
+        $mform->addElement('html', '<span id="copythis">');
+        $mform->addElement('editor', 'response', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('html', '</span>');
+
+        $mform->addElement('editor', 'feedback', 'x2', array('size' => 70, 'rows' => 1), $this->editoroptions);
+        $mform->addElement('html', '<span id="nextresponse">Next</span>');
+    
+    
+
         $mform->addElement('html', '</div>');
 
         /* presented for clicking on the gaps once they have been given numberical ids */

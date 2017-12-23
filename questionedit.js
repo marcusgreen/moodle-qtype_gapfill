@@ -184,6 +184,10 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         }
         $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
         $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
+        $("label[for*='id_response']").text(M.util.get_string("response", "qtype_gapfill"));
+        $("label[for*='id_feedback']").text(M.util.get_string("feedback", "qtype_gapfill"));
+        
+        
         $('#id_itemsettings_popup .atto_image_button').attr("disabled", 'true');
         $('#id_itemsettings_popup .atto_media_button').attr("disabled", 'true');
         $('#id_itemsettings_popup .atto_managefiles_button').attr("disabled", 'true');
@@ -191,13 +195,21 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
         require(['jquery', 'jqueryui'], function ($, jqui) {
+              $("#id_more").click(function(){
+                               alert ('more more more');
+                               $( "#copythis" ).clone().appendTo( "#nextresponse" ).css({
+                                   'display':'inline',
+                                   'hidden':'false'
+                               }).removeAttr("hidden").attr('id','response2');
+                            });
+            var $docheight=$(document).height();
             $("#id_itemsettings_popup").dialog({
                 position: {
                     my: 'right',
                     at: 'right',
                     of: "#id_itemsettings_canvas"
                 },
-                height: 500,
+                height: $docheight/3.5,
                 width: "70%",
                 modal: false,
                 title: title,
@@ -212,6 +224,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                             /*set editable to true as it is checked at the start of click */
                             $("#id_questiontexteditable").attr('contenteditable', 'true');
                             $("#id_itemsettings_button").click();
+                          
                         }
                 }
                 ]
