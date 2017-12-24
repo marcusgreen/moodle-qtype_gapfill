@@ -43,8 +43,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
     /**
      * Doesn't seem to be used
-     * @var string 
-      */
+     * @var string
+     */
     public $answerdisplay;
     /**
      * Doesn't seem to be used

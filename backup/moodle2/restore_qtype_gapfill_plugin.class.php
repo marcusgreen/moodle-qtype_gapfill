@@ -16,7 +16,7 @@
 
 /**
  * Gapfill question type restoration
- * 
+ *
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2011 The Open University
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Information to restore a backup of a gapfill question
- * 
+ *
  * Also used if you click the duplicate quiz button in a course.
  *
  * @copyright  2017 Marcus Green
@@ -59,7 +59,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
      /**
       * Process the qtype/gapfill element
-      * 
+      *
       * @global moodle_database $DB
       * @param array $data
       */
@@ -87,7 +87,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
      /**
       * Process the settings for individual gaps
-      * 
+      *
       * @global moodle_database $DB
       * @param array $data
       */

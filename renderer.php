@@ -116,10 +116,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->optionsaftertext == true) {
             $output .= $questiontext . $answeroptions;
         } else {
-            if($question->answerdisplay=='gapfill' || $question->answerdisplay=='dropdown'){
-                  $output .= $answeroptions . $questiontext;
-            }else{
-               $output .= $answeroptions .'</div>'. $questiontext;
+            if ($question->answerdisplay == 'gapfill' || $question->answerdisplay == 'dropdown') {
+                $output .= $answeroptions . $questiontext;
+            } else {
+                $output .= $answeroptions . '</div>' . $questiontext;
             }
         }
         if ($qa->get_state() == question_state::$invalid) {

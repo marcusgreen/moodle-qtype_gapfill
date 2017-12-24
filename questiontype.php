@@ -27,8 +27,8 @@ require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/engine/lib.php');
 
 /**
- * @copyright Marcus Green 2017 
- * 
+ * @copyright Marcus Green 2017
+ *
  * The gapfill question class
  * Load from database, and initialise class
  * A "fill in the gaps" cloze style question type
@@ -475,8 +475,10 @@ class qtype_gapfill extends question_type {
                 $question->itemsettings[$key]['gaptext'] = $format->getpath($setxml, array('#', 'gaptext', 0, '#'), 0);
                 $question->itemsettings[$key]['question'] = $format->getpath($setxml, array('#', 'question', 0, '#'), '', true);
                 $question->itemsettings[$key]['itemid'] = $format->getpath($setxml, array('#', 'itemid', 0, '#'), '', true);
-                $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), '', true);
-                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), '', true);
+                $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'),
+                        '', true);
+                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml,
+                        array('#', 'incorrectfeedback', 0, '#'), '', true);
             }
         }
         return $question;

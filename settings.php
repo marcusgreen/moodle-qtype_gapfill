@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Data to control defaults when creating and running a question 
- * 
+ * Data to control defaults when creating and running a question
+ *
  * @package    qtype_gapfill
  * @copyright  2013 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

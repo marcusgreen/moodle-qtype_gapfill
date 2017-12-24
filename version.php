@@ -16,7 +16,7 @@
 
 /**
  * Version information. When a new version is released version is incremented
- * 
+ *
  * @package    qtype_gapfill
  * @copyright  2013 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

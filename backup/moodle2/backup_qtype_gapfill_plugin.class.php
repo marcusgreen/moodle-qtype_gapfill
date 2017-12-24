@@ -16,7 +16,7 @@
 
 /**
  * Gapfill question type backup
- * 
+ *
  * @package    qtype_gapfill
  * @subpackage backup-moodle2
  * @copyright  2017 Marcus Green
@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
-*
+ *
  * Provides steps to perform one complete backup of a gapfill question instance
  *
  * @copyright  2017 Marcus Green

@@ -37,18 +37,17 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * if you are trying to make sense of Moodle question code, check the following link
      * http://docs.moodle.org/dev/Question_engine
      */
-    
-  
+
     /**
      * Apparently not used
-     * 
+     *
      * @var string
      */
     public $answer;
 
     /**
-     * answerdisplay is a string of either gapfill,dropdown or drag drop 
-     * @var string 
+     * answerdisplay is a string of either gapfill,dropdown or drag drop
+     * @var string
      */
     public $answerdisplay;
     public $shuffledanswers;
