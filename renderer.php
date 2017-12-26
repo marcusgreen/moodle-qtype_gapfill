@@ -69,7 +69,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $this->displayoptions = $options;
         $question = $qa->get_question();
         $this->itemsettings = json_decode($question->itemsettings);
-
+        
+        
+    
         if ($question->answerdisplay == "dragdrop") {
             $PAGE->requires->js('/question/type/gapfill/dragdrop.js');
         }
@@ -145,10 +147,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
-
+        
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
+
         $itemsettings = $this->get_itemsettings($rightanswer);
         if ($question->fixedgapsize == 1) {
             /* set all gaps to the size of the  biggest gap
@@ -165,6 +168,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $aftergaptext = "";
         $inputclass = "";
+        $fraction=0;
         if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
@@ -184,13 +188,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 if ($options->rightanswer == 1) {
                 //    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
                 }
-                $inputclass = $this->feedback_class($fraction);
+                $inputclass = $this->feedback_class($fraction);             
             }
         }
+       
 
         $qprefix = $qa->get_qt_field_name('');
         $inputname = $qprefix . 'p' . $place;
-
         $inputattributes = array(
             'type' => "text",
             'name' => $inputname,
@@ -220,12 +224,25 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
             $inputattributes['class'] = 'typetext ' . $inputclass;
-            return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         } else {
             /* it is a drag/drop quesiton type */
             $inputattributes['class'] = 'droptarget ' . $inputclass;
-            return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
+            //return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
+        if ($qa->get_behaviour_name() == 'interactivecountback') {
+            $hintstep = $qa->get_sequence_check_count();
+            $offset = round($hintstep / 2) - 1;
+            if (!$question->is_correct_response($currentanswer, $rightanswer)) {
+                $hint = substr($rightanswer, 0, $offset);
+                if(($hintstep >1)&& (($hintstep % 2)===0)){
+                $inputattributes['class']='incorrect';
+                }else{
+                  $inputattributes['value']=$hint;
+                }
+            }
+        }
+        return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
+
     }
 
     /**
