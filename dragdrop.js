@@ -24,6 +24,7 @@
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 /*global $ */
 /*jshint unused:false*/
+require(['jquery', 'jqueryui'], function ($, jqui) {
 $(function () {
     $(".draggable").draggable({
         revert: false,
@@ -50,3 +51,4 @@ $(function () {
         }
     });
 });
+ });
