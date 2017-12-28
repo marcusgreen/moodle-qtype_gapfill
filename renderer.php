@@ -15,8 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * gapfill question renderer class.
- *
+et_a *
  * @package    qtype_gapfill
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -181,9 +180,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
             } else if ($fraction == 0) {
                 $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
-                if ($options->rightanswer == 1) {
-                //    $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
-                }
                 $inputclass = $this->feedback_class($fraction);
             }
         }
