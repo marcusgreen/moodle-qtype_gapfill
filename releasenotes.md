@@ -1,6 +1,6 @@
 ### Version 1.961 of the Moodle Gapfill question type Dec 2017
 Mainly a bugfix where MS SQL server installations would not create the gapfill settings table.
-My thanks to marisol castro for reporting this.
+My thanks to marisol castro for reporting this. Improvements to phpdoc comments
 
 
 ### Version 1.96 of the Moodle Gapfill question type Oct 2017
@@ -14,10 +14,7 @@ with the contents of a 10K file (though that would not be a sensible use of the 
 Substantial improvements to amount of phpdoc comments, which is only of benefit to developers
 
 ### Version 1.95 of the Moodle Gapfill question type June 2017
-New setting optionsaftertext can be to show the draggable options after the text. Thanks to Elton LaClare for the inspiration to do this.
->>>>>>> remotes/origin/gapfill_1.95_with_gap_settings
-Fixed a bug where if there were multiple questions on a single page the draggables would
-become disabled after the first submit. Added behat featurefile add_quiz to test in 
+New setting optionsaftertext can be to show the draggable options after the text. Thanks to Elton LaClare for the inspiration to do this.Fixed a bug where if there were multiple questions on a single page the draggables would become disabled after the first submit. Added behat featurefile add_quiz to test in 
 quiz rather than just in preview mode. Added dragging of selections (previously it was
 only type in). Configured up .travis.yml so testing is run every time there is a 
 git commit. Made code tweaks to comply with results (e.g. csslint)
