@@ -232,7 +232,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             if (!$question->is_correct_response($currentanswer, $rightanswer)) {
                 $hint = substr($rightanswer, 0, $offset);
                 if(($hintstep >1)&& (($hintstep % 2)===0)){
-                $inputattributes['class']='incorrect';
+                     //$inputattributes['class']='incorrect';
                 }else{
                   $inputattributes['value']=$hint;
                 }
