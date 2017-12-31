@@ -1,6 +1,6 @@
 language: php
 
-sudo: tru 
+sudo: true
 
 cache:
   directories:
