@@ -1,6 +1,6 @@
 language: php
 
-sudo: required
+sudo: false
 
 cache:
   directories:
@@ -15,14 +15,10 @@ addons:
   firefox: "47.0.1"
   postgresql: "9.3"
 
-env:
-  global:
-    - IGNORE_PATHS=ignore
-    - IGNORE_NAMES=ignore_name.php
-    - MUSTACHE_IGNORE_NAMES=broken.mustache
-    - DB=pgsql
-    - MOODLE_BRANCH=master
-    - PROFILE=chrome
+env: 
+  - MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli IGNORE_PATHS=jquery
+#  - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=jquery
+
   
   
 
@@ -38,7 +34,7 @@ install:
 script:
   - moodle-plugin-ci phplint
   - moodle-plugin-ci csslint
- # - moodle-plugin-ci stylelint
+  - moodle-plugin-ci stylelint
   - moodle-plugin-ci jshint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
