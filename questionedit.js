@@ -24,7 +24,7 @@
 /* jshint unused:false*/
 
 
-/* the data is stored in a hidden field */
+/* The data is stored in a hidden field */
 var settingsdata = ($("[name='itemsettings']").val());
 
 var settings = [];
@@ -40,27 +40,27 @@ function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
     this.gaptext = text;
     this.delimitchars = delimitchars;
-    /* l and r for left and right */
+    /* The l and r is for left and right */
     this.l = delimitchars.substr(0, 1);
     this.r = delimitchars.substr(1, 1);
     this.len = this.gaptext.length;
     this.startchar = this.gaptext.substring(0, 1);
-    /* for checking if the end char is the right delimiter */
+    /* For checking if the end char is the right delimiter */
     this.endchar = this.gaptext.substring(this.len - 1, this.len);
     this.gaptext_nodelim = '';
     this.feedback = {};
     this.instance = 0;
     this.feedback.correct = $("#id_corecteditable").html();
     this.feedback.incorrect = $("#id_incorrecteditable").html();
-    Item.prototype.striptags = function (gaptext) {
-        /*this is not a perfect way of stripping html but it may be good enough */
+    Item.prototype.striptags = function(gaptext) {
+        /* This is not a perfect way of stripping html but it may be good enough */
         if (gaptext === undefined) {
             return "";
         }
         var regex = /(<([^>]+)>)/ig;
         return gaptext.replace(regex, "");
     };
-    this.stripdelim = function () {
+    this.stripdelim = function() {
         if (this.startchar === this.l) {
             this.gaptext_nodelim = this.gaptext.substring(1, this.len);
         }
@@ -71,12 +71,12 @@ function Item(text, delimitchars) {
         return this.gaptext_nodelim;
     };
     var itemsettings = [];
-    Item.prototype.get_itemsettings = function (target) {
+    Item.prototype.get_itemsettings = function(target) {
         var itemid = target.id;
         var underscore = itemid.indexOf("_");
-        var id = itemid.substr(2, underscore);
-        id = id.substr(0, id.indexOf("_"));
-        /*The instance, normally 0 but incremented if a gap has the same text as another
+        /* var id = itemid.substr(2, underscore);
+        var id = id.substr(0, id.indexOf("_"));*/
+        /* The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
         for (var set in settings) {
@@ -87,7 +87,7 @@ function Item(text, delimitchars) {
         }
         return itemsettings;
     };
-    this.update_json = function (e) {
+    this.update_json = function(e) {
         var found = false;
         var id = e.target.id;
         for (var set in settings) {
@@ -98,7 +98,7 @@ function Item(text, delimitchars) {
             }
         }
         if (found === false) {
-            /* if there is no record for this word add one */
+            /* If there is no record for this word add one */
             var itemsettings = {
                 itemid: id,
                 questionid: $("input[name=id]").val(),
@@ -113,10 +113,10 @@ function Item(text, delimitchars) {
 }
 
 
-/* a click on the button */
-$("#id_itemsettings_button").on("click", function () {
+/* A click on the button */
+$("#id_itemsettings_button").on("click", function() {
     var atto_islive = ($(".editor_atto")).length;
-    /* show error if Atto is not loaded. It might be because the page has not finished loading
+    /* Show error if Atto is not loaded. It might be because the page has not finished loading
      * or because plain text elements are being used or (perhaps less likely as time goes on)
      * the HTMLarea editor is being used. It might be possible to work with those other editors
      * but limiting to Atto keeps things straightforward and maintainable.
@@ -133,7 +133,7 @@ $("#id_itemsettings_button").on("click", function () {
         var settingformheight = $("#id_questiontexteditable").css("height");
         var settingformwidth = $("#id_questiontexteditable").css("width");
         $("#id_questiontexteditable").css("display", 'none');
-        /*copy the styles from attos editable area so the canvas looks the same (except gray) */
+        /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
         $('#id_itemsettings_canvas').css(copyStyles($("#id_questiontexteditable")));
         var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
         $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
@@ -147,10 +147,10 @@ $("#id_itemsettings_button").on("click", function () {
         $("#id_itemsettings_canvas").css({height: settingformheight, width: settingformwidth});
         $("#id_itemsettings_canvas").css({height: "100%", width: "100%"});
         $("#id_itemsettings_button").html(M.util.get_string("editquestiontext", "qtype_gapfill"));
-        /*setting the height by hand gets around a quirk of MSIE */
+        /* Setting the height by hand gets around a quirk of MSIE */
         $('#id_itemsettings_canvas').height($("#id_questiontexteditable").height());
-        /* disable the buttons on questiontext but not on the feedback form */
-        /*wrapContent should be the last on this block as it sometimes falls over with an error */
+        /* Disable the buttons on questiontext but not on the feedback form */
+        /* wrapContent should be the last on this block as it sometimes falls over with an error */
         wrapContent($("#id_itemsettings_canvas")[0]);
 
     } else {
@@ -166,7 +166,7 @@ $("#id_itemsettings_button").on("click", function () {
 });
 
 /* A click on the text */
-$("#id_itemsettings_canvas").on("click", function (e) {
+$("#id_itemsettings_canvas").on("click", function(e) {
     /*
      * questiontext needs to be edditable and the target must start
      * with id followed by one or more digits and an underscore
@@ -190,7 +190,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
         /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
-        require(['jquery', 'jqueryui'], function ($, jqui) {
+        require(['jquery', 'jqueryui'], function($, jqui) {
             $("#id_itemsettings_popup").dialog({
                 position: {
                     my: 'right',
@@ -204,12 +204,12 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                 buttons: [
                     {
                         text: "OK",
-                        click: function () {
+                        click: function() {
                             var JSONstr = item.update_json(e);
                             $('[class^=atto_]').removeAttr("disabled");
                             $("[name='itemsettings']").val(JSONstr);
                             $(".ui-dialog-content").dialog("close");
-                            /*set editable to true as it is checked at the start of click */
+                            /* Set editable to true as it is checked at the start of click */
                             $("#id_questiontexteditable").attr('contenteditable', 'true');
                             $("#id_itemsettings_button").click();
                         }
@@ -231,8 +231,8 @@ function toArray(obj) {
 // Wrap the words of an element and child elements in a span.
 // Recurs over child elements, add an ID and class to the wrapping span.
 // Does not affect elements with no content, or those to be excluded.
-var wrapContent = (function () {
-    return function (el) {
+var wrapContent = (function() {
+    return function(el) {
         var count = 0;
         gaps = [];
         // If element provided, start there, otherwise use the body.
@@ -317,10 +317,10 @@ function copyStyles(source) {
         if (window.getComputedStyle) {
             // Convenience methods to turn css case ('background-image') to camel ('backgroundImage').
             var pattern = /\-([a-z])/g;
-            var uc = function (a, b) {
+            var uc = function(a, b) {
                 return b.toUpperCase();
             };
-            var camelize = function (string) {
+            var camelize = function(string) {
                 return string.replace(pattern, uc);
             };
             // Make sure we're getting a good reference.
