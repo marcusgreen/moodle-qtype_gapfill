@@ -1,6 +1,6 @@
 language: php
 
-sudo: false
+sudo: required
 
 cache:
   directories:
@@ -17,10 +17,8 @@ addons:
 
 env: 
   - MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli IGNORE_PATHS=jquery
-#  - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=jquery
-
-  
-  
+  - MOODLE_BRANCH=MOODLE_34_STABLE DB=mysqli IGNORE_PATHS=jquery
+  - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=jquery
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -34,7 +32,6 @@ install:
 script:
   - moodle-plugin-ci phplint
   - moodle-plugin-ci csslint
-  - moodle-plugin-ci eslint
   - moodle-plugin-ci jshint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
