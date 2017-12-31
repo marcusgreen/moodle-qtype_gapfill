@@ -1,6 +1,6 @@
 language: php
 
-sudo: true
+sudo: false
 
 cache:
   directories:
@@ -8,24 +8,20 @@ cache:
 
 php: 
 # - 5.6
-# - 7.0
+ - 7.0
  - 7.1
 
 addons:
   firefox: "47.0.1"
   postgresql: "9.3"
 
-
 env:
-     global:
-        - MOODLE_START_BEHAT_SERVERS=NO
-        - DB=mysqli
-        - MOODLE_CI_VER=1
-        - MOODLE_DIR=/home/travis/build/moodle
-        - MOODLE_SELENIUM_JAR=/home/travis/build/moodle/selenium.jar
-        
-          - MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli IGNORE_PATHS=jquery
-       #  - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=jquery
+ global:
+  - MOODLE_BRANCH=MOODLE_34_STABLE
+  - IGNORE_NAMES=xmlrpc-utils.php
+ matrix:
+  - DB=pgsql
+  - DB=mysqli
   
   
 
@@ -39,12 +35,12 @@ before_install:
 install:
   - moodle-plugin-ci install
 script:
-#  - moodle-plugin-ci phplint
-#  - moodle-plugin-ci csslint
-#  - moodle-plugin-ci jshint
-#  - moodle-plugin-ci phpcpd
-#  - moodle-plugin-ci phpmd
-#  - moodle-plugin-ci codechecker
-#  - moodle-plugin-ci validate
-   - moodle-plugin-ci phpunit
-   - moodle-plugin-ci behat --moodle=${MOODLE_DIR} --auto-rerun=0
+  - moodle-plugin-ci phplint
+  - moodle-plugin-ci csslint
+  - moodle-plugin-ci jshint
+  - moodle-plugin-ci phpcpd
+  - moodle-plugin-ci phpmd
+  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci validate
+  - moodle-plugin-ci phpunit
+  - moodle-plugin-ci behat
