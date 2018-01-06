@@ -63,16 +63,20 @@ class qtype_gapfill_edit_form extends question_edit_form {
                 . '" style="display:none;background-color:lightgrey" >');
         $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
         $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
-        $mform->addElement('button', 'more', 'Add Feedback for specific responses');
 
-        $mform->addElement('html', '<span id="copythis">');
-        $mform->addElement('editor', 'response', '', array('size' => 70, 'rows' => 1), $this->editoroptions);
+
+        $edcount=6;
+        for ($i = 0; $i < $edcount; $i++) {
+            $display='" style="display:none">';
+            $mform->addElement('html', '<span id="responsefeedback' . $i .$display);
+            $mform->addElement('editor', 'response' . $i, 'Response', array('size' => 70, 'rows' => 1), $this->editoroptions);
+            $mform->addElement('editor', 'feedback' . $i, 'Feedback', array('size' => 70, 'rows' => 1), $this->editoroptions);
+            $mform->addElement('html', '</span>');
+        }
+        $mform->addElement('button', 'more', 'More Responses');
+
+        $mform->addElement('html', '<span id="nextresponse">');
         $mform->addElement('html', '</span>');
-
-        $mform->addElement('editor', 'feedback', 'x2', array('size' => 70, 'rows' => 1), $this->editoroptions);
-        $mform->addElement('html', '<span id="nextresponse">Next</span>');
-    
-    
 
         $mform->addElement('html', '</div>');
 

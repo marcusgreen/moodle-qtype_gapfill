@@ -34,7 +34,22 @@ if (settingsdata > "") {
     for (var o in obj) {
         settings.push(obj[o]);
     }
+}  
+function duplicate() {
+    $("#copythis").clone(true,true).find("[id]").addBack().each(function () {   
+    //  $("#id_response").parent().parent().parent().append( $(this).attr("id", $(this).attr("id") + "_cloned"));
+    });
+   var $myclone= $("#copythis").clone();
+   $myclone.find("*[id]").addBack().each(function () { 
+       $(this).attr("id",$(this).attr("id")+"_cloned");
+   } );
+   //Y.M.editor_atto.Editor.init(
+   $myclone.appendTo($("#nextresponse"));
+   //$('#id_response').append('#id_responseeditable').clone().attr("id") + "_cloned"));
+
 }
+
+
 
 function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
@@ -184,8 +199,6 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         }
         $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
         $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
-        $("label[for*='id_response']").text(M.util.get_string("response", "qtype_gapfill"));
-        $("label[for*='id_feedback']").text(M.util.get_string("feedback", "qtype_gapfill"));
         
         
         $('#id_itemsettings_popup .atto_image_button').attr("disabled", 'true');
@@ -194,14 +207,17 @@ $("#id_itemsettings_canvas").on("click", function (e) {
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
         /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
-        require(['jquery', 'jqueryui'], function ($, jqui) {
-              $("#id_more").click(function(){
-                               alert ('more more more');
-                               $( "#copythis" ).clone().appendTo( "#nextresponse" ).css({
-                                   'display':'inline',
-                                   'hidden':'false'
-                               }).removeAttr("hidden").attr('id','response2');
-                            });
+        require(['jquery', 'jqueryui'], function ($, jqui) {   
+               $('#responsefeedback0').css({'display': 'inline'});       
+               var feedbackno=1;
+               $("#id_more").click(function(){
+                   var el='#responsefeedback'+feedbackno
+                   $(el).css({'display': 'inline'});
+                   $('#id_itemsettings_popup').scrollTop($('#id_itemsettings_popup').height());
+                  // $('#id_response'+feedbackno).find('.editor_atto_content').focus()                   
+                    feedbackno++;
+
+                });
             var $docheight=$(document).height();
             $("#id_itemsettings_popup").dialog({
                 position: {
@@ -209,7 +225,7 @@ $("#id_itemsettings_canvas").on("click", function (e) {
                     at: 'right',
                     of: "#id_itemsettings_canvas"
                 },
-                height: $docheight/3.5,
+                height: $docheight/3,
                 width: "70%",
                 modal: false,
                 title: title,
