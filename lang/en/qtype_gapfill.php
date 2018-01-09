@@ -82,6 +82,8 @@ $string['questioncatnotfound'] = 'Question category not found, click click <a hr
 $string['importexamples'] = 'Import';
 $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
+$string['letterhints'] = 'Letter hints';
+$string['letterhints_help'] = 'Add letter from correct answer as a hint';
 $string['courseshortname'] = 'Course Shortname';
 $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions';
 $string['courseshortname_help'] = 'Enter the shortname of the course to import question to. This does a standard xml question import from the file example_questions.xml in the gapfill question type folder.';

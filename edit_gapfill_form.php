@@ -157,10 +157,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('disableregex', $config->disableregex);
         $mform->setAdvanced('disableregex');
 
+         $mform->addElement('advcheckbox', 'letterhints', get_string('letterhints', 'qtype_gapfill'));
+         $mform->addHelpButton('letterhints', 'letterhints', 'qtype_gapfill');
+
+        
          /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));
         $mform->addHelpButton('noduplicates', 'noduplicates', 'qtype_gapfill');
         $mform->setAdvanced('noduplicates');
+        
 
         /* Makes marking case sensitive so Cat is not the same as cat */
         $mform->addElement('advcheckbox', 'casesensitive', get_string('casesensitive', 'qtype_gapfill'));
