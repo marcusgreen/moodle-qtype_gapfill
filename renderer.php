@@ -226,18 +226,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['class'] = 'droptarget ' . $inputclass;
             //return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
-        if ($qa->get_behaviour_name() == 'interactivecountback') {
-            $triesleft = $qa->get_last_behaviour_var('_triesleft');
-            $hintcount = count($question->hints);
-            $offset = ($hintcount + 1) - $triesleft;
-            if (!$question->is_correct_response($currentanswer, $rightanswer)) {
-                $hint = substr($rightanswer, 0, $offset);
-                $data = $qa->get_last_step()->get_submitted_data();
-                if (isset($data['-tryagain'])) {
-                    $inputattributes['value'] = $hint;
-                }
-            }
-        }
+        $inputattributes = $question->get_letter_hints($qa,$inputattributes,$rightanswer,$currentanswer);
         return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
 
     }
