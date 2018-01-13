@@ -50,27 +50,75 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @var string
      */
     public $answerdisplay;
+    
+     /** 
+     * The only place this appears to be used is in the tests, can it be deleted?
+     * @var array
+     */    
     public $shuffledanswers;
-    public $correctfeedback;
+    
+      
+    /**
+     * Where an answer can be correct in more than one gap, only give a mark for one of them
+     * e.g. if it is olympic medals gold,silver and bronze, only give one mark if gold is
+     * entered in every gap
+     * @var boolean
+     */
     public $noduplicates;
+    
+    /**
+     * Disable regular expression processing, useful if you want maths symbols or html tags
+     * treated as simple literals
+     * @var boolean 
+     */
     public $disableregex;
+    
+    /**
+     * Set the size of every gap to the size of the larges so students do not
+     * get an idea of the correct answer from gap sizes
+     *
+     * @var boolean 
+     */
     public $fixedgapsize;
 
+  
     /**
-     *
+     * The size of the biggest gap (used when fixedgapsize is true
      * @var int
      */
     public $maxgapsize;
 
-    /**
-     *
+     /** 
+     * Feedback when the response is entirely correct
+     * @var string
+     */
+    public $correctfeedback='';
+    /** 
+     * Feedback when the response is partially correct
      * @var string
      */
     public $partiallycorrectfeedback = '';
+    /** 
+     * Feedback when the response is incorrect
+     * @var string
+     */
     public $incorrectfeedback = '';
+    /**
+     * Typically html     
+     * @var string
+     */
     public $correctfeedbackformat;
+     /**
+     * Typically html     
+     * @var string
+     */
     public $partiallycorrectfeedbackformat;
+     /**
+     * Typically html     
+     * @var string
+     */
     public $incorrectfeedbackformat;
+
 
     /**
      * its a whole number, it's only called fraction because it is referred to that in core
@@ -78,21 +126,44 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @var int
      */
     public $fraction;
+   
+       /**
+     * How many gaps in this question
+     * @var number 
+     */
     public $gapcount;
-    /* wronganswers is used, but needs a name change to distractors at some point */
+    
+    /**
+     * wronganswers is used, but would be better named as distractors 
+     * @var string comma delimited 
+     */
     public $wronganswers;
 
-    /* By default Cat is treated the same as cat, setting to 1 will make it case sensitive */
+    /**
+     * By default Cat is treated the same as cat. Setting it to 1 will make it case sensitive
+     * @var boolean 
+     */
     public $casesensitive;
 
-    /** @var array of question_answer. */
+   
+    /**
+     * array of strings as correct question answers
+     * @var rray
+     */
     public $answers = array();
-    /* checks for gaps that get a mark for being left black i.e. [!!] */
+    
+    /**
+     *checks for gaps that get a mark for being left black i.e. [!!] 
+     * @var string 
+     */
     public $blankregex = "/!.*!/";
 
-
-    /* the characters indicating a field to fill i.e. [cat] creates
+    
+    /**
+     * the characters indicating a field to fill i.e. [cat] creates
      * a field where the correct answer is cat
+     *
+     * @var string 
      */
     public $delimitchars = "[]";
 
@@ -110,8 +181,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
+    
+    
+    /**
+     * An array with all correct answers and distractors/wrong answers
+     * @var array
+     */
     public $allanswers = array();
-
+    
     /**
      * Start a new attempt at this question, storing any information that will
      * be needed later in the step and doing initialisation
