@@ -178,6 +178,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         // Adds hinting features.
         $this->add_interactive_settings(true, true);
+
+        $this->_form->getElement('hint[0]')->setValue(array('text'=>get_string('letterhint0','qtype_gapfill')));
+        $this->_form->getElement('hint[1]')->setValue(array('text'=>get_string('letterhint1','qtype_gapfill')));
+
     }
 
     /**
