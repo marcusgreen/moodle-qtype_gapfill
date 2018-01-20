@@ -1,5 +1,5 @@
 ### Version 1.97 of the Moodle Gapfill question type Feb 2018
-Letter hints new feature. An new checkbox in the question creation form toggles letter hint mode. This takes effect when an 
+Letter hints new feature. A new checkbox in the question creation form toggles letter hint mode. This takes effect when an 
 interactive question behaviour is selected. When a student gives an incorrect response they will be given incrementing letters 
 from the correct answer.
 
