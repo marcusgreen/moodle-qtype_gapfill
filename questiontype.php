@@ -41,7 +41,7 @@ class qtype_gapfill extends question_type {
      */
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext');
+            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints');
     }
 
     /**
@@ -56,7 +56,7 @@ class qtype_gapfill extends question_type {
             $PAGE->requires->jquery_plugin('ui');
             $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_gapfill');
     }
-     /**
+    /**
      * Called during question editing
      *
      * @global moodle_database $DB
@@ -107,7 +107,7 @@ class qtype_gapfill extends question_type {
         }
     }
 
-     /**
+    /**
      * Get settings e.g. feedback for correct and incorrect responses
      *
      * @global moodle_database $DB
@@ -218,7 +218,7 @@ class qtype_gapfill extends question_type {
         return $matches[1];
     }
 
-     /**
+    /**
      * Save the units and the answers associated with this question.
      * @param stdClass $question
      * @return boolean to indicate success or failure.
@@ -269,6 +269,7 @@ class qtype_gapfill extends question_type {
             $options->disableregex = '';
             $options->fixedgapsize = '';
             $options->optionsaftertext = '';
+            $options->letterhints = '';
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
 
@@ -278,12 +279,12 @@ class qtype_gapfill extends question_type {
         $options->noduplicates = $question->noduplicates;
         $options->disableregex = $question->disableregex;
         $options->fixedgapsize = $question->fixedgapsize;
-        $options->optionsaftertext = $question->optionsaftertext;
+        $options->letterhints = $question->letterhints;
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }
 
-     /**
+    /**
      * Write to the database during editing
      *
      * @global moodle_database $DB
@@ -321,7 +322,6 @@ class qtype_gapfill extends question_type {
         }
     }
 
-   
     /**
      * Set up all the answer fields with respective fraction (mark values)
      * This is used to update the question_answers table. Answerwords has
@@ -378,11 +378,11 @@ class qtype_gapfill extends question_type {
         return $answerfields;
     }
 
-   /**
+    /**
      * Take the data from the hidden form field or file import and write to the settings table
      * The first/main type of data is per gap feedback. Other data relating to
      * settings for a gap may be added later
-     * 
+     *
      * @global moodle_database $DB
      * @param stdClass $question
      * @param string $table
@@ -413,7 +413,7 @@ class qtype_gapfill extends question_type {
         }
     }
 
-     /**
+    /**
      * Called from within questiontypebase
      *
      * @param  string $hint
@@ -456,9 +456,9 @@ class qtype_gapfill extends question_type {
         return 'question';
     }
 
-   /**
+    /**
      * Create a question from reading in a file in Moodle xml format
-     * 
+     *
      * @param array $data
      * @param stdClass $question (might be an array)
      * @param qformat_xml $format
@@ -520,6 +520,8 @@ class qtype_gapfill extends question_type {
                 "</fixedgapsize>\n";
         $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
                 "</optionsaftertext>\n";
+        $output .= '    <letterhints>' . $question->options->letterhints .
+                "</letterhints>\n";
         foreach ($question->options->itemsettings as $set) {
             $output .= "      <gapsetting>\n";
             $output .= '        <question>' . $set->question . "</question>\n";

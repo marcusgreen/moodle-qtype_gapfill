@@ -50,14 +50,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @var string
      */
     public $answerdisplay;
-    
-     /** 
+
+    /**
      * The only place this appears to be used is in the tests, can it be deleted?
      * @var array
-     */    
+     */
     public $shuffledanswers;
-    
-      
+
     /**
      * Where an answer can be correct in more than one gap, only give a mark for one of them
      * e.g. if it is olympic medals gold,silver and bronze, only give one mark if gold is
@@ -65,56 +64,55 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @var boolean
      */
     public $noduplicates;
-    
+
     /**
      * Disable regular expression processing, useful if you want maths symbols or html tags
      * treated as simple literals
-     * @var boolean 
+     * @var boolean
      */
     public $disableregex;
-    
+
     /**
      * Set the size of every gap to the size of the larges so students do not
      * get an idea of the correct answer from gap sizes
      *
-     * @var boolean 
+     * @var boolean
      */
     public $fixedgapsize;
 
-  
     /**
      * The size of the biggest gap (used when fixedgapsize is true
      * @var int
      */
     public $maxgapsize;
 
-     /** 
+    /**
      * Feedback when the response is entirely correct
      * @var string
      */
-    public $correctfeedback='';
-    /** 
+    public $correctfeedback = '';
+    /**
      * Feedback when the response is partially correct
      * @var string
      */
     public $partiallycorrectfeedback = '';
-    /** 
+    /**
      * Feedback when the response is incorrect
      * @var string
      */
     public $incorrectfeedback = '';
     /**
-     * Typically html     
+     * Typically html
      * @var string
      */
     public $correctfeedbackformat;
-     /**
-     * Typically html     
+    /**
+     * Typically html
      * @var string
      */
     public $partiallycorrectfeedbackformat;
-     /**
-     * Typically html     
+    /**
+     * Typically html
      * @var string
      */
     public $incorrectfeedbackformat;
@@ -126,44 +124,43 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @var int
      */
     public $fraction;
-   
-       /**
-     * How many gaps in this question
-     * @var number 
-     */
-    public $gapcount;
-    
+
     /**
-     * wronganswers is used, but would be better named as distractors 
-     * @var string comma delimited 
+     * How many gaps in this question
+     * @var number
+     */
+
+    public $gapcount;
+
+    /**
+     * wronganswers is used, but would be better named as distractors
+     * @var string comma delimited
      */
     public $wronganswers;
 
     /**
      * By default Cat is treated the same as cat. Setting it to 1 will make it case sensitive
-     * @var boolean 
+     * @var boolean
      */
     public $casesensitive;
 
-   
     /**
      * array of strings as correct question answers
      * @var rray
      */
     public $answers = array();
-    
+
     /**
-     *checks for gaps that get a mark for being left black i.e. [!!] 
-     * @var string 
+     * checks for gaps that get a mark for being left black i.e. [!!]
+     * @var string
      */
     public $blankregex = "/!.*!/";
 
-    
     /**
      * the characters indicating a field to fill i.e. [cat] creates
      * a field where the correct answer is cat
      *
-     * @var string 
+     * @var string
      */
     public $delimitchars = "[]";
 
@@ -181,14 +178,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
 
     /** @var array index of the right choice for each stem. */
     public $rightchoices;
-    
-    
+
     /**
      * An array with all correct answers and distractors/wrong answers
      * @var array
      */
     public $allanswers = array();
-    
+
     /**
      * Start a new attempt at this question, storing any information that will
      * be needed later in the step and doing initialisation
@@ -372,7 +368,33 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $response[$this->field($place)] = $answer;
         }
     }
-
+    /**
+     * Incrementally fill the gap with the letters from the correct answer when in
+     * interactive with multiple tries mode
+     *
+     * @param question_attempt $qa
+     * @param array $inputattributes
+     * @param string $rightanswer
+     * @param string $currentanswer
+     * @return array
+     */
+    public function get_letter_hints(question_attempt $qa, array $inputattributes, $rightanswer, $currentanswer) {
+          /* implements  letterhints */
+        $question = $qa->get_question();
+        if ($qa->get_behaviour_name() == 'interactivecountback') {
+            $triesleft = $qa->get_last_behaviour_var('_triesleft');
+            $hintcount = count($question->hints);
+            $offset = ($hintcount + 1) - $triesleft;
+            if (!$question->is_correct_response($currentanswer, $rightanswer)) {
+                $hint = substr($rightanswer, 0, $offset);
+                $data = $qa->get_last_step()->get_submitted_data();
+                if (isset($data['-tryagain'])) {
+                    $inputattributes['value'] = $hint;
+                }
+            }
+        }
+        return $inputattributes;
+    }
     /**
      * called from within renderer in interactive mode
      *

@@ -112,8 +112,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == 'dragdrop') {
             if ($question->optionsaftertext == true) {
                 /* this is to communicate with the mobile app */
-               $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
-               $output .= $questiontext . $answeroptions;
+                $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
+                $output .= $questiontext . $answeroptions;
             } else {
                 $output .= $answeroptions . '</div>' . $questiontext;
             }
@@ -221,6 +221,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         } else {
             /* it is a drag/drop quesiton type */
             $inputattributes['class'] = 'droptarget ' . $inputclass;
+            if ($question->letterhints) {
+                $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
+            }
             return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         }
     }

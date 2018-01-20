@@ -1,7 +1,14 @@
+### Version 1.97 of the Moodle Gapfill question type Feb 2018
+Letter hints new feature. An new checkbox in the question creation form toggles letter hint mode. This takes effect when an 
+interactive question behaviour is selected. When a student gives an incorrect response they will be given incrementing letters 
+from the correct answer.
+
+Bug fix that broke the display of the quiz menu when optionsaftertext was selected but gapfill mode was selected. 
+That does not make sense as a usable combination but it was easy to have it set without noticing.
+
 ### Version 1.961 of the Moodle Gapfill question type Dec 2017
 Mainly a bugfix where MS SQL server installations would not create the gapfill settings table.
 My thanks to marisol castro for reporting this. Improvements to phpdoc comments
-
 
 ### Version 1.96 of the Moodle Gapfill question type Oct 2017
 Per gap feedback. This is a significant new feature and allows the creation of feedback that is
