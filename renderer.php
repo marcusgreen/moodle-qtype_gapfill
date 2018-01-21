@@ -201,7 +201,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes = array_merge($inputattributes, $readonly);
         }
 
-         if ($question->answerdisplay == "dropdown") {
+        if ($question->answerdisplay == "dropdown") {
             $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
             /* if the size attribute is left in android chrome
@@ -228,7 +228,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
             }
             return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
-            
         }
     }
 
