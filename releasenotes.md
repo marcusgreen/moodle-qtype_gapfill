@@ -1,3 +1,6 @@
+### Version 1.971 of the Moodle Gapfill question type Feb 2018
+Bug fix for issue where dragdrop did not work on iOS. Improvements in code standards compliance 
+
 ### Version 1.97 of the Moodle Gapfill question type Feb 2018
 Letter hints, new feature which only works when Interactive with multiple tries behaviour is used. A new checkbox in the question 
 creation form toggles letterhints mode. This takes effect when an interactive question behaviour is selected. There is a global
