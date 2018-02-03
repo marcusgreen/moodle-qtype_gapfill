@@ -31,7 +31,7 @@ $settings = null;
 if (is_siteadmin()) {
     $ADMIN->add('qtypesettings', new admin_category('qtype_gapfill_category', 'Gapfill'));
     $conf = get_config('qtype_gapfill');
-    $settingspage = new admin_settingpage('gfsettings' , 'Settings');
+    $settingspage = new admin_settingpage('gfsettings' , get_string('settings'));
     $ADMIN->add('qtype_gapfill_category', $settingspage);
      $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/disableregex',
         get_string('disableregex', 'qtype_gapfill'),
