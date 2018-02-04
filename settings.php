@@ -29,7 +29,7 @@ require_once($CFG->libdir . '/formslib.php');
 $settings = null;
 
 if (is_siteadmin()) {
-    $ADMIN->add('qtypesettings', new admin_category('qtype_gapfill_category', 'Gapfill'));
+    $ADMIN->add('qtypesettings', new admin_category('qtype_gapfill_category', get_string('pluginname', 'qtype_gapfill')));
     $conf = get_config('qtype_gapfill');
     $settingspage = new admin_settingpage('gfsettings' , get_string('settings'));
     $ADMIN->add('qtype_gapfill_category', $settingspage);
