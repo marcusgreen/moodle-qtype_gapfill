@@ -17,7 +17,7 @@
 /**
  * The question type class for the gapfill question type.
  *
- * @package    qtype_gapfill;
+ * @package    qtype_gapfill
  * @copyright  2018 Marcus Green
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
