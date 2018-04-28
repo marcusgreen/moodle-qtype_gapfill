@@ -57,6 +57,8 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $dbman->drop_field($table, $field);
         $field = new xmldb_field('wronganswers');
         $dbman->drop_field($table, $field);
+        upgrade_plugin_savepoint(true, 2006082505, 'qtype', 'gapfill');
+
     }
 
     if (!$dbman->field_exists('question_gapfill', 'noduplicates')) {
