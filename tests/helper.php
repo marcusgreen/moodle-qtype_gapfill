@@ -79,6 +79,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'disableregex' => $poptions['disableregex'],
                     'fixedgapsize' => '0',
                     'optionaftertext' => '',
+		    'letterhints' => '1',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
@@ -143,6 +144,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->casesensitive = '1';
         $question->gapcount = '2';
         $question->optionsaftertext = false;
+	$question->letterhints = '0';
         $question->itemsettings = '[{"id":"51","question":"256","itemid":"id1_0","gaptext":"sat","correctfeedback":"OK<br>",'
                 . '"incorrectfeedback":"Wrong<br>"}]';
 
