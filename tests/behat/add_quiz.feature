@@ -1,6 +1,6 @@
 @mod @mod_quiz  @qtype @qtype_gapfill @javascript
 
-Feature: Add a quiz
+Feature: Add a quiz with gapfill questions
   In order to evaluate students
   As a teacher
   I need to create a quiz with gapfill questions
