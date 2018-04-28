@@ -1,4 +1,4 @@
-@mod @mod_quiz @javascript
+@mod @mod_quiz  @qtype @qtype_gapfill @javascript
 
 Feature: Add a quiz
   In order to evaluate students
@@ -63,7 +63,7 @@ Feature: Add a quiz
     And I log out
 
 ##########################################################################################
-# One question per page, which can be used to check the status of the question 
+# One question per page, which can be used to check the status of the question
 # if you page forward and backwards between pages (though I don't think it does at the moment)
 ##########################################################################################
     When I log in as "teacher1"
@@ -77,7 +77,7 @@ Feature: Add a quiz
       | Question text                      | The [cat] sat on the mat               |
       | General feedback                   | General feedback cat mat|
 
- And I add a "Gapfill" question to the "Test quiz name" quiz with:
+    And I add a "Gapfill" question to the "Test quiz name" quiz with:
       | Question name                      | Second question                         |
       | Question text                      | The [cow] jumped over the [moon]        |
       | General feedback                   | General feedback cow moon|
@@ -95,7 +95,7 @@ Feature: Add a quiz
     And I press "Next page"
     Then I should see "Question 2"
     And I type "cow" into gap "1" in the gapfill question
-    And I type "moon" into gap "2" in the gapfill question  
+    And I type "moon" into gap "2" in the gapfill question
     And I press "Finish attempt ..."
     And I press "Submit all and finish"
 

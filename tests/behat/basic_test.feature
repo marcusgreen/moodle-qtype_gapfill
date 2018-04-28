@@ -45,7 +45,7 @@ Feature: Test all the basic functionality of this question type
 
  ##################################################
     # Deferred Feedback behaviour with CBM
-     And I set the following fields to these values:
+    And I set the following fields to these values:
       | How questions behave | Deferred feedback with CBM |
       | Marked out of        | 2                               |
       | Marks                | Show mark and max               |
@@ -56,21 +56,21 @@ Feature: Test all the basic functionality of this question type
     And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
 
-    And I press "Submit and finish"      
+    And I press "Submit and finish"
     And I should see "Your answer is correct."
     And I should see "CBM mark 2.00"
     And I wait "5" seconds
 
     ##################################################
     # Adaptive Mode No Penalties behaviour
-     And I set the following fields to these values:
+    And I set the following fields to these values:
       | How questions behave | Adaptive mode (no penalties) |
       | Marked out of        | 2                               |
       | Marks                | Show mark and max               |
       | Specific feedback    | Shown |
       | Right answer         | Shown |
 
-    And I press "Start again with these options" 
+    And I press "Start again with these options"
 
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
@@ -90,7 +90,7 @@ Feature: Test all the basic functionality of this question type
     And I should see "Mark 2.00 out of 2.00"
     And I wait "1" seconds
 
-    And I press "Start again with these options" 
+    And I press "Start again with these options"
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
 
@@ -98,16 +98,15 @@ Feature: Test all the basic functionality of this question type
     And I should see "Your answer is partially correct."
     And I should see "Mark 1.00 out of 2.00"
     And I wait "2" seconds
-    
-    And I press "Start again with these options" 
+
+    And I press "Start again with these options"
     And I type "xxx" into gap "1" in the gapfill question
     And I type "yyy" into gap "2" in the gapfill question
-  
-    And I press "Submit and finish"      
+
+    And I press "Submit and finish"
     And I should see "Your answer is incorrect."
     And I should see "Mark 0.00 out of 2.00"
     And I wait "5" seconds
-
 
     #################################################
     #Interactive with multiple tries
@@ -120,7 +119,7 @@ Feature: Test all the basic functionality of this question type
       | Right answer         | Shown |
     And I press "Start again with these options"
 
-    #Enter both correct responses 
+    #Enter both correct responses
     And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
 
@@ -136,7 +135,7 @@ Feature: Test all the basic functionality of this question type
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
 
-    And I press "Check"      
+    And I press "Check"
     And I should see "Your answer is partially correct."
 
     ################################################
@@ -144,7 +143,7 @@ Feature: Test all the basic functionality of this question type
     And I press "Try again"
     And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
-    
+
     And I press "Check"
     And I should see "Your answer is correct."
     And I should see "Mark 1.67 out of 2.00"
@@ -152,14 +151,14 @@ Feature: Test all the basic functionality of this question type
 
     ##################################################
     # Deferred Feedback behaviour
-     And I set the following fields to these values:
+    And I set the following fields to these values:
       | How questions behave | Deferred feedback |
       | Marked out of        | 2                               |
       | Marks                | Show mark and max               |
       | Specific feedback    | Shown |
       | Right answer         | Shown |
 
-    And I press "Start again with these options" 
+    And I press "Start again with these options"
     And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
 
@@ -168,16 +167,16 @@ Feature: Test all the basic functionality of this question type
     And I should see "Mark 2.00 out of 2.00"
     And I wait "5" seconds
 
-    And I press "Start again with these options" 
+    And I press "Start again with these options"
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
 
-    And I press "Submit and finish"      
+    And I press "Submit and finish"
     And I should see "Your answer is partially correct."
     And I should see "Mark 1.00 out of 2.00"
     And I wait "5" seconds
 
-    And I press "Start again with these options" 
+    And I press "Start again with these options"
     And I type "xxx" into gap "1" in the gapfill question
     And I type "yyy" into gap "2" in the gapfill question
 
