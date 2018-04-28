@@ -74,8 +74,6 @@ function Item(text, delimitchars) {
     Item.prototype.get_itemsettings = function(target) {
         var itemid = target.id;
         var underscore = itemid.indexOf("_");
-        /* var id = itemid.substr(2, underscore);
-        var id = id.substr(0, id.indexOf("_"));*/
         /* The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
