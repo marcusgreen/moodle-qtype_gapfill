@@ -186,7 +186,7 @@ $("#id_itemsettings_canvas").on("click", function(e) {
         $('#id_itemsettings_popup .atto_media_button').attr("disabled", 'true');
         $('#id_itemsettings_popup .atto_managefiles_button').attr("disabled", 'true');
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
-        /* the html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
+        /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
         require(['jquery', 'jqueryui'], function($, jqui) {
             $("#id_itemsettings_popup").dialog({
