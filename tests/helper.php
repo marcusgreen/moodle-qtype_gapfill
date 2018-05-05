@@ -23,6 +23,14 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * utilities used by the other test classes
+ * 
+ * @package    qtype_gapfill
+ * @copyright  2018 Marcus Green
+ 
+* @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 class qtype_gapfill_test_helper extends question_test_helper {
 
     /**
