@@ -36,8 +36,8 @@ require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
  */
 class qtype_gapfill_test extends advanced_testcase {
 
-    /** 
-     *  explained here https://docs.moodle.org/dev/Unit_test_API 
+    /**
+     *  explained here https://docs.moodle.org/dev/Unit_test_API
      * @var array
      */
     public static $includecoverage = array(

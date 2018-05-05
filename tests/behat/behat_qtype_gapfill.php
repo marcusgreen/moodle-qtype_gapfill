@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Behat steps definitions for gapfill drag drop into text. 
+ * Behat steps definitions for gapfill drag drop into text.
  *
  * @package   qtype_gapfill
  * @category  test
