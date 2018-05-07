@@ -22,7 +22,7 @@ php:
 
 env: 
   - MOODLE_BRANCH=MOODLE_34_STABLE DB=pgsql IGNORE_PATHS=mobile_src
-  - MOODLE_BRANCH=MOODLE_32_STABLE DB=mysql IGNORE_PATHS=mobile_src
+  - MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli IGNORE_PATHS=mobile_src
   - MOODLE_BRANCH=master DB=pgsql IGNORE_PATHS=mobile_src
 2
 before_install:
