@@ -3,6 +3,8 @@ Fixed a bug where correct answers were shown even thought it was turned off in t
 Thanks to Matthias Giger and contributors to the Moodle German language for reporting this.
 Additional PHPDocs, code standards compliance and confirmation that it works with Moodle 3.5
 
+Implemented privacy API for GDPR compliance 
+
 ### Version 1.971 of the Moodle Gapfill question type Feb 2018
 Bug fix for issue where dragdrop did not work on iOS. Improvements in code standards compliance.
 
