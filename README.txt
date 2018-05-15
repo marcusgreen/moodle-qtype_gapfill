@@ -19,6 +19,8 @@ moodle\question\type\gapfill
 Where moodle is webroot for your install.
 
 Go to Site Administration/Notifications
+Version 1.972 Implement Privacy/GDPR API, minor bug fixes
+Version 1.971 Bug fix for ios dragdrop issue
 Version 1.97 letter hint from correct response added to gaps in interactive mode when incorrect answers added
 Version 1.96 per gap feedback entered via a popup form by clicking on the gap when editing
 Version 1.95 add optionsaftertext  option so draggables appear after text
