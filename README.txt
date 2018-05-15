@@ -9,7 +9,7 @@ wrong answers. These can then can be selected via dropddropdown lists or javascr
 
 This question type was written by Marcus Green
 
-This question type was created and tested under Moodle 3.1,3.2,3.3,3.4
+This question type was created and tested under Moodle 3.1,3.2,3.3,3.4,3.5
 
 
 Place the files in a directory 
