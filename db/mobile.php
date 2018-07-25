@@ -23,6 +23,27 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
+
 $addons = array(
-    "qtype_gapfill" => array()
+    "qtype_gapfill" => array(
+        "handlers" => array( // Different places where the add-on will display content.
+            'gapfill' => array( // Handler unique name (can be anything)
+                'displaydata' => array(
+                    'title' => 'Gapfill mavg',
+                    'icon' => $CFG->wwwroot . '/question/type/gapfill/pix/icon.gif',
+                    'class' => 'qgapfill',
+                ),
+                'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on)
+                'method' => 'mobile_get_gapfill', 
+                'offlinefunctions' => array(
+                    'mobile_get_gapfill' => array(),
+                    'mobile_get_gapfill' => array(),
+                ), // Function needs caching for offline.
+            )
+        ),
+          'lang' => array(
+            array('pluginname', 'Gapfill question')
+        )
+        
+    )
 );
