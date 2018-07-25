@@ -16,10 +16,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Mobile output class for certificate
+ * Mobile output class for qtype_gapfill
  *
- * @package    mod_certificate
- * @copyright  2018 Juan Leyva
+ * @package    qtype_gapfill
+ * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
