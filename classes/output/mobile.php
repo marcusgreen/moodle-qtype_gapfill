@@ -63,9 +63,10 @@ TEMPLATE;
         global $CFG;
         return [
     'templates' => [
-       
+            [
            'id' => 'main',
-           'html' => $template        
+           'html' => $template
+                ]
      ],
      'javascript' => $jscontent
     ];
