@@ -24,7 +24,7 @@ defined('MOODLE_INTERNAL') || die();
 
 
 $addons = array(
-    "qtype_gapfill" => array(
+    "AddonQtypeGapfill" => array(
         "handlers" => array( // Different places where the add-on will display content.
             'gapfill' => array( // Handler unique name (can be anything)
                 'displaydata' => array(
