@@ -24,30 +24,55 @@ var result = {
         }
         const div = document.createElement('div');
         div.innerHTML = this.question.html;
-        
+
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
         this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
-        
+
          // Treat the correct/incorrect icons.
         this.CoreQuestionHelperProvider.treatCorrectnessIcons(div);
 
         /* from core question */
         //const answerContainer = div.querySelector('.answercontainer');
-        
+
         debugger;
 
         // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
+         // Get answeroptions/draggables.
+        const answeroptions = div.querySelector('.answeroptions');
+
+        if (div.querySelector('.readonly') != null) {
+            this.question.readonly = true;
+        }
+
+        if (div.querySelector('.feedback') != null) {
+            this.question.feedback = questionEl.querySelector('.feedback');
+            this.question.feedbackHTML = true;
+        }
+        /* set all droppables to disabled but remove the faded look shown on ios
+         * This prevents the keyboard popping up when a droppable is dropped onto
+         * a droptarget.
+         */
+        if (answeroptions !== null) {
+            var droptargets = questiontext.querySelectorAll('.droptarget');
+            droptargets.forEach((elem) => {
+                elem.style.webkitOpacity = 1;
+                elem.disabled = "true";
+            });
+
+        }
+
         this.CoreDomUtilsProvider.removeElement(div,'input[name*=sequencecheck]');
         this.CoreDomUtilsProvider.removeElement(div,'.validationerror');
-        
-       this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
-        /*if (typeof this.question.text == 'undefined') {
-            this.logger.warn('Aborting because of an error parsing question.', this.question.name);
 
-            return this.questionHelper.showComponentError(this.onAbort);
-        }*/
+        this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
+        this.question.answeroptions = answeroptions.innerHTML;
+
+        if (typeof this.question.text == 'undefined') {
+            this.logger.warn('Aborting because of an error parsing question.', this.question.name);
+            return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+        }
 
  //
     }
