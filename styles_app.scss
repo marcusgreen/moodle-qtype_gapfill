@@ -1,0 +1,109 @@
+.addon-qtype-gapfill-container {  
+    color:red;
+
+    /* the gap where answers are dropped/keyed in */
+    input[type=text]{
+        border:1px solid black;
+        margin-top:1px;
+        margin-bottom:1px;  
+        background:white;
+        color:black;
+        border-radius:4px;
+        display:inline;
+        height:inherit;
+    }
+
+    .droptarget{
+        text-align:center;  
+    }
+
+    span.draggable.answers{
+        font-size: 120%;
+        padding:3px;
+    }
+    /**
+    When an answer is picked the shadows
+    should make it look a bit like it has been
+    pressed in */
+    span.draggable.answers.picked{
+        /*a very light grey */
+        background:#F8F8F8;
+        -moz-box-shadow:    -1px -1px 1px  rgba(119, 119, 119, 0.75);
+        -webkit-box-shadow: -1px -1px 1px  rgba(119, 119, 119, 0.75);
+        box-shadow:         -1px -1px 1px  rgba(119, 119, 119, 0.75);
+    }
+
+    span.draggable.answers.notpicked{
+        /*only used as a marker */
+    }
+
+    span.draggable.answers{
+        vertical-align: middle;
+        display: inline-block;
+        margin: 2px;
+        cursor: pointer;
+        border:solid 1px;
+        padding-left:4px;
+        padding-right:4px;
+        background:white;
+        z-index: 3;
+
+        -moz-box-shadow: 2px 2px 2px #000;
+        -webkit-box-shadow: 2px 2px 2px #000;
+        box-shadow: 2px 2px 2px #000;
+        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+        /* For IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+        /* For IE 5.5 - 7 */
+        filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+    }
+
+    
+    input [type=text].mm-question-answer-correct{
+                background-color: #afa;
+    }
+    
+    input [type=text].mm-question-answer-incorrect{
+                background-color: #faa;
+    }
+    
+    /* for non selected correct words */
+    input[type=text].correct{
+        background-color: #afa;
+    }
+    
+    input[type=text].incorrect{
+        background-color: #faa;
+    }
+
+    input[type=text].correctduplicate{
+        background-color: #FFFF00;
+    }
+
+    span.aftergapfeedback {
+        font-style: italic;
+        font-weight: bold;
+        color: green;
+    }
+
+    .gapfilltable td{
+        border:solid;
+        border-width:thin;
+        padding:4px;
+    }
+    .gapfilltable th{
+        border:solid;
+        border-width:thin;
+        background-color: lightgray;
+    }
+    .gapfilltable caption{
+        border-bottom:solid;
+        border-width:thin;
+    }
+    .gapfilltable-col{
+        background-color: lightgray;
+    }
+    .gapfilltable-row{
+        background-color: lightgray;
+    }
+}

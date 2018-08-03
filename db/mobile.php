@@ -22,7 +22,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-
+global $CFG;
 $addons = array(
     "AddonQtypeGapfill" => array(
         "handlers" => array( // Different places where the add-on will display content.
@@ -38,6 +38,10 @@ $addons = array(
                     'mobile_get_gapfill' => array(),
                     'mobile_get_gapfill' => array(),
                 ), // Function needs caching for offline.
+                  'styles' => array(
+                    'url' => $CFG->wwwroot . '/question/type/gapfill/styles_app.scss',
+                    'version' => '0.2'
+                ),
             )
         ),
           'lang' => array(
