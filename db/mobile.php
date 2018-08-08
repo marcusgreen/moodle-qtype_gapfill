@@ -17,7 +17,7 @@
  * Gapfill question type  capability definition
  *
  * @package    qtype_gapfill
- * @copyright  2016 Marcus Green
+ * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -28,9 +28,9 @@ $addons = array(
         "handlers" => array( // Different places where the add-on will display content.
             'gapfill' => array( // Handler unique name (can be anything)
                 'displaydata' => array(
-                    'title' => 'Gapfill mavg',
+                    'title' => 'Gapfill question type',
                     'icon' => $CFG->wwwroot . '/question/type/gapfill/pix/icon.gif',
-                    'class' => 'qgapfill',
+                    'class' => '',
                 ),
                 'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on)
                 'method' => 'mobile_get_gapfill', 
@@ -39,8 +39,8 @@ $addons = array(
                     'mobile_get_gapfill' => array(),
                 ), // Function needs caching for offline.
                   'styles' => array(
-                    'url' => $CFG->wwwroot . '/question/type/gapfill/styles_app.scss',
-                    'version' => '0.2'
+                    'url' => '/question/type/gapfill/styles_app.scss',
+                    'version' => '0.3'
                 ),
             )
         ),
