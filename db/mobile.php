@@ -17,7 +17,7 @@
  * Gapfill question type  capability definition
  *
  * @package    qtype_gapfill
- * @copyright  2016 Marcus Green
+ * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -41,13 +41,13 @@ $addons = array(
                'styles' => array(
                     'url' => '/question/type/gapfill/styles_app.css',
                     'version' => '0.92'
+
                 ),
                 'lang' => array(
                     array('Gapfill question', 'pluginname')
                 )
             )
         ),
-       
         
     )
 );
