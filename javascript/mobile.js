@@ -15,9 +15,11 @@
 /**
  * Component to render a gapfil question.
  */
+
 var that = this;
 var result = {
     componentInit: function () {
+
         if (!this.question) {
             console.warn('Aborting because of no question received.');
             return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
@@ -73,11 +75,17 @@ var result = {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
             return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
         }
+        getEl();
+         function getEl() {
+            return 'getEl';
+        }
+ 
 
- //
     }
+    
 }
 result;
+
 
 
 
