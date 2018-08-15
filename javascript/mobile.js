@@ -26,6 +26,12 @@ var result = {
         }
         const div = document.createElement('div');
         div.innerHTML = this.question.html;
+        // Get question questiontext.
+        const questiontext = div.querySelector('.qtext');
+        questiontext.addEventListener('click', () => {
+            var selector = "#" + event.target.id;
+            /* more stuff here */
+       })
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
@@ -39,8 +45,6 @@ var result = {
 
         debugger;
 
-        // Get question questiontext.
-        const questiontext = div.querySelector('.qtext');
          // Get answeroptions/draggables.
         const answeroptions = div.querySelector('.answeroptions');
 
@@ -75,11 +79,7 @@ var result = {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
             return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
         }
-        getEl();
-         function getEl() {
-            return 'getEl';
-        }
- 
+
 
     }
     
