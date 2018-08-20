@@ -18,7 +18,19 @@
 
 var that = this;
 var result = {
+ 
     componentInit: function () {
+        this.questionRendered = function questionRendered() {
+            var draggables = this.componentContainer.querySelectorAll('.draggable');
+            for (var i = 0; i < draggables.length; i++) {
+                var drag =draggables[i];
+                    if (drag.id) {
+                        drag.addEventListener('click', () => {
+                            event.currentTarget.classList.toggle('picked');
+                        })
+                    }
+                }
+        }
 
         if (!this.question) {
             console.warn('Aborting because of no question received.');
@@ -28,10 +40,7 @@ var result = {
         div.innerHTML = this.question.html;
         // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
-        questiontext.addEventListener('click', () => {
-            var selector = "#" + event.target.id;
-            /* more stuff here */
-       })
+  
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
@@ -42,8 +51,6 @@ var result = {
 
         /* from core question */
         //const answerContainer = div.querySelector('.answercontainer');
-
-        debugger;
 
          // Get answeroptions/draggables.
         const answeroptions = div.querySelector('.answeroptions');

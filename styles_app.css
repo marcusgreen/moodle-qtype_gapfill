@@ -34,6 +34,14 @@ span.draggable.answers {
     -webkit-box-shadow: 2px 2px 6px #000;
 }
 
-.qtype-gapfill .droptarget{
-    background-color:red;
-}
+    /**
+    When an answer is picked the shadows
+    should make it look a bit like it has been
+    pressed in */
+    span.draggable.answers.picked{
+        /*a very light grey */
+        background:#F8F8F8;
+        -moz-box-shadow:    -1px -1px 1px  rgba(119, 119, 119, 0.75);
+        -webkit-box-shadow: -1px -1px 1px  rgba(119, 119, 119, 0.75);
+        box-shadow:         -1px -1px 1px  rgba(119, 119, 119, 0.75);
+    }
