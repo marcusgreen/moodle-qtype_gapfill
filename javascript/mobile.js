@@ -16,10 +16,10 @@
  * Component to render a gapfil question.
  */
 var that = this;
-var last_item_clicked='';
 var result = {
+
     componentInit: function () {
-        this.last_item_clicked='';
+
         function pickAnswerOption(draggables,event){
             event.currentTarget.classList.toggle('picked'); 
             for (var i = 0; i < draggables.length; i++) {
@@ -28,6 +28,7 @@ var result = {
                 }
                 draggables[i].classList.remove('picked');
             }
+            return event.currentTarget.innerHTML;
         }
         function unPick(selection){
             for (var i = 0; i < draggables.length; i++) {
@@ -37,22 +38,28 @@ var result = {
         }
 
         this.questionRendered = function questionRendered() {
+            var self = this;
+            var last_item_clicked='';
+            self.last_item_clicked=last_item_clicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
             for (var i = 0; i < draggables.length; i++) {
                     if (draggables[i].id){
                         draggables[i].addEventListener('click', () => {
-                            pickAnswerOption(draggables,event);
+                          self.last_item_clicked=  pickAnswerOption(draggables,event);
                         })
                     }
                 }
-                var droptargets = this.componentContainer.querySelectorAll('.droptarget');
+                var droptargets = this.componentContainer.querySelectorAll('.droptarget');         
+                self.last_item_clicked=last_item_clicked;
                 for (var i = 0; i < droptargets.length; i++) {
                     var target =droptargets[i];
                     debugger;
                         if (target.id) {
-                            target.addEventListener('click', () => {
-                                    alert('target click');                                
-                            })
+                            target.addEventListener('click', function(event) {
+                               // event.currentTarget.innerHTML=self.last_item_clicked;
+                               event.currentTarget.value=self.last_item_clicked;
+
+                            });
                         }
                     }
 
