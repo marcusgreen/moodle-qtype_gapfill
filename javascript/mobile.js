@@ -15,22 +15,49 @@
 /**
  * Component to render a gapfil question.
  */
-
 var that = this;
+var last_item_clicked='';
 var result = {
- 
     componentInit: function () {
+        this.last_item_clicked='';
+        function pickAnswerOption(draggables,event){
+            event.currentTarget.classList.toggle('picked'); 
+            for (var i = 0; i < draggables.length; i++) {
+                if(draggables[i].id == event.currentTarget.id){
+                    continue;
+                }
+                draggables[i].classList.remove('picked');
+            }
+        }
+        function unPick(selection){
+            for (var i = 0; i < draggables.length; i++) {
+                draggables[i].classList.remove('picked');
+            }
+            event.currentTarget.classList.toggle('picked'); 
+        }
+
         this.questionRendered = function questionRendered() {
             var draggables = this.componentContainer.querySelectorAll('.draggable');
             for (var i = 0; i < draggables.length; i++) {
-                var drag =draggables[i];
-                    if (drag.id) {
-                        drag.addEventListener('click', () => {
-                            event.currentTarget.classList.toggle('picked');
+                    if (draggables[i].id){
+                        draggables[i].addEventListener('click', () => {
+                            pickAnswerOption(draggables,event);
                         })
                     }
                 }
+                var droptargets = this.componentContainer.querySelectorAll('.droptarget');
+                for (var i = 0; i < droptargets.length; i++) {
+                    var target =droptargets[i];
+                    debugger;
+                        if (target.id) {
+                            target.addEventListener('click', () => {
+                                    alert('target click');                                
+                            })
+                        }
+                    }
+
         }
+       
 
         if (!this.question) {
             console.warn('Aborting because of no question received.');
@@ -70,8 +97,8 @@ var result = {
         if (answeroptions !== null) {
             var droptargets = questiontext.querySelectorAll('.droptarget');
             droptargets.forEach((elem) => {
-                elem.style.webkitOpacity = 1;
-                elem.disabled = "true";
+                //elem.style.webkitOpacity = 1;
+                //elem.disabled = "true";
             });
 
         }
