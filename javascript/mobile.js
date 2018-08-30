@@ -111,7 +111,7 @@ var result = {
             this.question.feedbackHTML = true;
         }
        
-        /* set all droppables to disabled but remove the faded look shown on ios
+        /* set all droptargets to disabled but remove the faded look shown on ios
          * This prevents the keyboard popping up when a droppable is dropped onto
          * a droptarget.
          */
@@ -119,8 +119,8 @@ var result = {
             var droptargets = questiontext.querySelectorAll('.droptarget');
             for (var i = 0; i < droptargets.length; i++) {
                 var target = droptargets[i];
-               // target.style.webkitOpacity = 1;
-               // target.disabled = "true";
+                target.style.webkitOpacity = 1;
+                target.disabled = "true";
             }
         }
 
