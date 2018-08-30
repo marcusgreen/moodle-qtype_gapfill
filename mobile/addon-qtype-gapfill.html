@@ -4,9 +4,9 @@
             <ion-icon name="information-circle"></ion-icon>
             {{ 'core.question.howtodraganddrop' | translate }}
         </p>
-        <p><core-format-text *ngIf="question.optionsaftertext" ngReadonly="true" ngClick="drop" [component]="component" [componentId]="componentId" [text]="question.text" (afterRender)="questionRendered()"></core-format-text></p>
+        <p><core-format-text *ngIf="question.optionsaftertext" [component]="component" [componentId]="componentId" [text]="question.text" (afterRender)="questionRendered()"></core-format-text></p>
         <core-format-text  [text]="question.answeroptions" ></core-format-text>
-        <p><core-format-text *ngIf="!question.optionsaftertext"  ngReadonly="true" ngClick="drop" [component]="component" [componentId]="componentId" [text]="question.text" (afterRender)="questionRendered()"></core-format-text></p>
+        <p><core-format-text *ngIf="!question.optionsaftertext"  [component]="component" [componentId]="componentId" [text]="question.text" (afterRender)="questionRendered()"></core-format-text></p>
         <core-format-text *ngIf="question.answers" [component]="component" [componentId]="componentId" [text]="question.answers" (afterRender)="questionRendered()"></core-format-text>
     </ion-item>
 </section>
