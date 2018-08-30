@@ -121,7 +121,8 @@ var result = {
             for (var i = 0; i < droptargets.length; i++) {
                 var target = droptargets[i];
                 target.style.webkitOpacity = 1;
-               // target.disabled = "true";
+                //target.disabled = "true";
+               target.readOnly=true;
             }
         }
 
