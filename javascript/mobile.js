@@ -20,7 +20,6 @@ var result = {
 
     componentInit: function () {
 
-    
         function pickAnswerOption(draggables,event){
             /** 
              *if the question is in a readonly state, e.g. after being
@@ -67,7 +66,9 @@ var result = {
                     var target =droptargets[i];
                         if (target.id) {
                             target.addEventListener('click', function(event) {
-                               event.currentTarget.value=self.last_item_clicked;
+                             event.currentTarget.value=self.last_item_clicked;
+                            //event.currentTarget.innerHTML=self.last_item_clicked;
+
                             });
                             target.addEventListener('dblclick', function(event) {
                                 event.currentTarget.value='';
@@ -120,7 +121,7 @@ var result = {
             for (var i = 0; i < droptargets.length; i++) {
                 var target = droptargets[i];
                 target.style.webkitOpacity = 1;
-                target.disabled = "true";
+               // target.disabled = "true";
             }
         }
 
