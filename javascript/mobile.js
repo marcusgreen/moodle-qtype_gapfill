@@ -20,7 +20,17 @@ var result = {
 
     componentInit: function () {
 
+    
         function pickAnswerOption(draggables,event){
+            /** 
+             *if the question is in a readonly state, e.g. after being
+             * answered or in the review page then stop any further 
+             * selections.
+             */
+            debugger;
+            if ( event.currentTarget.classList.contains('readonly')) {
+                return;
+            }
             event.currentTarget.classList.toggle('picked'); 
             for (var i = 0; i < draggables.length; i++) {
                 if(draggables[i].id == event.currentTarget.id){
@@ -40,10 +50,12 @@ var result = {
         this.questionRendered = function questionRendered() {
             var self = this;
             var last_item_clicked='';
+            debugger;
             self.last_item_clicked=last_item_clicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
             for (var i = 0; i < draggables.length; i++) {
-                    if (draggables[i].id){
+                    /* optionsaftertext reference is to stop the listener being applied twice */
+                    if (draggables[i].id && !this.question.optionsaftertext){
                         draggables[i].addEventListener('click', () => {
                           self.last_item_clicked=  pickAnswerOption(draggables,event);
                         })
@@ -53,13 +65,14 @@ var result = {
                 self.last_item_clicked=last_item_clicked;
                 for (var i = 0; i < droptargets.length; i++) {
                     var target =droptargets[i];
-                    debugger;
                         if (target.id) {
                             target.addEventListener('click', function(event) {
-                               // event.currentTarget.innerHTML=self.last_item_clicked;
                                event.currentTarget.value=self.last_item_clicked;
-
                             });
+                            target.addEventListener('dblclick', function(event) {
+                                event.currentTarget.value='';
+                             });
+
                         }
                     }
 
@@ -92,22 +105,23 @@ var result = {
         if (div.querySelector('.readonly') != null) {
             this.question.readonly = true;
         }
-
+        debugger;
         if (div.querySelector('.feedback') != null) {
-            this.question.feedback = questionEl.querySelector('.feedback');
+            this.question.feedback = div.querySelector('.feedback');
             this.question.feedbackHTML = true;
         }
+       
         /* set all droppables to disabled but remove the faded look shown on ios
          * This prevents the keyboard popping up when a droppable is dropped onto
          * a droptarget.
          */
         if (answeroptions !== null) {
             var droptargets = questiontext.querySelectorAll('.droptarget');
-            droptargets.forEach((elem) => {
-                //elem.style.webkitOpacity = 1;
-                //elem.disabled = "true";
-            });
-
+            for (var i = 0; i < droptargets.length; i++) {
+                var target = droptargets[i];
+               // target.style.webkitOpacity = 1;
+               // target.disabled = "true";
+            }
         }
 
         this.CoreDomUtilsProvider.removeElement(div,'input[name*=sequencecheck]');
@@ -122,6 +136,19 @@ var result = {
         }
 
 
+        // Wait for the DOM to be rendered.
+        setTimeout(() => {
+            /*set isdragdrop to true if it is a dragdrop question. This will then be used
+            * in template.html to determine when to show the  blue "tap to select..." prompt
+            */
+            if (div.querySelectorAll('.draggable') != null) {
+                this.question.isdragdrop = true;
+            }
+            if (div.querySelector('#gapfill_optionsaftertext') != null) {
+                this.question.optionsaftertext = true;
+            }
+
+        });
     }
     
 }
