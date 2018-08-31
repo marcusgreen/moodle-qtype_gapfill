@@ -1,5 +1,5 @@
 ### Version 1.972 of the Moodle Gapfill question type Aug 2018
-Support for the new Moodle 3.5 mobile app. 
+Support for the new Moodle 3.5 mobile app. Huge thanks to Dani Palou from Moodle HQ, without his help I would not have been able to add this capability.
 
 ### Version 1.971 of the Moodle Gapfill question type Feb 2018
 Bug fix for issue where dragdrop did not work on iOS. Improvements in code standards compliance.
