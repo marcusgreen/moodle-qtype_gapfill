@@ -19,61 +19,53 @@
 var that = this;
 var result = {
 
-    componentInit: function () {
+    componentInit: function() {
 
-        function pickAnswerOption(draggables,event){
-            /*if the question is in a readonly state, e.g. after being
+        function pickAnswerOption(draggables, event) {
+            /* If the question is in a readonly state, e.g. after being
              * answered or in the review page then stop any further
              * selections.
              */
-            debugger;
-            if ( event.currentTarget.classList.contains('readonly')) {
-                return;
+            if (event.currentTarget.classList.contains('readonly')) {
+                return false;
             }
             event.currentTarget.classList.toggle('picked');
             for (var i = 0; i < draggables.length; i++) {
-                if(draggables[i].id == event.currentTarget.id){
+                if (draggables[i].id == event.currentTarget.id) {
                     continue;
                 }
                 draggables[i].classList.remove('picked');
             }
             return event.currentTarget.innerHTML;
         }
-        function unPick(selection){
-            for (var i = 0; i < draggables.length; i++) {
-                draggables[i].classList.remove('picked');
-            }
-            event.currentTarget.classList.toggle('picked');
-        }
-
         this.questionRendered = function questionRendered() {
             var self = this;
-            var last_item_clicked = '';
-            debugger;
-            self.last_item_clicked = last_item_clicked;
+            var LastItemClicked = '';
+            self.LastItemClicked = LastItemClicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
-            for (var i = 0; i < draggables.length; i++) {
-                /* optionsaftertext reference is to stop the listener being applied twice */
+            var i;
+            for (i = 0; i < draggables.length; i++) {
+                /* Optionsaftertext reference is to stop the listener being applied twice */
                 if (draggables[i].id && !this.question.optionsaftertext) {
-                    draggables[i].addEventListener('click', () => {
-                        self.last_item_clicked = pickAnswerOption(draggables, event);
-                    })
+                    draggables[i].addEventListener('click', function() {
+                        self.LastItemClicked = pickAnswerOption(draggables, event);
+                    });
                 }
             }
             var droptargets = this.componentContainer.querySelectorAll('.droptarget');
-            self.last_item_clicked = last_item_clicked;
-            for (var i = 0; i < droptargets.length; i++) {
+            self.LastItemClicked = LastItemClicked;
+            for (i = 0; i < droptargets.length; i++) {
                 var target = droptargets[i];
                 if (target.id) {
-                    target.addEventListener('click', function (event) {
-                        event.currentTarget.value = self.last_item_clicked;
+                    target.addEventListener('click', function(event) {
+                        event.currentTarget.value = self.LastItemClicked;
                     });
-                    target.addEventListener('dblclick', function (event) {
+                    target.addEventListener('dblclick', function(event) {
                         event.currentTarget.value = '';
                     });
                 }
             }
-        }
+        };
 
         if (!this.question) {
             console.warn('Aborting because of no question received.');
@@ -83,6 +75,7 @@ var result = {
         div.innerHTML = this.question.html;
         // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
+
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
@@ -94,16 +87,15 @@ var result = {
          // Get answeroptions/draggables.
         const answeroptions = div.querySelector('.answeroptions');
 
-        if (div.querySelector('.readonly') != null) {
+        if (div.querySelector('.readonly') !== null) {
             this.question.readonly = true;
         }
-        debugger;
-        if (div.querySelector('.feedback') != null) {
+        if (div.querySelector('.feedback') !== null) {
             this.question.feedback = div.querySelector('.feedback');
             this.question.feedbackHTML = true;
         }
 
-        /* set all droptargets to disabled but remove the faded look shown on ios
+        /* Set all droptargets to disabled but remove the faded look shown on ios
          * This prevents the keyboard popping up when a droppable is dropped onto
          * a droptarget.
          */
@@ -116,8 +108,8 @@ var result = {
             }
         }
 
-        this.CoreDomUtilsProvider.removeElement(div,'input[name*=sequencecheck]');
-        this.CoreDomUtilsProvider.removeElement(div,'.validationerror');
+        this.CoreDomUtilsProvider.removeElement(div, 'input[name*=sequencecheck]');
+        this.CoreDomUtilsProvider.removeElement(div, '.validationerror');
 
         this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
         this.question.answeroptions = answeroptions.innerHTML;
@@ -127,19 +119,21 @@ var result = {
             return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
         }
 
+
         // Wait for the DOM to be rendered.
         setTimeout(() => {
-            /*set isdragdrop to true if it is a dragdrop question. This will then be used
+            /* Set isdragdrop to true if it is a dragdrop question. This will then be used
             * in template.html to determine when to show the  blue "tap to select..." prompt
             */
-            if (div.querySelectorAll('.draggable') != null) {
+            if (div.querySelectorAll('.draggable') !== null) {
                 this.question.isdragdrop = true;
             }
-            if (div.querySelector('#gapfill_optionsaftertext') != null) {
+            if (div.querySelector('#gapfill_optionsaftertext') !== null) {
                 this.question.optionsaftertext = true;
             }
 
         });
+    return true;
     }
-}
+};
 result;
