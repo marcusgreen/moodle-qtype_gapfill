@@ -77,7 +77,6 @@ var result = {
         // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
 
-
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
         this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
@@ -120,7 +119,6 @@ var result = {
             return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
         }
 
-
         // Wait for the DOM to be rendered.
         setTimeout(() => {
             /* Set isdragdrop to true if it is a dragdrop question. This will then be used
@@ -135,6 +133,6 @@ var result = {
 
         });
     return true;
-    }
+        }
 };
 result;
