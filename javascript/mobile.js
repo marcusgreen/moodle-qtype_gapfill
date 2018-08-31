@@ -16,12 +16,22 @@
 /**
  * Component to render a gapfil question.
  */
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
+/* eslint-disable no-console */
+
 var that = this;
 var result = {
 
     componentInit: function() {
-
+        /**
+         * If the question is in a readonly state, e.g. after being
+         * answered or in the review page then stop any further
+         * selections.
+         *
+         * @param {*} draggables
+         * @param {*} event
+         * @return {string} value of target
+         **/
         function pickAnswerOption(draggables, event) {
             /* If the question is in a readonly state, e.g. after being
              * answered or in the review page then stop any further
