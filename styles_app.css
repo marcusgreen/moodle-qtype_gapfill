@@ -1,4 +1,3 @@
-
 /* the gap where answers are dropped/keyed in */
 .que.gapfill input[type=text] {
     background: white;
@@ -9,7 +8,9 @@
     margin-top: 1px;
     padding: 1px;
 }
-
+.item-inner{
+    font-size:"150%";
+}
 span.draggable.answers {
     background: white;
     border: solid 1px;

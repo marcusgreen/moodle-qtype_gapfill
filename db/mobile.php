@@ -1,4 +1,5 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,21 +27,21 @@ global $CFG;
 $addons = array(
     "qtype_gapfill" => array(
         "handlers" => array( // Different places where the add-on will display content.
-            'gapfill' => array( // Handler unique name (can be anything)
+            'gapfill' => array( // Handler unique name (can be anything).
                 'displaydata' => array(
                     'title' => 'Gapfill Question',
                     'icon' => '/question/type/gapfill/pix/icon.gif',
                     'class' => '',
                 ),
-                'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on)
-                'method' => 'mobile_get_gapfill', 
+                'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on).
+                'method' => 'mobile_get_gapfill',
                 'offlinefunctions' => array(
                     'mobile_get_gapfill' => array(),
                     'mobile_get_gapfill' => array(),
                 ), // Function needs caching for offline.
                'styles' => array(
                     'url' => '/question/type/gapfill/styles_app.css',
-                    'version' => '0.94'
+                    'version' => '0.99'
 
                 ),
                 'lang' => array(
@@ -48,6 +49,5 @@ $addons = array(
                 )
             )
         ),
-        
     )
 );

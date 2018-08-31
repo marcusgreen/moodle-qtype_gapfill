@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -44,36 +43,19 @@ class mobile {
      */
     public static function mobile_get_gapfill() {
         global $OUTPUT, $USER, $DB, $CFG;
-           $template = <<<TEMPLATE
-           <section class="list mma-qtype-gapfill-container" ng-if="question.text || question.text === ''">
-    <div class="item item-text-wrap">
-           <mm-format-text ng-if="question.optionsaftertext" ng-onhold="clearGap($event)" ng-dblclick="clearGap($event)" ng-click="selectAnswer($event)"7 class="mm-content-with-float qtext" component="{{component}}" component-id="{{componentId}}">{{ question.text }}</mm-format-text>
-           <p ng-if="!question.readonly && question.isdragdrop" class="mm-info-card-icon gapfill-item-howto"><i class="icon ion-information"></i> {{ 'mm.question.howtodraganddrop' | translate }}</p>
-           <p>  <mm-format-text ng-if="question.isdragdrop" ng-onhold="clearGap($event)" ng-click="selectAnswer($event)" watch="true">{{question.answeroptions}} </mm-format-text></p>	
-           <mm-format-text ng-if="!question.optionsaftertext" ng-onhold="clearGap($event)" ng-dblclick="clearGap($event)" ng-click="selectAnswer($event)"7 class="mm-content-with-float qtext" component="{{component}}" component-id="{{componentId}}">{{ question.text }}</mm-format-text>
-  <mm-format-text watch="true" ng-if="question.feedbackHTML" component="{{component}}" component-id="{{componentId}}">
-            {{ question.feedback }}
-        </mm-format-text>
-    </div>
-</section>
-TEMPLATE;
-           
-         $templatepath = $CFG->wwwroot.'/question/type/gapfill/mobile/addon-qtype-gapfill.html';
-         $template = file_get_contents($templatepath);
-         $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/javascript/mobile.js';
-         $jscontent=file_get_contents($jsfilepath);
-
+        $templatepath = $CFG->wwwroot . '/question/type/gapfill/mobile/addon-qtype-gapfill.html';
+        $template = file_get_contents($templatepath);
+        $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/javascript/mobile.js';
+        $jscontent = file_get_contents($jsfilepath);
         global $CFG;
         return [
-    'templates' => [
-            [
-           'id' => 'main',
-           'html' => $template
+            'templates' => [
+                [
+                    'id' => 'main',
+                    'html' => $template
                 ]
-     ],
-     'javascript' => $jscontent
-    ];
+            ],
+            'javascript' => $jscontent
+        ];
     }
- 
-
 }
