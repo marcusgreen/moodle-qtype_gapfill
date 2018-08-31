@@ -16,6 +16,7 @@
 /**
  * Component to render a gapfil question.
  */
+/*jshint esversion: 6 */
 var that = this;
 var result = {
 
