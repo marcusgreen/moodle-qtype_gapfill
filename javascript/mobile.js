@@ -132,7 +132,7 @@ var result = {
             }
 
         });
-    return true;
-        }
+        return true;
+    }
 };
 result;
