@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Component to render a gapfil question.
+ * support for the mdl35+ mobile app
  */
 /* jshint esversion: 6 */
 /* eslint-disable no-console */
