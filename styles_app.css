@@ -46,3 +46,10 @@ span.draggable.answers.picked {
     -webkit-box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
     box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
 }
+/*Displays the correct answer in delimiters if an
+incorrect answer was entered */
+span.aftergapfeedback {
+    color: green;
+    font-style: italic;
+    font-weight: bold;
+}
