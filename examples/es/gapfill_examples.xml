@@ -78,10 +78,10 @@
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is partially correct.</p>]]></text>
+      <text><![CDATA[<p>Su respuesta es parcialmente correcta.</p>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text><![CDATA[<p>Your answer is incorrect.</p>]]></text>
+      <text><![CDATA[<p>Su respuesta es incorrecta.</p>]]></text>
     </incorrectfeedback>
   </question>
 
@@ -163,10 +163,10 @@
       <text></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
-      <text>Your answer is partially correct.</text>
+      <text>Su respuesta es parcialmente correcta.</text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
-      <text>Your answer is incorrect.</text>
+      <text>Su respuesta es incorrecta.</text>
     </incorrectfeedback>
   </question>
 
