@@ -1,4 +1,4 @@
-@qtype @qtype_gapfill @qtype_gapfill_import
+@qtype @qtype_gapfill, @qtype_gapfill_import
 Feature: Test importing Gapfill questions
   As a teacher
   In order to reuse Gapfill questions
@@ -19,7 +19,7 @@ Feature: Test importing Gapfill questions
 
   @javascript @_file_upload
   Scenario: import drag and drop into text question.
-    When I navigate to "Import" in current page administration
+    And I navigate to "Question bank > Import" in current page administration
     And I set the field "id_format_xml" to "1"
     And I upload "question/type/gapfill/tests/fixtures/gapfill_examples.xml" file to "Import" filemanager
     And I press "id_submitbutton"
