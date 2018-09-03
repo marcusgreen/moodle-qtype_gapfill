@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information. When a new version is released version is incremented
+ * Version information. When a new version is released the version is incremented
  *
  * @package    qtype_gapfill
  * @copyright  2018 Marcus Green
