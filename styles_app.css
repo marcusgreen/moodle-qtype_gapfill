@@ -1,0 +1,49 @@
+/* the gap where answers are dropped/keyed in */
+.que.gapfill input[type=text] {
+    background: white;
+    border: solid black thin;
+    border-radius: 4px;
+    color: black;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    padding: 1px;
+}
+.item-inner{
+    font-size:"150%";
+}
+span.draggable.answers {
+    background: white;
+    border: solid 1px;
+    box-shadow: 3px 3px 4px #000;
+    cursor: pointer;
+    display: inline-block;
+    margin: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    vertical-align: middle;
+    z-index: 3;
+    -moz-box-shadow: 3px 3px 4px #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 3px 3px 4px #000;
+}
+
+.que.gapfill span.draggable.answers:hover {
+    box-shadow: 2px 2px 6px #000;
+    -moz-box-shadow: 2px 2px 6px #000;
+    -webkit-box-shadow: 2px 2px 6px #000;
+}
+
+/**
+When an answer is picked the shadows
+should make it look a bit like it has been
+pressed in */
+
+span.draggable.answers.picked {
+ /*a very light grey */
+background: #F8F8F8;
+-moz-box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+-webkit-box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+}
