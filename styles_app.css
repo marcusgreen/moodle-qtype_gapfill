@@ -51,3 +51,38 @@ span.aftergapfeedback {
     font-style: italic;
     font-weight: bold;
 }
+.gapfilltable td {
+    border: solid;
+    border-width: thin;
+}
+
+.gapfillfirstcol {
+    background-color: #bcbbbb;
+}
+
+.gapfillcol {
+    background-color: lightgray;
+}
+
+.gapfilltable th {
+    background-color: lightgray;
+    border: solid;
+    border-width: thin;
+}
+
+.gapfilltable caption {
+    border-bottom: solid;
+    border-width: thin;
+}
+
+.que.gapfill input.correctduplicate {
+    background-color: #ff0;
+}
+
+.que.gapfill input.correct {
+    background-color: #afa;
+}
+
+.que.gapfill input.incorrect {
+    background-color: #faa;
+}
