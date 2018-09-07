@@ -1,5 +1,5 @@
 /* the gap where answers are dropped/keyed in */
-.qtype-gapfill input[type=text]{
+.qtype-gapfill input[type=text] {
     background: white;
     border: solid black thin;
     border-radius: 4px;
@@ -9,8 +9,8 @@
     padding: 1px;
 }
 /* dropped text is centred, keyed in text is not */
-.qtype-gapfill .droptarget{
-    text-align:center;  
+.qtype-gapfill .droptarget {
+    text-align: center;
 }
 
 
@@ -31,44 +31,42 @@
     border-radius: 4px;
     -webkit-box-shadow: 3px 3px 4px #000;
 }
-    /**
-    When an answer is picked the shadows
-    should make it look a bit like it has been
-    pressed in */
-    .qtype-gapfill span.draggable.answers.picked{
-        /*a very light grey */
-        background:#F8F8F8;
-        -moz-box-shadow:    -1px -1px 1px  rgba(119, 119, 119, 0.75);
-        -webkit-box-shadow: -1px -1px 1px  rgba(119, 119, 119, 0.75);
-        box-shadow:         -1px -1px 1px  rgba(119, 119, 119, 0.75);
-    }
-    .qtype-gapfill span.aftergapfeedback {
-        font-style: italic;
-        font-weight: bold;
-        color: green;
-    }
-
-    .gapfilltable td{
-        border:solid;
-        border-width:thin;
-        padding:4px;
-    }
-    .gapfilltable th{
-        border:solid;
-        border-width:thin;
-        background-color: lightgray;
-    }
-    .gapfilltable caption{
-        border-bottom:solid;
-        border-width:thin;
-    }
-    .gapfilltable-col{
-        background-color: lightgray;
-    }
-    .gapfilltable-row{
-        background-color: lightgray;
-    }
-
+/**
+When an answer is picked the shadows
+should make it look a bit like it has been
+pressed in */
+.qtype-gapfill span.draggable.answers.picked {
+    /*a very light grey */
+    background: #F8F8F8;
+    -moz-box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+    -webkit-box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+    box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+}
+.qtype-gapfill span.aftergapfeedback {
+    font-style: italic;
+    font-weight: bold;
+    color: green;
+}
+.gapfilltable td {
+    border: solid;
+    border-width: thin;
+    padding: 4px;
+}
+.gapfilltable th {
+    border: solid;
+    border-width: thin;
+    background-color: lightgray;
+}
+.gapfilltable caption {
+    border-bottom: solid;
+    border-width: thin;
+}
+.gapfilltable-col {
+    background-color: lightgray;
+}
+.gapfilltable-row {
+    background-color: lightgray;
+}
 
 .gapfilltable caption {
     border-bottom: solid;
