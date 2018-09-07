@@ -116,13 +116,13 @@ var result = {
                 target.style.webkitOpacity = 1;
                 target.readOnly = true;
             }
+            this.question.answeroptions = answeroptions.innerHTML;
         }
 
         this.CoreDomUtilsProvider.removeElement(div, 'input[name*=sequencecheck]');
         this.CoreDomUtilsProvider.removeElement(div, '.validationerror');
 
         this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
-        this.question.answeroptions = answeroptions.innerHTML;
 
         if (typeof this.question.text == 'undefined') {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
