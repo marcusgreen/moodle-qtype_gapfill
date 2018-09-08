@@ -1,6 +1,5 @@
 /* the gap where answers are dropped/keyed in */
 .qtype-gapfill input[type=text] {
-    background: white;
     border: solid black thin;
     border-radius: 4px;
     color: black;
@@ -11,6 +10,7 @@
 /* dropped text is centred, keyed in text is not */
 .qtype-gapfill .droptarget {
     text-align: center;
+    background: white;
 }
 
 
@@ -73,14 +73,14 @@ pressed in */
     border-width: thin;
 }
 
-.que.gapfill input.correctduplicate {
+.qtype-gapfill .droptarget.correctduplicate {
     background-color: #ff0;
 }
 
-.que.gapfill input.correct {
+.qtype-gapfill .core-question-answer-correct {
     background-color: #afa;
 }
 
-.que.gapfill input.incorrect {
+.qtype-gapfill .core-question-answer-incorrect {
     background-color: #faa;
 }
