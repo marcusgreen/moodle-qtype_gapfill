@@ -1,4 +1,4 @@
-### Version 1.973 of the Moodle Gapfill question type Aug 2018
+### Version 1.973 of the Moodle Gapfill question type Sep 2018
 Support for the new Moodle 3.5 mobile app. Huge thanks to Dani Palou from Moodle HQ, 
 without his help I would not have been able to add this capability. Thanks to Elton LaClare
 for help with testing.
