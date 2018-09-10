@@ -50,10 +50,10 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @param array $poptions
      * @return qtype_gapfill
      */
-    public static function make_question2($questiontext='The [cat] sat on the [mat]', $casesensitive = false, 
+    public static function make_question2($questiontext = 'The [cat] sat on the [mat]', $casesensitive = false,
         $poptions=array("noduplicates" => 0,
         'disableregex' => 0, 'delimitchars' => '[])')) {
-        $type='gapfill';
+        $type = 'gapfill';
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
         $question->questiontext = $questiontext;

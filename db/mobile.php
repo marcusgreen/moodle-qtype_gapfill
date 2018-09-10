@@ -41,7 +41,7 @@ $addons = array(
                 ), // Function needs caching for offline.
                'styles' => array(
                     'url' => '/question/type/gapfill/styles_app.css',
-                    'version' => '0.991'
+                    'version' => '1.00'
 
                 ),
                 'lang' => array(

@@ -28,11 +28,12 @@ var result = {
          * answered or in the review page then stop any further
          * selections.
          *
-         * @param {*} draggables
-         * @param {*} event
+         * @param NodeList draggables
+         * @param MouseEvent event
          * @return {string} value of target
          **/
         function pickAnswerOption(draggables, event) {
+            debugger;
             /* If the question is in a readonly state, e.g. after being
              * answered or in the review page then stop any further
              * selections.
@@ -43,8 +44,10 @@ var result = {
             event.currentTarget.classList.toggle('picked');
             for (var i = 0; i < draggables.length; i++) {
                 if (draggables[i].id == event.currentTarget.id) {
+                    /*continue if this is just picked draggable */
                     continue;
                 }
+                /*remove picked class from everything else*/
                 draggables[i].classList.remove('picked');
             }
             return event.currentTarget.innerHTML;
@@ -64,17 +67,15 @@ var result = {
                 }
             }
             var droptargets = this.componentContainer.querySelectorAll('.droptarget');
-            self.LastItemClicked = LastItemClicked;
             for (i = 0; i < droptargets.length; i++) {
-                var target = droptargets[i];
-                if (target.id) {
-                    target.addEventListener('click', function(event) {
+                    /* paste text from last click into the droptarger */
+                    droptargets[i].addEventListener('click', function(event) {
                         event.currentTarget.value = self.LastItemClicked;
                     });
-                    target.addEventListener('dblclick', function(event) {
+                    /* clear contents on double click */
+                    droptargets[i].addEventListener('dblclick', function(event) {
                         event.currentTarget.value = '';
                     });
-                }
             }
         };
 
@@ -84,7 +85,7 @@ var result = {
         }
         const div = document.createElement('div');
         div.innerHTML = this.question.html;
-        // Get question questiontext.
+         // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
@@ -112,15 +113,11 @@ var result = {
         if (answeroptions !== null) {
             var droptargets = questiontext.querySelectorAll('.droptarget');
             for (var i = 0; i < droptargets.length; i++) {
-                var target = droptargets[i];
-                target.style.webkitOpacity = 1;
-                target.readOnly = true;
+                droptargets[i].style.webkitOpacity = 1;
+                droptargets[i].readOnly = true;
             }
             this.question.answeroptions = answeroptions.innerHTML;
         }
-
-        this.CoreDomUtilsProvider.removeElement(div, 'input[name*=sequencecheck]');
-        this.CoreDomUtilsProvider.removeElement(div, '.validationerror');
 
         this.question.text = this.CoreDomUtilsProvider.getContentsOfElement(div, '.qtext');
 
