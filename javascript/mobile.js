@@ -33,7 +33,6 @@ var result = {
          * @return {string} value of target
          **/
         function pickAnswerOption(draggables, event) {
-            debugger;
             /* If the question is in a readonly state, e.g. after being
              * answered or in the review page then stop any further
              * selections.
