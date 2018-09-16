@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 /**
  *
  * The gapfill question class
- * 
+ *
  * Load from database, and initialise class
  * A "fill in the gaps" cloze style question type
  * @package    qtype_gapfill
