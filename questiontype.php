@@ -53,12 +53,7 @@ class qtype_gapfill extends question_type {
      * exist in the plugin folder and ensures they get included.
      * It also includes the jquery files required for this plugin
      */
-    public function find_standard_scripts() {
-        global $PAGE;
-            $PAGE->requires->jquery();
-            $PAGE->requires->jquery_plugin('ui');
-            $PAGE->requires->jquery_plugin('ui.touch-punch', 'qtype_gapfill');
-    }
+
     /**
      * Called during question editing
      *
