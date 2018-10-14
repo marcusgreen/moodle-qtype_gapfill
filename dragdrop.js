@@ -24,6 +24,8 @@
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 /* global $ */
 /* jshint unused:false*/
+define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
+
 $(function() {
     $(".draggable").draggable({
         revert: false,
@@ -49,4 +51,5 @@ $(function() {
             $(this).css("background-color", "white");
         }
     });
+});
 });
