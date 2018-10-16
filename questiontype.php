@@ -179,6 +179,11 @@ class qtype_gapfill extends question_type {
         return parent::save_question($question, $form);
     }
 
+    public function find_standard_scripts() {
+        global $CFG, $PAGE;
+        parent::find_standard_scripts();
+        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init');
+    }
 
     /**
      * chop the delimit string into a two element array

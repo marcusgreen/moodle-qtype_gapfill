@@ -246,7 +246,7 @@ var wrapContent = (function() {
         el = el && el.parentNode ? el : document.body;
         // Get all child nodes as a static array.
         var node,
-nodes = toArray(el.childNodes);
+        nodes = toArray(el.childNodes);
         if (el.id === "id_questiontextfeedback" && (count > 0)) {
             count = 0;
         }
@@ -256,7 +256,7 @@ nodes = toArray(el.childNodes);
         var r = delimitchars.substring(1, 2);
         var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
         var sp,
-span = document.createElement('span');
+        span = document.createElement('span');
         // Tag names of elements to skip, there are more to add.
         var skip = {'script': '', 'button': '', 'input': '', 'select': '',
             'textarea': '', 'option': ''};
