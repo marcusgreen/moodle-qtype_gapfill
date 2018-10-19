@@ -24,6 +24,7 @@
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 /* global $ */
 /* jshint unused:false*/
+/* eslint no-unused-vars: 0 */
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
         init: function() {
