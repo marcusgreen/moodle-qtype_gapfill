@@ -15,36 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Mobile output class for qtype_gapfill
+ * Mobile output class for qtype_YOURQTYPENAME
  *
- * @package    qtype_gapfill
- * @copyright  2018 Marcus Green
+ * @package    qtype_YOURQTYPENAME
+ * @copyright  2018 YOUR NAME
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace qtype_gapfill\output;
+namespace qtype_YOURQTYPENAME\output;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Mobile output class for gapfill question type
+ * Mobile output class for YOURQTYPENAME question type
  *
- * @package    qtype_gapfill
- * @copyright  2018 Marcus Green
+ * @package    qtype_YOURQTYPENAME
+ * @copyright  20XX YOUR NAME
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mobile {
 
     /**
-     * Returns the gapfill quetion type for the quiz the mobile app.
+     * Returns the YOURQTYPENAME quetion type for the quiz the mobile app.
      *
      * @return void
      */
-    public static function mobile_get_gapfill() {
+    public static function mobile_get_YOURQTYPENAME() {
         global $CFG;
-        $templatepath = $CFG->wwwroot . '/question/type/gapfill/mobile/addon-qtype-gapfill.html';
+        $templatepath = $CFG->wwwroot . '/question/type/YOURQTYPENAME/mobile/addon-qtype-YOURQTYPENAME.html';
         $template = file_get_contents($templatepath);
-        $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/javascript/mobile.js';
+        $jsfilepath = $CFG->wwwroot . '/question/type/YOURQTYPENAME/javascript/mobile.js';
         $jscontent = file_get_contents($jsfilepath);
         global $CFG;
         return [
