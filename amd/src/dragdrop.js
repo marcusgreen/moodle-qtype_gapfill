@@ -23,8 +23,8 @@
  */
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 /* global $ */
-/*eslint-disable no-unused-vars*/
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
+   /*eslint-disable no-unused-vars*/
     return {
         init: function() {
             $(".draggable").draggable({
