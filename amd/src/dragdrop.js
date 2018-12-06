@@ -21,9 +21,7 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/* This should be called script.js and go through the Moodle minify process but that seems to break it */
-/* global $ */
-// eslint-disable no-unused-vars
+/* eslint-disable no-unused-vars */
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
         init: function() {
