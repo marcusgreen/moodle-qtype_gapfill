@@ -21,8 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /* global $ */
-/* jshint unused:false*/
-
+/* jshint unused:vars */
 
 /* The data is stored in a hidden field */
 var settingsdata = ($("[name='itemsettings']").val());
