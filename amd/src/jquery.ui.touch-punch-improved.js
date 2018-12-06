@@ -87,21 +87,21 @@
 
         // Initialize the simulated mouse event using the touch event's coordinates
         simulatedEvent.initMouseEvent(
-            simulatedType,						// type
-            true,								// bubbles
-            true,								// cancelable
-            window,			  					// view
-            1,				   					// detail
-            event.screenX || touch.screenX,		// screenX
-            event.screenY || touch.screenY,		// screenY
-            event.clientX || coord.clientX,		// clientX
-            event.clientY || coord.clientY,		// clientY
-            false,			   					// ctrlKey
-            false,			  				 	// altKey
-            false,			  				 	// shiftKey
-            false,			   					// metaKey
-            0,				   					// button
-            null								// relatedTarget
+            simulatedType, // type
+            true, // bubbles
+            true, // cancelable
+            window, // view
+            1, // detail
+            event.screenX || touch.screenX, // screenX
+            event.screenY || touch.screenY, // screenY
+            event.clientX || coord.clientX, // clientX
+            event.clientY || coord.clientY, // clientY
+            false, // ctrlKey
+            false, // altKey
+            false, // shiftKey
+            false, // metaKey
+            0, // button
+            null // relatedTarget
         );
 
         // Dispatch the simulated event to the target element
