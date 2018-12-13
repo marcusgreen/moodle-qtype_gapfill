@@ -1,4 +1,4 @@
-### Version 1.975 of the Moodle Gapfill question type Sep 2018
+### Version 1.975 of the Moodle Gapfill question type Dec 2018
 Added a collection of sample english language questions in 
 examples\en\english_language.xml that can be imported.
 
