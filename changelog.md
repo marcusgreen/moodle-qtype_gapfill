@@ -3,9 +3,9 @@ Added a collection of sample english language questions in
 examples\en\english_language.xml that can be imported.
 
 Fixed an error message "Can not add jQuery plugins after starting page output!"
-That showed when the question type was used in simple lesson and debug output
-was turned on. This would probably shown in other modules that use the question 
-engine.
+That showed when the question type was used in simple lesson 
+https://moodle.org/plugins/mod_simplelesson
+and debug output was turned on. This would probably shown in other modules that use the question engine.
 
 Converted dragdrop.js to use amd modules, which is the standard 
 moodle way of handling javascript.  The utility admin/cli/check_database_schema.php 
