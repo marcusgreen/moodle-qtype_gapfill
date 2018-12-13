@@ -24,7 +24,7 @@ without his help I would not have been able to add this capability. Thanks to El
 for help with testing.
 
 ### Version 1.972 of the Moodle Gapfill question type May 2018
-Fixed a bug where correct answers were shown even thought it was turned off in the quiz settings checkbox.
+Fixed a bug where correct answers were shown even though it was turned off in the quiz settings checkbox.
 Thanks to Matthias Giger and contributors to the Moodle German language for reporting this. Fixed
 a bug introduced in the last release whereby the value of optionaftertext was not being saved. Thanks
 to Elton LaClare for reporting that. Additional PHPDocs, code standards compliance and confirmation that 
