@@ -3,7 +3,7 @@ Added a collection of sample english language questions in
 examples\en\english_language.xml that can be imported.
 
 The value for "show number of correct responses" checkbox on hints didn't do anything. That
-is now fixed. Mythanks to Dr Anna Stefaidou for reporting this. 
+is now fixed. My thanks to Dr Anna Stefaidou for reporting this. 
 
 Fixed an error message "Can not add jQuery plugins after starting page output!"
 That showed when the question type was used in simple lesson 
