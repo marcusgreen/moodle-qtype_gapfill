@@ -440,7 +440,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $numright++;
             }
         }
-        return [$numright,$this->gapcount];
+        return [$numright, $this->gapcount];
     }
 
     /**

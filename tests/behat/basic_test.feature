@@ -25,9 +25,13 @@ Feature: Test all the basic functionality of this Gapfill question type
       | Question name             | Gapfill-001                   |
       | Question text             | The cat [sat] on the [mat]    |
       | General feedback          | This is general feedback      |
-      | Hint 1                    | First hint                    |
-      | Hint 2                    | Second hint                   |
-
+      | Penalty for each incorrect try      | 0.3333333                              |
+      | Hint 1                              | Incorrect placements will be removed.  |
+      | id_hintclearwrong_0                 | 1                                      |
+      | id_hintshownumcorrect_0             | 1                                      |
+      | Hint 2                              | Incorrect placements will be removed.  |
+      | id_hintclearwrong_1                 | 0                                      |
+      | id_hintshownumcorrect_1             | 1                                      |
     Then I should see "Gapfill-001"
 
     When I click on "Edit" "link" in the "Gapfill-001" "table_row"
@@ -137,6 +141,11 @@ Feature: Test all the basic functionality of this Gapfill question type
 
     And I press "Check"
     And I should see "Your answer is partially correct."
+    
+    #This next line is shown because the box was checked in 
+    #the first hint for "Show the number of correct responses"
+    And I should see "You completed 1 gap correctly out of 2."
+    And I wait "2" seconds
 
     ################################################
     #second attempt
