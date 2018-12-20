@@ -141,8 +141,8 @@ Feature: Test all the basic functionality of this Gapfill question type
 
     And I press "Check"
     And I should see "Your answer is partially correct."
-    
-    #This next line is shown because the box was checked in 
+
+    #This next line is shown because the box was checked in
     #the first hint for "Show the number of correct responses"
     And I should see "You completed 1 gap correctly out of 2."
     And I wait "2" seconds
