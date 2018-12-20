@@ -137,7 +137,7 @@ Feature: Test all the basic functionality of this Gapfill question type
     #first attempt
     And I press "Start again with these options"
     And I type "sat" into gap "1" in the gapfill question
-    And I type "xxx" into gap "2" in the gapfill question
+    And I type "rugnotmat" into gap "2" in the gapfill question
 
     And I press "Check"
     And I should see "Your answer is partially correct."
@@ -150,6 +150,11 @@ Feature: Test all the basic functionality of this Gapfill question type
     ################################################
     #second attempt
     And I press "Try again"
+    
+    #confirm that the wrong response has been cleared (set within hints)
+    And I should not see "rugnotmat"
+    And I wait "2" seconds
+
     And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
 
