@@ -150,7 +150,7 @@ Feature: Test all the basic functionality of this Gapfill question type
     ################################################
     #second attempt
     And I press "Try again"
-    
+
     #confirm that the wrong response has been cleared (set within hints)
     And I should not see "rugnotmat"
     And I wait "2" seconds
