@@ -98,7 +98,7 @@ var result = {
         const answeroptions = div.querySelector('.answeroptions');
 
         if (div.querySelector('.readonly') !== null) {
-            this.question.readonly = true;
+            this.question.readOnly = true;
         }
         if (div.querySelector('.feedback') !== null) {
             this.question.feedback = div.querySelector('.feedback');
