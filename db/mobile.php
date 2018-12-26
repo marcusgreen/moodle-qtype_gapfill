@@ -31,7 +31,7 @@ $addons = [
                 'displaydata' => [
                     'title' => 'Gapfill question',
                     'icon' => '/question/type/gapfill/pix/icon.gif',
-                    'class' => '', 
+                    'class' => '',
                 ],
                 'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on).
                 'method' => 'mobile_get_gapfill',
