@@ -130,7 +130,7 @@ var result = {
             /* Set isdragdrop to true if it is a dragdrop question. This will then be used
             * in template.html to determine when to show the  blue "tap to select..." prompt
             */
-            if (div.querySelectorAll('.draggable') !== null) {
+            if (div.querySelectorAll('.draggable').legnth > 0 ) {
                 this.question.isdragdrop = true;
             }
             if (div.querySelector('#gapfill_optionsaftertext') !== null) {
