@@ -39,7 +39,7 @@ $addons = [
                     'mobile_get_gapfill' => [],
                 ], // Function needs caching for offline.
                 'styles' => [
-                    'url' => '/question/type/gapfill/styles_app.css',
+                    'url' => '/question/type/gapfill/mobile/styles_app.css',
                     'version' => '1.00'
                 ]
             ]

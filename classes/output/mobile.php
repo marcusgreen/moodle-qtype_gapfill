@@ -44,7 +44,7 @@ class mobile {
         global $CFG;
         $templatepath = $CFG->wwwroot . '/question/type/gapfill/mobile/addon-qtype-gapfill.html';
         $template = file_get_contents($templatepath);
-        $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/javascript/mobile.js';
+        $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/mobile/mobile.js';
         $jscontent = file_get_contents($jsfilepath);
         global $CFG;
         return [
