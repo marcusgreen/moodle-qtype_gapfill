@@ -46,7 +46,6 @@ class mobile {
         $template = file_get_contents($templatepath);
         $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/mobile/mobile.js';
         $jscontent = file_get_contents($jsfilepath);
-        global $CFG;
         return [
             'templates' => [
                 [

@@ -14,7 +14,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * support for the mdl35+ mobile app
+ * support for the mdl35+ mobile app. PHP calls this from within
+ * classes/output/mobile.php
  */
 /* jshint esversion: 6 */
 /* eslint-disable no-console */
