@@ -23,7 +23,6 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-global $CFG;
 $addons = [
     "qtype_gapfill" => [
         "handlers" => [ // Different places where the add-on will display content.
@@ -36,7 +35,7 @@ $addons = [
                 'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on).
                 'method' => 'mobile_get_gapfill',
                 'offlinefunctions' => [
-                    'mobile_get_gapfill' => [],
+                    'mobile_get_gapfill' => [],// function in classes/output/mobile.php
                 ], // Function needs caching for offline.
                 'styles' => [
                     'url' => '/question/type/gapfill/mobile/styles_app.css',
@@ -45,7 +44,7 @@ $addons = [
             ]
         ],
         'lang' => [
-                    ['pluginname', 'qtype_gapfill'],
+                    ['pluginname', 'qtype_gapfill'], // matching value in  lang/en/qtype_gapfill
         ],
     ]
 ];
