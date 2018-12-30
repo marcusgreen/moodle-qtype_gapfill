@@ -35,7 +35,7 @@ $addons = [
                 'delegate' => 'CoreQuestionDelegate', // Delegate (where to display the link to the add-on).
                 'method' => 'mobile_get_gapfill',
                 'offlinefunctions' => [
-                    'mobile_get_gapfill' => [],// function in classes/output/mobile.php
+                    'mobile_get_gapfill' => [], // function in classes/output/mobile.php
                 ], // Function needs caching for offline.
                 'styles' => [
                     'url' => '/question/type/gapfill/mobile/styles_app.css',
