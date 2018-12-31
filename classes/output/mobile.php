@@ -24,7 +24,6 @@
 
 namespace qtype_gapfill\output;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Mobile output class for gapfill question type
@@ -33,6 +32,8 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 class mobile {
 
     /**
@@ -42,18 +43,14 @@ class mobile {
      */
     public static function mobile_get_gapfill() {
         global $CFG;
-        $templatepath = $CFG->wwwroot . '/question/type/gapfill/mobile/addon-qtype-gapfill.html';
-        $template = file_get_contents($templatepath);
-        $jsfilepath = $CFG->wwwroot . '/question/type/gapfill/mobile/mobile.js';
-        $jscontent = file_get_contents($jsfilepath);
         return [
             'templates' => [
                 [
                     'id' => 'main',
-                    'html' => $template
-                ]
+                    'html' => file_get_contents($CFG->dirroot .'/question/type/gapfill/mobile/addon-qtype-gapfill.html')
+                    ]
             ],
-            'javascript' => $jscontent
+            'javascript' => file_get_contents($CFG->dirroot . '/question/type/gapfill/mobile/mobile.js')
         ];
     }
 }
