@@ -127,7 +127,7 @@ var result = {
         }
 
         // Wait for the DOM to be rendered.
-        setTimeout(() => {
+        setTimeout(()=> {
             /* Set isdragdrop to true if it is a dragdrop question. This will then be used
             * in template.html to determine when to show the  blue "tap to select..." prompt
             */

@@ -25,6 +25,9 @@
 namespace qtype_gapfill\output;
 
 
+
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Mobile output class for gapfill question type
  *
@@ -32,8 +35,6 @@ namespace qtype_gapfill\output;
  * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
-
 class mobile {
 
     /**
