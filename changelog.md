@@ -2,7 +2,8 @@
 Added a collection of sample english language questions in 
 examples\en\english_language.xml that can be imported.
 
-When using Adaptive question behaviour the gapfeedback was always for a correct answer. Thanks to Joseph Rézeau for reporting that.
+When using Adaptive question behaviour the gapfeedback was always for a correct answer. Thanks to Joseph Rézeau for reporting that. Joseph also helped with improving the straings that will
+help with translation.
 
 The value for "show number of correct responses" checkbox on hints didn't do anything. That is now fixed. My thanks to Dr Anna Stefaidou for reporting this. 
 
