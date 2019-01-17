@@ -2,6 +2,9 @@
 Added a collection of sample english language questions in 
 examples\en\english_language.xml that can be imported.
 
+Briefly tested with the Embed question filter
+https://moodle.org/plugins/filter_embedquestion
+
 When using Adaptive question behaviour the gapfeedback was always for a correct answer. Thanks to Joseph Rézeau for reporting that. Joseph also helped with improving the strings which will
 help with translation.
 
