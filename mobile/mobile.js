@@ -83,7 +83,7 @@ var result = {
             console.warn('Aborting because of no question received.');
             return that.CoreQuestionHelperProvider.showComponentError(that.onAbort);
         }
-        const div = document.createElement('div');
+        var div = document.createElement('div');
         div.innerHTML = this.question.html;
          // Get question questiontext.
         const questiontext = div.querySelector('.qtext');
