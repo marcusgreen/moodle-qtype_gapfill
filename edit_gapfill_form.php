@@ -63,9 +63,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('ui-css');
 
-        $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
+         $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'), 'qtype_gapfill');
-        $PAGE->requires->js('/question/type/gapfill/questionedit.js');
+        // $PAGE->requires->js('/question/type/gapfill/questionedit.js');
+
+        $contextid = $PAGE->context->id;
+        
+        $PAGE->requires->js_call_amd('qtype_gapfill/feedbackedit', 'init',['contextid'=>$contextid]);
+    
+
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
 
