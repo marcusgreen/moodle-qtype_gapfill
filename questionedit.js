@@ -237,8 +237,7 @@ function toArray(obj) {
 // Wrap the words of an element and child elements in a span.
 // Recurs over child elements, add an ID and class to the wrapping span.
 // Does not affect elements with no content, or those to be excluded.
-var wrapContent = (function() {
-    return function(el) {
+function wrapContent (el) {
         var count = 0;
         gaps = [];
         // If element provided, start there, otherwise use the body.
@@ -310,7 +309,6 @@ var wrapContent = (function() {
             }
         }
     };
-}());
 /**
  *
  * @param {array} source
