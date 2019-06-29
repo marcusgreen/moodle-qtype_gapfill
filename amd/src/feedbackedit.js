@@ -30,6 +30,97 @@ define(['jquery'], function($) {
             });
         }
     };
+
+/* The data is stored in a hidden field */
+var settingsdata = ($("[name='itemsettings']").val());
+
+var settings = [];
+var gaps = [];
+if (settingsdata > "") {
+    var obj = JSON.parse(settingsdata);
+    for (var o in obj) {
+        settings.push(obj[o]);
+    }
+}
+/**
+ *
+ * @param {string} text
+ * @param {string} delimitchars
+ */
+function Item(text, delimitchars) {
+    this.questionid = $("input[name=id]").val();
+    this.gaptext = text;
+    this.delimitchars = delimitchars;
+    /* The l and r is for left and right */
+    this.l = delimitchars.substr(0, 1);
+    this.r = delimitchars.substr(1, 1);
+    this.len = this.gaptext.length;
+    this.startchar = this.gaptext.substring(0, 1);
+    /* For checking if the end char is the right delimiter */
+    this.endchar = this.gaptext.substring(this.len - 1, this.len);
+    this.gaptextNodelim = '';
+    this.feedback = {};
+    this.instance = 0;
+    this.feedback.correct = $("#id_corecteditable").html();
+    this.feedback.incorrect = $("#id_incorrecteditable").html();
+    Item.prototype.striptags = function(gaptext) {
+        /* This is not a perfect way of stripping html but it may be good enough */
+        if (gaptext === undefined) {
+            return "";
+        }
+        var regex = /(<([^>]+)>)/ig;
+        return gaptext.replace(regex, "");
+    };
+    this.stripdelim = function() {
+        if (this.startchar === this.l) {
+            this.gaptextNodelim = this.gaptext.substring(1, this.len);
+        }
+        if (this.endchar === this.r) {
+            var len = this.gaptextNodelim.length;
+            this.gaptextNodelim = this.gaptextNodelim.substring(0, len - 1);
+        }
+        return this.gaptextNodelim;
+    };
+    var itemsettings = [];
+    Item.prototype.getItemSettings = function(target) {
+        var itemid = target.id;
+        var underscore = itemid.indexOf("_");
+        /* The instance, normally 0 but incremented if a gap has the same text as another
+         * instance is not currently used*/
+        this.instance = itemid.substr(underscore + 1);
+        for (var set in settings) {
+            text = this.stripdelim();
+            if (settings[set].gaptext === text) {
+                itemsettings = settings[set];
+            }
+        }
+        return itemsettings;
+    };
+    this.updateJson = function(e) {
+        var found = false;
+        var id = e.target.id;
+        for (var set in settings) {
+            if (settings[set].gaptext === this.stripdelim()) {
+                settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+                settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
+                found = true;
+            }
+        }
+        if (found === false) {
+            /* If there is no record for this word add one */
+            var itemsettings = {
+                itemid: id,
+                questionid: $("input[name=id]").val(),
+                correctfeedback: $("#id_correcteditable").html(),
+                incorrectfeedback: $("#id_incorrecteditable").html(),
+                gaptext: this.stripdelim()
+            };
+            settings.push(itemsettings);
+        }
+        return JSON.stringify(settings);
+    };
+}
+
     function setupcanvas(){
         debugger;
         if ($('#id_questiontexteditable').get(0).isContentEditable) {
@@ -56,7 +147,7 @@ define(['jquery'], function($) {
             $('#id_itemsettings_canvas').height($("#id_questiontexteditable").height());
             /* Disable the buttons on questiontext but not on the feedback form */
             /* wrapContent should be the last on this block as it sometimes falls over with an error */
-           // wrapContent($("#id_itemsettings_canvas")[0]);
+             wrapContent($("#id_itemsettings_canvas")[0]);
         } else{
             $("#id_questiontexteditable").css({display: "block", backgroundColor: "white"});
             $("#id_questiontexteditable").attr('contenteditable', 'true');
@@ -68,6 +159,95 @@ define(['jquery'], function($) {
         }
         
     }
+/**
+ * Convert an object to an array
+ * @param {object} obj
+ * @return {array}
+ */
+function toArray(obj) {
+    var arr = [];
+    for (var i = 0, iLen = obj.length; i < iLen; i++) {
+        arr.push(obj[i]);
+    }
+    return arr;
+}
+// Wrap the words of an element and child elements in a span.
+// Recurs over child elements, add an ID and class to the wrapping span.
+// Does not affect elements with no content, or those to be excluded.
+function wrapContent (el) {
+    debugger;
+        var count = 0;
+        gaps = [];
+        // If element provided, start there, otherwise use the body.
+        el = el && el.parentNode ? el : document.body;
+        // Get all child nodes as a static array.
+        var node,
+        nodes = toArray(el.childNodes);
+        if (el.id === "id_questiontextfeedback" && (count > 0)) {
+            count = 0;
+        }
+        var frag, text;
+        var delimitchars = $("#id_delimitchars").val();
+        var l = delimitchars.substring(0, 1);
+        var r = delimitchars.substring(1, 2);
+        var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
+        var sp,
+        span = document.createElement('span');
+        // Tag names of elements to skip, there are more to add.
+        var skip = {'script': '', 'button': '', 'input': '', 'select': '',
+            'textarea': '', 'option': ''};
+        // For each child node...
+        for (var i = 0, iLen = nodes.length; i < iLen; i++) {
+            node = nodes[i];
+            // If it's an element, call wrapContent.
+            if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
+                wrapContent(node);
+                // If it's a text node, wrap words.
+            } else if (node.nodeType === 3) {
+                var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
+                text = node.data.split(textsplit);
+                if (text) {
+                    // Create a fragment, handy suckers these.
+                    frag = document.createDocumentFragment();
+                    for (var j = 0, jLen = text.length; j < jLen; j++) {
+                        // If not whitespace, wrap it and append to the fragment.
+                        if (regex.test(text[j])) {
+                            sp = span.cloneNode(false);
+                            count++;
+                            sp.className = 'item';
+                            var item = new Item(text[j], $("#id_delimitchars").val());
+                            if (item.gaptext > '') {
+                                var instance = 0;
+                                for (var k = 0; k < gaps.length; ++k) {
+                                    if (gaps[k] === item.text) {
+                                        instance++;
+                                    }
+                                }
+                                item.id = 'id' + count + '_' + instance;
+                                sp.id = item.id;
+                                var is = item.getItemSettings(item);
+                                if (item.striptags(is.correctfeedback) > "") {
+                                    sp.className = 'hascorrect';
+                                }
+                                if (item.striptags(is.incorrectfeedback) > "") {
+                                    sp.className = sp.className + " " + 'hasnocorrect';
+                                }
+                                gaps.push(item.gaptext);
+                            }
+                            sp.appendChild(document.createTextNode(text[j]));
+                            frag.appendChild(sp);
+                            // Otherwise, just append it to the fragment.
+                        } else {
+                            frag.appendChild(document.createTextNode(text[j]));
+                        }
+                    }
+                }
+                // Replace the original node with the fragment.
+                node.parentNode.replaceChild(frag, node);
+            }
+        }
+    };
+    
 /**
  *
  * @param {array} source

@@ -238,6 +238,83 @@ function toArray(obj) {
 // Recurs over child elements, add an ID and class to the wrapping span.
 // Does not affect elements with no content, or those to be excluded.
 function wrapContent (el) {
+    debugger;
+        var count = 0;
+        gaps = [];
+        // If element provided, start there, otherwise use the body.
+        el = el && el.parentNode ? el : document.body;
+        // Get all child nodes as a static array.
+        var node,
+        nodes = toArray(el.childNodes);
+        if (el.id === "id_questiontextfeedback" && (count > 0)) {
+            count = 0;
+        }
+        var frag, text;
+        var delimitchars = $("#id_delimitchars").val();
+        var l = delimitchars.substring(0, 1);
+        var r = delimitchars.substring(1, 2);
+        var regex = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
+        var sp,
+        span = document.createElement('span');
+        // Tag names of elements to skip, there are more to add.
+        var skip = {'script': '', 'button': '', 'input': '', 'select': '',
+            'textarea': '', 'option': ''};
+        // For each child node...
+        for (var i = 0, iLen = nodes.length; i < iLen; i++) {
+            node = nodes[i];
+            // If it's an element, call wrapContent.
+            if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
+                wrapContent(node);
+                // If it's a text node, wrap words.
+            } else if (node.nodeType === 3) {
+                var textsplit = new RegExp("(\\" + l + ".*?\\" + r + ")", "g");
+                text = node.data.split(textsplit);
+                if (text) {
+                    // Create a fragment, handy suckers these.
+                    frag = document.createDocumentFragment();
+                    for (var j = 0, jLen = text.length; j < jLen; j++) {
+                        // If not whitespace, wrap it and append to the fragment.
+                        if (regex.test(text[j])) {
+                            sp = span.cloneNode(false);
+                            count++;
+                            sp.className = 'item';
+                            var item = new Item(text[j], $("#id_delimitchars").val());
+                            if (item.gaptext > '') {
+                                var instance = 0;
+                                for (var k = 0; k < gaps.length; ++k) {
+                                    if (gaps[k] === item.text) {
+                                        instance++;
+                                    }
+                                }
+                                item.id = 'id' + count + '_' + instance;
+                                sp.id = item.id;
+                                var is = item.getItemSettings(item);
+                                if (item.striptags(is.correctfeedback) > "") {
+                                    sp.className = 'hascorrect';
+                                }
+                                if (item.striptags(is.incorrectfeedback) > "") {
+                                    sp.className = sp.className + " " + 'hasnocorrect';
+                                }
+                                gaps.push(item.gaptext);
+                            }
+                            sp.appendChild(document.createTextNode(text[j]));
+                            frag.appendChild(sp);
+                            // Otherwise, just append it to the fragment.
+                        } else {
+                            frag.appendChild(document.createTextNode(text[j]));
+                        }
+                    }
+                }
+                // Replace the original node with the fragment.
+                node.parentNode.replaceChild(frag, node);
+            }
+        }
+    };
+    // Wrap the words of an element and child elements in a span.
+// Recurs over child elements, add an ID and class to the wrapping span.
+// Does not affect elements with no content, or those to be excluded.
+function wrapContent (el) {
+    debugger;
         var count = 0;
         gaps = [];
         // If element provided, start there, otherwise use the body.
