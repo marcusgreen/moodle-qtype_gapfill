@@ -21,12 +21,39 @@
  * @copyright  2019 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery'], function($) {
+define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragment,DialogInfo) {
 
     return {
-        init: function() {
-            $("#id_itemsettings_button").on("click", function() {
-                setupcanvas();
+        init: function(contextid) {
+                 /* make repeat elements work with fragments
+                https://tracker.moodle.org/browse/MDL-63685
+                */
+               var modalCreateFeedback = new DialogInfo('', '', null, false, false, contextid);
+               var loadFormFragment = function(repeat) {
+                   var params = { 'repeat': repeat };
+                   Fragment.loadFragment("qtype_gapfill", "feedbackedit", contextid, params).then(function(html, js) {
+                       modalCreateFeedback.show('Create feedback',
+                           '<div id="createFeedback">' +
+                           html + '</div>',
+                           '<div id="creatFeedbackDialogFooter"></div>', true);
+                       runJS(js);
+
+                   });
+               };
+               var runJS = function(source) {
+                if (source.trim() !== '') {
+                    var newscript = $('<script>').attr('type', 'text/javascript').html(source);
+                    $('head').append(newscript);
+                }
+            };
+            $('body').on('click', '#item_feedback #id_extended_feedback', function(e) {
+                e.preventDefault();
+                loadFormFragment(true);
+            });
+            $("#id_itemsettings_button").on("click", function(e) {
+                e.preventDefault();
+
+                setupcanvas(loadFormFragment);
             });
         }
     };
@@ -121,16 +148,18 @@ function Item(text, delimitchars) {
     };
 }
 
-    function setupcanvas(){
-        debugger;
+    function setupcanvas(loadFormFragment){
         if ($('#id_questiontexteditable').get(0).isContentEditable) {
             $("#id_questiontexteditable").attr('contenteditable', 'false');
             $("#fitem_id_questiontext").find('button').attr("disabled", 'true');
             var settingformheight = $("#id_questiontexteditable").css("height");
             var settingformwidth = $("#id_questiontexteditable").css("width");
             $("#id_questiontexteditable").css("display", 'none');
-            /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
-            $('#id_itemsettings_canvas').css(copyStyles($("#id_questiontexteditable")));
+            $('#id_itemsettings_canvas').css('padding-top','6px');
+            $('#id_itemsettings_canvas').css('padding-bottom','6px');
+            $('#id_itemsettings_canvas').css('padding-right','12px');
+            $('#id_itemsettings_canvas').css('padding-left','12px');
+
             var ed = $("#id_questiontexteditable").closest(".editor_atto_content_wrap");
             $("#id_itemsettings_canvas").appendTo(ed).css("position", "relative");
             $("#id_itemsettings_canvas").css({
@@ -157,8 +186,41 @@ function Item(text, delimitchars) {
             $("#id_itemsettings_button").html(M.util.get_string("additemsettings", "qtype_gapfill"));
             $('[class^=atto_]').removeAttr("disabled");
         }
-        
+        $("#id_itemsettings_canvas").on("click", function(e) {
+            canvasClick(e,loadFormFragment);
+        });
+
     }
+
+    /* A click on the text */
+function canvasClick(e,loadFormFragment){
+    /*
+     * Questiontext needs to be edditable and the target must start
+     * with id followed by one or more digits and an underscore
+     * */
+    if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
+        var delimitchars = $("#id_delimitchars").val();
+        var item = new Item(e.target.innerHTML, delimitchars);
+        var itemsettings = item.getItemSettings(e.target);
+        if (itemsettings === null || itemsettings.length === 0) {
+            $("#id_correcteditable").html('');
+            $("#id_incorrecteditable").html('');
+        } else {
+            $("#id_correcteditable").html(itemsettings.correctfeedback);
+            $("#id_incorrecteditable").html(itemsettings.incorrectfeedback);
+        }
+        $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
+        $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));
+        $('#id_itemsettings_popup .atto_image_button').attr("disabled", 'true');
+        $('#id_itemsettings_popup .atto_media_button').attr("disabled", 'true');
+        $('#id_itemsettings_popup .atto_managefiles_button').attr("disabled", 'true');
+        var title = M.util.get_string("additemsettings", "qtype_gapfill");
+        /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
+        title += ': ' + $("<div/>").html(item.stripdelim()).text();
+        loadFormFragment(true);
+
+    }
+};
 /**
  * Convert an object to an array
  * @param {object} obj
@@ -175,7 +237,6 @@ function toArray(obj) {
 // Recurs over child elements, add an ID and class to the wrapping span.
 // Does not affect elements with no content, or those to be excluded.
 function wrapContent (el) {
-    debugger;
         var count = 0;
         gaps = [];
         // If element provided, start there, otherwise use the body.
@@ -254,6 +315,9 @@ function wrapContent (el) {
  * @return {array} product
  */
 function copyStyles(source) {
+    debugger;
+    let css = document.defaultView.getComputedStyle($("#id_questiontexteditable")[0]);
+
     // The map to return with requested styles and values as KVP.
     var product = {};
     // The style object from the DOM element we need to iterate through.
@@ -293,6 +357,7 @@ function copyStyles(source) {
                     }
                 }
             }
+            debugger;
             return product;
         }
     }

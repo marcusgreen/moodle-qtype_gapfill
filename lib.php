@@ -42,3 +42,49 @@ function qtype_gapfill_pluginfile($course, $cm, $context, $filearea, $args, $for
     require_once($CFG->libdir . '/questionlib.php');
     question_pluginfile($course, $context, 'qtype_gapfill', $filearea, $args, $forcedownload, $options);
 }
+class feedback_form extends \moodleform {
+    //Add elements to form
+    public function definition() {
+ 
+        $mform = $this->_form; 
+        $formdata = $this->_customdata;
+        $mform->addElement('html','<div id="item_feedback">');
+
+        $mform->addElement('editor', 'correct', 'Correct', ['rows' => 4,'cols'=>50],'Correct', $this->editoroptions);
+        $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 4,'cols'=>50], $this->editoroptions);
+
+        $repeatarray = [];
+        $repeatarray[] = $mform->createElement('text','response','Response',['size'=>50]);
+        $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>2,'cols'=>50]);
+        $repeateloptions = [];
+        $START_REPETITIONS = 1;
+        $this->repeat_elements($repeatarray, $START_REPETITIONS,
+            $repeateloptions, 'extended_feedback_repeats', 'add_fields', 1, null, true);
+        $this->add_action_buttons();
+        $mform->addElement('html','</div>');
+
+    }
+    //Custom validation should be added here
+    function validation($data, $files) {
+        return array();
+    }
+}
+
+
+function qtype_gapfill_output_fragment_feedbackedit($args) {
+    global $PAGE;
+
+    $formdata = [];
+    if (!empty($args['jsonformdata'])) {
+        $serialiseddata = json_decode($args['jsonformdata']);
+        parse_str($serialiseddata, $formdata);
+    }
+
+    $mform= new feedback_form(null,$formdata,'post','',null,true,$formdata);
+    
+    if($mform->get_data()){
+        return;
+    }
+    return $mform->render();
+
+}
