@@ -81,11 +81,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setType('itemsettings', PARAM_RAW);
 
         /* popup for entering feedback for individual words */
-        $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
-                . '" style="display:none;background-color:lightgrey" >');
-        $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
-        $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
-        $mform->addElement('html', '</div>');
+        // $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
+        //         . '" style="display:none;background-color:lightgrey" >');
+        // $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+        // $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4), $this->editoroptions);
+        // $mform->addElement('html', '</div>');
 
         /* presented for clicking on the gaps once they have been given numberical ids */
         $mform->addElement('html',

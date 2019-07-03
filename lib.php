@@ -19,10 +19,12 @@
  *
  * @since      3.5
  * @package    qtype_gapfill
- * @copyright  Marcus Green 2018
+ * @copyright  Marcus Green 2019
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
+
+require_once $CFG->libdir.'/formslib.php';
 
 /**
  * Checks file access for gapfill  questions.
@@ -38,18 +40,19 @@ defined('MOODLE_INTERNAL') || die();
  *
  */
 function qtype_gapfill_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    global $DB, $CFG;
+    global $CFG;
     require_once($CFG->libdir . '/questionlib.php');
     question_pluginfile($course, $context, 'qtype_gapfill', $filearea, $args, $forcedownload, $options);
 }
-class feedback_form extends \moodleform {
+/**
+ *   popup for entering feedback for individual gaps 
+ */
+class gapfill_feedback_form extends moodleform {
     //Add elements to form
     public function definition() {
  
         $mform = $this->_form; 
-        $formdata = $this->_customdata;
-        $mform->addElement('html','<div id="item_feedback">');
-
+        $this->editoroptions =[];
         $mform->addElement('editor', 'correct', 'Correct', ['rows' => 4,'cols'=>50],'Correct', $this->editoroptions);
         $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 4,'cols'=>50], $this->editoroptions);
 
@@ -61,7 +64,7 @@ class feedback_form extends \moodleform {
         $this->repeat_elements($repeatarray, $START_REPETITIONS,
             $repeateloptions, 'extended_feedback_repeats', 'add_fields', 1, null, true);
         $this->add_action_buttons();
-        $mform->addElement('html','</div>');
+      //  $mform->addElement('html','</div>');
 
     }
     //Custom validation should be added here
@@ -72,7 +75,6 @@ class feedback_form extends \moodleform {
 
 
 function qtype_gapfill_output_fragment_feedbackedit($args) {
-    global $PAGE;
 
     $formdata = [];
     if (!empty($args['jsonformdata'])) {
@@ -80,7 +82,7 @@ function qtype_gapfill_output_fragment_feedbackedit($args) {
         parse_str($serialiseddata, $formdata);
     }
 
-    $mform= new feedback_form(null,$formdata,'post','',null,true,$formdata);
+    $mform= new gapfill_feedback_form(null,$formdata,'post','',null,true,$formdata);
     
     if($mform->get_data()){
         return;
