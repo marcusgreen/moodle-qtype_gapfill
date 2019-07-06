@@ -55,8 +55,8 @@ class gapfill_feedback_form extends moodleform {
         $item = json_decode($this->_customdata['item']);
         $this->editoroptions =[];
         $mform->addElement('editor', 'correct', 'Correct', ['rows' => 2,'cols'=>50],'Correct', $this->editoroptions);
-        $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 2,'cols'=>50], $this->editoroptions);
-
+        $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 2,'cols'=>50],$this->editoroptions);
+        $mform->setDefault('incorrect',['text' => $item->feedback->incorrect, 'format' => FORMAT_HTML]);
         $repeatarray = [];
         $repeatarray[] = $mform->createElement('text','response','Response',['size'=>50]);
         $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>2,'cols'=>50]);

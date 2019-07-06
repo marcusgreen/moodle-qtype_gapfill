@@ -65,8 +65,10 @@ define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragm
         }
     };
 
+
+function get_settingsdata(){
 /* The data is stored in a hidden field */
- var settingsdata = ($("[name='itemsettings']").val());
+var settingsdata = ($("[name='itemsettings']").val());
 
 var settings = [];
 var gaps = [];
@@ -75,6 +77,8 @@ if (settingsdata > "") {
     for (var o in obj) {
         settings.push(obj[o]);
     }
+}
+return settings;
 }
 /**
  *
@@ -123,6 +127,8 @@ function Item(text, delimitchars,event) {
         /* The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
+        debugger;
+        settings =get_settingsdata()
         for (var set in settings) {
             text = this.stripdelim();
             if (settings[set].gaptext === text) {
@@ -134,6 +140,7 @@ function Item(text, delimitchars,event) {
     this.updateJson = function(e) {
         var found = false;
         var id = e.id;
+        var settings = [];
         for (var set in settings) {
             if (settings[set].gaptext === this.stripdelim()) {
                 settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;

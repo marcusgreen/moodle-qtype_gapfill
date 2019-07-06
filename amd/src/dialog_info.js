@@ -44,6 +44,7 @@ define(
                 if (target.attr('name') === 'submitbutton') {
                     debugger;
                     var JSONstr = this.item.updateJson(this.item.event.target);
+                    $("#id_itemsettings").val(JSONstr); 
                     this.hide();
                 }
     
