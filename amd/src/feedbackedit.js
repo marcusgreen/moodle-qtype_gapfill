@@ -29,8 +29,15 @@ define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragm
                 https://tracker.moodle.org/browse/MDL-63685
                 */
                var modalCreateFeedback = new DialogInfo('', '', null, false, false, contextid);
-               var loadFormFragment = function(repeat) {
-                   var params = { 'repeat': repeat };
+               var loadFormFragment = function(repeat,item) {
+                   debugger;
+                   /* item gets passed in via LoadFragment so this should not be necessary */
+                   modalCreateFeedback.setItem(item);
+                   var params = { 
+                       'repeat': repeat,
+                       'item': JSON.stringify(item)
+                    };
+                
                    Fragment.loadFragment("qtype_gapfill", "feedbackedit", contextid, params).then(function(html, js) {
                        modalCreateFeedback.show('Create feedback',
                            '<div id="createFeedback">' +
@@ -59,7 +66,7 @@ define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragm
     };
 
 /* The data is stored in a hidden field */
-var settingsdata = ($("[name='itemsettings']").val());
+ var settingsdata = ($("[name='itemsettings']").val());
 
 var settings = [];
 var gaps = [];
@@ -74,7 +81,8 @@ if (settingsdata > "") {
  * @param {string} text
  * @param {string} delimitchars
  */
-function Item(text, delimitchars) {
+function Item(text, delimitchars,event) {
+    this.event = event;
     this.questionid = $("input[name=id]").val();
     this.gaptext = text;
     this.delimitchars = delimitchars;
@@ -125,7 +133,7 @@ function Item(text, delimitchars) {
     };
     this.updateJson = function(e) {
         var found = false;
-        var id = e.target.id;
+        var id = e.id;
         for (var set in settings) {
             if (settings[set].gaptext === this.stripdelim()) {
                 settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
@@ -200,7 +208,7 @@ function canvasClick(e,loadFormFragment){
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
-        var item = new Item(e.target.innerHTML, delimitchars);
+        var item = new Item(e.target.innerHTML, delimitchars,e);
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
@@ -217,7 +225,8 @@ function canvasClick(e,loadFormFragment){
         var title = M.util.get_string("additemsettings", "qtype_gapfill");
         /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
         title += ': ' + $("<div/>").html(item.stripdelim()).text();
-        loadFormFragment(true);
+        debugger;
+        loadFormFragment(true,item);
 
     }
 };
@@ -276,7 +285,7 @@ function wrapContent (el) {
                             sp = span.cloneNode(false);
                             count++;
                             sp.className = 'item';
-                            var item = new Item(text[j], $("#id_delimitchars").val());
+                            var item = new Item(text[j], $("#id_delimitchars").val(),el);
                             if (item.gaptext > '') {
                                 var instance = 0;
                                 for (var k = 0; k < gaps.length; ++k) {

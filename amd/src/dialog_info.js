@@ -2,7 +2,9 @@ define(
     [
         'jquery',
         'core/modal_factory',
-        'core/fragment'
+        'core/fragment',
+        'core/modal_events',
+
     ],
     /**
      * A general purpose info dialog - makes it easy to show and hide a reusable dialog.
@@ -10,40 +12,47 @@ define(
      * @param ModalFactory
      * @returns {dialogInfo}
      */
-    function($, ModalFactory, Fragment) {
+    function($, ModalFactory, Fragment, ModalEvents) {
         var dialogNumber = 0;
 
         return function DialogInfo(title, bodyHTML, footerHTML, large, autoShow, contextid) {
             this.contextId = contextid;
+            this.item ={};
+            this.e = null;
             DialogInfo.prototype.setupFormModal = function(modal) {
                 this.modal.getRoot().on('click', 'form input[type=submit]', this.submitButton.bind(this));
                 this.modal.getRoot().on('submit', 'form', this.submitFormAjax.bind(this));
-
+            }
+            DialogInfo.prototype.setItem = function(item){
+                this.item=item;
+            }
+            DialogInfo.prototype.setTrget = function(e){
+                this.e=e;
             }
 
             DialogInfo.prototype.submitButton = function(e) {
                 var form = this.modal.getRoot().find('form'),
                     target = $(e.target);
-                debugger;
                 if (target.attr('name') === 'add_fields') {
-                    // $repeats = $('[name$="extended_feedback_repeats"]').val();
-                    // $('[name$="extended_feedback_repeats"]').val(+$repeats + 1);
                     var formData = form.serialize();
                     formData = formData + '&' + encodeURIComponent(target.attr('name')) + '=' + encodeURIComponent(target.attr('value'));
                     this.modal.setBody(this.getBody(formData)); // loads fragment only, without form submission.
-                    // } else {
-                    //     this.submitFormAjax(e); // does the full submission
-                    // }
                 }
+                if (target.attr('name') === 'cancel') {
+                    self.modal.hide();
+                }
+                if (target.attr('name') === 'submitbutton') {
+                    debugger;
+                    var JSONstr = this.item.updateJson(this.item.event.target);
+                    this.hide();
+                }
+    
             }
             DialogInfo.prototype.getBody = function(formdata) {
-
                 var params = null;
                 if (typeof formdata !== "undefined") {
                     params = { jsonformdata: JSON.stringify(formdata) };
                 }
-                // Get the content of the modal.
-                debugger;
                 return Fragment.loadFragment("qtype_wordselect", "feedbackedit", this.contextId, params);
             };
 
@@ -52,7 +61,7 @@ define(
                 e.preventDefault();
                 debugger;
                 // Convert all the form elements values to a serialised string.
-                var formData = this.modal.getRoot().find('form').serialize();
+               // var formData = this.modal.getRoot().find('form').serialize();
 
             }
             var self = this;
@@ -69,6 +78,7 @@ define(
 
                 if (this.dialogIds.indexOf(this.dialogNum) === -1) {
                     $('body').on('click', '#' + okId, function() {
+                        debugger;
                         self.modal.hide();
                     });
                 }

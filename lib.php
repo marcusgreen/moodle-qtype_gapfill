@@ -52,9 +52,10 @@ class gapfill_feedback_form extends moodleform {
     public function definition() {
  
         $mform = $this->_form; 
+        $item = json_decode($this->_customdata['item']);
         $this->editoroptions =[];
-        $mform->addElement('editor', 'correct', 'Correct', ['rows' => 4,'cols'=>50],'Correct', $this->editoroptions);
-        $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 4,'cols'=>50], $this->editoroptions);
+        $mform->addElement('editor', 'correct', 'Correct', ['rows' => 2,'cols'=>50],'Correct', $this->editoroptions);
+        $mform->addElement('editor', 'incorrect', 'Incorrect', ['rows' => 2,'cols'=>50], $this->editoroptions);
 
         $repeatarray = [];
         $repeatarray[] = $mform->createElement('text','response','Response',['size'=>50]);
@@ -77,12 +78,11 @@ class gapfill_feedback_form extends moodleform {
 function qtype_gapfill_output_fragment_feedbackedit($args) {
 
     $formdata = [];
-    if (!empty($args['jsonformdata'])) {
-        $serialiseddata = json_decode($args['jsonformdata']);
-        parse_str($serialiseddata, $formdata);
-    }
-
-    $mform= new gapfill_feedback_form(null,$formdata,'post','',null,true,$formdata);
+     if (!empty($args['jsonformdata'])) {
+         $serialiseddata = json_decode($args['jsonformdata']);
+         parse_str($serialiseddata, $formdata);
+     }
+    $mform= new gapfill_feedback_form(null,$args,'post','',null,true,$formdata);
     
     if($mform->get_data()){
         return;
