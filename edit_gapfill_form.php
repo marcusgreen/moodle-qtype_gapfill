@@ -65,7 +65,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
          $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'), 'qtype_gapfill');
-        // $PAGE->requires->js('/question/type/gapfill/questionedit.js');
+       //  $PAGE->requires->js('/question/type/gapfill/questionedit.js');
 
         $contextid = $PAGE->context->id;
         
@@ -83,10 +83,11 @@ class qtype_gapfill_edit_form extends question_edit_form {
         /* popup for entering feedback for individual words */
 
 
+
         /* presented for clicking on the gaps once they have been given numberical ids */
         $mform->addElement('html',
          '<div class="gapfill" id="id_itemsettings_canvas" style="display:none;background-color:lightgrey" ></div>');
-
+		$editoroptions['data-placeholder'] = 'This is placeholder text';
         $mform->addElement('html', '<div id="questiontext" >');
         $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), array('rows' => 10),
                 $this->editoroptions);

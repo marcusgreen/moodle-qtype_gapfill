@@ -100,7 +100,7 @@ function Item(text, delimitchars,event) {
     this.gaptextNodelim = '';
     this.feedback = {};
     this.instance = 0;
-    this.feedback.correct = $("#id_corecteditable").html();
+    this.feedback.correct = $("#id_correcteditable").html();
     this.feedback.incorrect = $("#id_incorrecteditable").html();
     Item.prototype.striptags = function(gaptext) {
         /* This is not a perfect way of stripping html but it may be good enough */
