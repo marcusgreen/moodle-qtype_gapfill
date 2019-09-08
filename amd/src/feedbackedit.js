@@ -68,17 +68,12 @@ define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragm
 
 function get_settingsdata(){
 /* The data is stored in a hidden field */
-var settingsdata = ($("[name='itemsettings']").val());
-
-var settings = [];
-var gaps = [];
-if (settingsdata > "") {
-    var obj = JSON.parse(settingsdata);
-    for (var o in obj) {
-        settings.push(obj[o]);
-    }
+var settings = ($("[name='itemsettings']").val());
+if(settings >""){
+    return JSON.parse(settings)[0];
+}else{
+    return {};
 }
-return settings;
 }
 /**
  *
@@ -100,9 +95,19 @@ function Item(text, delimitchars,event) {
     this.gaptextNodelim = '';
     this.feedback = {};
     this.instance = 0;
-    this.feedback.correct = $("#id_correcteditable").html();
-    this.feedback.incorrect = $("#id_incorrecteditable").html();
-    Item.prototype.striptags = function(gaptext) {
+    this.settings = get_settingsdata();
+    for (var set in this.settings) {
+    if (set.indexOf('feedback') !== -1) {
+        this.feedback[set] = this.settings[set];
+        //         settings[set]['feedback'].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+        //         settings[set]['feedback'].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
+        //         found = true;
+           }
+     }
+
+  //  this.feedback.correct = $("#id_correcteditable").html();
+  //  this.feedback.incorrect = $("#id_incorrecteditable").html();
+  Item.prototype.striptags = function(gaptext) {
         /* This is not a perfect way of stripping html but it may be good enough */
         if (gaptext === undefined) {
             return "";
@@ -120,6 +125,7 @@ function Item(text, delimitchars,event) {
         }
         return this.gaptextNodelim;
     };
+
     var itemsettings = [];
     Item.prototype.getItemSettings = function(target) {
         var itemid = target.id;
@@ -127,12 +133,14 @@ function Item(text, delimitchars,event) {
         /* The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
-        debugger;
-        settings =get_settingsdata()
-        for (var set in settings) {
+        //settings =get_settingsdata()
+        itemsettings['correctfeedback']='';
+        itemsettings['incorrectfeedback']='';
+
+        for (var set in this.settings) {
             text = this.stripdelim();
-            if (settings[set].gaptext === text) {
-                itemsettings = settings[set];
+            if (this.settings[set].gaptext === text) {
+                itemsettings = this.settings[set];
             }
         }
         return itemsettings;
@@ -141,13 +149,13 @@ function Item(text, delimitchars,event) {
         var found = false;
         var id = e.id;
         var settings = [];
-        for (var set in settings) {
-            if (settings[set].gaptext === this.stripdelim()) {
-                settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
-                settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
-                found = true;
-            }
-        }
+        // for (var set in settings) {
+        //     if (settings[set].gaptext === this.stripdelim()) {
+        //         settings[set]['feedback'].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+        //         settings[set]['feedback'].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
+        //         found = true;
+        //     }
+        // }
         if (found === false) {
             /* If there is no record for this word add one */
             var itemsettings = {
@@ -207,7 +215,7 @@ function Item(text, delimitchars,event) {
 
     }
 
-    /* A click on the text */
+/* A click on the text */
 function canvasClick(e,loadFormFragment){
     /*
      * Questiontext needs to be edditable and the target must start
@@ -216,13 +224,15 @@ function canvasClick(e,loadFormFragment){
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML, delimitchars,e);
+        debugger;
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
-            $("#id_correcteditable").html('');
-            $("#id_incorrecteditable").html('');
-        } else {
-            $("#id_correcteditable").html(itemsettings.correctfeedback);
-            $("#id_incorrecteditable").html(itemsettings.incorrectfeedback);
+            
+        //     $("#id_correcteditable").html('');
+        //     $("#id_incorrecteditable").html('');
+        // } else {
+        //     $("#id_correcteditable").html(itemsettings.correctfeedback);
+        //     $("#id_incorrecteditable").html(itemsettings.incorrectfeedback);
         }
         $("label[for*='id_correct']").text(M.util.get_string("correct", "qtype_gapfill"));
         $("label[for*='id_incorrect']").text(M.util.get_string("incorrect", "qtype_gapfill"));

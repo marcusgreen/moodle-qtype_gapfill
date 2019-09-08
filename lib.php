@@ -50,33 +50,34 @@ function qtype_gapfill_pluginfile($course, $cm, $context, $filearea, $args, $for
 class gapfill_feedback_form extends moodleform {
     //Add elements to form
     public function definition() {
- 
+      
         $mform = $this->_form; 
         $item = json_decode($this->_customdata['item']);
+ 
         $this->editoroptions =[];
-        $mform->addElement('editor', 
+        $mform->addElement(
+        'editor', 
         'correct', 
-        'Correct', 
-        ['rows' => 2,'cols'=>50],
+        get_string('correct','qtype_gapfill'), 
+         ['rows' => 1,'cols'=>50],
         'Correct',
-         $this->editoroptions)->setValue(['text'=>$item->feedback->correct]);
+         ['autosave'=>false])->setValue(['text'=>$item->feedback->correctfeedback]);
 
-        $mform->addElement('editor', 
+        $mform->addElement(
+        'editor', 
         'incorrect', 
-        'Incorrect', 
-        ['rows' => 2,'cols'=>50],
-        $this->editoroptions)->setValue(['text'=>$item->feedback->incorrect]);
+        get_string('incorrect','qtype_gapfill'), 
+        ['rows' => 1,'cols'=>50,],
+        ['autosave'=>false])->setValue(['text'=>$item->feedback->incorrectfeedback]);
 
-   // $mform->setDefault('incorrect',['text' => $item->feedback->incorrect, 'format' => FORMAT_HTML]);
         $repeatarray = [];
         $repeatarray[] = $mform->createElement('text','response','Response',['size'=>50]);
-        $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>2,'cols'=>50]);
+        $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>1,'cols'=>50]);
         $repeateloptions = [];
         $START_REPETITIONS = 1;
         $this->repeat_elements($repeatarray, $START_REPETITIONS,
             $repeateloptions, 'extended_feedback_repeats', 'add_fields', 1, null, true);
         $this->add_action_buttons();
-      //  $mform->addElement('html','</div>');
 
     }
     //Custom validation should be added here
