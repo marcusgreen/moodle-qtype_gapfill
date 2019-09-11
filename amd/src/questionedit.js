@@ -27,10 +27,10 @@
 define(['jquery'], function($) {
     return {
         init: function() {
-var settingsdata = ($("[name='itemsettings']").val());
 
 function get_settings() {
   var settings = [];
+  var settingsdata = ($("[name='itemsettings']").val());
   if (settingsdata > "") {
     var obj = JSON.parse(settingsdata);
     for (var o in obj) {
@@ -182,6 +182,7 @@ $("#id_itemsettings_canvas").on("click", function(e) {
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
         var item = new Item(e.target.innerHTML, delimitchars);
+        debugger;
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
