@@ -42,7 +42,6 @@ define(
                     self.modal.hide();
                 }
                 if (target.attr('name') === 'submitbutton') {
-                    debugger;
                     var JSONstr = this.item.updateJson(this.item.event.target);
                     //write data back to hidden field
                     $("#id_itemsettings").val(JSONstr); 

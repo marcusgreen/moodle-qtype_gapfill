@@ -47,32 +47,30 @@ function qtype_gapfill_pluginfile($course, $cm, $context, $filearea, $args, $for
 /**
  *   popup for entering feedback for individual gaps 
  */
-class gapfill_feedback_form extends moodleform {
+class gapfill_feedback_form2 extends moodleform {
     //Add elements to form
     public function definition() {
       
-        $mform = $this->_form; 
-        $item = json_decode($this->_customdata['item']);
+       $mform = $this->_form; 
+      $item = json_decode($this->_customdata['item']);
  
-        $this->editoroptions =[];
         $mform->addElement(
         'editor', 
-        'correct', 
+        'right', 
         get_string('correct','qtype_gapfill'), 
-         ['rows' => 1,'cols'=>50],
-        'Correct',
+         ['cols' => 50,'rows'=>2],
          ['autosave'=>false])->setValue(['text'=>$item->feedback->correctfeedback]);
 
-        $mform->addElement(
+         $mform->addElement(
         'editor', 
-        'incorrect', 
+        'wrong', 
         get_string('incorrect','qtype_gapfill'), 
-        ['rows' => 1,'cols'=>50,],
+        ['cols' => 50,'rows'=>2],
         ['autosave'=>false])->setValue(['text'=>$item->feedback->incorrectfeedback]);
 
         $repeatarray = [];
         $repeatarray[] = $mform->createElement('text','response','Response',['size'=>50]);
-        $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>1,'cols'=>50]);
+        $repeatarray[] = $mform->createElement('editor','feedback','Feedback',['rows'=>2,'cols'=>50]);
         $repeateloptions = [];
         $START_REPETITIONS = 1;
         $this->repeat_elements($repeatarray, $START_REPETITIONS,
@@ -94,7 +92,7 @@ function qtype_gapfill_output_fragment_feedbackedit($args) {
          $serialiseddata = json_decode($args['jsonformdata']);
          parse_str($serialiseddata, $formdata);
      }
-    $mform= new gapfill_feedback_form(null,$args,'post','',null,true,$formdata);
+    $mform= new gapfill_feedback_form2(null,$args,'post','',null,true,$formdata);
     
     if($mform->get_data()){
         return;

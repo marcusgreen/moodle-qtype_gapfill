@@ -68,11 +68,17 @@ define(['jquery',"core/fragment", "qtype_gapfill/dialog_info"], function($,Fragm
 
 function get_settingsdata(){
 /* The data is stored in a hidden field */
-var settings = ($("[name='itemsettings']").val());
-if(settings >""){
-    return JSON.parse(settings)[0];
+var settingsdata = ($("[name='itemsettings']").val());
+
+var settings = [];
+if (settingsdata > "") {
+    var obj = JSON.parse(settingsdata);
+    for (var o in obj) {
+        settings.push(obj[o]);
+    }
+    return settings;
 }else{
-    return {};
+    return [];
 }
 }
 /**
@@ -127,35 +133,40 @@ function Item(text, delimitchars,event) {
     };
 
     var itemsettings = [];
+    // Get the settings for the gap that was clicked on.
     Item.prototype.getItemSettings = function(target) {
         var itemid = target.id;
         var underscore = itemid.indexOf("_");
         /* The instance, normally 0 but incremented if a gap has the same text as another
          * instance is not currently used*/
         this.instance = itemid.substr(underscore + 1);
-        //settings =get_settingsdata()
-        itemsettings['correctfeedback']='';
-        itemsettings['incorrectfeedback']='';
-
+        var settings =get_settingsdata()
+   
         for (var set in this.settings) {
             text = this.stripdelim();
-            if (this.settings[set].gaptext === text) {
+            if (this.settings[set] === text) {
                 itemsettings = this.settings[set];
             }
         }
+        if (itemsettings === null || itemsettings.length === 0) {
+                this.feedback.correctfeedback='';
+                this.feedback.incorrectfeedback='';
+
+        }
+
         return itemsettings;
     };
     this.updateJson = function(e) {
         var found = false;
         var id = e.id;
-        var settings = [];
-        // for (var set in settings) {
-        //     if (settings[set].gaptext === this.stripdelim()) {
-        //         settings[set]['feedback'].correctfeedback = $("#id_correcteditable")[0].innerHTML;
-        //         settings[set]['feedback'].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
-        //         found = true;
-        //     }
-        // }
+        debugger;
+        for (var set in this.settings) {
+            if (this.settings[set].gaptext === this.stripdelim()) {
+                // settings[set]['feedback'].correctfeedback = $("#id_correcteditable")[0].innerHTML;
+                // settings[set]['feedback'].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
+                 found = true;
+            }
+        }
         if (found === false) {
             /* If there is no record for this word add one */
             var itemsettings = {
@@ -165,9 +176,9 @@ function Item(text, delimitchars,event) {
                 incorrectfeedback: $("#id_incorrecteditable").html(),
                 gaptext: this.stripdelim()
             };
-            settings.push(itemsettings);
+           this.settings.push(itemsettings);
         }
-        return JSON.stringify(settings);
+        return JSON.stringify(this.settings);
     };
 }
 
@@ -223,8 +234,8 @@ function canvasClick(e,loadFormFragment){
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
-        var item = new Item(e.target.innerHTML, delimitchars,e);
         debugger;
+        var item = new Item(e.target.innerHTML, delimitchars,e);
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             
