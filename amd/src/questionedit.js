@@ -24,103 +24,10 @@
 /* jshint unused:vars */
 
 /* The data is stored in a hidden field */
-define(['jquery'], function($) {
+define(['jquery','qtype_gapfill/Item'], function($,Item) {
     return {
         init: function() {
-
-function get_settings() {
-  var settings = [];
-  var settingsdata = ($("[name='itemsettings']").val());
-  if (settingsdata > "") {
-    var obj = JSON.parse(settingsdata);
-    for (var o in obj) {
-      settings.push(obj[o]);
-    }
-  }
-  return settings;
-}
-/**
- *
- * @param {string} text
- * @param {string} delimitchars
- */
-function Item(text, delimitchars) {
-    this.questionid = $("input[name=id]").val();
-    debugger;
-    this.settings = get_settings();
-    this.gaptext = text;
-    this.delimitchars = delimitchars;
-    /* The l and r is for left and right */
-    this.l = delimitchars.substr(0, 1);
-    this.r = delimitchars.substr(1, 1);
-    this.len = this.gaptext.length;
-    this.startchar = this.gaptext.substring(0, 1);
-    /* For checking if the end char is the right delimiter */
-    this.endchar = this.gaptext.substring(this.len - 1, this.len);
-    this.gaptextNodelim = '';
-    this.feedback = {};
-    this.instance = 0;
-    this.feedback.correct = $("#id_corecteditable").html();
-    this.feedback.incorrect = $("#id_incorrecteditable").html();
-    Item.prototype.striptags = function(gaptext) {
-        /* This is not a perfect way of stripping html but it may be good enough */
-        if (gaptext === undefined) {
-            return "";
-        }
-        var regex = /(<([^>]+)>)/ig;
-        return gaptext.replace(regex, "");
-    };
-    this.stripdelim = function() {
-        if (this.startchar === this.l) {
-            this.gaptextNodelim = this.gaptext.substring(1, this.len);
-        }
-        if (this.endchar === this.r) {
-            var len = this.gaptextNodelim.length;
-            this.gaptextNodelim = this.gaptextNodelim.substring(0, len - 1);
-        }
-        return this.gaptextNodelim;
-    };
-    var itemsettings = [];
-    Item.prototype.getItemSettings = function(target) {
-        var itemid = target.id;
-        var underscore = itemid.indexOf("_");
-        /* The instance, normally 0 but incremented if a gap has the same text as another
-         * instance is not currently used*/
-        this.instance = itemid.substr(underscore + 1);
-        for (var set in this.settings) {
-            text = this.stripdelim();
-            if (this.settings[set].gaptext === text) {
-                itemsettings = this.settings[set];
-            }
-        }
-        return itemsettings;
-    };
-    this.updateJson = function(e) {
-        var found = false;
-        var id = e.target.id;
-        for (var set in this.settings) {
-            if (this.settings[set].gaptext === this.stripdelim()) {
-                this.settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
-                this.settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
-                found = true;
-            }
-        }
-        if (found === false) {
-            /* If there is no record for this word add one */
-            var itemsettings = {
-                itemid: id,
-                questionid: $("input[name=id]").val(),
-                correctfeedback: $("#id_correcteditable").html(),
-                incorrectfeedback: $("#id_incorrecteditable").html(),
-                gaptext: this.stripdelim()
-            };
-            this.settings.push(itemsettings);
-        }
-        return JSON.stringify(this.settings);
-    };
-}
-
-
+            
 /* A click on the button */
 $("#id_itemsettings_button").on("click", function() {
     var attoIsLive = ($(".editor_atto")).length;
@@ -181,8 +88,10 @@ $("#id_itemsettings_canvas").on("click", function(e) {
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
-        var item = new Item(e.target.innerHTML, delimitchars);
         debugger;
+        var item = new Item(e.target.innerHTML, delimitchars);
+
+        //var item = new Item(e.target.innerHTML, delimitchars);
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
