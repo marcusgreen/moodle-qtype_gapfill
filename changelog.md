@@ -1,6 +1,6 @@
 ### Version **** of the Moodle Gapfill question type *** 2019
 CSS fix for when the theme creates a paragraph for each gap. Thanks to feedback
-from Daniel Garcia (https://top.totalenglish.net) that hlped identify this.
+from Daniel Garcia (https://top.totalenglish.net) that helped identify this.
 
 CSS was not being applied to correct/incorrect responses when in dropdown mode.
 
