@@ -158,6 +158,9 @@ incorrec answer was entered */
     background-color: #afa;
 }
 
+.que.gapfill select.incorrect {
+    background-color: #faa;
+}
 .que.gapfill input.incorrect {
     background-color: #faa;
 }
