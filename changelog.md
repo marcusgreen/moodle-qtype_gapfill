@@ -1,3 +1,12 @@
+### Version **** of the Moodle Gapfill question type *** 2019
+CSS fix for when the theme creates a paragraph for each gap. Thanks to feedback
+from Daniel Garcia (https://top.totalenglish.net) that hlped identify this.
+
+CSS was not being applied to correct/incorrect responses when in dropdown mode.
+
+Switched to using amd javascript for question editing. No end user benefit
+but will help in future development.
+
 ### Version 1.976 of the Moodle Gapfill question type May 2019
 Updated icon design to include a hint of color and in svg format.
 More code compliance tweeks.
