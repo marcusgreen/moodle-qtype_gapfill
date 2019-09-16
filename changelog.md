@@ -2,6 +2,8 @@
 CSS fix for when the theme creates a paragraph for each gap. Thanks to feedback
 from Daniel Garcia (https://top.totalenglish.net) that helped identify this.
 
+Many thanks for further Spanish translations of example questions from German Valero.
+
 CSS was not being applied to correct/incorrect responses when in dropdown mode.
 
 Switched to using amd javascript for question editing. No end user benefit
