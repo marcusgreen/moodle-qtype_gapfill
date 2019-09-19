@@ -4,6 +4,8 @@ from Daniel Garcia (https://top.totalenglish.net) that helped identify this.
 
 Thanks to German Valero thanks for further Spanish translations of example questions.
 
+Thanks to Dave Foord for help identifying a bug displaying wrong answers in dropdown mode
+
 CSS was not being applied to correct/incorrect responses when in dropdown mode.
 
 Switched to using amd modules in the javascript for question editing. No end user benefit
