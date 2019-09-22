@@ -30,10 +30,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-    /* Not actually using the countback bit at the moment, not sure what it does.
-     * if you are trying to make sense of Moodle question code, check the following link
-     * http://docs.moodle.org/dev/Question_engine
-     */
 
     /**
      * Apparently not used
