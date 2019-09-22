@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 /**
- * Gapfill question definition class. 
+ * Gapfill question definition class.
  *
  * @package    qtype_gapfill
  * @copyright  2017 Marcus Green
