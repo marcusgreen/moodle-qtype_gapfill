@@ -24,96 +24,10 @@
 /* jshint unused:vars */
 
 /* The data is stored in a hidden field */
-var settingsdata = ($("[name='itemsettings']").val());
-
-var settings = [];
-var gaps = [];
-if (settingsdata > "") {
-    var obj = JSON.parse(settingsdata);
-    for (var o in obj) {
-        settings.push(obj[o]);
-    }
-}
-/**
- *
- * @param {string} text
- * @param {string} delimitchars
- */
-function Item(text, delimitchars) {
-    this.questionid = $("input[name=id]").val();
-    this.gaptext = text;
-    this.delimitchars = delimitchars;
-    /* The l and r is for left and right */
-    this.l = delimitchars.substr(0, 1);
-    this.r = delimitchars.substr(1, 1);
-    this.len = this.gaptext.length;
-    this.startchar = this.gaptext.substring(0, 1);
-    /* For checking if the end char is the right delimiter */
-    this.endchar = this.gaptext.substring(this.len - 1, this.len);
-    this.gaptextNodelim = '';
-    this.feedback = {};
-    this.instance = 0;
-    this.feedback.correct = $("#id_corecteditable").html();
-    this.feedback.incorrect = $("#id_incorrecteditable").html();
-    Item.prototype.striptags = function(gaptext) {
-        /* This is not a perfect way of stripping html but it may be good enough */
-        if (gaptext === undefined) {
-            return "";
-        }
-        var regex = /(<([^>]+)>)/ig;
-        return gaptext.replace(regex, "");
-    };
-    this.stripdelim = function() {
-        if (this.startchar === this.l) {
-            this.gaptextNodelim = this.gaptext.substring(1, this.len);
-        }
-        if (this.endchar === this.r) {
-            var len = this.gaptextNodelim.length;
-            this.gaptextNodelim = this.gaptextNodelim.substring(0, len - 1);
-        }
-        return this.gaptextNodelim;
-    };
-    var itemsettings = [];
-    Item.prototype.getItemSettings = function(target) {
-        var itemid = target.id;
-        var underscore = itemid.indexOf("_");
-        /* The instance, normally 0 but incremented if a gap has the same text as another
-         * instance is not currently used*/
-        this.instance = itemid.substr(underscore + 1);
-        for (var set in settings) {
-            text = this.stripdelim();
-            if (settings[set].gaptext === text) {
-                itemsettings = settings[set];
-            }
-        }
-        return itemsettings;
-    };
-    this.updateJson = function(e) {
-        var found = false;
-        var id = e.target.id;
-        for (var set in settings) {
-            if (settings[set].gaptext === this.stripdelim()) {
-                settings[set].correctfeedback = $("#id_correcteditable")[0].innerHTML;
-                settings[set].incorrectfeedback = $("#id_incorrecteditable")[0].innerHTML;
-                found = true;
-            }
-        }
-        if (found === false) {
-            /* If there is no record for this word add one */
-            var itemsettings = {
-                itemid: id,
-                questionid: $("input[name=id]").val(),
-                correctfeedback: $("#id_correcteditable").html(),
-                incorrectfeedback: $("#id_incorrecteditable").html(),
-                gaptext: this.stripdelim()
-            };
-            settings.push(itemsettings);
-        }
-        return JSON.stringify(settings);
-    };
-}
-
-
+define(['jquery','qtype_gapfill/Item'], function($,Item) {
+    return {
+        init: function() {
+            
 /* A click on the button */
 $("#id_itemsettings_button").on("click", function() {
     var attoIsLive = ($(".editor_atto")).length;
@@ -174,7 +88,10 @@ $("#id_itemsettings_canvas").on("click", function(e) {
      * */
     if (!$('#id_questiontexteditable').get(0).isContentEditable && (e.target.id.match(/^id[0-9]+_/))) {
         var delimitchars = $("#id_delimitchars").val();
+        debugger;
         var item = new Item(e.target.innerHTML, delimitchars);
+
+        //var item = new Item(e.target.innerHTML, delimitchars);
         var itemsettings = item.getItemSettings(e.target);
         if (itemsettings === null || itemsettings.length === 0) {
             $("#id_correcteditable").html('');
@@ -361,3 +278,6 @@ function copyStyles(source) {
     }
     return false;
 }
+        }
+    }
+    });
