@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- 
+
 /* The data is stored in a hidden field */
 define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
   return {
