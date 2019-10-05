@@ -20,9 +20,8 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/* global $ */
-/* jshint unused:vars */
 
+ 
 /* The data is stored in a hidden field */
 define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
   return {
@@ -118,7 +117,6 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
           e.target.id.match(/^id[0-9]+_/)
         ) {
           var delimitchars = $('#id_delimitchars').val();
-          debugger;
           var item = new Item(e.target.innerHTML, delimitchars);
 
           // Var item = new Item(e.target.innerHTML, delimitchars);
