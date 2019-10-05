@@ -28,7 +28,6 @@ define(["jquery"], function($) {
    */
   return function Item(text, delimitchars) {
     this.questionid = $("input[name=id]").val();
-    debugger;
     this.settings = get_settings();
     this.gaptext = text;
     this.delimitchars = delimitchars;
