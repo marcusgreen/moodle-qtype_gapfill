@@ -46,8 +46,5 @@ script:
   - moodle-plugin-ci mustache
   - moodle-plugin-ci grunt
   - moodle-plugin-ci phpunit
-  # - moodle-plugin-ci behat
-  # The following line is a temporary work-around for https://tracker.moodle.org/browse/MDL-66378.
-  # Once that is fixed, the next line can be deleted.
-  - curl https://github.com/timhunt/php-webdriver/commit/7a0aa38f591b7395939df25d8cb6677bf99a481f.patch | git apply --directory moodle/vendor/instaclick/php-webdriver
-  - moodle-plugin-ci behat --profile chrome
+ - moodle-plugin-ci behat
+ 
