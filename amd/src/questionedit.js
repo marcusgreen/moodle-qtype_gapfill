@@ -300,7 +300,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
           var dom = source.get(0);
           if (window.getComputedStyle) {
             // Convenience methods to turn css case ('background-image') to camel ('backgroundImage').
-            var pattern = /\-([a-z])/g;
+            var pattern = /-([a-z])/g;
             var uc = function(a, b) {
               return b.toUpperCase();
             };
