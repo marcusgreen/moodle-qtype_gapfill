@@ -15,8 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Generates the output for gapfill questions
+ *
  * @package    qtype_gapfill
- * @copyright  2017 Marcus Green
+ * @copyright  2019 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -24,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Generates the output for gapfill questions
  *
- * @copyright  2017 Marcus Green
+ * @copyright  2019 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
