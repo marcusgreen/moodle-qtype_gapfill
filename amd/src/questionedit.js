@@ -245,39 +245,50 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
                 frag = document.createDocumentFragment();
                 for (var j = 0, jLen = text.length; j < jLen; j++) {
                   // If not whitespace, wrap it and append to the fragment.
-                  if (regex.test(text[j])) {
-                    sp = span.cloneNode(false);
-                    count++;
-                    sp.className = 'item';
-                    var item = new Item(text[j], $('#id_delimitchars').val());
-                    if (item.gaptext > '') {
-                      var instance = 0;
-                      for (var k = 0; k < gaps.length; ++k) {
-                        if (gaps[k] === item.text) {
-                          instance++;
-                        }
-                      }
-                      item.id = 'id' + count + '_' + instance;
-                      sp.id = item.id;
-                      var is = item.getItemSettings(item);
-                      if (item.striptags(is.correctfeedback) > '') {
-                        sp.className = 'hascorrect';
-                      }
-                      if (item.striptags(is.incorrectfeedback) > '') {
-                        sp.className = sp.className + ' ' + 'hasnocorrect';
-                      }
-                      gaps.push(item.gaptext);
-                    }
-                    sp.appendChild(document.createTextNode(text[j]));
-                    frag.appendChild(sp);
-                    // Otherwise, just append it to the fragment.
-                  } else {
-                    frag.appendChild(document.createTextNode(text[j]));
-                  }
+                  doGap(text, span, j);
                 }
               }
               // Replace the original node with the fragment.
               node.parentNode.replaceChild(frag, node);
+            }
+          }
+          /**
+           * Process each gap
+           *
+           * @param {*} text
+           * @param {*} span
+           * @param {*} j
+           */
+          function doGap(text, span, j) {
+            gaps = [];
+            if (regex.test(text[j])) {
+              sp = span.cloneNode(false);
+              count++;
+              sp.className = 'item';
+              var item = new Item(text[j], $('#id_delimitchars').val());
+              if (item.gaptext > '') {
+                var instance = 0;
+                for (var k = 0; k < gaps.length; ++k) {
+                  if (gaps[k] === item.text) {
+                    instance++;
+                  }
+                }
+                item.id = 'id' + count + '_' + instance;
+                sp.id = item.id;
+                var is = item.getItemSettings(item);
+                if (item.striptags(is.correctfeedback) > '') {
+                  sp.className = 'hascorrect';
+                }
+                if (item.striptags(is.incorrectfeedback) > '') {
+                  sp.className = sp.className + ' ' + 'hasnocorrect';
+                }
+                gaps.push(item.gaptext);
+              }
+              sp.appendChild(document.createTextNode(text[j]));
+              frag.appendChild(sp);
+              // Otherwise, just append it to the fragment.
+            } else {
+              frag.appendChild(document.createTextNode(text[j]));
             }
           }
         };
