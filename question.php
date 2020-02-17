@@ -190,7 +190,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
          * that will be draggable when answering. It then discards any subsequent
          * fields with an | in it.
          */
-        $done = false;
         $temp = array();
         /* array_unique is for when you have multiple identical answers separated
          * by |, i.e. olympic medals as [gold|silve|bronze]
@@ -235,7 +234,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @return array
      */
     public function get_expected_data() {
-        $data = array();
+        $data = [];
         foreach ($this->places as $key => $value) {
             $data['p' . $key] = PARAM_RAW_TRIMMED;
         }
