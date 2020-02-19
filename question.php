@@ -204,7 +204,9 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             }
         }
         $this->allanswers = $temp;
-        shuffle($this->allanswers);
+        if($this->noshuffle !=="1"){
+          shuffle($this->allanswers);
+        }
         $step->set_qt_var('_allanswers', serialize($this->allanswers));
     }
 

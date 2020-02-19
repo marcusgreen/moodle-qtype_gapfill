@@ -39,12 +39,13 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 class qtype_gapfill extends question_type {
 
     /**
-     * data used by export_to_xml (among other things possibly
+     * data used by export_to_xml and to initialise additional fields from the
+     * question type table
      * @return array
      */
     public function extra_question_fields() {
         return array('question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints');
+            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints', 'noshuffle');
     }
 
     /**
@@ -75,7 +76,7 @@ class qtype_gapfill extends question_type {
      * @param boolean $forceplaintextanswers
      */
     protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
-        $question->answers = array();
+        $question->answers = [];
         if (empty($questiondata->options->answers)) {
             return;
         }
