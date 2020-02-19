@@ -82,7 +82,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
 
       // Define field shuffleoptions to be added to question_gapfill.
       $table = new xmldb_table('question_gapfill');
-      $field = new xmldb_field('shuffleoptions', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'letterhints');
+      $field = new xmldb_field('noshuffle', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'letterhints');
 
       // Conditionally launch add field shuffleoptions.
       if (!$dbman->field_exists($table, $field)) {

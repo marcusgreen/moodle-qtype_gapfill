@@ -154,12 +154,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
 
 
-        // Do not shuffle dnd answer options
-        $mform->addElement('advcheckbox', 'noshuffle', get_string('noshuffle', 'qtype_gapfill'));
-        $mform->addHelpButton('noshuffle', 'noshuffle', 'qtype_gapfill');
-        //$mform->setDefault('noshuffle', $config->noshuffle);
-        $mform->setAdvanced('noshuffle');
-
          /* use plain string matching instead of regular expressions */
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
@@ -169,6 +163,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
          $mform->addElement('advcheckbox', 'letterhints', get_string('letterhints', 'qtype_gapfill'));
          $mform->setDefault('letterhints', $config->letterhints);
          $mform->addHelpButton('letterhints', 'letterhints', 'qtype_gapfill');
+
+        // Do not shuffle dnd answer options
+        $mform->addElement('advcheckbox', 'noshuffle', get_string('noshuffle', 'qtype_gapfill'));
+        $mform->addHelpButton('noshuffle', 'noshuffle', 'qtype_gapfill');
+        $mform->setDefault('noshuffle', $config->noshuffle);
+        $mform->setAdvanced('noshuffle');
 
          /* Discards duplicates before processing answers, useful for tables with gaps like [cat|dog][cat|dog] */
         $mform->addElement('advcheckbox', 'noduplicates', get_string('noduplicates', 'qtype_gapfill'));

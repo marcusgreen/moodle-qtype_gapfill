@@ -273,6 +273,8 @@ class qtype_gapfill extends question_type {
             $options->fixedgapsize = '';
             $options->optionsaftertext = '';
             $options->letterhints = '';
+            $options->noshuffle = '';
+
             $options->id = $DB->insert_record('question_gapfill', $options);
         }
 
@@ -284,6 +286,8 @@ class qtype_gapfill extends question_type {
         $options->fixedgapsize = $question->fixedgapsize;
         $options->optionsaftertext = $question->optionsaftertext;
         $options->letterhints = $question->letterhints;
+        $options->noshuffle = $question->noshuffle;
+
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);
     }

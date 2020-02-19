@@ -65,8 +65,10 @@ $string['fixedgapsizeset_text'] = 'Sets the size of every gap to that of the big
 $string['itemsettingsbutton'] = 'Gap settings';
 $string['itemsettingserror'] = 'Only works with Atto editor. Go to Editor preferences to switch to Atto';
 $string['moreoptions'] = 'More Options.';
-$string['shuffleoptions'] = 'Shuffle options.';
-$string['shuffleoptions_help'] = 'Shuffle answer options. Shuffle the order on each new attempt';
+$string['noshuffle'] = 'No option shuffle.';
+$string['noshuffle_text'] = 'Do not shuffle the answer options.';
+$string['noshuffle_help'] = 'Do not shuffle the answer options.';
+
 
 $string['blank'] = 'blank';
 $string['optionsaftertext'] = 'Options after text';
