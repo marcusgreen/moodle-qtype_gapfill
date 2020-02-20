@@ -88,6 +88,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'fixedgapsize' => '0',
                     'optionaftertext' => '',
                     'letterhints' => '1',
+                    'noshuffle' => '0',
                     'correctfeedback' => 'Correct Feedback',
                     'correctfeedbackformat' => '0',
                     'partiallycorrectfeedback' => 'Partially Correct Feedback',
