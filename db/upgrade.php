@@ -81,16 +81,16 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     if ($oldversion < 2020021800) {
 
       // Define field shuffleoptions to be added to question_gapfill.
-      $table = new xmldb_table('question_gapfill');
-      $field = new xmldb_field('noshuffle', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'letterhints');
+        $table = new xmldb_table('question_gapfill');
+        $field = new xmldb_field('noshuffle', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'letterhints');
 
-      // Conditionally launch add field shuffleoptions.
-      if (!$dbman->field_exists($table, $field)) {
-          $dbman->add_field($table, $field);
-      }
+        // Conditionally launch add field shuffleoptions.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+       }
 
-      // Gapfill savepoint reached.
-      upgrade_plugin_savepoint(true, 2020021800, 'qtype', 'gapfill');
+        // Gapfill savepoint reached.
+        upgrade_plugin_savepoint(true, 2020021800, 'qtype', 'gapfill');
   }
     return true;
 }
