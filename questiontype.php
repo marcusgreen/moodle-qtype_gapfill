@@ -528,6 +528,8 @@ class qtype_gapfill extends question_type {
                 "</optionsaftertext>\n";
         $output .= '    <letterhints>' . $question->options->letterhints .
                 "</letterhints>\n";
+        $output .= '    <noshuffle>' . $question->options->noshuffle .
+                "</noshuffle>\n";
         foreach ($question->options->itemsettings as $set) {
             $output .= "      <gapsetting>\n";
             $output .= '        <question>' . $set->question . "</question>\n";

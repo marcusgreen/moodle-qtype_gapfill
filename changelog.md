@@ -1,6 +1,9 @@
 ### Version 1.978 of the Moodle Gapfill question type Dec 2019
 Fixed issue with case sensitivity when using | operator and ignore duplicates
-Thanks to Jason Rogers of the South Carolina Dept of Education and Dipak Kumar of Blackboard for reporting this and helping test the solution
+Thanks to Jason Rogers of the South Carolina Dept of Education and Dipak Kumar of Blackboard for reporting this and helping test the solution.
+
+Added new checkbox called noshuffle. When selected answer options are always shown in the order they were entered. Implemented as a result of this conversation thread.
+https://moodle.org/mod/forum/discuss.php?d=395222
 
 ### Version 1.977 of the Moodle Gapfill question type Oct 2019
 
