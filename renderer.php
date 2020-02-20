@@ -200,7 +200,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
-            $inputattribues['selected'] = $currentanswer;
             /* if the size attribute is left in android chrome
              *  doesn't show the down arrows in select
              */
