@@ -185,7 +185,7 @@ class qtype_gapfill extends question_type {
      * @return void
      */
     public function find_standard_scripts() {
-        global $CFG, $PAGE;
+        global $PAGE;
         parent::find_standard_scripts();
         $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init');
     }
@@ -341,7 +341,7 @@ class qtype_gapfill extends question_type {
      * @param stdClass $question
      * @return  array
      */
-    public function get_answer_fields(array $answerwords, $question) {
+    private function get_answer_fields(array $answerwords, $question) {
         /* this code runs both on saving from a form and from importing and needs
          * improving as it mixes pulling information from the question object which
          * comes from the import and from $question->wronganswers field which
