@@ -153,7 +153,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('optionsaftertext', $config->optionsaftertext);
         $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
 
-
          /* use plain string matching instead of regular expressions */
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
@@ -164,7 +163,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
          $mform->setDefault('letterhints', $config->letterhints);
          $mform->addHelpButton('letterhints', 'letterhints', 'qtype_gapfill');
 
-        // Do not shuffle dnd answer options
+        // Do not shuffle dnd answer options.
         $mform->addElement('advcheckbox', 'noshuffle', get_string('noshuffle', 'qtype_gapfill'));
         $mform->addHelpButton('noshuffle', 'noshuffle', 'qtype_gapfill');
         $mform->setDefault('noshuffle', $config->noshuffle);

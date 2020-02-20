@@ -54,19 +54,16 @@ class gapfill_import_form extends moodleform {
      */
     protected function definition() {
         $mform = $this->_form;
-        global $DB,$USER;
-        $c = array_column(get_courses(),'shortname');
-        $courses = array_combine($c,$c);
-        $options = [];
-        $mform->addElement('autocomplete', 'autosearch', 'Search', $courses, $options);
+        $mform->addElement('text', 'courseshortname', 'Course');
         $mform->setType('courseshortname', PARAM_RAW);
-        $mform->addElement('submit', 'submitbutton', get_string('import'));
+        $mform->addElement('submit', 'submitbutton', 'Import');
     }
 
     /**
      * Get the category to insert the questions. Can be tricky if the course
      * has never been used previously as the category may not exist
      *
+     * @global moodle_database $DB
      * @param string $courseshortname
      * @return array
      */
@@ -87,6 +84,7 @@ class gapfill_import_form extends moodleform {
      * If if does not have the category prompt the user to visit the course which
      * will create the category. TODO improve this bit.
      *
+     * @global moodle_database $DB
      * @param array $fromform
      * @param array $data
      * @return boolean
