@@ -49,7 +49,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @param array $poptions
      * @return qtype_gapfill
      */
-    public static function make_question2($questiontext = 'The [cat] sat on the [mat]',
+    public static function make_question2($questiontext = 'The [cat] sat on the [mat]', $casesensitive = false,
         $poptions=array("noduplicates" => 0,
         'disableregex' => 0, 'delimitchars' => '[])')) {
         $type = 'gapfill';
@@ -61,9 +61,9 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->qtype = question_bank::get_qtype('gapfill');
         $answerwords = $question->qtype->get_gaps($poptions['delimitchars'], $questiontext);
 
-        $question->places = [];
+        $question->places = array();
 
-        $answers = [];
+        $answers = array();
         $id = 1;
         foreach ($answerwords as $key => $answer) {
             $id++;
