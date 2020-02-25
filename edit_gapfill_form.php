@@ -72,7 +72,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->removeelement('questiontext');
         /*for storing the json containing the settings data */
-        $mform->addElement('hidden', 'itemsettings', '', array('size' => '80'));
+        $mform->addElement('text', 'itemsettings', '', array('size' => '80'));
         $mform->setType('itemsettings', PARAM_RAW);
 
         /* popup for entering feedback for individual words */
@@ -80,6 +80,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
                 . '" style="display:none;background-color:lightgrey" >');
         $mform->addElement('editor', 'correct', '', array('size' => 70, 'rows' => 4),  ['autosave' => false]);
         $mform->addElement('editor', 'incorrect', '', array('size' => 70, 'rows' => 4),  ['autosave' => false]);
+        $mform->addElement('advcheckbox', 'isdistractor', get_string('distractor', 'qtype_gapfill'));
+
         $mform->addElement('html', '</div>');
 
         /* presented for clicking on the gaps once they have been given numberical ids */

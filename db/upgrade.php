@@ -92,5 +92,19 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         // Gapfill savepoint reached.
         upgrade_plugin_savepoint(true, 2020021800, 'qtype', 'gapfill');
     }
+    if ($oldversion < 2020022400) {
+
+      // Define field isdistractor to be added to question_gapfill_settings.
+      $table = new xmldb_table('question_gapfill_settings');
+      $field = new xmldb_field('isdistractor', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'incorrectfeedback');
+
+      // Conditionally launch add field isdistractor.
+      if (!$dbman->field_exists($table, $field)) {
+          $dbman->add_field($table, $field);
+      }
+
+      // Gapfill savepoint reached.
+      upgrade_plugin_savepoint(true, 2020022400, 'qtype', 'gapfill');
+  }
     return true;
 }

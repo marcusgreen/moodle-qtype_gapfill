@@ -68,6 +68,8 @@ $string['moreoptions'] = 'More Options.';
 $string['noshuffle'] = 'No option shuffle.';
 $string['noshuffle_text'] = 'Do not shuffle the answer options.';
 $string['noshuffle_help'] = 'Do not shuffle the answer options.';
+$string['distractor'] = 'Distractor (wrong answer).';
+
 
 
 $string['blank'] = 'blank';

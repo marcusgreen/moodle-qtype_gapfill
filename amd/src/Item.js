@@ -92,6 +92,7 @@ define(["jquery"], function($) {
       return itemsettings;
     };
     this.updateJson = function(e) {
+      debugger;
       var found = false;
       var id = e.target.id;
       for (var set in this.settings) {
@@ -102,6 +103,9 @@ define(["jquery"], function($) {
           this.settings[set].incorrectfeedback = $(
             "#id_incorrecteditable"
           )[0].innerHTML;
+          this.settings[set].isdistractor = $(
+            "#id_isdistractor"
+          )[0].checked;
           found = true;
         }
       }
@@ -112,6 +116,7 @@ define(["jquery"], function($) {
           questionid: $("input[name=id]").val(),
           correctfeedback: $("#id_correcteditable").html(),
           incorrectfeedback: $("#id_incorrecteditable").html(),
+          isdistractor: $("#id_isdistractor").val(),
           gaptext: this.stripdelim()
         };
         this.settings.push(itemsettings);
