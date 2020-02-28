@@ -218,7 +218,7 @@ class qtype_gapfill extends question_type {
          */
         $delim = self::get_delimit_array($delimitchars);
         $fieldregex = '/.*?\\' . $delim["l"] . '(.*?)\\' . $delim["r"] . '/';
-        $matches = array();
+        $matches = [];
         preg_match_all($fieldregex, $questiontext, $matches);
         return $matches[1];
     }
