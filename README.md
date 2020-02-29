@@ -1,4 +1,4 @@
-Gapfill Moodle Quesiton type
+### Gapfill Moodle Quesiton type
 [![Build Status](https://travis-ci.org/marcusgreen/moodle-qtype_gapfill.svg?branch=master)](https://travis-ci.org/marcusgreen/moodle-qtype_gapfill)
 
 A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices and the mobile app.
