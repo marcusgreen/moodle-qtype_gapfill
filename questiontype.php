@@ -174,7 +174,6 @@ class qtype_gapfill extends question_type {
          * value for the whole question. Value for
          * each gap can be only 0 or 1
          */
-        $ua = array_unique($gaps);
         $form->defaultmark = count($gaps);
         return parent::save_question($question, $form);
     }
