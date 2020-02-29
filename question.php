@@ -351,15 +351,6 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * TODO
-     * I am not convinced this is actually used anywhere
-     */
-    public function  get_instances() {
-        foreach ($this->places as $place => $answer) {
-            $response[$this->field($place)] = $answer;
-        }
-    }
-    /**
      * Incrementally fill the gap with the letters from the correct answer when in
      * interactive with multiple tries mode
      *
