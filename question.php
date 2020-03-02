@@ -44,6 +44,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public $answerdisplay;
 
+
     /**
      * The only place this appears to be used is in the tests, can it be deleted?
      * @var array
@@ -328,7 +329,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @param array $response
      * @return boolean
      */
-    private function is_gradable_response(array $response) {
+    public function is_gradable_response(array $response) {
         foreach ($response as $answergiven) {
             if (($answergiven !== "")) {
                 return true;
