@@ -328,7 +328,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @param array $response
      * @return boolean
      */
-    public function is_gradable_response(array $response) {
+    private function is_gradable_response(array $response) {
         foreach ($response as $answergiven) {
             if (($answergiven !== "")) {
                 return true;
