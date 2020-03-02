@@ -250,7 +250,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function summarise_response(array $response) {
         $summary = "";
-        foreach ($response as $key => $value) {
+        foreach ($response as $value) {
             $summary .= " " . $value . " ";
         }
         return $summary;
@@ -264,7 +264,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function is_complete_response(array $response) {
         $gapsfilled = 0;
         $iscomplete = true;
-        foreach ($this->answers as $key => $rightanswer) {
+        foreach ($this->answers as $rightanswer) {
             $answergiven = array_shift($response);
             if ((!($answergiven == "")) || (preg_match($this->blankregex, $rightanswer->answer))) {
                 $gapsfilled++;
@@ -329,7 +329,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @return boolean
      */
     public function is_gradable_response(array $response) {
-        foreach ($response as $key => $answergiven) {
+        foreach ($response as $answergiven) {
             if (($answergiven !== "")) {
                 return true;
             }
