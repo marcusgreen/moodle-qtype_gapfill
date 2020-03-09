@@ -134,6 +134,13 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $key2 = str_replace(' ', '', $key);
             $delimitchars2[$key2] = $value;
         }
+
+        // Gapfill sample questions (22).
+        global $PAGE;
+        $import = new moodle_url('/question/type/gapfill/import_examples.php', ['origin'=>'editform', 'courseid' => $PAGE->course->id]);
+
+        $mform->addElement('html', '<a href='. $import->out().'>Import Examples</a>');
+
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars2);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
@@ -183,6 +190,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[0]')->setValue(array('text' => get_string('letterhint0', 'qtype_gapfill')));
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
+
     }
 
     /**

@@ -29,12 +29,13 @@ require_once($CFG->libdir . '/xmlize.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 
+
 admin_externalpage_setup('qtype_gapfill_import');
 
 /**
  *  This does the same as the standard xml import but easier
  *
- * @copyright Marcus Green 2017
+ * @copyright Marcus Green 2020
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * Form for importing example questions
  */
@@ -53,29 +54,20 @@ class gapfill_import_form extends moodleform {
      * mini form for entering the import details
      */
     protected function definition() {
+        global $PAGE;
         $mform = $this->_form;
-        $mform->addElement('text', 'courseshortname', get_string('course'));
-        $mform->setType('courseshortname', PARAM_RAW);
-        $mform->addElement('submit', 'submitbutton', get_string('import'));
-    }
 
-    /**
-     * Get the category to insert the questions. Can be tricky if the course
-     * has never been used previously as the category may not exist
-     *
-     * @param string $courseshortname
-     * @return array
-     */
-    public function get_question_category($courseshortname) {
-        global $DB;
-        /* parent=0 means where you have multiple categories it is at the top */
-        $sql = 'Select qcat.id id, c.id courseid,c.shortname,ctx.id contextid from {course} c
-        join {context} ctx on ctx.instanceid=c.id
-        join {question_categories} qcat on qcat.contextid=ctx.id
-        and ctx.contextlevel=50 and qcat.parent=0 and c.shortname =?';
-        $category = $DB->get_records_sql($sql, array($courseshortname));
-        $category = array_shift($category);
-        return $category;
+
+        $origin = optional_param('origin', '', PARAM_TEXT);
+        $courseid = optional_param('courseid', '', PARAM_INT);
+        $mform->addElement('hidden', 'courseid', $courseid);
+        $mform->setType('courseid', PARAM_INT);
+        if ($origin !=='editform') {
+          $mform->addElement('text', 'courseshortname', get_string('course'));
+          $mform->setType('courseshortname', PARAM_RAW);
+        }
+        $mform->addElement('html', '<div id="description">'.get_string('description', 'qtype_gapfill').'</div>');
+        $mform->addElement('submit', 'submitbutton', get_string('import'));
     }
 
     /**
@@ -88,21 +80,7 @@ class gapfill_import_form extends moodleform {
      * @return boolean
      */
     public function validation($fromform, $data) {
-        $errors = array();
-        global $DB;
-        $sql = 'select id from {course} where shortname =?';
-        $this->course = $DB->get_records_sql($sql, array($fromform['courseshortname']));
-        $this->course = array_shift($this->course);
-        if ($this->course == null) {
-            $errors['courseshortname'] = get_string('coursenotfound', 'qtype_gapfill');
-        } else {
-            $this->questioncategory = $this->get_question_category($fromform['courseshortname']);
-            if (count($this->questioncategory) == 0) {
-                $url = new moodle_url('/question/edit.php?courseid=' . $this->course->id);
-                $errors['courseshortname'] = get_string('questioncatnotfound', 'qtype_gapfill', $url->out());
-            }
-        }
-
+        $errors = [];
         if ($errors) {
             return $errors;
         } else {
@@ -111,29 +89,59 @@ class gapfill_import_form extends moodleform {
     }
 
 }
-
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    $category = $mform->questioncategory;
-    $categorycontext = context::instance_by_id($category->contextid);
-    $category->context = $categorycontext;
+    $context= context_course::instance($fromform->courseid);
+    //$topcategory = question_get_top_category($context->id, true);
 
-    $qformat = new qformat_xml();
-    $file = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/gapfill_examples.xml';
-    $qformat->setFilename($file);
+    $qformat = new \qformat_xml();
+    $filename = 'gapfill_examples.xml';
+    $importfile = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/'.$filename;
+
+    $coursecontext = \context_course::instance($fromform->courseid);
+    $category = $DB->get_record('question_categories', ['contextid' => $coursecontext->id]);
+    $course = $DB->get_record('course', array('id'=>$fromform->courseid), '*', MUST_EXIST);
+    $contexts = $DB->get_records('context');
+
+    $qformat->setContexts([$coursecontext]);
 
     $qformat->setCategory($category);
+    $qformat->setCourse($course);
+    $qformat->setFilename($importfile);
+    $qformat->setRealfilename($importfile);
+    $qformat->setMatchgrades('nearest');
+    $qformat->setStoponerror(true);
+    $qformat->setCatfromfile(true);
+
+    // $contexts = $DB->get_records('context');
+    // $realfilename = $filename;
+    // $qformat->setContexts($contexts);
+    // global $DB;
+    // $course= $DB->get_record('course', ['id'=>$fromform->courseid]);
+    // $qformat->setCourse($course);
+    // $qformat->setFilename($importfile);
+    // $qformat->setRealfilename($realfilename);
+    // $qformat->setMatchgrades('error');
+    // $qformat->setCatfromfile(1);
+    // $qformat->setContextfromfile(1);
+    // $qformat->setStoponerror(1);
+    // $qformat->setCattofile(1);
+    // $qformat->setContexttofile(1);
+    // $qformat->set_display_progress(true);
+
+
+
     echo $OUTPUT->header();
     // Do anything before that we need to.
     if (!$qformat->importpreprocess()) {
         print_error('cannotimport', 'qtype_gapfill', $PAGE->out);
     }
     // Process the uploaded file.
-    if (!$qformat->importprocess($category)) {
+    if (!$qformat->importprocess()) {
         print_error(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
         /* after the import offer a link to go to the course and view the questions */
-        $visitquestions = new moodle_url('/question/edit.php?courseid=' . $mform->course->id);
+        $visitquestions = new moodle_url('/question/edit.php?courseid=' . $fromform->courseid);
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
