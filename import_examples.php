@@ -54,13 +54,16 @@ class gapfill_import_form extends moodleform {
      * mini form for entering the import details
      */
     protected function definition() {
-        global $PAGE;
+        global $DB;
         $mform = $this->_form;
-
 
         $origin = optional_param('origin', '', PARAM_TEXT);
         $courseid = optional_param('courseid', '', PARAM_INT);
         $mform->addElement('hidden', 'courseid', $courseid);
+
+        $coursecontext = \context_course::instance($courseid);
+        $category = $DB->get_record('question_categories', ['contextid' => $coursecontext->id, 'name'=>'Gapfill sample questions']);
+
         $mform->setType('courseid', PARAM_INT);
         if ($origin !=='editform') {
           $mform->addElement('text', 'courseshortname', get_string('course'));
@@ -71,9 +74,7 @@ class gapfill_import_form extends moodleform {
     }
 
     /**
-     * Check that the course exists and that it has a top level question category
-     * If if does not have the category prompt the user to visit the course which
-     * will create the category. TODO improve this bit.
+     * Todo add validation if required.
      *
      * @param array $fromform
      * @param array $data
@@ -91,45 +92,26 @@ class gapfill_import_form extends moodleform {
 }
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    $context= context_course::instance($fromform->courseid);
-    //$topcategory = question_get_top_category($context->id, true);
 
     $qformat = new \qformat_xml();
     $filename = 'gapfill_examples.xml';
     $importfile = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/'.$filename;
 
     $coursecontext = \context_course::instance($fromform->courseid);
-    $category = $DB->get_record('question_categories', ['contextid' => $coursecontext->id]);
+
+    $topcategory = question_get_top_category($coursecontext->id, true);
     $course = $DB->get_record('course', array('id'=>$fromform->courseid), '*', MUST_EXIST);
     $contexts = $DB->get_records('context');
 
     $qformat->setContexts([$coursecontext]);
 
-    $qformat->setCategory($category);
+    $qformat->setCategory($topcategory);
     $qformat->setCourse($course);
     $qformat->setFilename($importfile);
     $qformat->setRealfilename($importfile);
     $qformat->setMatchgrades('nearest');
     $qformat->setStoponerror(true);
     $qformat->setCatfromfile(true);
-
-    // $contexts = $DB->get_records('context');
-    // $realfilename = $filename;
-    // $qformat->setContexts($contexts);
-    // global $DB;
-    // $course= $DB->get_record('course', ['id'=>$fromform->courseid]);
-    // $qformat->setCourse($course);
-    // $qformat->setFilename($importfile);
-    // $qformat->setRealfilename($realfilename);
-    // $qformat->setMatchgrades('error');
-    // $qformat->setCatfromfile(1);
-    // $qformat->setContextfromfile(1);
-    // $qformat->setStoponerror(1);
-    // $qformat->setCattofile(1);
-    // $qformat->setContexttofile(1);
-    // $qformat->set_display_progress(true);
-
-
 
     echo $OUTPUT->header();
     // Do anything before that we need to.
