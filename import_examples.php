@@ -34,6 +34,8 @@ $category = optional_param('category', '', PARAM_INT);
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
 
 $PAGE->set_context(context_course::instance($courseid));
+$course = get_course($courseid);
+$PAGE->set_heading($course->fullname);
 $PAGE->set_url(new moodle_url('/question/type/gapfill/import_examples.php'));
 
 
