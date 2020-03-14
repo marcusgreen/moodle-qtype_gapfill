@@ -28,9 +28,21 @@ require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/xmlize.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
+require_once($CFG->libdir.'/formslib.php');
+$courseid = optional_param('courseid', '', PARAM_INT);
+$category = optional_param('category', '', PARAM_INT);
+$returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
+
+$PAGE->set_context(context_course::instance($courseid));
+$PAGE->set_url(new moodle_url('/question/type/gapfill/import_examples.php'));
+//$PAGE->set_heading($COURSE->fullname);
 
 
-admin_externalpage_setup('qtype_gapfill_import');
+
+$PAGE->set_context(context_course::instance($courseid));
+$PAGE->navbar->add(get_string('course'), new moodle_url('/course/view.php', ['id'=>$courseid]));
+$PAGE->navbar->add(get_string('questionbank', 'qtype_gapfill'), new moodle_url('/question/edit.php', ['courseid' =>$courseid])) ;
+
 
 /**
  *  This does the same as the standard xml import but easier
@@ -57,20 +69,20 @@ class gapfill_import_form extends moodleform {
         global $DB;
         $mform = $this->_form;
 
-        $origin = optional_param('origin', '', PARAM_TEXT);
         $courseid = optional_param('courseid', '', PARAM_INT);
         $mform->addElement('hidden', 'courseid', $courseid);
+        $mform->setType('courseid', PARAM_INT);
 
         $coursecontext = \context_course::instance($courseid);
         $category = $DB->get_record('question_categories', ['contextid' => $coursecontext->id, 'name'=>'Gapfill sample questions']);
-
-        $mform->setType('courseid', PARAM_INT);
-        if ($origin !=='editform') {
-          $mform->addElement('text', 'courseshortname', get_string('course'));
-          $mform->setType('courseshortname', PARAM_RAW);
-        }
         $mform->addElement('html', '<div id="description">'.get_string('description', 'qtype_gapfill').'</div>');
+
+        if ($category) {
+          $mform->addElement('html', '<div id="description">'. get_string('importwarning', 'qtype_gapfill').'</div>');
+        }
+
         $mform->addElement('submit', 'submitbutton', get_string('import'));
+
     }
 
     /**
@@ -90,6 +102,7 @@ class gapfill_import_form extends moodleform {
     }
 
 }
+
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
 
@@ -113,6 +126,7 @@ if ($fromform = $mform->get_data()) {
     $qformat->setStoponerror(true);
     $qformat->setCatfromfile(true);
 
+
     echo $OUTPUT->header();
     // Do anything before that we need to.
     if (!$qformat->importpreprocess()) {
@@ -123,13 +137,17 @@ if ($fromform = $mform->get_data()) {
         print_error(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
         /* after the import offer a link to go to the course and view the questions */
-        $visitquestions = new moodle_url('/question/edit.php?courseid=' . $fromform->courseid);
+      //  echo $OUTPUT->header();
+        $visitquestions = new moodle_url('/question/edit.php?courseid',['courseid'=>$courseid]);
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
         return;
     }
 }
+
+
+
 
 echo $OUTPUT->header();
 $mform->display();

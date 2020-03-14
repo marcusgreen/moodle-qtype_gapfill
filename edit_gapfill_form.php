@@ -135,12 +135,20 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $delimitchars2[$key2] = $value;
         }
 
-        // Gapfill sample questions (22).
         global $PAGE;
-        $import = new moodle_url('/question/type/gapfill/import_examples.php', ['origin'=>'editform', 'courseid' => $PAGE->course->id]);
-
-        $mform->addElement('html', '<a href='. $import->out().'>Import Examples</a>');
-
+        if (get_config('qtype_gapfill', 'importlink')) {
+          $returnurl = optional_param('returnurl', null, PARAM_LOCALURL);
+          $category = optional_param('category', null, PARAM_INT);
+          $cid = $PAGE->course->id;
+            $params = [
+              'courseid' => $cid,
+              'category' =>$category,
+              'sesskey' => sesskey(),
+              'returnurl' => $returnurl
+              ];
+          $import = new moodle_url('/question/type/gapfill/import_examples.php', $params);
+          $mform->addElement('html', '<a href='. $import->out().'>Import Examples</a>');
+      }
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars2);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
@@ -288,5 +296,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function qtype() {
         return 'gapfill';
     }
+
 
 }

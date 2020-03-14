@@ -36,6 +36,9 @@ if (is_siteadmin()) {
      $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/disableregex',
         get_string('disableregex', 'qtype_gapfill'),
         get_string('disableregexset_text', 'qtype_gapfill'), 0));
+    $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/importlink',
+        get_string('importlink', 'qtype_gapfill'),
+        get_string('importlink_text', 'qtype_gapfill'), 1));
     $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/fixedgapsize',
         get_string('fixedgapsize', 'qtype_gapfill'),
         get_string('fixedgapsizeset_text', 'qtype_gapfill') , 1));
@@ -55,11 +58,5 @@ if (is_siteadmin()) {
          get_string('delimitchars', 'qtype_gapfill'),
          get_string('delimitset_text', 'qtype_gapfill'),
          "[ ],{ },# #,@ @", PARAM_RAW, 20, 3));
-    $ADMIN->add('qtype_gapfill_category',
-            new admin_externalpage(
-                    'qtype_gapfill_import',
-                     get_string('importexamples', 'qtype_gapfill'),
-                     new moodle_url('/question/type/gapfill/import_examples.php'),
-                    'moodle/site:config'
-            ));
+
 }
