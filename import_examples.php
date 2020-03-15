@@ -137,15 +137,21 @@ if ($fromform = $mform->get_data()) {
         print_error(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
         /* after the import offer a link to go to the course and view the questions */
-        $visitquestions = new moodle_url('/question/edit.php?courseid', ['courseid'=>$courseid]);
+        $params = [
+        'courseid' => $courseid,
+        'category' =>  $qformat->category->id.','.$coursecontext->id,
+        'qbshowtext' => 1,
+        'recurse' => 0,
+        'recurse'=> 1,
+        'showhidden' => 0
+        ];
+        $visitquestions = new moodle_url('/question/edit.php?courseid', $params);
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
         return;
     }
 }
-
-
 
 
 echo $OUTPUT->header();
