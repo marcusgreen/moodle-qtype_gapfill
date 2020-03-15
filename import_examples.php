@@ -13,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  *
  * Import sample Gapfill questions from xml file.
@@ -138,7 +137,7 @@ if ($fromform = $mform->get_data()) {
         print_error(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
         /* after the import offer a link to go to the course and view the questions */
-      //  echo $OUTPUT->header();
+      // echo $OUTPUT->header();
         $visitquestions = new moodle_url('/question/edit.php?courseid',['courseid'=>$courseid]);
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
