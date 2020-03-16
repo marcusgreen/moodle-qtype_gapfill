@@ -65,7 +65,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'), 'qtype_gapfill');
         $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
-        $mform->addElement('html', '<div class="gapfill-edit">');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
 
@@ -73,6 +72,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         /*for storing the json containing the settings data */
         $mform->addElement('hidden', 'itemsettings', '', array('size' => '80'));
         $mform->setType('itemsettings', PARAM_RAW);
+        $mform->addElement('html', '<span class="gapfill-edit">');
+
 
         /* popup for entering feedback for individual words */
         $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
@@ -199,7 +200,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[0]')->setValue(array('text' => get_string('letterhint0', 'qtype_gapfill')));
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
-        $mform->addElement('html', '</div>');
+        $mform->addElement('html', '</span>');
 
 
     }
