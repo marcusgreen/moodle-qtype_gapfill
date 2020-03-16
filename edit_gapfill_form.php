@@ -65,7 +65,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'), 'qtype_gapfill');
         $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
-
+        $mform->addElement('html', '<div class="gapfill-edit">');
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
 
@@ -116,6 +116,22 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
+
+        global $PAGE;
+        if (get_config('qtype_gapfill', 'importlink')) {
+          $returnurl = optional_param('returnurl', null, PARAM_LOCALURL);
+          $category = optional_param('category', null, PARAM_INT);
+          $cid = $PAGE->course->id;
+            $params = [
+              'courseid' => $cid,
+              'category' =>$category,
+              'sesskey' => sesskey(),
+              'returnurl' => $returnurl
+              ];
+          $import = new moodle_url('/question/type/gapfill/import_examples.php', $params);
+          $mform->addElement('html', '<span class ="import-examples"><a href='. $import->out().'>Import Examples</a></span>');
+      }
+
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
         // The delimiting characters around fields.
@@ -134,20 +150,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $delimitchars2[$key2] = $value;
         }
 
-        global $PAGE;
-        if (get_config('qtype_gapfill', 'importlink')) {
-          $returnurl = optional_param('returnurl', null, PARAM_LOCALURL);
-          $category = optional_param('category', null, PARAM_INT);
-          $cid = $PAGE->course->id;
-            $params = [
-              'courseid' => $cid,
-              'category' =>$category,
-              'sesskey' => sesskey(),
-              'returnurl' => $returnurl
-              ];
-          $import = new moodle_url('/question/type/gapfill/import_examples.php', $params);
-          $mform->addElement('html', '<a href='. $import->out().'>Import Examples</a>');
-      }
         $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_gapfill'), $delimitchars2);
         $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_gapfill');
 
@@ -197,6 +199,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[0]')->setValue(array('text' => get_string('letterhint0', 'qtype_gapfill')));
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
+        $mform->addElement('html', '</div>');
+
 
     }
 

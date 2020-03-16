@@ -12,6 +12,10 @@ question editing form
     box-shadow: 3px 3px #7bc1f7;
     font-style: italic;
 }
+.gapfill-edit .import-examples {
+  font-size:1.5rem;
+  background-color:red;
+}
 
 .gapfill .attobackground {
     background: lightgrey;
