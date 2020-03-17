@@ -24,19 +24,35 @@
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
         init: function() {
-          $(".droptarget").on('keydown drop', function() {
-           var draggables = $(".draggable");
-           debugger;
-           var i;
-           var targetVal = $(this).val();
-           for(i=0;i < draggables.length;i++){
-            sourceVal = draggables[i].textContent;
-            if(sourceVal == targetVal){
-              $(draggables[i]).css("visibility","visible")
-            }
-
-           }
+          var dropvals = [];
+          $(".droptarget").each(function(el) {
+            dropvals.push($(this).val());
           });
+          $(".draggable").each(function(el){
+            if(dropvals.includes($(this).text())) {
+              document.getElementById( this.id ).style.visibility = 'hidden';
+            }
+          });
+          $(".droptarget").on('dblclick', function() {
+            dragvisibility(this);
+            $(this).val('');
+          })
+
+          $(".droptarget").on('keydown drop', function() {
+            dragvisibility(this);
+          });
+
+          function dragvisibility(that){
+            var draggables = $(".draggable");
+            var targetVal = $(that).val();
+            for(i=0;i < draggables.length;i++){
+             sourceVal = draggables[i].textContent;
+             if(sourceVal == targetVal){
+               $(draggables[i]).css("visibility","visible")
+             }
+            }
+          }
+
 
             $(".draggable").draggable({
                 revert: false,
@@ -58,10 +74,7 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                         return;
                     }
                     this.value = $(ui.draggable).text();
-                    debugger;
                     $(ui.draggable).css("visibility", "hidden");
-
-
                     $(this).css("background-color", "white");
                 }
             });
