@@ -24,6 +24,20 @@
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
         init: function() {
+          $(".droptarget").on('keydown drop', function() {
+           var draggables = $(".draggable");
+           debugger;
+           var i;
+           var targetVal = $(this).val();
+           for(i=0;i < draggables.length;i++){
+            sourceVal = draggables[i].textContent;
+            if(sourceVal == targetVal){
+              $(draggables[i]).css("visibility","visible")
+            }
+
+           }
+          });
+
             $(".draggable").draggable({
                 revert: false,
                 helper: 'clone',
@@ -36,6 +50,7 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                     $(this).fadeTo(0, 1);
                 }
             });
+
             $(".droptarget").droppable({
                 hoverClass: 'active',
                 drop: function(event, ui) {
@@ -43,6 +58,10 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                         return;
                     }
                     this.value = $(ui.draggable).text();
+                    debugger;
+                    $(ui.draggable).css("visibility", "hidden");
+
+
                     $(this).css("background-color", "white");
                 }
             });
