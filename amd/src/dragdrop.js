@@ -30,7 +30,7 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
           });
           $(".draggable").each(function(el){
             if(dropvals.includes($(this).text())) {
-              document.getElementById( this.id ).style.visibility = 'hidden';
+              document.getElementById(this.id ).style.visibility = 'hidden';
             }
           });
           $(".droptarget").on('dblclick', function() {

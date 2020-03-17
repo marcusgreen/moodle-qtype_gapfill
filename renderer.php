@@ -100,8 +100,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
             /* format the non entry field parts of the question text, this will also
               ensure images get displayed */
-            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
-                   $qa, 'question', 'questiontext', $question->id);
+            // $questiontext .= $question->format_text($fragment, $question->questiontextformat,
+            //        $qa, 'question', 'questiontext', $question->id);
+            $questiontext .= $qa->rewrite_pluginfile_urls($fragment, 'question', 'questiontext', $question->id);
+            //        return format_text($text, $format, $formatoptions);
+
         }
 
         $output .= "<br/>";
