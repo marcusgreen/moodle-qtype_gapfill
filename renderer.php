@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
+use qtype_gapfill_question;
 
 /**
  * Generates the output for gapfill questions
@@ -66,7 +67,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
-        $question = $qa->get_question();
+        $question  = $qa->get_question();
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
@@ -98,10 +99,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             if ($place > 0) {
                 $questiontext .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
-            /* format the non entry field parts of the question text, this will also
-              ensure images get displayed */
-            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
-                   $qa, 'question', 'questiontext', $question->id);
+            /* ensure images get displayed */
+            $questiontext .= $qa->rewrite_pluginfile_urls($fragment, 'question',
+                                                          'questiontext', $question->id);
+
         }
 
         $output .= "<br/>";
