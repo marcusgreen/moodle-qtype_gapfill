@@ -20,6 +20,7 @@
  * @copyright  2018 Marcus Green
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
+
 defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once($CFG->libdir . '/questionlib.php');
@@ -159,6 +160,27 @@ class qtype_gapfill extends question_type {
         }
     }
 
+/**
+ * all the possible types of response that are
+ * recognised for this question.
+ *
+ * @param [type] $questiondata
+ * @return void
+ */
+    public function get_possible_responses($questiondata) {
+      $responses = [];
+      foreach ($questiondata->options->answers as $aid => $answer) {
+          $responses[] = new question_possible_response($answer->answer,
+                  ($answer->fraction / count($questiondata->options->answers)));
+      }
+      $responses[null] = question_possible_response::no_response();
+      $responseclasses = ['5' => $responses];
+      return $responseclasses;
+
+     // return $responseclasses;
+
+    }
+
     /**
      * Sets the default mark as 1* the number of gaps
      * Does not allow setting any other value per space/field at the moment
@@ -245,7 +267,10 @@ class qtype_gapfill extends question_type {
         $this->save_hints($question, true);
         return true;
     }
-
+    public function get_random_guess_score($questiondata) {
+      // TODO.
+      return 0;
+  }
 
     /**
      * Writes to the database, runs from question editing form

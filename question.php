@@ -666,4 +666,32 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         }
         return $markedgaps;
     }
+
+    public function classify_response(array $response) {
+      $parts = [];
+      foreach ($this->places as $place => $group) {
+          if (!array_key_exists($this->field($place), $response) ||
+                  !$response[$this->field($place)]) {
+             $parts[$place] = question_classified_response::no_response();
+              continue;
+           }
+
+           $fieldname = $this->field($place);
+           $fieldvalue= $response[$fieldname];
+
+    /**
+     * @var string the classification of this response the student gave to this
+     * part of the question. Must match one of the responseclasses returned by
+     * {@link question_type::get_possible_responses()}.
+     */
+   // public $responseclassid;
+    /** @var string the actual response the student gave to this part. */
+    //public $fraction;
+             $parts[$place] = new question_classified_response(
+                  'cat',
+                  $fieldvalue,
+                  1);
+       }
+       return $parts;
+  }
 }
