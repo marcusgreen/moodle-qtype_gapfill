@@ -399,7 +399,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
+    public function is_used(string $draggable, $qa, string $cssclasses){
 
+         if(in_array($draggable, $qa->get_last_qt_data())) {
+           return $cssclasses .= ' hide ';
+         }
+         return $cssclasses;
+    }
     /**
      *
      * @param array $response Passed in from the submitted form
@@ -410,6 +416,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function get_num_parts_right(array $response) {
         $numright = 0;
+
         foreach ($this->places as $place => $notused) {
             $rightanswer = $this->get_right_choice_for($place);
             if (!isset($response[$this->field($place)])) {
@@ -426,6 +433,17 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $numright++;
             }
+        }
+        //mavg
+        if ($this->noduplicates == 1) {
+          $numright = 0;
+          foreach ($this->places as $place => $notused) {
+            $answergiven = $response[$this->field($place)];
+            if (in_array($answergiven,$this->places)) {
+              $numright++;
+            }
+          }
+
         }
         return [$numright, $this->gapcount];
     }

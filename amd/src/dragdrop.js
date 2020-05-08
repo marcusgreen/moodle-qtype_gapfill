@@ -24,34 +24,60 @@
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
         init: function() {
-          var dropvals = [];
-          $(".droptarget").each(function(el) {
-            dropvals.push($(this).val());
-          });
-          $(".draggable").each(function(el){
-            if(dropvals.includes($(this).text())) {
-              document.getElementById(this.id ).style.visibility = 'hidden';
-            }
-          });
+          // var dropvals = [];
+          // $(".droptarget").each(function(el) {
+          //   dropvals.push($(this).val());
+          // });
+          // $(".draggable").each(function(el){
+          //   if(dropvals.includes($(this).text())) {
+          //     document.getElementById(this.id ).style.visibility = 'hidden';
+          //   }
+          // });
           $(".droptarget").on('dblclick', function() {
-            dragvisibility(this);
-            $(this).val('');
+            dragShow(this);
+            $(this).val("");
+
           })
 
-          $(".droptarget").on('keydown drop', function() {
-            dragvisibility(this);
-          });
-
-          function dragvisibility(that){
+          // function dragHide(that){
+          //   var draggables = $(".draggable");
+          //   var targetVal = $(that).val();
+          //   for(i=0;i < draggables.length;i++){
+          //    sourceVal = draggables[i].textContent;
+          //    if(sourceVal == targetVal){
+          //      $(draggables[i]).addClass("hide");
+          //    }
+          //   }
+          // }
+          function dragShow(that){
             var draggables = $(".draggable");
             var targetVal = $(that).val();
             for(i=0;i < draggables.length;i++){
              sourceVal = draggables[i].textContent;
              if(sourceVal == targetVal){
-               $(draggables[i]).css("visibility","visible")
+               $(draggables[i]).removeClass("hide");
              }
             }
           }
+
+          $(".droptarget").on('keydown drop', function() {
+            dragShow(this);
+          });
+
+
+          // function dragvisibility(that){
+          //   debugger;
+
+          //   var draggables = $(".draggable");
+          //   var targetVal = $(that).val();
+          //   for(i=0;i < draggables.length;i++){
+          //    sourceVal = draggables[i].textContent;
+          //    if(sourceVal == targetVal){
+          //      $(draggables[i]).addClass("hide");
+          //      $(that).val("");
+          //    }
+          //   }
+          // }
 
 
             $(".draggable").draggable({
@@ -59,12 +85,6 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                 helper: 'clone',
                 cursor: 'pointer',
                 scroll: 'false',
-                start: function() {
-                    $(this).fadeTo('fast', 0.5);
-                },
-                stop: function() {
-                    $(this).fadeTo(0, 1);
-                }
             });
 
             $(".droptarget").droppable({
@@ -74,8 +94,7 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                         return;
                     }
                     this.value = $(ui.draggable).text();
-                    $(ui.draggable).css("visibility", "hidden");
-                    $(this).css("background-color", "white");
+                    $(ui.draggable).addClass("hide");
                 }
             });
         }
