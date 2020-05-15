@@ -89,8 +89,6 @@ $string['singleuse'] = 'Single use draggables';
 $string['singleuse_text'] = 'Remove draggables from list when dropped into a gap';
 $string['singleuse_help'] = 'Remove draggables from list when dropped into a gap';
 
-
-
 /* Used in the settings */
 $string['addhinttext'] = 'Add hint text to editing form';
 $string['addhinttext_text'] = 'Populate first two hints in the Multiple tries section of the form';

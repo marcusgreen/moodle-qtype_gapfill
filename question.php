@@ -399,6 +399,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             return false;
         }
     }
+    /**
+     * Communicate with the dragdrop.js script
+     *
+     * @return void
+     */
+    public function initJs(int $singleuse) {
+        global $PAGE;
+        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init',['singleuse' => $singleuse]);
+    }
     public function is_used(string $draggable, $qa, string $cssclasses){
          if(in_array($draggable, $qa->get_last_qt_data())) {
            return $cssclasses .= ' hide ';

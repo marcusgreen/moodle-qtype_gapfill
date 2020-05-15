@@ -23,32 +23,15 @@
  */
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
     return {
-        init: function() {
-          // var dropvals = [];
-          // $(".droptarget").each(function(el) {
-          //   dropvals.push($(this).val());
-          // });
-          // $(".draggable").each(function(el){
-          //   if(dropvals.includes($(this).text())) {
-          //     document.getElementById(this.id ).style.visibility = 'hidden';
-          //   }
-          // });
+        init: function(singleuse) {
+        debugger;
           $(".droptarget").on('dblclick', function() {
-            dragShow(this);
-            $(this).val("");
-
+            if(singleuse){
+              dragShow(this);
+              $(this).val("");
+            }
           })
 
-          // function dragHide(that){
-          //   var draggables = $(".draggable");
-          //   var targetVal = $(that).val();
-          //   for(i=0;i < draggables.length;i++){
-          //    sourceVal = draggables[i].textContent;
-          //    if(sourceVal == targetVal){
-          //      $(draggables[i]).addClass("hide");
-          //    }
-          //   }
-          // }
           function dragShow(that){
             var draggables = $(".draggable");
             var targetVal = $(that).val();
@@ -64,22 +47,6 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
             dragShow(this);
           });
 
-
-          // function dragvisibility(that){
-          //   debugger;
-
-          //   var draggables = $(".draggable");
-          //   var targetVal = $(that).val();
-          //   for(i=0;i < draggables.length;i++){
-          //    sourceVal = draggables[i].textContent;
-          //    if(sourceVal == targetVal){
-          //      $(draggables[i]).addClass("hide");
-          //      $(that).val("");
-          //    }
-          //   }
-          // }
-
-
             $(".draggable").draggable({
                 revert: false,
                 helper: 'clone',
@@ -94,7 +61,9 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                         return;
                     }
                     this.value = $(ui.draggable).text();
-                    $(ui.draggable).addClass("hide");
+                    if(singleuse){
+                        $(ui.draggable).addClass("hide");
+                    }
                 }
             });
         }
