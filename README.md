@@ -9,6 +9,7 @@ If the dropdown or dragdrop options are set in the question edit form, it can di
 wrong answers. These can then can be selected via dropddropdown lists or javascript powered drag and drop functionality.
 
 See change log at https://github.com/marcusgreen/moodle-qtype_gapfill/blob/master/changelog.md
+To install from the plugins database go to https://moodle.org/plugins/qtype_gapfill
 
 This question type was written by Marcus Green
 
