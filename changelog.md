@@ -1,4 +1,4 @@
-### Version 1.978 of the Moodle Gapfill question type Apr 2020
+### Version 1.978 of the Moodle Gapfill question type May 2020
 Fixed issue with case sensitivity when using | operator and ignore duplicates
 Thanks to Jason Rogers of the South Carolina Dept of Education and Dipak Kumar of Blackboard for reporting this and helping test the solution.
 
