@@ -13,6 +13,9 @@ The editing form was ignoring the settings/default for fixedgapsize. It is now r
 by default on installation the widths gaps will be set to that of the largest gap. See docs at
 https://docs.moodle.org/en/Gapfill_question_type#Fixed_Gapsize. I noticed that myself.
 
+Regular expressions are now disabled by default. Thanks to the suggestion from Howard Miller, legendry contributor at the Moodle.org forums.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/31
+
 
 ### Version 1.977 of the Moodle Gapfill question type Oct 2019
 
