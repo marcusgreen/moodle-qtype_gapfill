@@ -21,5 +21,5 @@ moodle\question\type\gapfill
 Where moodle is webroot for your install.
 
 Go to Site Administration/Notifications
-See changelog.md for details of each update
+
 User documentation is at https://docs.moodle.org/en/Gapfill_question_type
