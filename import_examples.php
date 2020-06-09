@@ -53,11 +53,21 @@ class gapfill_import_form extends moodleform {
      * mini form for entering the import details
      */
     protected function definition() {
-        $mform = $this->_form;
-        $mform->addElement('text', 'courseshortname', get_string('course'));
-        $mform->setType('courseshortname', PARAM_RAW);
-        $mform->addElement('submit', 'submitbutton', get_string('import'));
-    }
+      global $DB;
+      //$courses = $records = $DB->get_recordset_sql('SELECT shortname from {course} where id >'.SITEID);
+
+      $courses = $records = $DB->get_records_sql_menu('SELECT id, shortname from {course} where id >'.SITEID);
+      $courses = array_combine($courses, $courses);
+
+      $mform = $this->_form;
+
+      // $courses = $DB-get_records('course',);
+      $options = [];
+      $mform->addElement('searchableselector', 'courseshortname', 'Search', $courses, $options);
+      //$mform->addElement('text', 'courseshortname', get_string('course'));
+      $mform->setType('courseshortname', PARAM_RAW);
+      $mform->addElement('submit', 'submitbutton', get_string('import'));
+  }
 
     /**
      * Get the category to insert the questions. Can be tricky if the course
