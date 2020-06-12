@@ -98,9 +98,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             if ($place > 0) {
                 $questiontext .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
-            /* ensure images get displayed */
-            $questiontext .= $qa->rewrite_pluginfile_urls($fragment, 'question',
-                                                          'questiontext', $question->id);
+              // Format the non entry field parts of the question text.
+              // This will also ensure images get displayed.
+              $questiontext .= $question->format_text($fragment, $question->questiontextformat,
+              $qa, 'question', 'questiontext', $question->id);
 
         }
 
