@@ -56,12 +56,6 @@ class qtype_gapfill extends question_type {
             'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints');
     }
 
-    /**
-     * Utility method used by {@link qtype_renderer::head_code()}
-     * It looks for any of the files script.js or script.php that
-     * exist in the plugin folder and ensures they get included.
-     * It also includes the jquery files required for this plugin
-     */
 
     /**
      * Called during question editing
