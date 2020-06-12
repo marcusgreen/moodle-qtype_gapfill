@@ -229,6 +229,11 @@ class qtype_gapfill extends question_type {
         return $matches[1];
     }
 
+    public static function contains_delim($fragment){
+      $found = strpos($fragment, "#");
+      return $found;
+    }
+
     /**
      * Save the units and the answers associated with this question.
      * @param stdClass $question

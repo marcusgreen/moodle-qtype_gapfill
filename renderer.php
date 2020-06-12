@@ -95,7 +95,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $markedgaps = $question->get_markedgaps($qa, $options);
 
         foreach ($question->textfragments as $place => $fragment) {
-            if ($place > 0) {
+            if (qtype_gapfill::contains_delim($fragment)){
                 $questiontext .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
               // Format the non entry field parts of the question text.
