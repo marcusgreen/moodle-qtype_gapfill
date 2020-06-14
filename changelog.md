@@ -1,6 +1,5 @@
 ### Version 1.979 of the Moodle Gapfill question type June 2020
-Filters were not being processed. LayTex in particular. Note only text can
-be used for draggables, but LayTex can be used in the body of the quesiton text.
+Filters were not being processed. LayTex in particular. Thanks to Elena Safiulina for reporting this issue. Be aware that only plain text can be used for draggables etc, however LayTex can be used in the body of the question text.
 
 ### Version 1.978 of the Moodle Gapfill question type May 2020
 Fixed issue with case sensitivity when using | operator and ignore duplicates
