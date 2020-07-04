@@ -86,8 +86,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                      $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
                     /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
                     $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++
-                            . '" class= "' . $cssclasses . '">' .
-                            $potentialanswer . "</span>";
+                        . '" class= "' . $cssclasses . '">' .
+                        $potentialanswer . "</span>";
                 }
             }
             $answeroptions .= "<br/><br/>";
@@ -99,12 +99,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             if ($place > 0) {
                 $questiontext .= $this->embedded_element($qa, $place, $options, $markedgaps);
             }
-            /* format the non entry field parts of the question text, this will also
-              ensure images get displayed */
-            // $questiontext .= $question->format_text($fragment, $question->questiontextformat,
-            //        $qa, 'question', 'questiontext', $question->id);
-            $questiontext .= $qa->rewrite_pluginfile_urls($fragment, 'question', 'questiontext', $question->id);
-            //        return format_text($text, $format, $formatoptions);
+            // Format the non entry field parts of the question text.
+            // This will also ensure images get displayed.
+            $questiontext .= $question->format_text($fragment, $question->questiontextformat,
+                $qa, 'question', 'questiontext', $question->id);
 
         }
 
@@ -118,13 +116,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 $output .= $answeroptions . '</div>' . $questiontext;
             }
         } else {
-            /*for gapfill and dropdown rendering */
+            // For gapfill and dropdown rendering.
             $output .= $questiontext;
         }
 
         if ($qa->get_state() == question_state::$invalid) {
-            $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer'
-                                => $output)), array('class' => 'validationerror'));
+            $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
+             ['class' => 'validationerror']);
         }
         $output .= html_writer::end_div();
 
@@ -165,7 +163,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* $options->correctness is really about it being ready to mark, */
         $aftergaptext = "";
         $inputclass = "";
-        if ((($options->correctness) or ( $options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
+        if ((($options->correctness) or ($options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
             $response = $qa->get_last_qt_data();
@@ -174,7 +172,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             if ($fraction == 1) {
                 array_push($this->correctresponses, $response[$fieldname]);
                 /* if the gap contains !! or  the response is (a correct) non blank */
-                if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] <> '')) {
+                if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] != '')) {
                     $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
@@ -213,7 +211,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $inputattributes['style'] = '';
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
-                    array('' => ''), $inputattributes) . ' ' . $aftergaptext;
+                array('' => ''), $inputattributes) . ' ' . $aftergaptext;
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
@@ -249,7 +247,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return false;
         }
         $aftergaptext = "";
-        if (($fraction == 0) && ($rightanswer <> "") && ($rightanswer <> ".+")) {
+        if (($fraction == 0) && ($rightanswer != "") && ($rightanswer != ".+")) {
             /* replace | operator with the word or */
             $rightanswerdisplay = preg_replace("/\|/", get_string("or", "qtype_gapfill"), $rightanswer);
             /* replace !! with the 'blank' */
@@ -260,14 +258,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
              * was given */
             $aftergaptext = $this->feedback_image($fraction);
             $aftergaptext .= "<span class='aftergapfeedback' title='" .
-                get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
+            get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
                 $rightanswerdisplay . $delim["r"] . "</span>";
             $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >"
-                . $this->get_feedback($itemsettings, false) . "</span>";
+            . $this->get_feedback($itemsettings, false) . "</span>";
         } else {
             $aftergaptext = $this->feedback_image($fraction);
             $aftergaptext .= " <span class='gapfeedbackcorrect' title='feedback' >" .
-                $this->get_feedback($itemsettings, true) . "</span>";
+            $this->get_feedback($itemsettings, true) . "</span>";
         }
         return $aftergaptext;
     }

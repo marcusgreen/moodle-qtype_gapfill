@@ -1,7 +1,10 @@
-### Version 2.0 of the Moodle Gapfill question type June 2020
+### Version 2.0 of the Moodle Gapfill question type JUl 2020
 New setting useonce. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a useonce checkbox in the editing form.
 
-### Version 1.978 of the Moodle Gapfill question type Apr 2020
+### Version 1.979 of the Moodle Gapfill question type June 2020
+Filters were not being processed. LayTex in particular. Thanks to Elena Safiulina for reporting this issue. Be aware that only plain text can be used for draggables etc, however LayTex can be used in the body of the question text.
+
+### Version 1.978 of the Moodle Gapfill question type May 2020
 Fixed issue with case sensitivity when using | operator and ignore duplicates
 Thanks to Jason Rogers of the South Carolina Dept of Education and Dipak Kumar of Blackboard for reporting this and helping test the solution.
 
@@ -15,6 +18,10 @@ A fix for an error triggered in the question analysis in the quiz statistics rep
 The editing form was ignoring the settings/default for fixedgapsize. It is now recognising this and
 by default on installation the widths gaps will be set to that of the largest gap. See docs at
 https://docs.moodle.org/en/Gapfill_question_type#Fixed_Gapsize. I noticed that myself.
+
+Regular expressions are now disabled by default. Thanks to the suggestion from Howard Miller, legendry contributor at the Moodle.org forums.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/31
+
 
 ### Version 1.977 of the Moodle Gapfill question type Oct 2019
 

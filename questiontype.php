@@ -39,6 +39,15 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 class qtype_gapfill extends question_type {
 
     /**
+     * Whether the quiz statistics report can analyse
+     * all the student responses. See questiontypebase for more
+     *
+     * @return bool
+     */
+    public function can_analyse_responses() {
+          return false;
+    }
+    /**
      * data used by export_to_xml (among other things possibly
      * @return array
      */
@@ -47,12 +56,6 @@ class qtype_gapfill extends question_type {
             'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints', 'singleuse'];
     }
 
-    /**
-     * Utility method used by {@link qtype_renderer::head_code()}
-     * It looks for any of the files script.js or script.php that
-     * exist in the plugin folder and ensures they get included.
-     * It also includes the jquery files required for this plugin
-     */
 
     /**
      * Called during question editing
