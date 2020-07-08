@@ -108,9 +108,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $output .= "<br/>";
         if ($question->answerdisplay == 'dragdrop') {
+            $questiontext = $this->app_connect($question, $questiontext);
             if ($question->optionsaftertext == true) {
-                /* this is to communicate with the mobile app */
-                $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
                 $output .= $questiontext . $answeroptions;
             } else {
                 $output .= $answeroptions . '</div>' . $questiontext;
@@ -129,6 +128,23 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $output;
     }
 
+    /**
+     * Set divs that are inspected by the mobile app
+     * for settings
+     *
+     * @param qtype_gapfill_question $question
+     * @param  string $questiontext
+     * @return string
+     */
+    public function app_connect(qtype_gapfill_question $question, string $questiontext) : string{
+      if ($question->optionsaftertext == true) {
+          $questiontext .= "<div id='gapfill_optionsaftertext'></div>";
+      }
+      if ($question->singleuse == true) {
+          $questiontext .= "<div id='gapfill_singleuse'></div>";
+      }
+      return $questiontext;
+    }
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
      * set the state accordingly
