@@ -50,10 +50,11 @@ var result = {
                 /* Remove picked class from everything else*/
                 draggables[i].classList.remove('picked');
             }
-            return event.currentTarget.innerHTML;
+            return event.currentTarget;
         }
         this.questionRendered = function questionRendered() {
             var self = this;
+	    var picked = null;
             var LastItemClicked = '';
             self.LastItemClicked = LastItemClicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
@@ -62,7 +63,8 @@ var result = {
                 /* Optionsaftertext reference is to stop the listener being applied twice */
                 if (draggables[i].id && !this.question.optionsaftertext) {
                     draggables[i].addEventListener('click', function() {
-                        self.LastItemClicked = pickAnswerOption(draggables, event);
+		    picked  = pickAnswerOption(draggables, event);
+		    self.LastItemClicked = picked.innerHTML;
                     });
                 }
             }
@@ -71,7 +73,8 @@ var result = {
                     /* Paste text from last click into the droptarger */
                     droptargets[i].addEventListener('click', function(event) {
                         event.currentTarget.value = self.LastItemClicked;
-                    });
+			document.getElementById(picked.id).style.display = "none"; 
+                   });
                     /* Clear contents on double click */
                     droptargets[i].addEventListener('dblclick', function(event) {
                         event.currentTarget.value = '';
@@ -140,6 +143,9 @@ var result = {
                 this.question.optionsaftertext = true;
             }
 
+            if (div.querySelector('#gapfill_singleuse') !== null) {
+                this.question.singleuse = true;
+            }
         });
         // @codingStandardsIgnoreEnd
         return true;
