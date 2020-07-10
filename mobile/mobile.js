@@ -54,7 +54,7 @@ var result = {
         }
         this.questionRendered = function questionRendered() {
             var self = this;
-	    var picked = null;
+	          var picked = {};
             var LastItemClicked = '';
             self.LastItemClicked = LastItemClicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
@@ -63,24 +63,34 @@ var result = {
                 /* Optionsaftertext reference is to stop the listener being applied twice */
                 if (draggables[i].id && !this.question.optionsaftertext) {
                     draggables[i].addEventListener('click', function() {
-		    picked  = pickAnswerOption(draggables, event);
-		    self.LastItemClicked = picked.innerHTML;
+                     picked  = pickAnswerOption(draggables, event);
+                     self.LastItemClicked = picked.innerHTML;
                     });
                 }
             }
             var droptargets = this.componentContainer.querySelectorAll('.droptarget');
             for (i = 0; i < droptargets.length; i++) {
-                    /* Paste text from last click into the droptarger */
-                    droptargets[i].addEventListener('click', function(event) {
+                       /* Paste text from last click into the droptarger */
+                       droptargets[i].addEventListener('click', function(event) {
                         event.currentTarget.value = self.LastItemClicked;
-			document.getElementById(picked.id).style.display = "none"; 
+                        hideDropped(draggables, event);
                    });
+
                     /* Clear contents on double click */
                     droptargets[i].addEventListener('dblclick', function(event) {
                         event.currentTarget.value = '';
                     });
             }
         };
+        function hideDropped(draggables, event) {
+          for (i = 0; i < draggables.length; i++) {
+            if (draggables[i].innerHTML == event.currentTarget.value) {
+              draggables[i].style.display = "none";
+            } else {
+              draggables[i].style.display = "inline-block";
+            }
+          }
+        }
 
         if (!this.question) {
             console.warn('Aborting because of no question received.');
