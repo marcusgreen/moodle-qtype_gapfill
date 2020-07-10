@@ -24,6 +24,7 @@ var that = this;
 var result = {
 
     componentInit: function() {
+      debugger;
         /**
          * If the question is in a readonly state, e.g. after being
          * answered or in the review page then stop any further
@@ -74,12 +75,12 @@ var result = {
                        droptargets[i].addEventListener('click', function(event) {
                         event.currentTarget.value = self.LastItemClicked;
                         hideDropped(draggables, event);
-                   });
-
+                   })
                     /* Clear contents on double click */
                     droptargets[i].addEventListener('dblclick', function(event) {
-                        event.currentTarget.value = '';
-                    });
+                       // event.currentTarget.value = '';
+                          showCleared(draggables,event);
+                    })
             }
         };
         function hideDropped(draggables, event) {
@@ -90,7 +91,19 @@ var result = {
               draggables[i].style.display = "inline-block";
             }
           }
-        }
+        };
+
+        function showCleared(draggables, event) {
+          debugger;
+          for (i = 0; i < draggables.length; i++) {
+            if(draggables[i].innerHTML == event.target.value){
+              draggables[i].style.display = "inline-block";
+              draggables[i].classList.remove('picked');
+            }
+          }
+          event.currentTarget.value = '';
+
+        };
 
         if (!this.question) {
             console.warn('Aborting because of no question received.');
