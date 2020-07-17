@@ -401,6 +401,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
     /**
      * Communicate with the dragdrop.js script
+     * tell it if singleuse of draggables is
+     * enabled
      *
      * @return void
      */
@@ -408,8 +410,20 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         global $PAGE;
         $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init',['singleuse' => $singleuse ?? 0]);
     }
-    public function is_used(string $draggable, $qa, string $cssclasses){
-         if(in_array($draggable, $qa->get_last_qt_data())) {
+
+
+    /**
+     * Check if singleuse is enabled and if so
+     * hide this draggable if it has already
+     * been dropped into a gap
+     *
+     * @param string $draggable
+     * @param question_attempt $qa
+     * @param string $cssclasses
+     * @return string
+     */
+    public function is_used(string $draggable, question_attempt $qa, string $cssclasses) :string {
+      if((($this->singleuse == 1) && in_array($draggable, $qa->get_last_qt_data()))) {
            return $cssclasses .= ' hide ';
          }
          return $cssclasses;

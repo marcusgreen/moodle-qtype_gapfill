@@ -1,5 +1,5 @@
 ### Version 2.0 of the Moodle Gapfill question type JUl 2020
-New setting useonce. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a useonce checkbox in the editing form.
+New setting singleuse. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a useonce checkbox in the editing form.
 
 ### Version 1.979 of the Moodle Gapfill question type June 2020
 Filters were not being processed. LayTex in particular. Thanks to Elena Safiulina for reporting this issue. Be aware that only plain text can be used for draggables etc, however LayTex can be used in the body of the question text.
@@ -10,8 +10,7 @@ Thanks to Jason Rogers of the South Carolina Dept of Education and Dipak Kumar o
 
 Fix for when force clean is on, which is planned to be a default, see
 https://tracker.moodle.org/browse/MDL-62352
-Thanks to  Hubong Nguen for the UK OU who contributed a patch for wordselect without which
-I would not have known about this.
+Thanks to  Hubong Nguen for the UK OU who contributed a patch for wordselect without which I would not have known about this.
 
 A fix for an error triggered in the question analysis in the quiz statistics report. Thanks to Chris Kenniburg of Dearborn schools for reporting this.
 
