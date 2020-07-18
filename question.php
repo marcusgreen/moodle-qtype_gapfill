@@ -508,7 +508,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             /* Hash of flatted answer values is is guaranteed
               not to to be an answer for any gap */
             $nonanswer = hash('ripemd160', implode(' ', $this->places));
-            foreach ($response as $key => $value) {
+            foreach (array_keys($response) as $key) {
                 $response[$key] = $nonanswer;
             }
             $response = array_merge($response, $au);
