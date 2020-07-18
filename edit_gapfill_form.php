@@ -160,7 +160,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('disableregex', $config->disableregex);
         $mform->setAdvanced('disableregex');
 
-         // Single use (remove them from list when dropped in gap)
+         // Single use (remove draggables from list when dropped in gap).
         $mform->addElement('advcheckbox', 'singleuse', get_string('singleuse', 'qtype_gapfill'));
         $mform->addHelpButton('singleuse', 'singleuse', 'qtype_gapfill');
         $mform->setDefault('singleuse', $config->singleuse);

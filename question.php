@@ -406,11 +406,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      *
      * @return void
      */
-    public function initJs(?int $singleuse = 0) {
+    public function initjs(?int $singleuse = 0) {
         global $PAGE;
-        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init',['singleuse' => $singleuse ?? 0]);
+        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init', ['singleuse' => $singleuse ?? 0]);
     }
-
 
     /**
      * Check if singleuse is enabled and if so
@@ -422,12 +421,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @param string $cssclasses
      * @return string
      */
-    public function is_used(string $draggable, question_attempt $qa, string $cssclasses) :string {
-      if((($this->singleuse == 1) && in_array($draggable, $qa->get_last_qt_data()))) {
-           return $cssclasses .= ' hide ';
-         }
-         return $cssclasses;
+    public function is_used(string $draggable, question_attempt $qa, string $cssclasses): string {
+        if ((($this->singleuse == 1) && in_array($draggable, $qa->get_last_qt_data()))) {
+            return $cssclasses .= ' hide ';
+        }
+        return $cssclasses;
     }
+
     /**
      *
      * @param array $response Passed in from the submitted form
@@ -456,16 +456,14 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
                 $numright++;
             }
         }
-        //mavg
         if ($this->noduplicates == 1) {
-          $numright = 0;
-          foreach ($this->places as $place => $notused) {
-            $answergiven = $response[$this->field($place)];
-            if (in_array($answergiven,$this->places)) {
-              $numright++;
+            $numright = 0;
+            foreach ($this->places as $place => $notused) {
+                $answergiven = $response[$this->field($place)];
+                if (in_array($answergiven, $this->places)) {
+                    $numright++;
+                }
             }
-          }
-
         }
         return [$numright, $this->gapcount];
     }

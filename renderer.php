@@ -67,7 +67,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
         $question = $qa->get_question();
-        $question->initJs($question->singleuse);
+        $question->initjs($question->singleuse);
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
@@ -136,14 +136,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param  string $questiontext
      * @return string
      */
-    public function app_connect(qtype_gapfill_question $question, string $questiontext) : string{
-      if ($question->optionsaftertext == true) {
-          $questiontext .= "<div id='gapfill_optionsaftertext'></div>";
-      }
-      if ($question->singleuse == true) {
-          $questiontext .= "<div id='gapfill_singleuse'></div>";
-      }
-      return $questiontext;
+    public function app_connect(qtype_gapfill_question $question, string $questiontext) : string {
+        if ($question->optionsaftertext == true) {
+            $questiontext .= "<div id='gapfill_optionsaftertext'></div>";
+        }
+        if ($question->singleuse == true) {
+            $questiontext .= "<div id='gapfill_singleuse'></div>";
+        }
+        return $questiontext;
     }
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
