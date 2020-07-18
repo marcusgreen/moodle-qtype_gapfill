@@ -236,7 +236,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function get_expected_data() {
         $data = [];
-        foreach ($this->places as $key => $value) {
+        foreach (array_keys($this->places) as $key) {
             $data['p' . $key] = PARAM_RAW_TRIMMED;
         }
         return $data;
@@ -475,7 +475,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @return array a cleaned up response with the wrong bits reset.
      */
     public function clear_wrong_from_response(array $response) {
-        foreach ($this->places as $place => $notused) {
+        foreach (array_keys($this->places) as $place) {
             if (!array_key_exists($this->field($place), $response)) {
                 continue;
             }
@@ -674,7 +674,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
         $markedgaps = array();
         $question = $qa->get_question();
         $correctgaps = array();
-        foreach ($question->textfragments as $place => $notused) {
+        foreach (array_keys($question->textfragments) as $place) {
             if ($place < 1) {
                 continue;
             }
