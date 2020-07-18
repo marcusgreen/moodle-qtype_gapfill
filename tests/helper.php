@@ -154,6 +154,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->gapcount = '2';
         $question->optionsaftertext = false;
         $question->letterhints = '0';
+        $question->singleuse = '0';
         $question->itemsettings = '[{"id":"51","question":"256","itemid":"id1_0","gaptext":"sat","correctfeedback":"OK<br>",'
                 . '"incorrectfeedback":"Wrong<br>"}]';
 
