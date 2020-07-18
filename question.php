@@ -437,26 +437,26 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * for question. Compares answergiven with right/correct answer
      */
     public function get_num_parts_right(array $response) {
-      $numright = 0;
-      foreach (array_keys($this->places) as $place) {
-          $rightanswer = $this->get_right_choice_for($place);
-          if (!isset($response[$this->field($place)])) {
-              continue;
-          }
-          $answergiven = $response[$this->field($place)];
-          if (!array_key_exists($this->field($place), $response)) {
-              continue;
-          }
-          if (!$this->casesensitive == 1) {
-              $answergiven = core_text::strtolower($answergiven, 'UTF-8');
-              $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
-          }
-          if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
-              $numright++;
-          }
-      }
-      return [$numright, $this->gapcount];
-  }
+        $numright = 0;
+        foreach (array_keys($this->places) as $place) {
+            $rightanswer = $this->get_right_choice_for($place);
+            if (!isset($response[$this->field($place)])) {
+                continue;
+            }
+            $answergiven = $response[$this->field($place)];
+            if (!array_key_exists($this->field($place), $response)) {
+                continue;
+            }
+            if (!$this->casesensitive == 1) {
+                $answergiven = core_text::strtolower($answergiven, 'UTF-8');
+                $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
+            }
+            if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
+                $numright++;
+            }
+        }
+        return [$numright, $this->gapcount];
+    }
 
     /**
      * Given a response, rest the parts that are wrong. Relevent in
