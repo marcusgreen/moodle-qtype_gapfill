@@ -293,7 +293,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param boolean $correctness
      * @return string
      */
-    protected function get_feedback(array $settings, bool $correctness) :string {
+    protected function get_feedback(?array $settings, bool $correctness) :string {
         if ($settings == null) {
             return "";
         }
