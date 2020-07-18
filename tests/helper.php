@@ -94,6 +94,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
                     'incorrectfeedback' => 'Incorrect Feedback',
                     'incorrectfeedbackformat' => '0',
                     'optionsaftertext' => false,
+                    'singleuse' => false,
                     'answers' => $answers,
         );
 
