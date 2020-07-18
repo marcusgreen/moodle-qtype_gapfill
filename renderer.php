@@ -218,7 +218,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
-            $inputattribues['selected'] = $currentanswer;
+            $inputattributes['selected'] = $currentanswer;
             /* if the size attribute is left in android chrome
              *  doesn't show the down arrows in select
              */
@@ -293,7 +293,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param boolean $correctness
      * @return string
      */
-    protected function get_feedback($settings, $correctness) {
+    protected function get_feedback(array $settings, boolean $correctness) :string {
         if ($settings == null) {
             return "";
         }
@@ -317,7 +317,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param string $rightanswer
      * @return array
      */
-    protected function get_itemsettings($rightanswer) {
+    protected function get_itemsettings(string $rightanswer) {
         foreach ($this->itemsettings as $set) {
             if ($set->gaptext == $rightanswer) {
                 return $set;
