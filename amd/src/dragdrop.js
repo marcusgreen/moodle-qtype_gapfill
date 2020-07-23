@@ -44,7 +44,12 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
                     }
                     this.value = $(ui.draggable).text();
                     $(this).css("background-color", "white");
-                }
+                    $(this).addClass("dropped");
+                },
+            });
+            $(".droptarget").dblclick(function() {
+               $(this).val("");
+               $(this).removeClass("dropped");
             });
         }
     };
