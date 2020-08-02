@@ -75,6 +75,10 @@ question editing form
 
 .que.gapfill input.droptarget {
     text-align: center;
+    cursor: pointer;
+}
+.que.gapfill div.answeroptions {
+  margin-bottom: 15px;
 }
 
 .que.gapfill span.draggable.answers {

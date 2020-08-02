@@ -67,7 +67,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
         $question = $qa->get_question();
-        $question->initjs($question->singleuse);
+        if(!$options->readonly){
+             $question->initjs($question->singleuse);
+        }
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
@@ -90,7 +92,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                         $potentialanswer . "</span>";
                 }
             }
-            $answeroptions .= "<br/><br/>";
         }
         $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
         $markedgaps = $question->get_markedgaps($qa, $options);
