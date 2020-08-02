@@ -18,7 +18,7 @@
  *
  * @package    qtype
  * @subpackage gapfill
- * @copyright  2017 Marcus Green
+ * @copyright  2020 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function ($) {
@@ -61,11 +61,17 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
             return;
           }
           this.value = $(ui.draggable).text();
+          $(this).css("background-color", "white");
+          $(this).addClass("dropped");
           if (singleuse) {
             $(ui.draggable).addClass("hide");
           }
         }
       });
+      $(".droptarget").dblclick(function() {
+        $(this).val("");
+        $(this).removeClass("dropped");
+     });
     }
   };
 });
