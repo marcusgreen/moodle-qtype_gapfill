@@ -67,8 +67,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
         $question = $qa->get_question();
-        if(!$options->readonly){
-             $question->initjs($question->singleuse);
+        if (!$options->readonly) {
+            $question->initjs($question->singleuse);
         }
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
