@@ -1,6 +1,14 @@
 ### Version 2.0 of the Moodle Gapfill question type JUl 2020
-New setting singleuse. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a singleuse checkbox in the editing form. When an item is dropped into a gap the gap has the dropped class added.
-This may be used in the future for styling purposes. Double click on a gap with text will clear it now.
+New setting singleuse. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a "singleuse" checkbox in the editing form.
+
+Added a new  feature for possible future that when an item is dropped into a gap the gap has the 'dropped' class added. I may use this in the future for styling, i.e. change appearance on drop.
+
+Double click on a gap with text will clear it now.
+
+Added js logic to the Display answers checkboxes. For example, if dropdowns is selected the Singleuse checkbox is unchecked and disabled. Have not applied logic to the checkboxes under 'show more'
+
+Refined the unit test classes to consolidate create_question and create_question2 into a single function. This is just for developer clarity.
+
 
 ### Version 1.979 of the Moodle Gapfill question type June 2020
 Filters were not being processed. LayTex in particular. Thanks to Elena Safiulina for reporting this issue. Be aware that only plain text can be used for draggables etc, however LayTex can be used in the body of the question text.
