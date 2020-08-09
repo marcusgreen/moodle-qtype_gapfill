@@ -67,6 +67,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
         $question = $qa->get_question();
+        if (!$options->readonly) {
+            $question->initjs($question->singleuse);
+        }
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
@@ -82,14 +85,13 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                     if ($options->readonly) {
                         $cssclasses = " draggable answers readonly ";
                     }
-
+                     $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
                     /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
                     $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++
                         . '" class= "' . $cssclasses . '">' .
                         $potentialanswer . "</span>";
                 }
             }
-            $answeroptions .= "<br/><br/>";
         }
         $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
         $markedgaps = $question->get_markedgaps($qa, $options);
@@ -107,9 +109,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $output .= "<br/>";
         if ($question->answerdisplay == 'dragdrop') {
+            $questiontext = $this->app_connect($question, $questiontext);
             if ($question->optionsaftertext == true) {
-                /* this is to communicate with the mobile app */
-                $questiontext .= "<div id='gapfill_optionsaftertext'></div></div>";
                 $output .= $questiontext . $answeroptions;
             } else {
                 $output .= $answeroptions . '</div>' . $questiontext;
@@ -128,6 +129,23 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         return $output;
     }
 
+    /**
+     * Set divs that are inspected by the mobile app
+     * for settings
+     *
+     * @param qtype_gapfill_question $question
+     * @param  string $questiontext
+     * @return string
+     */
+    public function app_connect(qtype_gapfill_question $question, string $questiontext) : string {
+        if ($question->optionsaftertext == true) {
+            $questiontext .= "<div id='gapfill_optionsaftertext'></div>";
+        }
+        if ($question->singleuse == true) {
+            $questiontext .= "<div id='gapfill_singleuse'></div>";
+        }
+        return $questiontext;
+    }
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
      * set the state accordingly
@@ -201,7 +219,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dropdown") {
             $inputattributes['class'] = $inputclass;
             $inputattributes['type'] = "select";
-            $inputattribues['selected'] = $currentanswer;
+            $inputattributes['selected'] = $currentanswer;
             /* if the size attribute is left in android chrome
              *  doesn't show the down arrows in select
              */
@@ -276,7 +294,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param boolean $correctness
      * @return string
      */
-    protected function get_feedback($settings, $correctness) {
+    protected function get_feedback(?array $settings, bool $correctness) :string {
         if ($settings == null) {
             return "";
         }
@@ -300,7 +318,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @param string $rightanswer
      * @return array
      */
-    protected function get_itemsettings($rightanswer) {
+    protected function get_itemsettings(string $rightanswer) {
         foreach ($this->itemsettings as $set) {
             if ($set->gaptext == $rightanswer) {
                 return $set;
