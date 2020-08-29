@@ -352,16 +352,27 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
                 product[name] = style[name];
               }
             } else if ((style = dom.style)) {
-              for (name in style) {
-                if (typeof style[name] != 'function') {
-                  product[name] = style[name];
-                }
-              }
+              product = getStyle(style, product, name);
             }
             return product;
           }
         }
         return false;
+      }
+      /**
+       * TODO check if this function is needed
+       * @param {string} style
+       * @param {object} product
+       * @param {string} name
+       * @returns {string}
+       */
+      function getStyle(style, product, name) {
+        for (name in style) {
+          if (typeof style[name] != 'function') {
+            product[name] = style[name];
+          }
+        }
+        return product;
       }
     },
   };
