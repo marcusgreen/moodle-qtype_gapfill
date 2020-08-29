@@ -26,20 +26,19 @@
 define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
   return {
     init: function() {
-      $('#id_answerdisplay').change(function(evt) {
-        debugger;
+      $('#id_answerdisplay').change(function() {
         var selected = $(this).val();
-        if(selected == 'gapfill'){
+        if (selected == 'gapfill') {
           $('#id_fixedgapsize').prop('disabled',false);
           $("#id_optionsaftertext").prop('disabled',true).prop('checked',false);
           $('#id_singleuse').prop('disabled',true).prop('checked', false);
         }
-        if(selected == 'dragdrop'){
+        if (selected == 'dragdrop') {
           $('#id_optionsaftertext').prop('disabled',false);
           $('#id_singleuse').prop('disabled',false);
           $('#id_fixedgapsize').prop('disabled',false);
         }
-        if(selected == 'dropdown'){
+        if (selected == 'dropdown') {
           $('#id_fixedgapsize').prop('disabled',true).prop('checked',false);
           $('#id_optionsaftertext').prop('disabled',true).prop('checked',false);
           $('#id_singleuse').prop('disabled',true).prop('checked',false);
