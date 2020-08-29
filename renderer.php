@@ -290,8 +290,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     /**
      * Get feedback for correct or incorrect response
      *
-     * @param array $settings
-     * @param boolean $correctness
+     * @param array|null $settings
+     * @param bool $correctness
      * @return string
      */
     protected function get_feedback(?array $settings, bool $correctness) :string {
