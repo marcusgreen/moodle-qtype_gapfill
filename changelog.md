@@ -1,4 +1,4 @@
-### Version 2.0 of the Moodle Gapfill question type Aug 2020
+### Version 2.01 of the Moodle Gapfill question type Aug 2020
 New setting singleuse. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a "singleuse" checkbox in the editing form.
 Also works in mobile app.
 
