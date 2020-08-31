@@ -26,6 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_gapfill';
 $plugin->version  = 2020082902;
-$plugin->requires = 2017042100;  // Moodle 3.3
+$plugin->requires = 2017042100;  // Moodle 3.3 .
 $plugin->release = '2.06';
 $plugin->maturity  = MATURITY_STABLE;
