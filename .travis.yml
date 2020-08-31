@@ -33,14 +33,8 @@ matrix:
 
     - php: 7.3
       env:
-        - MOODLE_BRANCH=MOODLE_38_STABLE
+        - MOODLE_BRANCH=MOODLE_39_STABLE
         - DB=pgsql
-
-    - php: 7.2
-      env:
-        - MOODLE_BRANCH=MOODLE_37_STABLE
-        - DB=mysqli
-
 
 before_install:
     - phpenv config-rm xdebug.ini
