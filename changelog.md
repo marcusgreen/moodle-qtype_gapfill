@@ -1,3 +1,7 @@
+### Version 2.07 of the Moodle Gapfill question type Aug 2020
+Discard changes to mobile that were supposed to make singleuse work, they broke how it worked on mobile. Added class to put space under answeroptions in 
+mobile.
+
 ### Version 2.06 of the Moodle Gapfill question type Aug 2020
 New setting singleuse. Draggables are removed from the list of options once they are dropped into a gap. Set on and off through a "singleuse" checkbox in the editing form.
 Also works in mobile app.
