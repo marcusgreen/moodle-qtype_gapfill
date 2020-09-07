@@ -1,5 +1,5 @@
-### Version 2.07 of the Moodle Gapfill question type Aug 2020
-Discard changes to mobile that were supposed to make singleuse work, they broke how it worked on mobile. Added class to put space under answeroptions in 
+### Version 2.07 of the Moodle Gapfill question type Sep 2020
+Discard changes to mobile that were supposed to make singleuse work, they broke how it worked on mobile. Added class to put space under answeroptions in
 mobile.
 
 ### Version 2.06 of the Moodle Gapfill question type Aug 2020
