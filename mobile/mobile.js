@@ -125,10 +125,6 @@ var result = {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
             return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
         }
-
-        // @codingStandardsIgnoreStart
-        // see MDL-64516
-        // Wait for the DOM to be rendered.
         setTimeout(()=> {
             /* Set isdragdrop to true if it is a dragdrop question. This will then be used
             * in template.html to determine when to show the  blue "tap to select..." prompt
@@ -141,7 +137,6 @@ var result = {
             }
 
         });
-        // @codingStandardsIgnoreEnd
         return true;
     }
 };
