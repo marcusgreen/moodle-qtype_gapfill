@@ -1,3 +1,7 @@
+### Version 2.08 of the Moodle Gapfill question type Sep 2020
+Removed a nullable parameter type as it breaks on PHP 7.0 which is supported at least
+up till Moodle 3.5
+
 ### Version 2.07 of the Moodle Gapfill question type Sep 2020
 Discard changes to mobile that were supposed to make singleuse work, they broke how it worked on mobile. Added class to put space under answeroptions in
 mobile.
