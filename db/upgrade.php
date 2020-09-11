@@ -88,7 +88,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2020091100, 'qtype', 'gapfill');
 
     }
-    if ($oldversion < 2020082902) {
+    if ($oldversion < 2020091101) {
 
         // Changing the default of field singleuse on table question_gapfill to 0.
         $table = new xmldb_table('question_gapfill');
@@ -98,7 +98,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         $dbman->change_field_default($table, $field);
 
         // Gapfill savepoint reached.
-        upgrade_plugin_savepoint(true, 2020082902, 'qtype', 'gapfill');
+        upgrade_plugin_savepoint(true, 2020091101, 'qtype', 'gapfill');
     }
     return true;
 }
