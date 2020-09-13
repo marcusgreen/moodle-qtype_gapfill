@@ -60,6 +60,7 @@ var result = {
             self.LastItemClicked = LastItemClicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
             var droptargets = this.componentContainer.querySelectorAll('.droptarget');
+            that.draggables = this.componentContainer.querySelectorAll('.draggable');
 
             var i;
             for (i = 0; i < draggables.length; i++) {
