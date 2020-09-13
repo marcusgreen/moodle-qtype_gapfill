@@ -73,7 +73,7 @@ var result = {
             for (i = 0; i < droptargets.length; i++) {
                        /* Paste text from last click into the droptarger */
                        droptargets[i].addEventListener('click', function(event) {
-                        dragShow(event);
+                        dragShow(event,this);
                         event.currentTarget.value = self.LastItemClicked;
                         hideDropped(draggables, event);
                    })
@@ -91,9 +91,9 @@ var result = {
      *
      * @param {*} that
      */
-      function dragShow(event) {
+      function dragShow(event, that) {
         debugger;
-        var draggables = this.componentContainer.querySelectorAll('.draggable');
+        var draggables = that.componentContainer.querySelectorAll('.draggable');
         var targetVal = event.target;
         var i;
         for (i = 0; i < draggables.length; i++) {
