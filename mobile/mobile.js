@@ -80,7 +80,6 @@ var result = {
                     /* Clear contents on double click */
                     droptargets[i].addEventListener('dblclick', function(event) {
                        // event.currentTarget.value = '';
-                       alert('dblclick');
                           showCleared(draggables,event);
                     })
             }
@@ -93,6 +92,7 @@ var result = {
      * @param {*} that
      */
       function dragShow(event) {
+        debugger;
         var draggables = this.componentContainer.querySelectorAll('.draggable');
         var targetVal = event.target;
         var i;
