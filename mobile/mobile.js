@@ -73,16 +73,36 @@ var result = {
             for (i = 0; i < droptargets.length; i++) {
                        /* Paste text from last click into the droptarger */
                        droptargets[i].addEventListener('click', function(event) {
+                        dragShow(event);
                         event.currentTarget.value = self.LastItemClicked;
                         hideDropped(draggables, event);
                    })
                     /* Clear contents on double click */
                     droptargets[i].addEventListener('dblclick', function(event) {
                        // event.currentTarget.value = '';
+                       alert('dblclick');
                           showCleared(draggables,event);
                     })
             }
         };
+
+    /**
+     * Reveal draggables that are not
+     * the the current one
+     *
+     * @param {*} that
+     */
+      function dragShow(event) {
+        var draggables = this.componentContainer.querySelectorAll('.draggable');
+        var targetVal = event.target;
+        var i;
+        for (i = 0; i < draggables.length; i++) {
+          var sourceVal = draggables[i].textContent;
+          if (sourceVal == targetVal) {
+            //$(draggables[i]).removeClass("hide");
+          }
+        }
+      }
         function hideDropped(draggables, event) {
           for (i = 0; i < draggables.length; i++) {
             if (draggables[i].innerHTML == event.currentTarget.value) {
