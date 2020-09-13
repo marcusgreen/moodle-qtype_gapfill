@@ -52,6 +52,19 @@ var result = {
             }
             return event.currentTarget.innerHTML;
         }
+
+        function dragShow(event) {
+          var draggables = this.componentContainer.querySelectorAll('.draggable');
+          var targetVal = event.currentTarget.value
+          var i;
+          for (i = 0; i < draggables.length; i++) {
+            var sourceVal = draggables[i].textContent;
+            if (sourceVal == targetVal) {
+              //$(draggables[i]).removeClass("hide");
+            }
+          }
+        }
+
         this.questionRendered = function questionRendered() {
             var self = this;
             var LastItemClicked = '';
