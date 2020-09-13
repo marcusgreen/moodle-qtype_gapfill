@@ -59,6 +59,8 @@ var result = {
             var LastItemClicked = '';
             self.LastItemClicked = LastItemClicked;
             var draggables = this.componentContainer.querySelectorAll('.draggable');
+            var droptargets = this.componentContainer.querySelectorAll('.droptarget');
+
             var i;
             for (i = 0; i < draggables.length; i++) {
                 /* Optionsaftertext reference is to stop the listener being applied twice */
@@ -69,7 +71,6 @@ var result = {
                     });
                 }
             }
-            var droptargets = this.componentContainer.querySelectorAll('.droptarget');
             for (i = 0; i < droptargets.length; i++) {
                        /* Paste text from last click into the droptarger */
                        droptargets[i].addEventListener('click', function(event) {
