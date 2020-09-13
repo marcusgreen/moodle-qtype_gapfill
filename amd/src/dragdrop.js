@@ -1,6 +1,3 @@
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
@@ -24,9 +21,9 @@
 define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], function($) {
   return {
     init: function(singleuse) {
-      $(".droptarget").on('dblclick', function() {
+      $(".droptarget").on('dblclick', function(event) {
         if (singleuse) {
-          dragShow(this);
+          dragShow(event);
           $(this).val("");
         }
       });
@@ -37,7 +34,7 @@ define(['jquery', 'jqueryui', 'qtype_gapfill/jquery.ui.touch-punch-improved'], f
      *
      * @param {*} that
      */
-      function dragShow(that) {
+      function dragShow(event) {
         var draggables = $(".draggable");
         var targetVal = $(that).val();
         var i;
