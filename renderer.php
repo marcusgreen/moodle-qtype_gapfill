@@ -107,7 +107,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         }
 
-        $output .= "<br/>";
         if ($question->answerdisplay == 'dragdrop') {
             $questiontext = $this->app_connect($question, $questiontext)."</div>";
             if ($question->optionsaftertext == true) {
