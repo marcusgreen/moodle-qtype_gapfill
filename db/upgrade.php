@@ -80,7 +80,7 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
     }
     if ($oldversion < 2020091100) {
         if (!$dbman->field_exists('question_gapfill', 'singleuse')) {
-            $field = new xmldb_field('singleuse', XMLDB_TYPE_INTEGER, '1',null, null, null, '0', 'optionsaftertext');
+            $field = new xmldb_field('singleuse', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'optionsaftertext');
             $table = new xmldb_table('question_gapfill');
             $dbman->add_field($table, $field);
         }
