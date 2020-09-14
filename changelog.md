@@ -1,6 +1,6 @@
 ### Version 2.08 of the Moodle Gapfill question type Sep 2020
 Removed a nullable parameter type as it breaks on PHP 7.0 which is supported at least
-up till Moodle 3.5. Fix the fix to the mobile app. Single use is entirely disbled  now
+up till Moodle 3.5. Fix the fix to the mobile app. Single use is entirely disbled now
 in the app.
 
 ### Version 2.07 of the Moodle Gapfill question type Sep 2020
