@@ -1,3 +1,9 @@
+### Version 2.09 of the Moodle Gapfill question type Sep 2020
+Singleuse draggbles was always on because javascript interpreted "0" as true.
+The file renderer.php now casts it to Boolean (true or false) so singleuse draggables
+is only on when the setting is clicked. My thanks to Mrs Summers for reporting this
+and help identify the problem and also to Matthias Giger for testing.
+
 ### Version 2.08 of the Moodle Gapfill question type Sep 2020
 Removed missing nullable parameter type ?int, as it breaks on PHP 7.0 which is supported at least
 up till Moodle 3.5. The optionsaftertext setting did not work on Mobile, fixed by adding
