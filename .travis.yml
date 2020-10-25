@@ -28,7 +28,7 @@ matrix:
 
     - php: 7.3
       env:
-        - MOODLE_BRANCH=MOODLE_38_STABLE
+        - MOODLE_BRANCH=MOODLE_39_STABLE
         - DB=pgsql
         - CHECK_GRUNT=yes
 
