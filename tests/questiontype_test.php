@@ -49,7 +49,7 @@ class qtype_gapfill_test extends advanced_testcase {
         $this->qtype = new qtype_gapfill();
     }
 
-    protected function tearDown() {
+    protected function tearDown() : void {
         $this->qtype = null;
     }
     /**
