@@ -135,7 +135,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $question = qtype_gapfill_test_helper::make_question();
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
-    public function test_save_question() {
+    protected function test_save_question() {
         $this->resetAfterTest();
         global $DB;
         $syscontext = context_system::instance();
@@ -149,7 +149,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $question->qtype = 'gapfill';
         $question->createdby = 0;
         $this->qtype->save_question($question, $fromform);
-        $this->assertEquals($DB->get_field('question','questiontext',['id' =>$question->id]), $question->questiontext);
+        $this->assertEquals($DB->get_field('question', 'questiontext', ['id' => $question->id]), $question->questiontext);
     }
     public function test_get_validation_error() {
         $questiontext = 'The [cat] sat on the [mat]';
@@ -194,7 +194,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $newresponse = array('p1' => 'cat', 'p2' => 'mat');
         $this->assertTrue($question->is_same_response($prevresponse, $newresponse));
     }
-    protected function setUp(): void {
+    public function setUp(): void {
         $this->qtype = question_bank::get_qtype('gapfill');;
     }
 

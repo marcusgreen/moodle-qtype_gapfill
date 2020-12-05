@@ -49,7 +49,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
       */
     public static function get_gapfill_question_form_data_catmat() {
         $qdata = new stdClass();
-        $answerwords = ['cat','mat'];
+        $answerwords = ['cat', 'mat'];
         $answers = [];
         $id = 1;
         foreach ($answerwords as $key => $answer) {
@@ -70,7 +70,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'contextid' => '1',
             'parent' => '0',
             'name' => 'Generic Gapfill Question',
-            'questiontext' =>[
+            'questiontext' => [
                 'text' => 'The [cat] sat on the [mat]',
                 'format' => FORMAT_HTML
             ],
