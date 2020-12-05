@@ -17,7 +17,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Coverage information for question type gapfill.
+ * Coverage information the gapfill question type.
  *
  * @package    qtype_gapfill
  * @category   phpunit
@@ -26,27 +26,27 @@ defined('MOODLE_INTERNAL') || die();
  */
 
 /**
- * Coverage information for the core subsystem.
+ * Coverage information for the gapfill question type
  *
  * @copyright  2020 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 return new class extends phpunit_coverage_info {
-    /** @var array The list of folders relative to the plugin root to whitelist in coverage generation. */
+    // List of folders relative to the plugin root to whitelist in coverage generation.
     protected $whitelistfolders = [
     ];
 
-    /** @var array The list of files relative to the plugin root to whitelist in coverage generation. */
+    // List of files relative to plugin root to whitelist in coverage generation.
     protected $whitelistfiles = [
     ];
 
-    /** @var array The list of folders relative to the plugin root to excludelist in coverage generation. */
+    // List of folders relative to the plugin root to excludelist in coverage generation.
     protected $excludelistfolders = [
         'db',
         'lang',
         'tests'
     ];
 
-    /** @var array The list of files relative to the plugin root to excludelist in coverage generation. */
+    // List of files relative to the plugin root to excludelist in coverage generation.
     protected $excludelistfiles = [];
 };
