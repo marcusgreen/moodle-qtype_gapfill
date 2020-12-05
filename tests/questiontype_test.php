@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/question/type/gapfill/questiontype.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
 
 /**
- * Unit tests for the shortanswer question type class.
+ * Unit tests for the gapfill question type class.
  *
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -40,7 +40,7 @@ class qtype_gapfill_test extends advanced_testcase {
      *  explained here https://docs.moodle.org/dev/Unit_test_API
      * @var array
      */
-    public static $includecoverage = array(
+    protected static $includecoverage = array(
         'question/type/questiontypebase.php',
         'question/type/gapfill/questiontype.php',
     );
