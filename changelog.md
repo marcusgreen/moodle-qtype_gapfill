@@ -1,3 +1,8 @@
+### Version 2.11 of the Moodle Gapfill question type Dec 2020
+Fix for https://github.com/marcusgreen/moodle-qtype_gapfill/issues/64
+CSS change to fix issue with dropping onto toargets.
+More unit tests in response to coverage reports (purely for developers)
+
 ### Version 2.10 of the Moodle Gapfill question type Oct 2020
 Removed an end_div tag because it broke the display of blocks in quiz.
 Thanks to Eliot Hoving of the UCL University in the UK for reporting this.
