@@ -220,7 +220,7 @@ class qtype_gapfill extends question_type {
      * @param stdClass $question
      * @return boolean to indicate success or failure.
      **/
-    private function save_question_options($question) {
+    public function save_question_options($question) {
         /* Save the extra data to your database tables from the
           $question object, which has all the post data from editquestion.html */
         $gaps = $this->get_gaps($question->delimitchars, $question->questiontext);
