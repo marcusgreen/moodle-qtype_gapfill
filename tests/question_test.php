@@ -29,7 +29,6 @@ require_once($CFG->dirroot . '/question/type/questionbase.php');
 require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
 
-
 require_once($CFG->dirroot . '/question/type/gapfill/question.php');
 
 /**
@@ -57,9 +56,9 @@ class qtype_gapfill_question_test extends advanced_testcase {
     }
 
     public function test_summarise_response_() {
-         $question = qtype_gapfill_test_helper::make_question();
-         $response = array('p1' => 'cat', 'p2' => 'dog');
-         $this->assertEquals($question->summarise_response($response), " cat  dog ");
+        $question = qtype_gapfill_test_helper::make_question();
+        $response = array('p1' => 'cat', 'p2' => 'dog');
+        $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
 
     public function test_grade_response() {
@@ -69,7 +68,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         list($fraction, $state) = $question->grade_response($response);
 
         /* with two fields, if you have one wrong the score (fraction)
-         will be .5. Fraction is always a a fractional part of one.*/
+        will be .5. Fraction is always a a fractional part of one.*/
         $this->assertEquals($fraction, .5);
 
         $response = array('p1' => 'cat', 'p2' => 'mat');
@@ -101,6 +100,16 @@ class qtype_gapfill_question_test extends advanced_testcase {
      * [gold|silve|bronze] [gold|silve|bronze] [gold|silve|bronze]
      * So students cannot get marks for [gold] [gold] [gold]
      */
+
+    /**
+     * confirm the splitting of delimiters into
+     * left and right
+     */
+    public function test_get_delimit_array() {
+        $delimchars = qtype_gapfill::get_delimit_array('[]');
+        $this->assertEquals($delimchars['l'], '[');
+        $this->assertEquals($delimchars['r'], ']');
+    }
     public function test_discard_duplicates() {
         $options = [
             "noduplicates" => 1,
@@ -118,7 +127,6 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $this->assertEquals($numpartsright[0], 1, 'Expected 1 response to be discarded so 1 right');
     }
 
-
     public function test_is_complete_response() {
         $question = qtype_gapfill_test_helper::make_question();
         $response = array('p1' => 'cat', 'p2' => 'mat');
@@ -135,7 +143,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $question = qtype_gapfill_test_helper::make_question();
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
-    protected function test_save_question() {
+    public function test_save_question() {
         $this->resetAfterTest();
         global $DB;
         $syscontext = context_system::instance();
@@ -155,9 +163,8 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $questiontext = 'The [cat] sat on the [mat]';
         $question = qtype_gapfill_test_helper::make_question($questiontext);
         $question->gapcount = 2;
-        $this->assertTrue(is_string($question->get_validation_error( array('p1' => '') ) ));
+        $this->assertTrue(is_string($question->get_validation_error(array('p1' => ''))));
     }
-
 
     public function test_is_correct_response() {
         $question = qtype_gapfill_test_helper::make_question();
@@ -195,7 +202,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $this->assertTrue($question->is_same_response($prevresponse, $newresponse));
     }
     public function setUp(): void {
-        $this->qtype = question_bank::get_qtype('gapfill');;
+        $this->qtype = question_bank::get_qtype('gapfill');
     }
 
     protected function tearDown(): void {

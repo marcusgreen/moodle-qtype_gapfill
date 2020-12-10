@@ -47,7 +47,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @return object
      */
     public static function get_gapfill_question_form_data_catmat() {
-        $qdata = new stdClass();
         $answerwords = ['cat', 'mat'];
         $answers = [];
         $id = 1;
