@@ -143,22 +143,6 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $question = qtype_gapfill_test_helper::make_question();
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
-    public function test_save_question() {
-        $this->resetAfterTest();
-        global $DB;
-        $syscontext = context_system::instance();
-        $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
-        $category = $questiongenerator->create_question_category([]);
-        $fromform = test_question_maker::get_question_form_data('gapfill', 'catmat');
-        $fromform->category = $category->id . ',' . $syscontext->id;
-
-        $question = new stdClass();
-        $question->category = $category->id;
-        $question->qtype = 'gapfill';
-        $question->createdby = 0;
-        $this->qtype->save_question($question, $fromform);
-        $this->assertEquals($DB->get_field('question', 'questiontext', ['id' => $question->id]), $question->questiontext);
-    }
     public function test_get_validation_error() {
         $questiontext = 'The [cat] sat on the [mat]';
         $question = qtype_gapfill_test_helper::make_question($questiontext);
