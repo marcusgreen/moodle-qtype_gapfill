@@ -457,8 +457,8 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     }
 
     /**
-     * Given a response, rest the parts that are wrong. Relevent in
-     * interactive with multiple tries
+     * Given a response, reset the parts that are wrong to a blank string.
+     * Relevent when usinginteractive with multiple tries behaviour
      * @param array $response a response
      * @return array a cleaned up response with the wrong bits reset.
      */

@@ -68,6 +68,15 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'contextid' => '1',
             'parent' => '0',
             'name' => 'Generic Gapfill Question',
+            'itemsettings' => '[
+                {
+                    "itemid":"id1_0",
+                    "questionid":"",
+                    "correctfeedback":"Cat is correct",
+                    "incorrectfeedback":"Mat is not correct",
+                    "gaptext":"cat"
+                }
+             ]',
             'questiontext' => [
                 'text' => 'The [cat] sat on the [mat]',
                 'format' => FORMAT_HTML,
@@ -232,6 +241,16 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $qdata->qtype = 'gapfill';
         $qdata->name = 'catmat';
         $qdata->questiontext = 'The [cat] sat on the [mat]';
+        $qtype->itemsettings = '[
+            {
+                "itemid":"id1_0",
+                "questionid":"",
+                "correctfeedback":"Cat is correct",
+                "incorrectfeedback":"Mat is not correct",
+                "gaptext":"cat"
+            }
+        ]';
+
         $qdata->generalfeedback = 'someanswer';
 
         $qdata->options = new stdClass();
