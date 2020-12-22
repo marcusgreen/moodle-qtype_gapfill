@@ -50,7 +50,7 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $this->assertEquals($question->get_size($answer), 5);
     }
 
-    public function test_clear_wrong_from_response(){
+    public function test_clear_wrong_from_response() {
         $question = qtype_gapfill_test_helper::make_question();
         $response = ['p1' => 'cat', 'p2' => 'dog'];
         $result = $question->clear_wrong_from_response($response);
