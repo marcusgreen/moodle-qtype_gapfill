@@ -2,9 +2,11 @@
 Fix for https://github.com/marcusgreen/moodle-qtype_gapfill/issues/64.
 CSS change to fix issue with dropping onto targets. Thanks to
 Tim Schroeder for reporting this.
+
 Fix for duplicate draggbles appearing when using the or (|), opertor. As described here
 https://moodle.org/mod/forum/discuss.php?d=414949&parent=1672515
 Thanks to Nancy Chan for reporting that.
+
 More unit tests in response to coverage reports (purely for developers)
 
 ### Version 2.10 of the Moodle Gapfill question type Oct 2020
