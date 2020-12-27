@@ -30,7 +30,6 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
 
 require_once($CFG->dirroot . '/question/type/gapfill/question.php');
-
 /**
  * Unit tests for the gapfill question definition class.
  *
@@ -91,22 +90,13 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $responses = [
             0 => ['p1' => 'cat', 'p2' => 'cat'],
             1 => ['p1' => 'cat', 'p2' => 'cat'],
-            2 => ['p1' => 'cat', 'p2' => 'cat']
+            2 => ['p1' => 'cat', 'p2' => 'cat'],
         ];
         $fraction = $question->compute_final_grade($responses, 3);
         /* With a default mark of 2 this would show a mark of 1
         This was compared with how the ddwtos question marked */
         $this->assertEquals($fraction, .5);
     }
-    /**
-     * When noduplicates is true,
-     * discard any duplicate responses when
-     * calculating how many responses were correct
-     * Normally used with questions like
-     * What are the olympic medals?
-     * [gold|silve|bronze] [gold|silve|bronze] [gold|silve|bronze]
-     * So students cannot get marks for [gold] [gold] [gold]
-     */
 
     /**
      * confirm the splitting of delimiters into
@@ -117,11 +107,20 @@ class qtype_gapfill_question_test extends advanced_testcase {
         $this->assertEquals($delimchars['l'], '[');
         $this->assertEquals($delimchars['r'], ']');
     }
+    /**
+     * When noduplicates is true,
+     * discard any duplicate responses when
+     * calculating how many responses were correct
+     * Normally used with questions like
+     * What are the olympic medals?
+     * [gold|silve|bronze] [gold|silve|bronze] [gold|silve|bronze]
+     * So students cannot get marks for [gold] [gold] [gold]
+     */
     public function test_discard_duplicates() {
         $options = [
             "noduplicates" => 1,
             'disableregex' => 0,
-            'delimitchars' => '[]'
+            'delimitchars' => '[]',
         ];
         $questiontext = 'The [cat] sat on the [cat]';
         $question = qtype_gapfill_test_helper::make_question($questiontext, $options);
