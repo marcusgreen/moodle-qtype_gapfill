@@ -315,3 +315,15 @@ Wayne Prescott.
 The elevator pitch for this question type is as follows
 
 "The Gapfill question type is so easy use, the instructions require one 7 word sentence. Put square braces around the missing words."
+
+### Gapfill question type for Moodle V 1.2 Aug 2013
+Version 1.2 will colour duplicate answers yellow when discard duplicates mode is used
+
+### Gapfill question type for Moodle V 1.1 May 2013
+Version 1.1 includes a count of correct answers and clears incorrect responses in interactive mode
+
+### Gapfill question type for Moodle V 1.0 Nov 2012
+This question type was created under Moodle 2.2 and tested with 2.3 and 2.4 It will not work with versions of moodle prior to 2.1.
+
+
+
