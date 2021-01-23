@@ -78,7 +78,7 @@ $string['gap_plural'] = 'gaps';
 $string['yougotnrightcount'] = 'You completed {$a->num} {$a->gaporgaps} correctly out of {$a->outof}.';
 $string['correctanswer'] = 'Correct answer';
 $string['coursenotfound'] = 'Course not found, check the course shortname';
-$string['questioncatnotfound'] = 'Question category not found, click click <a href={$a}>here</a> to initialise, then the browser back button';
+$string['questioncatnotfound'] = 'Question category not found, click <a href={$a}>here</a> to initialise, then the browser back button';
 $string['importexamples'] = 'Import';
 $string['cannotimport'] = 'cannotimport';
 $string['course'] = 'Import help';
