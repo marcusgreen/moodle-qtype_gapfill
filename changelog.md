@@ -10,6 +10,9 @@ Thanks to Nancy Chan for reporting that.
 Disable regex in dropdown mode. This is a fix for this issue
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/32
 
+Error in English lang string. Thanks to lucaboesch
+https://github.com/marcusgreen/moodle-qtype_gapfill/pull/69
+
 More unit tests in response to coverage reports (purely for developers)
 
 ### Version 2.10 of the Moodle Gapfill question type Oct 2020
