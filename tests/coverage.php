@@ -22,14 +22,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-/**
- * Unit tests coverage configuraiton for the gapfill
- * question type
- *
- * @copyright  2021 Marcus Green
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * Control the phpunit coverage report
- */
 return new class extends phpunit_coverage_info {
     /**
      * Default to cover code in all folders
@@ -50,13 +42,13 @@ return new class extends phpunit_coverage_info {
         'questiontype.php'
     ];
 
-   /**
-    * Don't check unit test coverage of files in these folders.
-    * For example it makes little sense to have
-    * unit tests for a lang file which has no functions
-    *
-    * @var array
-    */
+    /**
+     * Don't check unit test coverage of files in these folders.
+     * For example it makes little sense to have
+     * unit tests for a lang file which has no functions
+     *
+     * @var array
+     */
     protected $excludelistfolders = [
         'db',
         'lang',
