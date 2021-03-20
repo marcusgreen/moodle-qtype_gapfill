@@ -1,3 +1,4 @@
+
 <?php
 // This file is part of Moodle - http://moodle.org/
 //
@@ -76,22 +77,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $output = "";
         $answeroptions = '';
         if ($question->answerdisplay == "dragdrop") {
-            $answeroptions = html_writer::empty_tag('div', array('class' => ' answeroptions '));
-            $potentialanswerid = 0;
-            foreach ($this->allanswers as $potentialanswer) {
-                if (!preg_match($question->blankregex, trim($potentialanswer))) {
-                    $cssclasses = " draggable answers ";
-                    /* When previewing after a quiz is complete */
-                    if ($options->readonly) {
-                        $cssclasses = " draggable answers readonly ";
-                    }
-                     $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
-                    /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
-                    $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++
-                        . '" class= "' . $cssclasses . '">' .
-                        $potentialanswer . "</span>";
-                }
-            }
+            $answeroptions = $this->setup_answeroptions($qa);
         }
         $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
         $markedgaps = $question->get_markedgaps($qa, $options);
@@ -125,7 +111,32 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         return $output;
     }
-
+    /**
+     * populate answer options when using dragdrop mode
+     *
+     * @param question_attempt $qa
+     * @return string
+     */
+    public function setup_answeroptions(question_attempt $qa) : string {
+        $question = $qa->get_question();
+        $answeroptions = html_writer::empty_tag('div', array('class' => ' answeroptions '));
+        $potentialanswerid = 0;
+        foreach ($this->allanswers as $potentialanswer) {
+            if (!preg_match($question->blankregex, trim($potentialanswer))) {
+                $cssclasses = " draggable answers ";
+                /* When previewing after a quiz is complete */
+                if ($this->displayoptions->readonly) {
+                    $cssclasses = " draggable answers readonly ";
+                }
+                 $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
+                /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
+                $answeroptions .= '<span id="pa:_' . $question->id . '_' . $potentialanswerid++
+                    . '" class= "' . $cssclasses . '">' .
+                    $potentialanswer . "</span>";
+            }
+        }
+        return $answeroptions;
+    }
     /**
      * Set divs that are inspected by the mobile app
      * for settings
@@ -141,7 +152,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->singleuse == true) {
             $questiontext .= "<div id='gapfill_singleuse'></div>";
         }
-        return $questiontext;
+        return $questiontext.'</div>';
     }
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
@@ -417,5 +428,4 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return get_string('yougotnrightcount', 'qtype_gapfill', $a);
         }
     }
-
 }
