@@ -1,4 +1,4 @@
-@qtype @qtype_gapfill, @qtype_gapfill_import
+@qtype
 Feature: Test importing Gapfill questions
   As a teacher
   In order to reuse Gapfill questions

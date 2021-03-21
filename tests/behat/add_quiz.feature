@@ -1,12 +1,11 @@
-@mod @mod_quiz  @qtype @qtype_gapfill @javascript
+@mod @mod_quiz  @qtype @qtype_gapfill @javascript @gapfill_quiz
 
-Feature: Add a Gapfill quiz
+  Feature: Add a Gapfill quiz
   In order to evaluate students
   As a teacher
+  Scenario: Add and configure small quiz and perform an attempt as a student with Javascript enabled
   I need to create a quiz with gapfill questions
-
-  Background:
-
+   Background:
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Terry1    | Teacher1 | teacher1@example.com |
@@ -60,8 +59,8 @@ Feature: Add a Gapfill quiz
     And I press "Finish attempt ..."
     And I press "Submit all and finish"
     And I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
+    And I am on "Course 1" course homepage
     And I log out
-
 ##########################################################################################
 # One question per page, which can be used to check the status of the question
 # if you page forward and backwards between pages (though I don't think it does at the moment)
@@ -83,7 +82,7 @@ Feature: Add a Gapfill quiz
       | General feedback                   | General feedback cow moon|
 
     And I press "Repaginate"
-    And I press "Go"
+    Then I click on "Go" "button" in the "Repaginate" "dialogue"
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
@@ -91,16 +90,12 @@ Feature: Add a Gapfill quiz
     And I press "Attempt quiz now"
     Then I should see "Question 1"
     And I type "cat" into gap "1" in the gapfill question
-    #And I should see "Answer saved"
     And I press "Next page"
     Then I should see "Question 2"
     And I type "cow" into gap "1" in the gapfill question
     And I type "moon" into gap "2" in the gapfill question
     And I press "Finish attempt ..."
     And I press "Submit all and finish"
-
- # @javascript
-  Scenario: Add and configure small quiz and perform an attempt as a student with Javascript enabled
-    Then I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
+    And I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
     And I follow "Finish review"
-    And I log out
+    Then I log out
