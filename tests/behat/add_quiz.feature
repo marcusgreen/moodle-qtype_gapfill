@@ -1,24 +1,24 @@
 @mod @mod_quiz  @qtype @qtype_gapfill @javascript @gapfill_quiz
 
 Feature: Add a Gapfill quiz
-   In order to evaluate students as a teacher
-   Scenario: Add a small quiz with gapfill questions and make an attempt
-   Background:
+    In order to evaluate students as a teacher
+  Scenario: Add a small quiz with gapfill questions and make an attempt
+  Background:
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Terry1    | Teacher1 | teacher1@example.com |
       | student1 | Sam1      | Student1 | student1@example.com |
     And the following "courses" exist:
       | fullname | shortname | category |
-      | Course 1 | C1 | 0 |
+      | Course 1 | C1        | 0        |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Quiz" to section "1" and I fill the form with:
-      | Name        | Gapfill single page quiz         |
+      | Name        | Gapfill single page quiz                          |
       | Description | Test Gapfill with more than one question per page |
     And I follow "Gapfill single page quiz"
     And I navigate to "Edit settings" in current page administration
@@ -33,14 +33,14 @@ Feature: Add a Gapfill quiz
 #with an early bug
 ##############################################################################
     And I add a "Gapfill" question to the "Gapfill single page quiz" quiz with:
-      | Question name                      | First question                         |
-      | Question text                      | The [cat] sat on the [mat]               |
-      | General feedback                   | Question1 feedback |
+      | Question name    | First question             |
+      | Question text    | The [cat] sat on the [mat] |
+      | General feedback | Question1 feedback         |
 
     And I add a "Gapfill" question to the "Gapfill single page quiz" quiz with:
-      | Question name                      | Second question                         |
-      | Question text                      | The [cow] jumped over the [moon]        |
-      | General feedback                   | Question1 feedback |
+      | Question name    | Second question                  |
+      | Question text    | The [cow] jumped over the [moon] |
+      | General feedback | Question1 feedback               |
 
     And I log out
     And I log in as "student1"
@@ -70,14 +70,14 @@ Feature: Add a Gapfill quiz
       | Description | Test quiz description |
 
     And I add a "Gapfill" question to the "Test quiz name" quiz with:
-      | Question name                      | First question                         |
-      | Question text                      | The [cat] sat on the mat               |
-      | General feedback                   | General feedback cat mat|
+      | Question name    | First question           |
+      | Question text    | The [cat] sat on the mat |
+      | General feedback | General feedback cat mat |
 
     And I add a "Gapfill" question to the "Test quiz name" quiz with:
-      | Question name                      | Second question                         |
-      | Question text                      | The [cow] jumped over the [moon]        |
-      | General feedback                   | General feedback cow moon|
+      | Question name    | Second question                  |
+      | Question text    | The [cow] jumped over the [moon] |
+      | General feedback | General feedback cow moon        |
 
     And I press "Repaginate"
     Then I click on "Go" "button" in the "Repaginate" "dialogue"
