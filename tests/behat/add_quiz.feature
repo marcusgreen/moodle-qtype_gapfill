@@ -1,10 +1,8 @@
 @mod @mod_quiz  @qtype @qtype_gapfill @javascript @gapfill_quiz
 
-  Feature: Add a Gapfill quiz
-  In order to evaluate students
-  As a teacher
-  Scenario: Add and configure small quiz and perform an attempt as a student with Javascript enabled
-  I need to create a quiz with gapfill questions
+Feature: Add a Gapfill quiz
+   In order to evaluate students as a teacher
+   Scenario: Add a small quiz with gapfill questions and make an attempt
    Background:
     Given the following "users" exist:
       | username | firstname | lastname | email                |
