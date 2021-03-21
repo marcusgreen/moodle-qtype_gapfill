@@ -222,17 +222,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $readonly = array('disabled' => 'true');
             $inputattributes = array_merge($inputattributes, $readonly);
         }
-
         if ($question->answerdisplay == "dropdown") {
-            $inputattributes['class'] = $inputclass;
-            $inputattributes['type'] = "select";
-            $inputattributes['selected'] = $currentanswer;
-            /* if the size attribute is left in android chrome
-             *  doesn't show the down arrows in select
-             */
-            unset($inputattributes["size"]);
-            /* blank out the style put in previously */
-            $inputattributes['style'] = '';
+            $inputattributes = $this->get_dropdown_attributes($inputattributes, $inputclass, $currentanswer);
             $selectoptions = $this->get_dropdown_list();
             $selecthtml = html_writer::select($selectoptions, $inputname, $currentanswer,
                 array('' => ''), $inputattributes) . ' ' . $aftergaptext;
@@ -292,6 +283,26 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             $this->get_feedback($itemsettings, true) . "</span>";
         }
         return $aftergaptext;
+    }
+    /**
+     * Get attributes for dropdowns (select)
+     *
+     * @param array $inputattributes
+     * @param string $inputclass
+     * @param string $currentanswer
+     * @return array
+     */
+    private function get_dropdown_attributes(array $inputattributes, string $inputclass, string $currentanswer) : array {
+        $inputattributes['class'] = $inputclass;
+        $inputattributes['type'] = "select";
+        $inputattributes['selected'] = $currentanswer;
+        /* if the size attribute is left in android chrome
+         *  doesn't show the down arrows in select
+         */
+        unset($inputattributes["size"]);
+        /* blank out the style put in previously */
+        $inputattributes['style'] = '';
+        return $inputattributes;
     }
 
     /**
