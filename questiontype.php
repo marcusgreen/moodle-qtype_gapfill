@@ -77,7 +77,7 @@ class qtype_gapfill extends question_type {
      * @param stdClass $questiondata
      * @param boolean $forceplaintextanswers
      */
-    protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers) {
+    protected function initialise_question_answers(question_definition $question, $questiondata, $forceplaintextanswers = true) {
         $question->answers = array();
         if (empty($questiondata->options->answers)) {
             return;
