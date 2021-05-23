@@ -116,7 +116,6 @@ class questiontype_test extends advanced_testcase {
         $this->assertEquals('cat', $answerfields[0]['value']);
         $this->assertEquals('mat', $answerfields[1]['value']);
         $this->qtype->get_question_options($question);
-
     }
     public function test_name() {
         $this->assertEquals($this->qtype->name(), 'gapfill');
