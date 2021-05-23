@@ -109,8 +109,8 @@ class qtype_gapfill_test extends advanced_testcase {
         $gaps = $this->qtype->get_gaps("[]", $question->questiontext);
         $answerfields = $this->qtype->get_answer_fields($gaps, $question);
         $this->assertIsArray($this->qtype->get_answer_fields($gaps,$question));
-        $this->assertEquals('cat',$answerfields[0]['value']);
-        $this->assertEquals('mat',$answerfields[1]['value']);
+        $this->assertEquals('cat', $answerfields[0]['value']);
+        $this->assertEquals('mat', $answerfields[1]['value']);
 
     }
     public function test_name() {
