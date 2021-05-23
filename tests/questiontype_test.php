@@ -27,13 +27,15 @@ global $CFG;
 
 require_once($CFG->dirroot . '/question/type/gapfill/questiontype.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
+
+
 /**
  * Unit tests for the gapfill question type class.
  *
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_gapfill_test extends advanced_testcase {
+class questiontype_test extends advanced_testcase {
 
     /**
      *  explained here https://docs.moodle.org/dev/Unit_test_API
@@ -85,6 +87,7 @@ class qtype_gapfill_test extends advanced_testcase {
         return $q;
     }
 
+
     public function test_save_question() {
         $this->resetAfterTest();
         global $DB;
@@ -107,10 +110,12 @@ class qtype_gapfill_test extends advanced_testcase {
          $fromform->correctfeedback['text']);
 
         $gaps = $this->qtype->get_gaps("[]", $question->questiontext);
+
         $answerfields = $this->qtype->get_answer_fields($gaps, $question);
         $this->assertIsArray($this->qtype->get_answer_fields($gaps, $question));
         $this->assertEquals('cat', $answerfields[0]['value']);
         $this->assertEquals('mat', $answerfields[1]['value']);
+
 
     }
     public function test_name() {
