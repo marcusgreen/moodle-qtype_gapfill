@@ -39,7 +39,8 @@ return new class extends phpunit_coverage_info {
      * @var array
      */
     protected $includelistfiles = [
-        'questiontype.php'
+        'questiontype.php',
+        'qtype_gapfill'
     ];
 
     /**

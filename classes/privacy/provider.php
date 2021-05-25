@@ -40,7 +40,7 @@ class provider implements
      * @return  string
      */
     public static function get_reason() : string {
-        return 'privacy:null_metadata';
+        return 'privacy:null_reason';
     }
 
 }
