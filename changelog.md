@@ -1,4 +1,4 @@
-### Version 2.13 of the Moodle Gapfill question type June 2021
+### Version 2.131 of the Moodle Gapfill question type June 2021
 Fix for Mobile App/ionic5, long text questions were cutting off instead of wrapping.
 More english language example questions. Moved from travis ci to github actions and
 moodle-ci
