@@ -147,8 +147,13 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @return qtype_gapfill
      */
     public static function make_question($questiontext = "The [cat] sat on the [mat]",
-        $poptions = ['noduplicates' => 0,
-            'disableregex' => 0, 'delimitchars' => '[]']) {
+        $poptions = [
+            'noduplicates' => 0,
+            'disableregex' => 0,
+            'optionsaftertext' => false,
+            'delimitchars' => '[]',
+            'optionsaftertext' => false
+         ]) {
         $type = 'gapfill';
         question_bank::load_question_definition_classes($type);
         $question = new qtype_gapfill_question();
@@ -191,7 +196,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'partiallycorrectfeedbackformat' => '0',
             'incorrectfeedback' => 'Incorrect Feedback',
             'incorrectfeedbackformat' => '0',
-            'optionsaftertext' => false,
+            'optionsaftertext' => $poptions['optionsaftertext'],
             'singleuse' => false,
             'answers' => $answers,
         ];

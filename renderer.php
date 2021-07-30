@@ -95,9 +95,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == 'dragdrop') {
             $questiontext = $this->app_connect($question, $questiontext)."</div>";
             if ($question->optionsaftertext == true) {
-                $output .= $questiontext . $answeroptions;
+                $output .= '<div>'.$questiontext . '</div>' . $answeroptions;
             } else {
-                $output .= $answeroptions . '</div>' . $questiontext;
+                $output .= '<div>'.$answeroptions . '</div>' . $questiontext;
             }
         } else {
             // For gapfill and dropdown rendering.
