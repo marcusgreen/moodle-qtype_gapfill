@@ -511,7 +511,7 @@ What are the colors of the Olympic medals?
         $this->quba->finish_all_questions();
     }
 
-    public function test_matching_divs(){
+    public function test_matching_divs() {
         $questiontext = "The [cat] sat on the [mat]";
         // Defaults to optionsaftertext being false.
         $gapfill = qtype_gapfill_test_helper::make_question($questiontext);

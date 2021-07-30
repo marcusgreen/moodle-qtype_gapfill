@@ -121,6 +121,7 @@ class question_test extends advanced_testcase {
             "noduplicates" => 1,
             'disableregex' => 0,
             'delimitchars' => '[]',
+            'optionsaftertext' => false
         ];
         $questiontext = 'The [cat] sat on the [cat]';
         $question = qtype_gapfill_test_helper::make_question($questiontext, $options);
