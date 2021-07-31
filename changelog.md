@@ -1,3 +1,6 @@
+### Version 2.132 of the Moodle Gapfill question type Jul 2021
+Fix for https://github.com/marcusgreen/moodle-qtype_gapfill/issues/76
+where spurious div broke display of quiz blocks.
 ### Version 2.131 of the Moodle Gapfill question type June 2021
 Fix for Mobile App/ionic5, long text questions were cutting off instead of wrapping.
 More english language example questions. Moved from travis ci to github actions and
