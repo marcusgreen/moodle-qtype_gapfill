@@ -78,7 +78,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->answerdisplay == "dragdrop") {
             $answeroptions = $this->setup_answeroptions($qa);
         }
-        $questiontext = html_writer::empty_tag('div', array('class' => 'qtext'));
+        $questiontext = html_writer::start_div('qtext');
         $markedgaps = $question->get_markedgaps($qa, $options);
 
         foreach ($question->textfragments as $place => $fragment) {
@@ -151,7 +151,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->singleuse == true) {
             $questiontext .= "<div id='gapfill_singleuse'></div>";
         }
-        return $questiontext.'</div>';
+        return $questiontext;
     }
     /**
      * Construct the gaps, e.g. textentry or dropdowns and
