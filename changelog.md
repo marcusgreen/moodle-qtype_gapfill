@@ -3,6 +3,7 @@ Fix renderer.php so the output complies with the validator at https://validator.
 Thanks to t-schroeder for raising this issue
 https://github.com/marcusgreen/moodle-qtype_gapfill/pull/77
 Which gave me the idea of validating the output.
+Fix for layout in optionsaftertext mode
 Bump to version of Moodle required from 3.3 to 3.7, to make support easier
 
 ### Version 2.132 of the Moodle Gapfill question type Jul 2021
