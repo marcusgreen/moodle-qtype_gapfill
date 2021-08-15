@@ -634,5 +634,4 @@ What are the colors of the Olympic medals?
         $this->assertEquals($gapfill->get_size("one"), 3);
         $this->assertEquals($gapfill->get_size("one|twleve"), 6);
     }
-
 }

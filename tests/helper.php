@@ -143,7 +143,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * Slight improvements over original make_question class
      *
      * @param string $questiontext
-     * @param array $options
+     * @param array $poptions
      * @return qtype_gapfill
      */
     public static function make_question($questiontext = "The [cat] sat on the [mat]", array $poptions =[]) {
@@ -156,7 +156,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'optionsaftertext' => $poptions['optionsaftertext'] ?? false,
             'singleuse' => $poptions['singleuse'] ?? false,
         ];
-
 
         $type = 'gapfill';
         question_bank::load_question_definition_classes($type);
