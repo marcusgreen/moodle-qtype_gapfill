@@ -54,23 +54,33 @@ class walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->check_output_contains('1.0');
         $this->check_output_contains('1.00');
     }
-    public function test_single_use() {
-        /* This checks that the bug from line 130 of questiontype is fixed
-          that line should read
-          if (!in_array($a->answer, $question->allanswers,true)) {
-          Without the final true only one draggable will display */
-        $questiontext = "[1.0] [1.00]";
+
+    public function test_app_connect() {
+        global $PAGE;
+
+        $questiontext = "The [cat] sat on the [mat]";
         $options = [
-            'disableregex' => 1,
-            'noduplicates' => 0,
-            'delimitchars' => '[]',
-            'optionsaftertext' => false,
+            'optionsaftertext' => true,
             'singleuse' => true
         ];
         $gapfill = qtype_gapfill_test_helper::make_question( $questiontext, $options);
+        $renderer = $gapfill->get_renderer($PAGE);
+        $html = $renderer->app_connect($gapfill, 'randomstring');
+        $this->assertStringContainsString('gapfill_singleuse', $html, ' missing gapfill singleuse tag');
+    }
+
+    public function test_dropdowns() {
+        $questiontext = "The [cat] sat on the [mat]";
+        $options = [
+            'optionsaftertext' => true,
+            'singleuse' => true,
+            'answerdisplay' => 'dropdown'
+        ];
+
+        $gapfill = qtype_gapfill_test_helper::make_question( $questiontext, $options);
         $this->start_attempt_at_question($gapfill, 'immediatefeedback');
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
-        $this->assertStringContainsString('gapfill_singleuse', $html, ' missing gapfill singleuse tag');
+        $this->assertStringContainsString('select type', $html, ' missing select tags tag');
     }
 
 

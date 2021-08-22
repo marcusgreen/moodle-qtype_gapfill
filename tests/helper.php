@@ -153,8 +153,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'disableregex' => $poptions['disableregex'] ?? 0,
             'optionsaftertext' => $poptions['optionsaftertext'] ?? false,
             'delimitchars' => $poptions['delimitchars'] ?? '[]',
-            'optionsaftertext' => $poptions['optionsaftertext'] ?? false,
             'singleuse' => $poptions['singleuse'] ?? false,
+            'answerdisplay' => $poptions['answerdisplay'] ?? 'dragdrop'
         ];
 
         $type = 'gapfill';
@@ -185,7 +185,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'id' => '117',
             'question' => '163',
             'layout' => '0',
-            'answerdisplay' => 'dragdrop',
+            'answerdisplay' => $options['answerdisplay'],
             'delimitchars' => '[]',
             'casesensitive' => false,
             'noduplicates' => '1',
