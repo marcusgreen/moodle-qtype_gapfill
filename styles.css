@@ -54,13 +54,15 @@ question editing form
 .que.gapfill input[type=text] {
     background: white;
     border: solid black thin;
-    border-radius: 4px;
     color: black;
     margin-bottom: 1px;
     margin-top: 1px;
-    padding: 1px;
+    padding: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
     display: inline-block;
     height: inherit;
+    /* border-radius: 4px; */
 }
 
 /* glow a little around the border */
@@ -84,18 +86,20 @@ question editing form
 .que.gapfill span.draggable.answers {
     background: white;
     border: solid 1px;
-    box-shadow: 3px 3px 4px #000;
     cursor: pointer;
     display: inline-block;
     margin: 1px;
     margin-right: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
     vertical-align: middle;
     z-index: 3;
-    border-radius: 4px;
     width: max-content;
+    /* border-radius: 4px;
+    box-shadow: 3px 3px 4px #000; */
 }
+
 .que.gapfill span.draggable.answers.hide {
     display: none;
 }
