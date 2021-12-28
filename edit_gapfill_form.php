@@ -182,23 +182,29 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
     }
-protected function form_setup(MoodleQuickForm $mform) : MoodleQuickForm{
-    global $PAGE;
-    $PAGE->requires->jquery();
-    $PAGE->requires->jquery_plugin('ui');
-    $PAGE->requires->jquery_plugin('ui-css');
+    /**
+     * Setup form elements that are very unlikely to change
+     *
+     * @param MoodleQuickForm $mform
+     * @return MoodleQuickForm
+     */
+    protected function form_setup(MoodleQuickForm $mform) : MoodleQuickForm{
+        global $PAGE;
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('ui-css');
 
-    $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
-        'correct', 'incorrect'), 'qtype_gapfill');
-    $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
+        $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
+            'correct', 'incorrect'), 'qtype_gapfill');
+        $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
 
-    $mform->addElement('hidden', 'reload', 1);
-    $mform->setType('reload', PARAM_RAW);
+        $mform->addElement('hidden', 'reload', 1);
+        $mform->setType('reload', PARAM_RAW);
 
-    $mform->removeelement('questiontext');
+        $mform->removeelement('questiontext');
 
-    return $mform;
-}
+        return $mform;
+    }
     /**
      * item settings such as feedback for correct and incorrect responses
      * @param stdClass $question
