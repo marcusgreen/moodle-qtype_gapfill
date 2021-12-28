@@ -24,9 +24,11 @@
 namespace qtype_gapfill;
 
 defined('MOODLE_INTERNAL') || die();
-global $CFG;
 
 use \qtype_gapfill_test_helper as helper;
+
+global $CFG;
+
 require_once($CFG->dirroot . '/question/type/questionbase.php');
 require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
