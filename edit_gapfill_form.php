@@ -58,19 +58,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
      * @param object $mform the form being built.
      */
     protected function definition_inner($mform) {
-        global $PAGE;
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
-        $PAGE->requires->jquery_plugin('ui-css');
+        $mform = $this->form_setup($mform);
 
-        $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
-            'correct', 'incorrect'), 'qtype_gapfill');
-        $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
-
-        $mform->addElement('hidden', 'reload', 1);
-        $mform->setType('reload', PARAM_RAW);
-
-        $mform->removeelement('questiontext');
         /*for storing the json containing the settings data */
         $mform->addElement('hidden', 'itemsettings', '', array('size' => '80'));
         $mform->setType('itemsettings', PARAM_RAW);
@@ -193,7 +182,23 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
     }
+protected function form_setup(MoodleQuickForm $mform) : MoodleQuickForm{
+    global $PAGE;
+    $PAGE->requires->jquery();
+    $PAGE->requires->jquery_plugin('ui');
+    $PAGE->requires->jquery_plugin('ui-css');
 
+    $PAGE->requires->strings_for_js(array('itemsettingserror', 'editquestiontext', 'additemsettings',
+        'correct', 'incorrect'), 'qtype_gapfill');
+    $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
+
+    $mform->addElement('hidden', 'reload', 1);
+    $mform->setType('reload', PARAM_RAW);
+
+    $mform->removeelement('questiontext');
+
+    return $mform;
+}
     /**
      * item settings such as feedback for correct and incorrect responses
      * @param stdClass $question
