@@ -122,8 +122,15 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
         }
     }
-
-    protected function get_options(MoodleQuickform $mform, $config) {
+    /**
+     * Add the (mainly) checkboxes for customising how a question
+     * works/displays
+     *
+     * @param MoodleQuickform $mform
+     * @param \stdClass $config
+     * @return MoodleQuickform
+     */
+    protected function get_options(MoodleQuickform $mform, $config) : MoodleQuickform {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
         /* turn  config->delimitchars into an array) */
@@ -164,6 +171,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('optionsaftertext', $config->optionsaftertext);
         $mform->addHelpButton('optionsaftertext', 'optionsaftertext', 'qtype_gapfill');
 
+        /* Sequently add responses to the first empty gap when clicked */
+        $mform->addElement('advcheckbox', 'buildermode', get_string('buildermode', 'qtype_gapfill'));
+        $mform->setDefault('buildermode', $config->buildermode);
+        $mform->addHelpButton('buildermode', 'buildermode', 'qtype_gapfill');
+
+
         // Use plain string matching instead of regular expressions.
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));
         $mform->addHelpButton('disableregex', 'disableregex', 'qtype_gapfill');
@@ -185,6 +198,8 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('casesensitive', $config->casesensitive);
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
+
+        return $mform;
 
     }
     /**

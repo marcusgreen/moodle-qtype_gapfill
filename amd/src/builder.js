@@ -20,7 +20,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 export const init = () => {
-  debugger;
   var gaps = document.querySelectorAll('input[id*="_p"].droptarget');
   gaps.forEach(item => {
     item.addEventListener('dblclick', event => {

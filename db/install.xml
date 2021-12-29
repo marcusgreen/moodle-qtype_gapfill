@@ -16,6 +16,7 @@
         <FIELD NAME="fixedgapsize" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="all gaps set to the same size in the renderer" PREVIOUS="disableregex" NEXT="correctfeedback"/>
         <FIELD NAME="optionsaftertext" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Show options after text" PREVIOUS="fixedgapsize" NEXT="correctfeedback"/>
         <FIELD NAME="singleuse" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Single use draggables" PREVIOUS="optionsaftertext" NEXT="letterhints"/>
+        <FIELD NAME="buildermode" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Sequently add responses on click" PREVIOUS="singleuse" NEXT="letterhints"/
         <FIELD NAME="letterhints" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Add letters from correct response incrementally in interactive mode" PREVIOUS="optionsaftertext" NEXT="correctfeedback"/>
         <FIELD NAME="correctfeedback" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="optionsaftertext" NEXT="correctfeedbackformat"/>
         <FIELD NAME="correctfeedbackformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="correctfeedback" NEXT="partiallycorrectfeedback" />
