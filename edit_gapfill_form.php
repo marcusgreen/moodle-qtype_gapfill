@@ -108,10 +108,24 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
+
+        $config = get_config('qtype_gapfill');
+        $mform = $this->get_options($mform, $config);
+
+        // To add combined feedback (correct, partial and incorrect).
+        $this->add_combined_feedback_fields(true);
+
+        // Adds hinting features.
+        $this->add_interactive_settings(true, true);
+        if ($config->letterhints && $config->addhinttext) {
+            $this->_form->getElement('hint[0]')->setValue(array('text' => get_string('letterhint0', 'qtype_gapfill')));
+            $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
+        }
+    }
+
+    protected function get_options(MoodleQuickform $mform, $config) {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
-        // The delimiting characters around fields.
-        $config = get_config('qtype_gapfill');
         /* turn  config->delimitchars into an array) */
         $delimitchars = explode(",", $config->delimitchars);
         /* copies the values into the keys */
@@ -172,15 +186,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
 
-        // To add combined feedback (correct, partial and incorrect).
-        $this->add_combined_feedback_fields(true);
-
-        // Adds hinting features.
-        $this->add_interactive_settings(true, true);
-        if ($config->letterhints && $config->addhinttext) {
-            $this->_form->getElement('hint[0]')->setValue(array('text' => get_string('letterhint0', 'qtype_gapfill')));
-            $this->_form->getElement('hint[1]')->setValue(array('text' => get_string('letterhint1', 'qtype_gapfill')));
-        }
     }
     /**
      * Setup form elements that are very unlikely to change
