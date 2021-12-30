@@ -88,5 +88,19 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2020091100, 'qtype', 'gapfill');
 
     }
+    if ($oldversion < 2021122900) {
+
+        // Define field buildermode to be added to question_gapfill.
+        $table = new xmldb_table('question_gapfill');
+        $field = new xmldb_field('buildermode', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'singleuse');
+
+        // Conditionally launch add field buildermode.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Gapfill savepoint reached.
+        upgrade_plugin_savepoint(true, 2021122900, 'qtype', 'gapfill');
+    }
     return true;
 }

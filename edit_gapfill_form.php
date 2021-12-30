@@ -175,7 +175,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->addElement('advcheckbox', 'buildermode', get_string('buildermode', 'qtype_gapfill'));
         $mform->setDefault('buildermode', $config->buildermode);
         $mform->addHelpButton('buildermode', 'buildermode', 'qtype_gapfill');
-
+        $mform->setDefault('singleuse', $config->buildermode);
 
         // Use plain string matching instead of regular expressions.
         $mform->addElement('advcheckbox', 'disableregex', get_string('disableregex', 'qtype_gapfill'));

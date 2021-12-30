@@ -19,20 +19,34 @@
  * @copyright  2020 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-export const init = () => {
+export const init = (singleuse) => {
+  debugger;
   var gaps = document.querySelectorAll('input[id*="_p"].droptarget');
-  gaps.forEach(item => {
-    item.addEventListener('dblclick', event => {
-      item.value = "";
+  // Clear gap on double click
+  gaps.forEach(gap => {
+    gap.addEventListener('dblclick', event => {
+      var gapValue = event.currentTarget.value;
+      restoreOption(gapValue);
+      gap.value = "";
     });
   });
+  function restoreOption(gapValue) {
+    document.querySelectorAll('span.draggable.answers').forEach(option => {
+      if(gapValue == option.innerText) {
+        option.hidden=false;
+      }
+    });
+  }
 
-  document.querySelectorAll('span.draggable.answers').forEach(item => {
-    item.addEventListener('click', event => {
+  document.querySelectorAll('span.draggable.answers').forEach(option => {
+    option.addEventListener('click', event => {
       var answeroption = event.currentTarget.textContent;
       for (let i = 0; i < gaps.length; i++) {
         if (!gaps[i].value) {
           gaps[i].value = answeroption;
+          if(singleuse) {
+            option.hidden = true;
+          }
           return;
         }
       }

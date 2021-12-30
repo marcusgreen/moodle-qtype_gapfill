@@ -30,7 +30,8 @@ $string['noduplicates'] = 'No Duplicates';
 $string['noduplicates_help'] = 'When checked, each answer must be unique, useful where each field has a | operator, i.e. what are the colours of the Olympic medals and each field has [gold|silver|bronze], if the student enters gold in every field only the first will get a mark (the others will still get a tick though). It is really more like discard duplicate answers for marking purposes';
 
 $string['buildermode'] = 'Builder mode';
-$string['buildermode_help'] = 'Sequently add responses to the first empty gap when clicked';
+$string['buildermode_text'] = 'Sequently add responses to the first empty gap when clicked';
+$string['buildermode_help'] = 'Sequently add responses to the first empty gap when clicked, double click to remove response';
 
 $string['correct'] = 'Feedback for correct.';
 $string['editquestiontext'] = 'Edit question text';

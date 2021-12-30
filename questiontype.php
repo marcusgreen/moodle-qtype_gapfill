@@ -53,7 +53,7 @@ class qtype_gapfill extends question_type {
      */
     public function extra_question_fields() {
         return ['question_gapfill', 'answerdisplay', 'delimitchars', 'casesensitive',
-            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints', 'singleuse'];
+            'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints', 'singleuse', 'buildermode'];
     }
 
 
@@ -278,6 +278,7 @@ class qtype_gapfill extends question_type {
         $options->optionsaftertext = $question->optionsaftertext;
         $options->letterhints = $question->letterhints;
         $options->singleuse = $question->singleuse;
+        $options-> buildermode = $question->buildermode;
 
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('question_gapfill', $options);

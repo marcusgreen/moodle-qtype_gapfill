@@ -54,6 +54,9 @@ if (is_siteadmin()) {
     $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/addhinttext',
         get_string('addhinttext', 'qtype_gapfill'),
         get_string('addhinttext_text', 'qtype_gapfill') , 0));
+    $settingspage->add(new admin_setting_configcheckbox('qtype_gapfill/buildermode',
+        get_string('buildermode', 'qtype_gapfill'),
+        get_string('buildermode_text', 'qtype_gapfill') , 0));
     $settingspage->add(new admin_setting_configtextarea('qtype_gapfill/delimitchars',
          get_string('delimitchars', 'qtype_gapfill'),
          get_string('delimitset_text', 'qtype_gapfill'),
