@@ -33,7 +33,7 @@ export const init = (singleuse) => {
   function restoreOption(gapValue) {
     document.querySelectorAll('span.draggable.answers').forEach(option => {
       if(gapValue == option.innerText) {
-        option.hidden=false;
+        option.classList.remove("hide");
       }
     });
   }
@@ -45,7 +45,7 @@ export const init = (singleuse) => {
         if (!gaps[i].value) {
           gaps[i].value = answeroption;
           if(singleuse) {
-            option.hidden = true;
+            option.classList.add("hide");
           }
           return;
         }
