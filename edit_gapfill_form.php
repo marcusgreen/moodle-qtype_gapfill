@@ -123,6 +123,14 @@ class qtype_gapfill_edit_form extends question_edit_form {
         }
     }
 
+    /**
+     * Add the (mainly) checkboxes for customising how a question
+     * works/displays
+     *
+     * @param MoodleQuickform $mform
+     * @param \stdClass $config
+     * @return MoodleQuickform
+     */
     protected function get_options(MoodleQuickform $mform, $config) {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
