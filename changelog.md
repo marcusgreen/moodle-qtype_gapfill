@@ -2,7 +2,7 @@
 Missing space around or in non English feedback. Where the language was not
 English and there is more than one correct answer the space was missing around
 the tanslation of or. So in German if the correct answers are red or green it would present as
-redodergreen instead of red oder green. Credit to Simon Küpfer for reporting this issue.
+redodergreen instead of red oder green. Thanks to Simon Küpfer for reporting this issue.
 
 Described here
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/80
@@ -271,7 +271,7 @@ to ensure the question type will work with Moodle 2.9. This is required because 
 JQuery code in the previous version of Gapfill would not work with 2.9. The versions
 of JQuery, JQuery UI and touchpunch (for mobile support) have been updated. This addresses
 some issues with drag and drop when using MS IE.  The calls are taken from the way JQuery is
-used in the ordering question type. Credit to Gordon Bateson for this.
+used in the ordering question type. Thanks to Gordon Bateson for this.
 
 There is a fix to ensure proper handling of string comparison. Previously
 tolower was used which would not work correctly with text containing accents.
