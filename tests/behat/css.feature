@@ -1,8 +1,5 @@
 @core @qtype @qtype_gapfill @qtype_gapfill_css @_switch_window
-Feature: Test all the basic functionality of this Gapfill question type
-    In order to evaluate students responses, As a teacher I need to
-  create and preview gapfill questions.
-
+Feature: Test the styling in the display at runtime matches expectations
   Background:
     Given the following "users" exist:
         | username | firstname | lastname | email               |
