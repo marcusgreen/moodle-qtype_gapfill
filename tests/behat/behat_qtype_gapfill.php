@@ -94,6 +94,7 @@ class behat_qtype_gapfill extends behat_base {
      * https://www.w3schools.com/xml/xpath_examples.asp
      *
      * @param  string $selector
+     * @param string $cssproperty
      * @param  string $expectedvalue
      * @return void
      *
@@ -152,8 +153,8 @@ class behat_qtype_gapfill extends behat_base {
      * Determine if a Mink NodeElement contains a specific css rule attribute value.
      *
      * @param Behat\Mink\Element\NodeElement $element
-     * @param bool $value
-     * @return void
+     * @param string $value
+     * @return bool
      */
     protected function element_has_class(Behat\Mink\Element\NodeElement $element, string $value) :bool {
         $exists = false;
