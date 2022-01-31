@@ -79,4 +79,85 @@ class behat_qtype_gapfill extends behat_base {
         $this->execute('behat_forms::i_set_the_field_with_xpath_to', array($xpath, $gapresponse));
     }
 
+
+  /**
+   * Check the computed css style of an element based
+   * on an xpath match.It depends on
+   * xmlDoc.evaluate(xpath, xmlDoc, null, XPathResult.ANY_TYPE,null);
+   * Which does not work with all browsers. See
+   * https://www.w3schools.com/xml/xpath_examples.asp
+   *
+   * @param string $selector
+   * @param string $expectedvalue
+   * @return void
+   *
+   * @When element :selector has a computed style for :property of :expectedvalue
+   */
+
+  public function hasAComputedStyleWithAValueOf(string $selector,string $cssproperty, string $expectedvalue) :void {
+    $page = $this->getSession()->getPage();
+    $element = $page->find("xpath", $selector);
+
+    if (empty($element)) {
+      $message = sprintf('Could not find element using the selector "%s"', $selector);
+      throw new \Exception($message);
+    }
+
+  $js = ' (function() {
+    const element = document.evaluate("'.$selector.'",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    const style = window.getComputedStyle(element);
+    return style.'.$cssproperty.'
+    }()); ';
+
+    $result = $this->evaluate_script($js);
+    if($result == $expectedvalue) {
+      return;
+    } else {
+      $message = 'The css property '.$cssproperty.' of element '.$selector;
+      $message .= 'does not match '. $expectedvalue.' actual value is '.$result;
+      throw new \Exception($message);
+    }
+
+  }
+  /**
+   * @Given /^The element "(?P<selector>[^"]*)" should have a class with a value of "(?P<value>[^"]*)"$/
+   *
+   */
+  public function assertElementHasClassValue($selector,$value) {
+    $page = $this->getSession()->getPage();
+    $element = $page->find('css', $selector);
+
+    if (empty($element)) {
+      $message = sprintf('Could not find element using the selector "%s"', $selector);
+      throw new \Exception($message);
+    }
+    $style = $this->elementHasClassValue($element, $value);
+    if (empty($style)) {
+      $message = sprintf('The property "%s" for the selector "%s" is not "%s"', $property, $selector, $value);
+      throw new \Exception($message);
+    }
+  }
+    /**
+   * Determine if a Mink NodeElement contains a specific css rule attribute value.
+   *
+   * @param NodeElement $element
+   *   NodeElement previously selected with $this->getSession()->getPage()->find().
+   * @param string $property
+   *   Name of the CSS property, such as "visibility".
+   * @param string $value
+   *   Value of the specified rule, such as "hidden".
+   *
+   * @return NodeElement|bool
+   *   The NodeElement selected if true, FALSE otherwise.
+   */
+  protected function elementHasClassValue($element, $value) {
+    $exists = FALSE;
+    $classes = $element->getAttribute('class');
+    if ($classes) {
+       if(str_contains($classes,$value)){
+          $exists = true;
+       }
+    }
+    return $exists;
+  }
 }

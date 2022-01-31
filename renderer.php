@@ -189,7 +189,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         /* $options->correctness is really about it being ready to mark, */
         $aftergaptext = "";
-        $inputclass = "";
+        $inputclass = " form-control ";
         if ((($options->correctness) or ($options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
@@ -202,11 +202,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] != '')) {
                     $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
                     /* sets the field background to green or yellow if fraction is 1 */
-                    $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
+                    $inputclass .= $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
                 }
             } else if ($fraction == 0) {
                 $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings, $rightanswer);
-                $inputclass = $this->feedback_class($fraction);
+                $inputclass .= $this->feedback_class($fraction);
             }
         }
 
