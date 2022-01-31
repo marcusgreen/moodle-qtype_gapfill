@@ -147,20 +147,15 @@ class behat_qtype_gapfill extends behat_base {
             throw new \Exception($message);
         }
     }
+
     /**
      * Determine if a Mink NodeElement contains a specific css rule attribute value.
      *
-     * @param NodeElement $element
-     *   NodeElement previously selected with $this->getSession()->getPage()->find().
-     * @param string      $property
-     *   Name of the CSS property, such as "visibility".
-     * @param string      $value
-     *   Value of the specified rule, such as "hidden".
-     *
-     * @return NodeElement|bool
-     *   The NodeElement selected if true, FALSE otherwise.
+     * @param Behat\Mink\Element\NodeElement $element
+     * @param bool $value
+     * @return void
      */
-    protected function element_has_class($element, $value) {
+    protected function element_has_class(Behat\Mink\Element\NodeElement $element, string $value) :bool {
         $exists = false;
         $classes = $element->getAttribute('class');
         if ($classes) {
