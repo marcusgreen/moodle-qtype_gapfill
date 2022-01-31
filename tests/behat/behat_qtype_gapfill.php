@@ -99,8 +99,7 @@ class behat_qtype_gapfill extends behat_base {
      *
      * @When element :selector has a computed style for :property of :expectedvalue
      */
-
-    public function hasAComputedStyleWithAValueOf(string $selector, string $cssproperty, string $expectedvalue): void {
+    public function element_has_a_computed_style_for(string $selector, string $cssproperty, string $expectedvalue): void {
         $page = $this->getSession()->getPage();
         $element = $page->find("xpath", $selector);
 
@@ -110,11 +109,11 @@ class behat_qtype_gapfill extends behat_base {
         }
 
         $js = ' (function() {
-    const element = document.evaluate("' . $selector . '",document,
-     null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    const style = window.getComputedStyle(element);
-    return style.' . $cssproperty . '
-    }()); ';
+                    const element = document.evaluate("' . $selector . '",document,
+                    null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                    const style = window.getComputedStyle(element);
+                    return style.' . $cssproperty . '
+                }()); ';
 
         $result = $this->evaluate_script($js);
         if ($result == $expectedvalue) {
@@ -125,10 +124,16 @@ class behat_qtype_gapfill extends behat_base {
             throw new \Exception($message);
         }
     }
+
     /**
+     * Confirm element has a given class
+     *
+     * @param string $selector
+     * @param string $value
+     * @return void
      * @Given /^The element "(?P<selector>[^"]*)" should have a class with a value of "(?P<value>[^"]*)"$/
      */
-    public function assertElementHasClassValue($selector, $value) {
+    public function the_element_should_have_a_class_with_a_value_of(string $selector, string $value) {
         $page = $this->getSession()->getPage();
         $element = $page->find('css', $selector);
 
@@ -136,7 +141,7 @@ class behat_qtype_gapfill extends behat_base {
             $message = sprintf('Could not find element using the selector "%s"', $selector);
             throw new \Exception($message);
         }
-        $style = $this->elementHasClassValue($element, $value);
+        $style = $this->element_has_class($element, $value);
         if (empty($style)) {
             $message = sprintf('The property "%s" for the selector "%s" is not "%s"', $property, $selector, $value);
             throw new \Exception($message);
@@ -155,7 +160,7 @@ class behat_qtype_gapfill extends behat_base {
      * @return NodeElement|bool
      *   The NodeElement selected if true, FALSE otherwise.
      */
-    protected function elementHasClassValue($element, $value) {
+    protected function element_has_class($element, $value) {
         $exists = false;
         $classes = $element->getAttribute('class');
         if ($classes) {
