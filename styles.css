@@ -51,28 +51,24 @@ question editing form
 }
 
 /* the gap where answers are dropped/keyed in */
+
 .que.gapfill input[type=text] {
-    background: white;
-    border: solid black thin;
-    color: black;
+    background: #fff;
+    border: solid #000 thin;
+    border-radius: 4px;
+    color: #000;
     margin-bottom: 1px;
     margin-top: 1px;
-    padding: 2px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 1px;
     display: inline-block;
-    height: inherit;
-    /* border-radius: 4px; */
+    height: inherit
 }
-
-/* glow a little around the border */
-
-.que.gapfill input.droptarget:hover {
-    box-shadow: 0 0 8px #7bc1f7;
+.que.gapfill input[type=text] {
+    display: inline-block;
 }
-
-.que.gapfill input.droptarget:focus {
-    box-shadow: 0 0 8px #7bc1f7;
+.que.gapfill input[type=text]:read-only {
+    background-color: #e8e8e8;
+    text-align: center;
 }
 
 .que.gapfill input.droptarget {
@@ -96,8 +92,6 @@ question editing form
     vertical-align: middle;
     z-index: 3;
     width: max-content;
-    /* border-radius: 4px;
-    box-shadow: 3px 3px 4px #000; */
 }
 
 .que.gapfill span.draggable.answers.hide {
@@ -154,17 +148,5 @@ incorrec answer was entered */
     border-width: thin;
 }
 
-.que.gapfill input.correctduplicate {
-    background-color: #ff0;
-}
-
-.que.gapfill input.correct {
-    background-color: #afa;
-}
-
-.que.gapfill select.incorrect {
-    background-color: #faa;
-}
 .que.gapfill input.incorrect {
-    background-color: #faa;
 }

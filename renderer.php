@@ -169,6 +169,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
+           $inputclass = " form-control mb-1 ";
 
         $currentanswer = $qa->get_last_qt_var($fieldname);
         $currentanswer = htmlspecialchars_decode($currentanswer);
@@ -188,7 +189,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         /* $options->correctness is really about it being ready to mark, */
         $aftergaptext = "";
-        $inputclass = " form-control ";
         if ((($options->correctness) or ($options->numpartscorrect)) && isset($markedgaps['p' . $place])) {
             $gap = $markedgaps['p' . $place];
             $fraction = $gap['fraction'];
@@ -221,7 +221,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         );
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
-            $readonly = array('disabled' => 'true');
+            $readonly = ['readonly' => 'readonly'];
             $inputattributes = array_merge($inputattributes, $readonly);
         }
         if ($question->answerdisplay == "dropdown") {
@@ -232,7 +232,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
-            $inputattributes['class'] = 'typetext ' . $inputclass;
+            $inputattributes['class'] = $inputclass;
             $inputattributes['spellcheck'] = 'false';
             if ($question->letterhints) {
                 $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
