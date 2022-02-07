@@ -61,7 +61,7 @@ question editing form
     margin-top: 1px;
     padding: 1px;
     display: inline-block;
-    height: inherit
+    height: inherit;
 }
 .que.gapfill input[type=text] {
     display: inline-block;
@@ -146,7 +146,4 @@ incorrec answer was entered */
 .gapfilltable caption {
     border-bottom: solid;
     border-width: thin;
-}
-
-.que.gapfill input.incorrect {
 }
