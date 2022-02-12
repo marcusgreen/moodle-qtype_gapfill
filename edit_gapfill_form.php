@@ -130,7 +130,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
      * @param \stdClass $config
      * @return MoodleQuickform
      */
-    protected function get_options(MoodleQuickform $mform, $config) : MoodleQuickform {
+    protected function get_options(MoodleQuickform $mform, $config) {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_gapfill'));
 
         /* turn  config->delimitchars into an array) */
