@@ -153,6 +153,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if ($question->singleuse == true) {
             $questiontext .= "<div id='gapfill_singleuse'></div>";
         }
+        if ($question->buildermode == true) {
+            $questiontext .= "<div id='gapfill_buildermode'></div>";
+        }
         return $questiontext;
     }
     /**
