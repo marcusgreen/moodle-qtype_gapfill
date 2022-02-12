@@ -136,6 +136,9 @@ var result = {
             if (div.querySelector('#gapfill_optionsaftertext') !== null) {
                 this.question.optionsaftertext = true;
             }
+            if (div.querySelector('#gapfill_buildermode') !== null) {
+                this.question.buildermode = true;
+            }
 
         });
         return true;
