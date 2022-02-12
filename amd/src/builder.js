@@ -24,7 +24,7 @@ export const init = (singleuse) => {
   var gaps = document.querySelectorAll('input[id*="_p"].droptarget');
   // Clear gap on double click
   gaps.forEach(gap => {
-    gap.addEventListener('dblclick', event => {
+    gap.addEventListener('click', event => {
       var gapValue = event.currentTarget.value;
       restoreOption(gapValue);
       gap.value = "";
