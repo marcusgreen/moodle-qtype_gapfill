@@ -20,9 +20,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 export const init = (singleuse) => {
-  debugger;
   var gaps = document.querySelectorAll('input[id*="_p"].droptarget');
-  // Clear gap on double click
+  // Clear gap on single click.
   gaps.forEach(gap => {
     gap.addEventListener('click', event => {
       var gapValue = event.currentTarget.value;
@@ -32,7 +31,7 @@ export const init = (singleuse) => {
   });
   function restoreOption(gapValue) {
     document.querySelectorAll('span.draggable.answers').forEach(option => {
-      if(gapValue == option.innerText) {
+      if (gapValue == option.innerText) {
         option.classList.remove("hide");
       }
     });
