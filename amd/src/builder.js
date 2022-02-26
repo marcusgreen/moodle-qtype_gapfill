@@ -19,7 +19,15 @@
  * @copyright  2020 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-export const init = (singleuse) => {
+/**
+ * Initialise code and indicate
+ * if singlemode is in use. This is
+ * where draggables dissapear once
+ * they are used.
+ *
+ * @param {integer} singleUse
+ */
+export const init = (singleUse) => {
   var gaps = document.querySelectorAll('input[id*="_p"].droptarget');
   // Clear gap on single click.
   gaps.forEach(gap => {
@@ -29,6 +37,12 @@ export const init = (singleuse) => {
       gap.value = "";
     });
   });
+  /**
+   * Reveal draggables that are not
+   * the the current one
+   *
+   * @param {string} gapValue
+   */
   function restoreOption(gapValue) {
     document.querySelectorAll('span.draggable.answers').forEach(option => {
       if (gapValue == option.innerText) {
@@ -43,7 +57,7 @@ export const init = (singleuse) => {
       for (let i = 0; i < gaps.length; i++) {
         if (!gaps[i].value) {
           gaps[i].value = answeroption;
-          if(singleuse) {
+          if (singleUse) {
             option.classList.add("hide");
           }
           return;
