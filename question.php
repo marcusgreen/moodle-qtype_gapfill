@@ -401,9 +401,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * tell it if singleuse of draggables is
      * enabled
      * @param int $singleuse
+     * @param int $buildermode
      * @return void
      */
-    public function initjs($singleuse = 0, $buildermode = 0) {
+    public function initjs(int $singleuse = 0, int $buildermode = 0) {
         global $PAGE;
         if ($buildermode) {
             $PAGE->requires->js_call_amd('qtype_gapfill/builder', 'init', ['singleuse' => $singleuse ?? 0]);
