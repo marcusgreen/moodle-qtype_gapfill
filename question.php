@@ -405,12 +405,11 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public function initjs($singleuse = 0, $buildermode = 0) {
         global $PAGE;
-        if($buildermode) {
+        if ($buildermode) {
             $PAGE->requires->js_call_amd('qtype_gapfill/builder', 'init', ['singleuse' => $singleuse ?? 0]);
         } else {
             $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init', ['singleuse' => $singleuse ?? 0]);
         }
-
     }
 
     /**
