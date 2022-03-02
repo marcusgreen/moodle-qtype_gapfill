@@ -33,7 +33,9 @@ Feature: Test duplicating a quiz containing a gapfill question
     Then the following fields match these values:
         | Question name                      | Moodle                                                                        |
         | Question text                      | The [cat] sat on the [mat]                                                  |
-        | General feedback                   | Feeline feedback |                                                                  |
+        | General feedback                   | Feeline feedback |
+        | Builder moode |1|                                                                |
         | For any correct response           | Well done!                                                                    |
         | For any partially correct response | Parts, but only parts, of your response are correct.                          |
         | For any incorrect response         | That is not right at all.                                                     |
+    And I pause

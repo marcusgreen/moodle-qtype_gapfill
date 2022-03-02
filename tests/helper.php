@@ -104,6 +104,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'fixedgapsize' => '0',
             'optionaftertext' => '',
             'letterhints' => '1',
+            'buildermode' => '0',
             'generalfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
@@ -154,7 +155,8 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'optionsaftertext' => $poptions['optionsaftertext'] ?? false,
             'delimitchars' => $poptions['delimitchars'] ?? '[]',
             'singleuse' => $poptions['singleuse'] ?? false,
-            'answerdisplay' => $poptions['answerdisplay'] ?? 'dragdrop'
+            'answerdisplay' => $poptions['answerdisplay'] ?? 'dragdrop',
+            'buildermode' => $poptions['buildermode'] ?? '0'
         ];
 
         $type = 'gapfill';
@@ -193,6 +195,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'fixedgapsize' => '0',
             'optionaftertext' => '',
             'letterhints' => '1',
+            'buildermode' => $options['buildermode'],
             'correctfeedback' => 'Correct Feedback',
             'correctfeedbackformat' => '0',
             'partiallycorrectfeedback' => 'Partially Correct Feedback',
