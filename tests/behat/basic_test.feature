@@ -69,7 +69,6 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I press "Submit and finish"
     And I should see "pergap incorrect feedback"
 
-
     ##################################################
     # Adaptive Mode No Penalties behaviour
     And I set the following fields to these values:
