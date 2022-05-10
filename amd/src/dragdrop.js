@@ -21,9 +21,8 @@
  */
 
 export const init = (singleuse) => {
-
-  var draggables = document.getElementsByClassName('draggable');
-  window.singleuse = singleuse;
+    Window.single = singleuse;
+    var draggables = document.getElementsByClassName('draggable');
 
     draggables.forEach(function (e) {
           e.addEventListener('dragstart', dragStart);
@@ -36,19 +35,35 @@ export const init = (singleuse) => {
           });
 
           e.addEventListener("dblclick", function(event) {
-            event.target.value = "";
+            dragShow(this);
           });
 
           e.addEventListener("drop", drop);
       });
+      /**
+       *
+       * @param {*} that
+       */
+      function dragShow(that) {
+        var targetVal = that.value;
+        document.getElementsByClassName('draggable').forEach(function (e) {
+          if (e.innerText.trim() === targetVal.trim()) {
+              e.classList.remove("hide");
+              that.value = "";
+          }
+        });
+      }
 
   /**
    *
    * @param {*} e
    */
   function drop(e) {
-   var data = e.dataTransfer.getData('text/plain');
-   e.target.value = data;
+    e.target.value = e.dataTransfer.getData('text/plain');
+    var sourceId = e.dataTransfer.getData("sourceId");
+    var sourceEl = document.getElementById(sourceId);
+    sourceEl.classList.add('hide');
+    e.preventDefault();
   }
   /**
    *
@@ -57,5 +72,6 @@ export const init = (singleuse) => {
   function dragStart(e) {
     e.currentTarget.cursor = 'move';
     e.dataTransfer.setData('text/plain', e.target.innerText);
+    e.dataTransfer.setData('sourceId', this.id);
   }
 };
