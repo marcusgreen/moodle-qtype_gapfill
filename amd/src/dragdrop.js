@@ -29,7 +29,7 @@ export const init = (singleuse) => {
           e.addEventListener('dragstart', dragStart);
     });
 
-  var droptargets = document.getElementsByClassName('droptarget')
+  var droptargets = document.getElementsByClassName('droptarget');
      droptargets.forEach(function (e) {
           e.addEventListener("dragover", function(event) {
             event.preventDefault();
