@@ -21,7 +21,7 @@
  */
 
 export const init = (singleuse) => {
-    Window.single = singleuse;
+    Window.singleuse = singleuse;
     var draggables = document.getElementsByClassName('draggable');
 
     draggables.forEach(function (e) {
@@ -34,8 +34,12 @@ export const init = (singleuse) => {
             event.preventDefault();
           });
 
-          e.addEventListener("dblclick", function(event) {
-            dragShow(this);
+          e.addEventListener("dblclick", function() {
+            if (Window.singleuse) {
+               dragShow(this);
+            }
+            this.value = "";
+
           });
 
           e.addEventListener("drop", drop);
@@ -59,11 +63,14 @@ export const init = (singleuse) => {
    * @param {*} e
    */
   function drop(e) {
+    dragShow(this);
     e.target.value = e.dataTransfer.getData('text/plain');
     var sourceId = e.dataTransfer.getData("sourceId");
     var sourceEl = document.getElementById(sourceId);
-    sourceEl.classList.add('hide');
-    e.preventDefault();
+    if (Window.singleuse) {
+      sourceEl.classList.add('hide');
+      e.preventDefault();
+    }
   }
   /**
    *
