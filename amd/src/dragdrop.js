@@ -22,27 +22,20 @@
 
 export const init = (singleuse) => {
     Window.singleuse = singleuse;
-    var draggables = document.getElementsByClassName('draggable');
-
+    var draggables = document.querySelectorAll('span[class*="draggable"]');
     draggables.forEach(function (e) {
           e.addEventListener('dragstart', dragStart);
     });
+    document.querySelectorAll('input[class*="droptarget"]').forEach(function(e) {
+      e.addEventListener("dblclick", function() {
+        if (Window.singleuse) {
+           dragShow(this);
+        }
+        this.value = "";
+      });
 
-  var droptargets = document.getElementsByClassName('droptarget');
-     droptargets.forEach(function (e) {
-          e.addEventListener("dragover", function(event) {
-            event.preventDefault();
-          });
+      e.addEventListener("drop", drop);
 
-          e.addEventListener("dblclick", function() {
-            if (Window.singleuse) {
-               dragShow(this);
-            }
-            this.value = "";
-
-          });
-
-          e.addEventListener("drop", drop);
       });
       /**
        *
@@ -50,7 +43,7 @@ export const init = (singleuse) => {
        */
       function dragShow(that) {
         var targetVal = that.value;
-        document.getElementsByClassName('draggable').forEach(function (e) {
+          draggables.forEach(function(e) {
           if (e.innerText.trim() === targetVal.trim()) {
               e.classList.remove("hide");
               that.value = "";
@@ -71,14 +64,17 @@ export const init = (singleuse) => {
       sourceEl.classList.add('hide');
       e.preventDefault();
     }
+    event.preventDefault();
+
   }
   /**
    *
    * @param {*} e
    */
   function dragStart(e) {
-    e.currentTarget.cursor = 'move';
+    // e.currentTarget.cursor = 'move';
     e.dataTransfer.setData('text/plain', e.target.innerText);
     e.dataTransfer.setData('sourceId', this.id);
+    // e.dataTransfer.dropEffect = "copy";
   }
 };
