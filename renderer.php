@@ -220,7 +220,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size' => $size,
+            'size' => $size
         );
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
