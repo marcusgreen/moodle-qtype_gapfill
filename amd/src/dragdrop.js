@@ -50,9 +50,14 @@ export const init = (singleuse) => {
           }
         });
       }
-      // document.addEventListener('dragover', function(e) {
-      //   e.preventDefault();
-      // });
+
+  /**
+   * Stops strange things happening on ios drop event
+   * @param {*} e
+   */
+    document.addEventListener('dragover', function(e) {
+      e.preventDefault();
+  });
 
 
   /**
