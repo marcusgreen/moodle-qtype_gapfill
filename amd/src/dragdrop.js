@@ -68,7 +68,7 @@ export const init = (singleuse) => {
       sourceEl.classList.add('hide');
       e.preventDefault();
     }
-    event.preventDefault();
+    e.preventDefault();
 
   }
   /**
