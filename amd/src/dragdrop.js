@@ -60,7 +60,7 @@ export const init = (singleuse) => {
    * @param {*} e
    */
   function drop(e) {
-    dragShow(this);
+   // dragShow(this);
     e.target.value = e.dataTransfer.getData('text/plain');
     var sourceId = e.dataTransfer.getData("sourceId");
     var sourceEl = document.getElementById(sourceId);
@@ -69,7 +69,6 @@ export const init = (singleuse) => {
       e.preventDefault();
     }
     e.preventDefault();
-
   }
   /**
    *
