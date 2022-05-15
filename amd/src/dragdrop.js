@@ -50,9 +50,9 @@ export const init = (singleuse) => {
           }
         });
       }
-      document.addEventListener('dragover', function(e) {
-        e.preventDefault();
-      });
+      // document.addEventListener('dragover', function(e) {
+      //   e.preventDefault();
+      // });
 
 
   /**
