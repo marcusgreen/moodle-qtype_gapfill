@@ -23,7 +23,7 @@
 export const init = (singleuse) => {
     Window.singleuse = singleuse;
     var draggables = document.querySelectorAll('span[class*="draggable"]');
-    draggables.forEach(function (e) {
+    draggables.forEach(function(e) {
           e.addEventListener('dragstart', dragStart);
     });
     document.querySelectorAll('input[class*="droptarget"]').forEach(function(e) {
