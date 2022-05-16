@@ -64,9 +64,6 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      * @return string HTML fragment.
      */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
-        global $PAGE;
-        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init', ['singleuse' => $singleuse ?? 0]);
-
         $this->displayoptions = $options;
         $question = $qa->get_question();
         if (!$options->readonly) {
