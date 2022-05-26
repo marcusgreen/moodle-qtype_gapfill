@@ -124,10 +124,10 @@ class questiontype_test extends \advanced_testcase {
         $this->qtype->get_question_options($question);
     }
      /**
-     * Test the valuue returned by name  method.
-     *
-     * @covers ::name()
-     */
+      * Test the valuue returned by name  method.
+      *
+      * @covers ::name()
+      */
     public function test_name() {
         $this->assertEquals($this->qtype->name(), 'gapfill');
     }
