@@ -73,7 +73,6 @@ Feature: Test all the basic functionality of this Gapfill question type
     # And I drag "mat" into gap "1" in the gapfill question
     And I type "mat" into gap "1" in the gapfill question
 
-
     And I press "Submit and finish"
     And I should see "pergap incorrect feedback"
 
@@ -101,7 +100,6 @@ Feature: Test all the basic functionality of this Gapfill question type
 
     # And I drag "mat" into gap "2" in the gapfill question
     And I type "mat" into gap "2" in the gapfill question
-
 
     And I press "Check"
     And I should see "Your answer is correct."
@@ -145,7 +143,6 @@ Feature: Test all the basic functionality of this Gapfill question type
     # And I drag "mat" into gap "2" in the gapfill question
     And I type "mat" into gap "2" in the gapfill question
 
-
     And I press "Check"
     And I should see "Your answer is correct."
     And I should see "Mark 2.00 out of 2.00"
@@ -180,7 +177,6 @@ Feature: Test all the basic functionality of this Gapfill question type
     # And I drag "mat" into gap "2" in the gapfill question
     And I type "mat" into gap "2" in the gapfill question
 
-
     And I press "Check"
     And I should see "Your answer is correct."
     And I should see "Mark 1.67 out of 2.00"
@@ -201,7 +197,6 @@ Feature: Test all the basic functionality of this Gapfill question type
 
     # And I drag "mat" into gap "2" in the gapfill question
     And I type "mat" into gap "2" in the gapfill question
-
 
     And I press "Submit and finish"
     And I should see "Your answer is correct."
