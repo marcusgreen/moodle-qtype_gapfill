@@ -41,36 +41,57 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class question_test extends \advanced_testcase {
+    /**
+     * Test value returned by questionid_column_name()
+     *
+     * @covers ::get_expected_data()
+     */
     public function test_get_expected_data() {
         $question = helper::make_question();
         $expecteddata = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
         $this->assertEquals($question->get_expected_data(), $expecteddata);
     }
 
+    /**
+     * Test value returned by get_size()
+     * which is a count of charactes in correct answer
+     * @covers ::get_size()
+     */
     public function test_get_size() {
         $question = helper::make_question();
         $answer = "123|12345";
         $this->assertEquals($question->get_size($answer), 5);
     }
 
-    public function test_clear_wrong_from_response() {
+        /**
+         * confirm wrong responses are cleared
+         * @covers ::clear_wrong_from_response()
+         */
+        public function test_clear_wrong_from_response() {
         $question = helper::make_question();
         $response = ['p1' => 'cat', 'p2' => 'dog'];
         $result = $question->clear_wrong_from_response($response);
         $this->assertEquals($result['p2'], "");
     }
-
+    /**
+     * @covers ::field(int)
+     */
     public function test_field() {
         $question = helper::make_question();
         $this->assertEquals($question->field('1'), 'p1');
     }
 
-    public function test_summarise_response_() {
+        /**
+         * @covers ::summarise_response()
+         */
+        public function test_summarise_response() {
         $question = helper::make_question();
         $response = array('p1' => 'cat', 'p2' => 'dog');
         $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
-
+    /**
+     * @covers ::grade_response(array)
+     */
     public function test_grade_response() {
         $question = helper::make_question();
 
@@ -88,7 +109,9 @@ class question_test extends \advanced_testcase {
         // will be 1. Fraction is always a a fractional part of one.
         $this->assertEquals($fraction, 1);
     }
-
+    /**
+     * @covers ::compute_final_grade()
+     */
     public function test_compute_final_grade() {
         $question = \qtype_gapfill_test_helper::make_question();
         $responses = [
@@ -105,6 +128,7 @@ class question_test extends \advanced_testcase {
     /**
      * confirm the splitting of delimiters into
      * left and right
+     * @covers ::get_delimit_array()
      */
     public function test_get_delimit_array() {
         $delimchars = \qtype_gapfill::get_delimit_array('[]');
@@ -119,6 +143,8 @@ class question_test extends \advanced_testcase {
      * What are the olympic medals?
      * [gold|silve|bronze] [gold|silve|bronze] [gold|silve|bronze]
      * So students cannot get marks for [gold] [gold] [gold]
+     *
+     * @covers ::test_discard_duplicates()
      */
     public function test_discard_duplicates() {
         $options = [
@@ -135,6 +161,9 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($numpartsright[0], 1, 'Expected 1 response to be discarded so 1 right');
     }
 
+    /*
+    * @covers ::is_complete_response()
+    */
     public function test_is_complete_response() {
         $question = helper::make_question();
         $response = array('p1' => 'cat', 'p2' => 'mat');
@@ -147,17 +176,25 @@ class question_test extends \advanced_testcase {
 
         $this->assertFalse($question->is_complete_response(array()));
     }
+    /*
+    * @covers ::get_correct_response()
+    */
     public function test_get_correct_response() {
         $question = helper::make_question();
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
+    /*
+    * @covers ::get_validateion_error()
+    */
     public function test_get_validation_error() {
         $questiontext = 'The [cat] sat on the [mat]';
         $question = helper::make_question($questiontext);
         $question->gapcount = 2;
         $this->assertTrue(is_string($question->get_validation_error(array('p1' => ''))));
     }
-
+    /*
+    * @covers ::is_correct_response()
+    */
     public function test_is_correct_response() {
         $question = helper::make_question();
         $question->casesensitive = 0;
@@ -177,13 +214,17 @@ class question_test extends \advanced_testcase {
         $this->assertTrue($question->is_correct_response($answergiven, $rightanswer));
 
     }
-
+    /*
+    * @covers ::get_right_choice_for()
+    */
     public function test_get_right_choice_for_place() {
         $question = helper::make_question();
         $this->assertEquals($question->get_right_choice_for(1), 'cat');
         $this->assertNotEquals($question->get_right_choice_for(2), 'cat');
     }
-
+    /*
+    * @covers ::is_same_response()
+    */
     public function test_is_same_response() {
         $question = helper::make_question();
         $prevresponse = array();
