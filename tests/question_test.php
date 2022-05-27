@@ -170,11 +170,12 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($numpartsright[0], 1, 'Expected 1 response to be discarded so 1 right');
     }
 
-    /*
-    * Has the user put something in every gap?
-    *
-    * @covers ::is_complete_response()
-    */
+    /**
+     *
+     * Has the user put something in every gap?
+     *
+     * @covers ::is_complete_response(array)
+     */
     public function test_is_complete_response() {
         $question = helper::make_question();
         $response = array('p1' => 'cat', 'p2' => 'mat');
@@ -187,29 +188,30 @@ class question_test extends \advanced_testcase {
 
         $this->assertFalse($question->is_complete_response(array()));
     }
-    /*
-    * What would be the right answer for this gap
-    * @covers ::get_correct_response()
-    */
+    /**
+     *
+     * What would be the right answer for this gap
+     * @covers ::get_correct_response()
+     */
     public function test_get_correct_response() {
         $question = helper::make_question();
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
-    /*
-    * Returns prompt asking for answer if none is provided
-    *
-    * @covers ::get_validateion_error()
-    */
+    /**
+     * Returns prompt asking for answer if none is provided
+     *
+     * @covers ::get_validateion_error()
+     */
     public function test_get_validation_error() {
         $questiontext = 'The [cat] sat on the [mat]';
         $question = helper::make_question($questiontext);
         $question->gapcount = 2;
         $this->assertTrue(is_string($question->get_validation_error(array('p1' => ''))));
     }
-    /*
-    * Is the text correct for this gap
-    * @covers ::is_correct_response()
-    */
+    /**
+     * Is the text correct for this gap
+     * @covers ::is_correct_response()
+     */
     public function test_is_correct_response() {
         $question = helper::make_question();
         $question->casesensitive = 0;
@@ -228,20 +230,20 @@ class question_test extends \advanced_testcase {
         $rightanswer = 'cat';
         $this->assertTrue($question->is_correct_response($answergiven, $rightanswer));
     }
-    /*
-    * What is the correct value for a gap
-    *
-    * @covers ::get_right_choice_for()
-    */
+    /**
+     * What is the correct value for a gap
+     *
+     * @covers ::get_right_choice_for()
+     */
     public function test_get_right_choice_for_place() {
         $question = helper::make_question();
         $this->assertEquals($question->get_right_choice_for(1), 'cat');
         $this->assertNotEquals($question->get_right_choice_for(2), 'cat');
     }
-    /*
-    * Don't change answer if it is the same
-    * @covers ::is_same_response()
-    */
+    /**
+     * Don't change answer if it is the same
+     * @covers ::is_same_response()
+     */
     public function test_is_same_response() {
         $question = helper::make_question();
         $prevresponse = array();
