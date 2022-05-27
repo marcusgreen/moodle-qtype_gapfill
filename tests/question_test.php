@@ -21,6 +21,7 @@
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace qtype_gapfill;
 
 defined('MOODLE_INTERNAL') || die();
@@ -63,17 +64,18 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($question->get_size($answer), 5);
     }
 
-        /**
-         * confirm wrong responses are cleared
-         * @covers ::clear_wrong_from_response()
-         */
-        public function test_clear_wrong_from_response() {
+    /**
+     * confirm wrong responses are cleared
+     * @covers ::clear_wrong_from_response()
+     */
+    public function test_clear_wrong_from_response() {
         $question = helper::make_question();
         $response = ['p1' => 'cat', 'p2' => 'dog'];
         $result = $question->clear_wrong_from_response($response);
         $this->assertEquals($result['p2'], "");
     }
     /**
+     * Returns string of place key value prepended with p
      * @covers ::field(int)
      */
     public function test_field() {
@@ -81,10 +83,10 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($question->field('1'), 'p1');
     }
 
-        /**
-         * @covers ::summarise_response()
-         */
-        public function test_summarise_response() {
+    /**
+     * @covers ::summarise_response()
+     */
+    public function test_summarise_response() {
         $question = helper::make_question();
         $response = array('p1' => 'cat', 'p2' => 'dog');
         $this->assertEquals($question->summarise_response($response), " cat  dog ");
@@ -217,7 +219,6 @@ class question_test extends \advanced_testcase {
         $answergiven = 'cat';
         $rightanswer = 'cat';
         $this->assertTrue($question->is_correct_response($answergiven, $rightanswer));
-
     }
     /*
     * What is the correct value for a gap
@@ -249,5 +250,4 @@ class question_test extends \advanced_testcase {
     protected function tearDown(): void {
         $this->qtype = null;
     }
-
 }
