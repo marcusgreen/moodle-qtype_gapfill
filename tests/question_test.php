@@ -40,6 +40,7 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
  *
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @coversDefaultClass \question\type\gapfill\question
  */
 class question_test extends \advanced_testcase {
     /**
