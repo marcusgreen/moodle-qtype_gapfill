@@ -162,6 +162,7 @@ class question_test extends \advanced_testcase {
     }
 
     /*
+    * Has the user put something in every gap?
     * @covers ::is_complete_response()
     */
     public function test_is_complete_response() {
@@ -177,6 +178,7 @@ class question_test extends \advanced_testcase {
         $this->assertFalse($question->is_complete_response(array()));
     }
     /*
+    * What would be the right answer for this gap
     * @covers ::get_correct_response()
     */
     public function test_get_correct_response() {
@@ -184,6 +186,8 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
     /*
+    * Returns prompt asking for answer if none is provided
+    *
     * @covers ::get_validateion_error()
     */
     public function test_get_validation_error() {
@@ -193,6 +197,7 @@ class question_test extends \advanced_testcase {
         $this->assertTrue(is_string($question->get_validation_error(array('p1' => ''))));
     }
     /*
+    * Is the text correct for this gap
     * @covers ::is_correct_response()
     */
     public function test_is_correct_response() {
@@ -215,6 +220,8 @@ class question_test extends \advanced_testcase {
 
     }
     /*
+    * What is the correct value for a gap
+    *
     * @covers ::get_right_choice_for()
     */
     public function test_get_right_choice_for_place() {
@@ -223,6 +230,7 @@ class question_test extends \advanced_testcase {
         $this->assertNotEquals($question->get_right_choice_for(2), 'cat');
     }
     /*
+    * Don't change answer if it is the same
     * @covers ::is_same_response()
     */
     public function test_is_same_response() {
