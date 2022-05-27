@@ -84,6 +84,8 @@ class question_test extends \advanced_testcase {
     }
 
     /**
+     * Value used for reports
+     *
      * @covers ::summarise_response()
      */
     public function test_summarise_response() {
@@ -92,6 +94,8 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
     /**
+     * Calculate grade and returns an array
+     *
      * @covers ::grade_response(array)
      */
     public function test_grade_response() {
@@ -112,6 +116,8 @@ class question_test extends \advanced_testcase {
         $this->assertEquals($fraction, 1);
     }
     /**
+     * The complex final grade calculation
+     *
      * @covers ::compute_final_grade()
      */
     public function test_compute_final_grade() {
@@ -165,6 +171,7 @@ class question_test extends \advanced_testcase {
 
     /*
     * Has the user put something in every gap?
+    *
     * @covers ::is_complete_response()
     */
     public function test_is_complete_response() {
