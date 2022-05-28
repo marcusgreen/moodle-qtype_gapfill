@@ -1,3 +1,8 @@
+### Version 2.134 of the Moodle Gapfill question type Jun 2022
+The use of jQuery UI broke the display of the 'dock' in Moodle 4.0
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/83
+Switched to using ES6 html5 drag and drop code. Thanks to ....
+
 ### Version 2.133 of the Moodle Gapfill question type Mar 2022
 Missing space around or in non English feedback. Where the language was not
 English and there is more than one correct answer the space was missing around
