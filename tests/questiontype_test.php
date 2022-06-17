@@ -125,9 +125,9 @@ class questiontype_test extends \advanced_testcase {
     }
     /**
      * Test the valuue returned by name  method.
-    *
-    * @covers ::name()
-    */
+     *
+     * @covers ::name()
+     */
     public function test_name() {
         $this->assertEquals($this->qtype->name(), 'gapfill');
     }
