@@ -89,7 +89,11 @@ class questiontype_test extends \advanced_testcase {
         return $q;
     }
 
-
+    /**
+     * Test the behaviour of save_question method.
+     *
+     * @covers ::save_question
+     */
     public function test_save_question() {
         $this->resetAfterTest();
         global $DB;
