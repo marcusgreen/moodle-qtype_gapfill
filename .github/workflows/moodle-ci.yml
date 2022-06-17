@@ -27,9 +27,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4']
-        moodle-branch: ['MOODLE_400_STABLE']
-        database: [mariadb]
+        php: ['7.4', '8.0']
+        moodle-branch: ['MOODLE_311_STABLE', 'master']
+        database: [pgsql, mariadb]
 
     steps:
       - name: Check out repository code
@@ -52,9 +52,9 @@ jobs:
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
           sudo locale-gen en_AU.UTF-8
           echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+
       - name: Install moodle-plugin-ci
         run: |
-          moodle-plugin-ci add-plugin --branch master iarenaza/moodle-filter_multilang2
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
           DB: ${{ matrix.database }}
@@ -76,7 +76,7 @@ jobs:
 
       - name: Moodle Code Checker
         if: ${{ always() }}
-        run: moodle-plugin-ci codechecker
+        run: moodle-plugin-ci codechecker --max-warnings 0
 
       - name: Moodle PHPDoc Checker
         if: ${{ always() }}
@@ -96,7 +96,7 @@ jobs:
 
       - name: Grunt
         if: ${{ always() }}
-        run: moodle-plugin-ci grunt
+        run: moodle-plugin-ci grunt --max-lint-warnings 0
 
       - name: PHPUnit tests
         if: ${{ always() }}
@@ -105,4 +105,3 @@ jobs:
       - name: Behat features
         if: ${{ always() }}
         run: moodle-plugin-ci behat --profile chrome
-
