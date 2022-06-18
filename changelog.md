@@ -1,6 +1,9 @@
-Version 2.134 of the Moodle Gapfill question type Jun 2022
+### Version 2.134 of the Moodle Gapfill question type Jun 2022
 
-Fix for duplicated draggables when used in the mobile apps. Thanks to Nicholas Stefanski for reporting this and for contributing a code solution.
+Fix for duplicated draggables when used in the mobile apps. Thanks to Nicholas Stefanski for reporting this and for contributing a code solution. 
+
+Added $CFG->wwwwroot in front of path to mobile css for where moodle home hangs of a folder from the 
+url.
 
 ### Version 2.133 of the Moodle Gapfill question type Mar 2022
 Missing space around or in non English feedback. Where the language was not
