@@ -23,10 +23,10 @@
 export const init = (singleuse) => {
   Window.singleuse = singleuse;
   var draggables = document.querySelectorAll('span[class*="draggable"]');
-  draggables.forEach(function (e) {
+  draggables.forEach(function(e) {
     e.addEventListener('dragstart', dragStart);
   });
-  document.querySelectorAll('input[class*="droptarget"]').forEach(function (e) {
+  document.querySelectorAll('input[class*="droptarget"]').forEach(function(e) {
     e.addEventListener("dblclick", function () {
       if (Window.singleuse) {
         dragShow(this);
@@ -43,7 +43,7 @@ export const init = (singleuse) => {
    */
   function dragShow(that) {
     var targetVal = that.value;
-    draggables.forEach(function (e) {
+    draggables.forEach(function(e) {
       if (e.innerText.trim() === targetVal.trim()) {
         e.classList.remove("hide");
         that.value = "";
@@ -55,7 +55,7 @@ export const init = (singleuse) => {
    * Stops strange things happening on ios drop event
    * @param {*} e
    */
-  document.addEventListener('dragover', function (e) {
+  document.addEventListener('dragover', function(e) {
     e.preventDefault();
   });
 
