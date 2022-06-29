@@ -220,4 +220,4 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I should see "Your answer is incorrect."
     And I should see "Mark 0.00 out of 2.00"
     And I wait "1" seconds
-    
+
