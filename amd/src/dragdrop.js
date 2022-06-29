@@ -27,7 +27,7 @@ export const init = (singleuse) => {
     e.addEventListener('dragstart', dragStart);
   });
   document.querySelectorAll('input[class*="droptarget"]').forEach(function(e) {
-    e.addEventListener("dblclick", function () {
+    e.addEventListener("dblclick", function() {
       if (Window.singleuse) {
         dragShow(this);
       }
