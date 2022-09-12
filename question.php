@@ -385,7 +385,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public function is_correct_response($answergiven, $rightanswer) {
         if (!$this->casesensitive == 1) {
             $answergiven = core_text::strtolower($answergiven, 'UTF-8');
-            $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
+            $rightanswer = strip_tags(core_text::strtolower($rightanswer, 'UTF-8'));
         }
 
         if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
@@ -446,7 +446,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             }
             if (!$this->casesensitive == 1) {
                 $answergiven = core_text::strtolower($answergiven, 'UTF-8');
-                $rightanswer = core_text::strtolower($rightanswer, 'UTF-8');
+                $rightanswer = strip_tags(core_text::strtolower($rightanswer, 'UTF-8'));
             }
             if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->disableregex)) {
                 $numright++;
