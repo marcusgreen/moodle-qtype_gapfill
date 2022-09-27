@@ -35,7 +35,7 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I set the field "Question name" to "Gapfill-002"
     And I press "Gap settings"
     And I click on "//span[@id='id1_0']" "xpath_element"
-
+    And I wait "1" seconds
     And I set the field with xpath "//div[@id='id_correcteditable']" to "pergap correct feedback"
     And I set the field with xpath "//div[@id='id_incorrecteditable']" to "pergap incorrect feedback"
 
@@ -55,23 +55,17 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Right answer         | Shown                      |
 
     And I press "Start again with these options"
-    # And I drag "sat" into gap "1" in the gapfill question
-    And I type "sat" into gap "1" in the gapfill question
-
+    And I drag "sat" into gap "1" in the gapfill question
     And I drag "mat" into gap "2" in the gapfill question
-    And I type "mat" into gap "2" in the gapfill question
-
     And I press "Submit and finish"
     And I should see "Your answer is correct."
     And I should see "CBM mark 2.00"
+
     And I should see "pergap correct feedback"
 
     And I press "Start again"
-    # And I drag "sat" into gap "2" in the gapfill question
-    And I type "sat" into gap "2" in the gapfill question
-
-    # And I drag "mat" into gap "1" in the gapfill question
-    And I type "mat" into gap "1" in the gapfill question
+    And I drag "sat" into gap "2" in the gapfill question
+    And I drag "mat" into gap "1" in the gapfill question
 
     And I press "Submit and finish"
     And I should see "pergap incorrect feedback"
@@ -95,11 +89,8 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I should see "Mark 1.00 out of 2.00"
     And I wait "1" seconds
 
-    # And I drag "sat" into gap "1" in the gapfill question
-    And I type "sat" into gap "1" in the gapfill question
-
-    # And I drag "mat" into gap "2" in the gapfill question
-    And I type "mat" into gap "2" in the gapfill question
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
 
     And I press "Check"
     And I should see "Your answer is correct."
@@ -137,11 +128,8 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I press "Start again with these options"
 
     #Enter both correct responses
-    # And I drag "sat" into gap "1" in the gapfill question
-    And I type "sat" into gap "1" in the gapfill question
-
-    # And I drag "mat" into gap "2" in the gapfill question
-    And I type "mat" into gap "2" in the gapfill question
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
 
     And I press "Check"
     And I should see "Your answer is correct."
@@ -171,11 +159,8 @@ Feature: Test all the basic functionality of this Gapfill question type
     And I should not see "rugnotmat"
     And I wait "2" seconds
 
-    # And I drag "sat" into gap "1" in the gapfill question
-    And I type "sat" into gap "1" in the gapfill question
-
-    # And I drag "mat" into gap "2" in the gapfill question
-    And I type "mat" into gap "2" in the gapfill question
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
 
     And I press "Check"
     And I should see "Your answer is correct."
@@ -192,11 +177,8 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Right answer         | Shown             |
 
     And I press "Start again with these options"
-    # And I drag "sat" into gap "1" in the gapfill question
-    And I type "sat" into gap "1" in the gapfill question
-
-    # And I drag "mat" into gap "2" in the gapfill question
-    And I type "mat" into gap "2" in the gapfill question
+    And I drag "sat" into gap "1" in the gapfill question
+    And I drag "mat" into gap "2" in the gapfill question
 
     And I press "Submit and finish"
     And I should see "Your answer is correct."
