@@ -1,3 +1,7 @@
+### Version 2.135 of the Moodle Gapfill question type Sept 2022
+The use of jQuery UI broke the display of the 'dock' in Moodle 4.0 #83 Switched to using ES6 html5 drag and drop code.
+More English language exampl questions
+
 ### Version 2.134 of the Moodle Gapfill question type Jun 2022
 
 Fix for duplicated draggables when used in the mobile apps. Thanks to Nicholas Stefanski for reporting this and for contributing a code solution. 
