@@ -1,7 +1,5 @@
 ### Version 2.136 of the Moodle Gapfill question type Month 2022
-Remove html comments from code before rendering. There is no
-reason to include comments at run time and when people copy and paste
-from other sources it can include items like  <!--[if !supportLists]
+Remove html comments from code before rendering. There is no reason to include comments at run time and when people copy and paste from other sources it can include items like  <!--[if !supportLists]
 creating spurious gaps. Thanks to sunnac for reporting this.
 
 New behat test to confirm core mlang and mlang2 filters work as expected.
