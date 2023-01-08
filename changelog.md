@@ -1,4 +1,4 @@
-### Version 2.137 of the Moodle Gapfill question type Jan 2022
+### Version 2.137 of the Moodle Gapfill question type Jan 2023
 Fix compatibility on mobile with dark theme (css tweak)
 https://github.com/marcusgreen/moodle-qtype_gapfill/pull/100
 
