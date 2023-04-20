@@ -57,7 +57,7 @@ Feature: Add a Gapfill quiz
     And I should not see "Question2 feedback"
     And I press "Finish attempt ..."
     And I press "Submit all and finish"
-    And I click on "Submit all and finish" "button" in the "Confirmation" "dialogue"
+    And I click on "Submit all and finish" "button" in the "Submit all your answers and finish?" "dialogue"
     And I am on "Course 1" course homepage
     And I log out
 ##########################################################################################

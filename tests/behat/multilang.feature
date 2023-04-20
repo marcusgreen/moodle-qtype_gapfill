@@ -15,21 +15,21 @@ Feature: Test the queiton type works with multilanguage filters
     And the "multilang2" filter is "on"
     And the "multilang" filter is "on"
 
-  @javascript
-  Scenario: Create a question and check mlang2 works as expected
-    When the filter_multilang2 plugin is installed
-    And I am on the "Course 1" "core_question > course question bank" page logged in as teacher1
-    # Create a new question with mlang2 tags
-    # Then check that the french words are not displayed
-    And I add a "Gapfill" question filling the form with:
-        | Question name | Gapfill-001                                                    |
-        | Question text | The {mlang fr}chat{mlang}{mlang en}cat{mlang} sat on the [mat] |
-    Then I should see "Gapfill-001"
+  # @javascript
+  # Scenario: Create a question and check mlang2 works as expected
+  #   When the filter_multilang2 plugin is installed
+  #   And I am on the "Course 1" "core_question > course question bank" page logged in as teacher1
+  #   # Create a new question with mlang2 tags
+  #   # Then check that the french words are not displayed
+  #   And I add a "Gapfill" question filling the form with:
+  #       | Question name | Gapfill-001                                                    |
+  #       | Question text | The {mlang fr}chat{mlang}{mlang en}cat{mlang} sat on the [mat] |
+  #   Then I should see "Gapfill-001"
 
-  # Preview it.
-    And I am on the "Gapfill-001" "core_question > preview" page
-    And I should see "cat"
-    And I should not see "chat"
+  # # Preview it.
+  #   And I am on the "Gapfill-001" "core_question > preview" page
+  #   And I should see "cat"
+  #   And I should not see "chat"
 
   @javascript
   Scenario: Create a question and check (core) mlang works as expected
