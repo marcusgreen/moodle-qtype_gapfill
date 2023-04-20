@@ -31,8 +31,9 @@ jobs:
       matrix:
         include:
           - php: '8.0'
-            moodle-branch: 'MOODLE_401_STABLE'
+            moodle-branch: ['MOODLE_401_STABLE', master]
             database: 'pgsql'
+
 
     steps:
       - name: Checkout
