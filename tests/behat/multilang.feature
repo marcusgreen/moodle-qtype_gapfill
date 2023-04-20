@@ -17,7 +17,7 @@ Feature: Test the queiton type works with multilanguage filters
 
   @javascript
   Scenario: Create a question and check mlang2 works as expected
-    # When the filter_multilang2 plugin is installed
+    When the filter_multilang2 plugin is installed
     And I am on the "Course 1" "core_question > course question bank" page logged in as teacher1
     # Create a new question with mlang2 tags
     # Then check that the french words are not displayed
