@@ -1,8 +1,8 @@
-# Gapfill Moodle Question type 
+# Gapfill Moodle Question type
 [![Moodle Plugin CI](https://github.com/marcusgreen/moodle-qtype_gapfill/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/marcusgreen/moodle-qtype_gapfill/actions/workflows/moodle-ci.yml) [![GitHub Release](https://img.shields.io/github/release/marcusgreen/moodle-qtype_gapfill.svg)](https://github.com/marcusgreen//moodle-qtype_gapfill/releases)
 [![Moodle Support](https://img.shields.io/badge/Moodle-%3E%3D%204.0-blue)](https://github.com/marcusgreen/moodle-qtype_gapfill/actions)
 
-A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices and the mobile app. For custom development and consultancy contact Moodle Partner Titus Learning (http://www.tituslearning.com).
+A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices and the mobile app. For custom development and consultancy contact Moodle Partner Catalyst EU (https://www.catalyst-eu.net/).
 
 Teachers can define the question with square braces to define the missing words. For example The [cat] sat on the [mat].
 Alternative delimiting characters can be defined during question edit for example The #cat# sat on the #mat# can be valid.
