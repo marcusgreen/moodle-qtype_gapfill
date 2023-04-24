@@ -13,6 +13,9 @@ Feature: Test all the basic functionality of this Gapfill question type
     And the following "course enrolments" exist:
         | user    | course | role           |
         | teacher | C1     | editingteacher |
+    Given the following "user preferences" exist:
+        | user    | preference | value |
+        | teacher | htmleditor | atto  |
 
   @javascript
   Scenario: Create, edit then preview a gapfill question.
@@ -33,6 +36,7 @@ Feature: Test all the basic functionality of this Gapfill question type
 
     When I choose "Edit question" action for "Gapfill-001" in the question bank
     And I set the field "Question name" to "Gapfill-002"
+
     And I press "Gap settings"
     And I click on "//span[@id='id1_0']" "xpath_element"
     And I wait "1" seconds
