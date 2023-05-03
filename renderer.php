@@ -65,6 +65,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         $this->displayoptions = $options;
+        /** @var qtype_gapfill_question $question */
         $question = $qa->get_question();
         if (!$options->readonly) {
             $question->initjs((Boolean) $question->singleuse);
@@ -73,10 +74,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
         $this->allanswers = unserialize($seranswers);
         $output = "";
-        $answeroptions = '';
-        if ($question->answerdisplay == "dragdrop") {
-            $answeroptions = $this->setup_answeroptions($qa);
-        }
+
         $questiontext = '';
         $markedgaps = $question->get_markedgaps($qa, $options);
 
@@ -91,23 +89,31 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         }
 
+        if ($qa->get_state() == question_state::$invalid) {
+            $questiontext .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
+             ['class' => 'validationerror']);
+        }
+
+        $answeroptions = '';
+        if ($question->answerdisplay == "dragdrop") {
+            $answeroptions = $this->setup_answeroptions($qa);
+            $answeroptions = html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
+        }
+
+        $output = '';
         if ($question->answerdisplay == 'dragdrop') {
             $questiontext = $this->app_connect($question, $questiontext);
+            $questiontext .= html_writer::tag('div', $output, ['class' => 'qtext']);
             if ($question->optionsaftertext == true) {
-                $output .= '<div>'.$questiontext . '</div>' . $answeroptions;
+                $output .= $questiontext . $answeroptions;
             } else {
-                $output .= '<div>'.$answeroptions . '</div>' . $questiontext;
+                $output .= $answeroptions.$questiontext;
             }
         } else {
             // For gapfill and dropdown rendering.
             $output .= $questiontext;
         }
 
-        if ($qa->get_state() == question_state::$invalid) {
-            $output .= html_writer::nonempty_tag('div', $question->get_validation_error(array('answer' => $output)),
-             ['class' => 'validationerror']);
-        }
-        $output = html_writer::tag('div', $output, ['class' => 'qtext']);
         return $output;
     }
     /**
