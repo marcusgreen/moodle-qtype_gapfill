@@ -103,7 +103,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $output = '';
         if ($question->answerdisplay == 'dragdrop') {
             $questiontext = $this->app_connect($question, $questiontext);
-            $questiontext .= html_writer::tag('div', $output, ['class' => 'qtext']);
+            $questiontext = html_writer::tag('div', $questiontext, ['class' => 'qtext']);
             if ($question->optionsaftertext == true) {
                 $output .= $questiontext . $answeroptions;
             } else {
@@ -111,6 +111,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             }
         } else {
             // For gapfill and dropdown rendering.
+            $questiontext = html_writer::tag('div', $questiontext, ['class' => 'qtext']);
             $output .= $questiontext;
         }
 
@@ -176,7 +177,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $question = $qa->get_question();
         $fieldname = $question->field($place);
 
-        $currentanswer = $qa->get_last_qt_var($fieldname);
+        $currentanswer = $qa->get_last_qt_var($fieldname) ?? '';
         $currentanswer = htmlspecialchars_decode($currentanswer);
         $rightanswer = $question->get_right_choice_for($place);
         $itemsettings = $this->get_itemsettings($rightanswer);
@@ -223,7 +224,8 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'name' => $inputname,
             'value' => $currentanswer,
             'id' => $inputname,
-            'size' => $size
+            'size' => $size,
+            'class' => 'gap'
         );
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
@@ -238,7 +240,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return $selecthtml;
         } else if ($question->answerdisplay == "gapfill") {
             /* it is a typetext (gapfill) question */
-            $inputattributes['class'] = 'typetext ' . $inputclass;
+            $inputattributes['class'] = 'typetext gap' . $inputclass;
             $inputattributes['spellcheck'] = 'false';
             if ($question->letterhints) {
                 $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
@@ -246,7 +248,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             return html_writer::empty_tag('input', $inputattributes) . $aftergaptext;
         } else {
             /* it is a drag/drop quesiton type */
-            $inputattributes['class'] = 'droptarget ' . $inputclass;
+            $inputattributes['class'] = 'droptarget gap ' . $inputclass;
             if ($question->letterhints) {
                 $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
             }
