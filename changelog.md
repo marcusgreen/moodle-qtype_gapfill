@@ -3,6 +3,9 @@ Fix for PHP 8.1 deprecation messages. Thanks to Joseph Rézeau  for
 creating the ticket for that.
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/104
 
+Re-instate the creation of letterhints field in the dbfor upgrades from
+before v1.97 in 2018
+
 ### Version 2.137 of the Moodle Gapfill question type April 2023
 Fix compatibility on mobile with dark theme (css tweak)
 https://github.com/marcusgreen/moodle-qtype_gapfill/pull/100
