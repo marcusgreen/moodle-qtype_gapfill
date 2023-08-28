@@ -167,6 +167,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
      */
     public function embedded_element(question_attempt $qa, $place, question_display_options $options, $markedgaps) {
         /* fraction is the mark associated with this field, always 1 or 0 for this question type */
+        /** @var \qtype_gapfill_question $question */
         $question = $qa->get_question();
         $fieldname = $question->field($place);
 
@@ -361,6 +362,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
     public function get_input_class(array $markedgaps, question_attempt $qa, $fraction, $fieldname) {
         $response = $qa->get_last_qt_data();
         $question = $qa->get_question();
+
         $inputclass = $this->feedback_class($fraction);
         foreach ($markedgaps as $gap) {
             if ($response[$fieldname] == $gap['value']) {
