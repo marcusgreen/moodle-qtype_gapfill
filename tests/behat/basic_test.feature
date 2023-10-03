@@ -59,7 +59,9 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Specific feedback    | Shown                      |
         | Right answer         | Shown                      |
 
-    And I press "Start again with these options"
+    # And I press "Start again with these options"
+    And I press "Update display options"
+    And I press "Start again"
     # And I drag "sat" into gap "1" in the gapfill question
     And I type "sat" into gap "1" in the gapfill question
 
@@ -90,7 +92,8 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Specific feedback    | Shown                        |
         | Right answer         | Shown                        |
 
-    And I press "Start again with these options"
+    And I press "Save preview options"
+    And I press "Start again"
 
     And I type "sat" into gap "1" in the gapfill question
     And I type "xxx" into gap "2" in the gapfill question
@@ -139,8 +142,8 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Marks                | Show mark and max               |
         | Specific feedback    | Shown                           |
         | Right answer         | Shown                           |
-    And I press "Start again with these options"
-
+    And I press "Save preview options"
+    And I press "Start again"
     #Enter both correct responses
     # And I drag "sat" into gap "1" in the gapfill question
     And I type "sat" into gap "1" in the gapfill question
@@ -196,7 +199,8 @@ Feature: Test all the basic functionality of this Gapfill question type
         | Specific feedback    | Shown             |
         | Right answer         | Shown             |
 
-    And I press "Start again with these options"
+    And I press "Update display options"
+    And I press "Start again"
     # And I drag "sat" into gap "1" in the gapfill question
     And I type "sat" into gap "1" in the gapfill question
 

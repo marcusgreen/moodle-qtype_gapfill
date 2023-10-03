@@ -1,4 +1,4 @@
-@mod @mod_quiz  @qtype @qtype_gapfill @javascript @gapfill_quiz
+@mod @mod_quiz  @qtype @qtype_gapfill @javascript @qtype_gapfill_add_quiz
 
 Feature: Add a Gapfill quiz
     In order to evaluate students as a teacher
@@ -67,7 +67,8 @@ Feature: Add a Gapfill quiz
     And I click on "Attempts" "link"
     And I click on "mod-quiz-report-overview-report-selectall-attempts" "checkbox"
     And I click on "Delete selected attempts" "button"
-    And I click on "Yes" "button" in the "Confirmation" "dialogue"
+    # And I click on "Yes" "button" in the "Confirmation" "dialogue"
+    And I click on "Yes" "button"
     And I am on the "Gapfill single page quiz" "mod_quiz > Edit" page logged in as "teacher1"
     And I press "Repaginate"
     Then I click on "Go" "button" in the "Repaginate" "dialogue"

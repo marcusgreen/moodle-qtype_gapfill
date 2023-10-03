@@ -40,5 +40,6 @@ Feature: Test the queiton type works with multilanguage filters
     Then I should see "Gapfill-002"
     #Check that the french words are not displayed
     And I am on the "Gapfill-002" "core_question > preview" page
+
     And I should see "cat"
     And I should not see "chat"
