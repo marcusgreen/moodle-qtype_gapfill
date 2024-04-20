@@ -1,3 +1,7 @@
+### Version 2.139 of the Moodle Gapfill question type April 2024
+Fixes for PHP 8.2 deprecation messages. Updates to ci to confirm compatibility 
+with Moodle 4.4.
+
 ### Version 2.138 of the Moodle Gapfill question type May 2023
 Fix for PHP 8.1 deprecation messages. Thanks to Joseph Rézeau  for
 creating the ticket for that.
