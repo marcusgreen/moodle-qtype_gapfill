@@ -64,6 +64,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public $letterhints;
 
+    /**
+     * Draggable options will dissapear after the first time they have been used, i.e.
+     * they can only be used once.
+     *
+     * @var boolean
+     */
+    public $letterhints;
+
+
 
     /**
      * Where an answer can be correct in more than one gap, only give a mark for one of them
