@@ -57,6 +57,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $shuffledanswers;
 
     /**
+     * Should letterhints be generated in interactive with feedback mode. This takes the form
+     * of adding an additional letter to the hints shown.
+     *
+     * @var boolean
+     */
+    public $letterhints;
+
+
+    /**
      * Where an answer can be correct in more than one gap, only give a mark for one of them
      * e.g. if it is olympic medals gold,silver and bronze, only give one mark if gold is
      * entered in every gap
