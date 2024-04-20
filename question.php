@@ -72,6 +72,13 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      */
     public $singleuse;
 
+    /**
+     * Values from the gapfill_settings table for per gap
+     * feedback.
+     *
+     * @var \stdClass
+     */
+    public $itemsettings;
 
 
     /**
