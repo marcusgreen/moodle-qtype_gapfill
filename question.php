@@ -70,7 +70,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      *
      * @var boolean
      */
-    public $letterhints;
+    public $singleuse;
 
 
 
