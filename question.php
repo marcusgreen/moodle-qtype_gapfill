@@ -38,6 +38,12 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
     public $answer;
 
     /**
+     * Display draggables after the body of the question
+     * @var boolean
+     */
+    public $optionsaftertext;
+
+    /**
      * answerdisplay is a string of either gapfill,dropdown or drag drop
      * @var string
      */
