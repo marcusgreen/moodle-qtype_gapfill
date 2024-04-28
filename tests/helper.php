@@ -39,7 +39,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @return string
      */
     public function get_test_questions() {
-        return array('catmat');
+        return ['catmat'];
     }
 
     /**
@@ -218,7 +218,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'qtype' => 'gapfill',
             'length' => '1',
             'stamp' => 'tjh238.vledev.open.ac.uk+100708154547+JrHygi',
-            'version' => 'tjh238.vledev.open.ac.uk+100708154548+a3zh8v',
+            'version' => 1,
             'hidden' => '0',
             'timecreated' => '1278603947',
             'timemodified' => '1278603947',
@@ -231,7 +231,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
         ];
 
         $question = $question->qtype->make_question($questiondata);
-        $question->gapstofill = count($answerwords);
         return $question;
     }
 

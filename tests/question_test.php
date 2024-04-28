@@ -43,6 +43,14 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
  * @coversDefaultClass \question\type\gapfill\question
  */
 class question_test extends \advanced_testcase {
+
+    /**
+     *
+     * @var qtype_gapfill $gapfill
+     * An instance of the question type
+     */
+    public $qtype;
+
     /**
      * Test value returned by questionid_column_name()
      *

@@ -423,7 +423,8 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
             'disableregex' => 1,
         ];
         $gapfill = helper::make_question($questiontext, $options);
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $gapstofill = count($gapfill->answers);
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
 
         $this->check_current_state(\question_state::$todo);
         $this->check_current_mark(null);
@@ -467,8 +468,9 @@ What are the colors of the Olympic medals?
         $submission = array('-submit' => 1, 'p1' => 'gold', 'p2' => 'silver', 'p3' => 'silver');
 
         $gapfill = helper::make_question( $questiontext, $options);
+        $gapstofill = count($gapfill->answers);
 
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
 
         // Check the initial state.
         $this->check_current_state(\question_state::$todo);
@@ -498,7 +500,9 @@ What are the colors of the Olympic medals?
     public function test_no_duplicate_draggables() {
         $qtext = 'Bicycles have [wheels]. Cars have [wheels|engines].';
         $gapfill = helper::make_question($qtext);
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $gapstofill = count($gapfill->answers);
+
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
         // Confirm draggables are unique, i.e. wheels appears only once.
         $this->assertEquals(2, count($gapfill->allanswers));
     }
@@ -509,11 +513,13 @@ What are the colors of the Olympic medals?
      */
     public function test_get_letter_hints() {
         $gapfill = helper::make_question();
+        $gapstofill = count($gapfill->answers);
+
         $gapfill->hints = [
             new \question_hint(1, 'This is the first hint.', FORMAT_HTML),
             new \question_hint(2, 'This is the second hint.', FORMAT_HTML),
         ];
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
         $this->process_submission([ '-submit' => 1, 'p1' => 'cat', 'p2' => 'cat']);
         $this->process_submission(array('-tryagain' => 1));
         $qa = $this->quba->get_question_attempt($this->slot);
@@ -549,8 +555,9 @@ What are the colors of the Olympic medals?
  [one] sat on the [two] [!!] ';
 
         $gapfill = helper::make_question( $questiontext);
+        $gapstofill = count($gapfill->answers);
 
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
 
         /* answer with duplicate values, only one of each duplicate should get a mark */
         /* save answer */
@@ -579,7 +586,7 @@ What are the colors of the Olympic medals?
         $this->check_current_state(\question_state::$gradedright);
 
         /* start again but put a value in the field expecting a blank */
-        $this->start_attempt_at_question($gapfill, 'interactive', $gapfill->gapstofill);
+        $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
         $submission = array('p1' => 'one', 'p2' => 'two', 'p3' => "three");
         $this->process_submission($submission);
         $this->check_step_count(2);
@@ -669,8 +676,9 @@ What are the colors of the Olympic medals?
  [one] sat on the [two] [!!] ';
 
         $gapfill = helper::make_question( $questiontext);
+        $gapstofill = count($gapfill->answers);
 
-        $this->start_attempt_at_question($gapfill, 'deferredfeedback', $gapfill->gapstofill);
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', $gapstofill);
         /* A mark for a blank submission where the gap is [!!] */
         $submission = array('p1' => 'one', 'p2' => 'two', 'p3' => '');
 
@@ -704,7 +712,6 @@ What are the colors of the Olympic medals?
         $gapfill = helper::make_question();
         $maxmark = 2;
 
-        $gapfill->showanswers = true;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
 
         // Check the initial state.
