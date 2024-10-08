@@ -68,12 +68,12 @@ class gapfill_import_form extends moodleform {
      */
     public function get_question_category($courseshortname) {
         global $DB;
-        /* parent=0 means where you have multiple categories it is at the top */
-        $sql = 'Select qcat.id id, c.id courseid,c.shortname,ctx.id contextid from {course} c
-        join {context} ctx on ctx.instanceid=c.id
-        join {question_categories} qcat on qcat.contextid=ctx.id
-        and ctx.contextlevel=50 and qcat.parent=0 and c.shortname =?';
-        $category = $DB->get_records_sql($sql, array($courseshortname));
+        /* parent=0 means where you have multiple categories it is at the top 50 is CONTEXT_COURSE*/
+        $sql = 'SELECT qcat.id id, c.id courseid,c.shortname,ctx.id contextid FROM {course} c
+        JOIN {context} ctx on ctx.instanceid=c.id
+        JOIN {question_categories} qcat on qcat.contextid=ctx.id
+        AND ctx.contextlevel=50 AND qcat.parent=0 AND c.shortname =?';
+        $category = $DB->get_records_sql($sql, [$courseshortname]);
         $category = array_shift($category);
         return $category;
     }
@@ -87,17 +87,17 @@ class gapfill_import_form extends moodleform {
      * @param array $data
      * @return boolean
      */
-    public function validation($fromform, $data) {
-        $errors = array();
+    public function validation($fromform, $data): array|bool {
+        $errors = [];
         global $DB;
-        $sql = 'select id from {course} where shortname =?';
+        $sql = 'SELECT id FROM {course} WHERE shortname =?';
         $this->course = $DB->get_records_sql($sql, array($fromform['courseshortname']));
         $this->course = array_shift($this->course);
         if ($this->course == null) {
             $errors['courseshortname'] = get_string('coursenotfound', 'qtype_gapfill');
         } else {
             $this->questioncategory = $this->get_question_category($fromform['courseshortname']);
-            if (count($this->questioncategory) == 0) {
+            if ($this->questioncategory->id  == 0) {
                 $url = new moodle_url('/question/edit.php?courseid=' . $this->course->id);
                 $errors['courseshortname'] = get_string('questioncatnotfound', 'qtype_gapfill', $url->out());
             }
