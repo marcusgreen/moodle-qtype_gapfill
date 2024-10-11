@@ -1,3 +1,9 @@
+### Version 2.141 of the Moodle Gapfill question type October 2024
+PHP 8.3 compatibility fix. It was throwing an undeclared variables error
+Thanks to to Alistair Spark for reporting the issue here
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/113
+Confirmation of compatibility with Moodle 4.5
+
 ### Version 2.139 of the Moodle Gapfill question type April 2024
 Fixes for PHP 8.2 deprecation messages. Updates to ci to confirm compatibility 
 with Moodle 4.4.
