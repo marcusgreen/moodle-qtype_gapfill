@@ -1,3 +1,8 @@
+### Version 2.142 of the Moodle Gapfill question type March 2025
+Fixed a bug in backup and restore where the feedback fields were not being backed up.
+Thanks to Mark Johnson for reporting this.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/117
+
 ### Version 2.141 of the Moodle Gapfill question type October 2024
 PHP 8.3 compatibility fix. It was throwing an undeclared variables error
 Thanks to to Alistair Spark for reporting the issue here
@@ -5,7 +10,7 @@ https://github.com/marcusgreen/moodle-qtype_gapfill/issues/113
 Confirmation of compatibility with Moodle 4.5
 
 ### Version 2.139 of the Moodle Gapfill question type April 2024
-Fixes for PHP 8.2 deprecation messages. Updates to ci to confirm compatibility 
+Fixes for PHP 8.2 deprecation messages. Updates to ci to confirm compatibility
 with Moodle 4.4.
 
 ### Version 2.138 of the Moodle Gapfill question type May 2023
