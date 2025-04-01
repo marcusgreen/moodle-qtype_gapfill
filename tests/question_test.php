@@ -57,7 +57,7 @@ class question_test extends \advanced_testcase {
      * @covers ::get_expected_data()
      */
     public function test_get_expected_data() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $expecteddata = array('p1' => 'raw_trimmed', 'p2' => 'raw_trimmed');
         $this->assertEquals($question->get_expected_data(), $expecteddata);
     }
@@ -68,7 +68,7 @@ class question_test extends \advanced_testcase {
      * @covers ::get_size()
      */
     public function test_get_size() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $answer = "123|12345";
         $this->assertEquals($question->get_size($answer), 5);
     }
@@ -78,7 +78,7 @@ class question_test extends \advanced_testcase {
      * @covers ::clear_wrong_from_response()
      */
     public function test_clear_wrong_from_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $response = ['p1' => 'cat', 'p2' => 'dog'];
         $result = $question->clear_wrong_from_response($response);
         $this->assertEquals($result['p2'], "");
@@ -88,7 +88,7 @@ class question_test extends \advanced_testcase {
      * @covers ::field(int)
      */
     public function test_field() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $this->assertEquals($question->field('1'), 'p1');
     }
 
@@ -98,7 +98,7 @@ class question_test extends \advanced_testcase {
      * @covers ::summarise_response()
      */
     public function test_summarise_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $response = array('p1' => 'cat', 'p2' => 'dog');
         $this->assertEquals($question->summarise_response($response), " cat  dog ");
     }
@@ -108,7 +108,7 @@ class question_test extends \advanced_testcase {
      * @covers ::grade_response(array)
      */
     public function test_grade_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
 
         $response = array('p1' => 'cat', 'p2' => 'dog');
         list($fraction, $state) = $question->grade_response($response);
@@ -130,7 +130,7 @@ class question_test extends \advanced_testcase {
      * @covers ::compute_final_grade()
      */
     public function test_compute_final_grade() {
-        $question = \qtype_gapfill_test_helper::make_question();
+        $question = \qtype_gapfill_test_helper::make_question('gapfill');
         $responses = [
             0 => ['p1' => 'cat', 'p2' => 'cat'],
             1 => ['p1' => 'cat', 'p2' => 'cat'],
@@ -168,7 +168,7 @@ class question_test extends \advanced_testcase {
             "noduplicates" => 1,
         ];
         $questiontext = 'The [cat] sat on the [cat]';
-        $question = \qtype_gapfill_test_helper::make_question($questiontext, $options);
+        $question = \qtype_gapfill_test_helper::make_question('gapfill', $questiontext, $options);
         // Give the same answer for each gap.
         $response = array('p1' => 'cat', 'p2' => 'cat');
         // Discard duplicates by putting hash in duplicate gaps.
@@ -185,7 +185,7 @@ class question_test extends \advanced_testcase {
      * @covers ::is_complete_response(array)
      */
     public function test_is_complete_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $response = array('p1' => 'cat', 'p2' => 'mat');
 
         $this->assertTrue($question->is_complete_response($response));
@@ -202,7 +202,7 @@ class question_test extends \advanced_testcase {
      * @covers ::get_correct_response()
      */
     public function test_get_correct_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $this->assertEquals($question->get_correct_response(), array('p1' => 'cat', 'p2' => 'mat'));
     }
     /**
@@ -221,7 +221,7 @@ class question_test extends \advanced_testcase {
      * @covers ::is_correct_response()
      */
     public function test_is_correct_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $question->casesensitive = 0;
         $answergiven = 'CAT';
         $rightanswer = 'cat';
@@ -244,7 +244,7 @@ class question_test extends \advanced_testcase {
      * @covers ::get_right_choice_for()
      */
     public function test_get_right_choice_for_place() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $this->assertEquals($question->get_right_choice_for(1), 'cat');
         $this->assertNotEquals($question->get_right_choice_for(2), 'cat');
     }
@@ -253,7 +253,7 @@ class question_test extends \advanced_testcase {
      * @covers ::is_same_response()
      */
     public function test_is_same_response() {
-        $question = helper::make_question();
+        $question = helper::make_question('gapfill');
         $prevresponse = array();
         $newresponse = array('p1' => 'cat', 'p2' => 'mat');
         $this->assertFalse($question->is_same_response($prevresponse, $newresponse));

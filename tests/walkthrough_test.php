@@ -55,7 +55,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
             'optionsaftertext' => false,
             'singleuse' => false
         ];
-        $gapfill = helper::make_question( $questiontext, $options);
+        $gapfill = helper::make_question('gapfill', $questiontext, $options);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         $this->check_output_contains('1.0');
@@ -74,7 +74,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
             'optionsaftertext' => true,
             'singleuse' => true
         ];
-        $gapfill = helper::make_question( $questiontext, $options);
+        $gapfill = helper::make_question('gapfill',  $questiontext, $options);
         $renderer = $gapfill->get_renderer($PAGE);
         $html = $renderer->app_connect($gapfill, 'randomstring');
         $this->assertStringContainsString('gapfill_singleuse', $html, ' missing gapfill singleuse tag');
@@ -92,7 +92,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
             'answerdisplay' => 'dropdown'
         ];
 
-        $gapfill = helper::make_question( $questiontext, $options);
+        $gapfill = helper::make_question('gapfill',  $questiontext, $options);
         $this->start_attempt_at_question($gapfill, 'immediatefeedback');
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
         $this->assertStringContainsString('select type', $html, ' missing select tags tag');
@@ -106,7 +106,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_deferred_feedback_unanswered() {
 
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         /* Check the initial state. */
@@ -139,7 +139,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
      */
     public function test_deferred_with_correct() {
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -167,7 +167,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_deferred_with_incorrect() {
 
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -204,7 +204,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
             'disableregex' => 1,
         ];
 
-        $gapfill = helper::make_question( $questiontext, $options);
+        $gapfill = helper::make_question('gapfill',  $questiontext, $options);
         $maxmark = 1;
             $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -225,7 +225,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_deferred_with_partially_correct() {
 
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -251,7 +251,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_deferred_with_blanks() {
         // Create a gapfill question.
         $questiontext = "The [cat] sat on the [mat]";
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -276,7 +276,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
 
         $questiontext = "Moscow is the capital of [Россия], The French word for boy is [garçon]. A word that
                 ends with an accent is [andrà]  ";
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $maxmark = 3;
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $maxmark);
         // Check the initial state.
@@ -297,7 +297,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_interactive_with_correct() {
 
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
 
@@ -354,7 +354,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     public function test_interactive_wildcard_with_correct() {
         // Create a gapfill question.
         $questiontext = " The [cat|dog] sat on the [mat] ";
-        $gapfill = helper::make_question($questiontext);
+        $gapfill = helper::make_question('gapfill', $questiontext);
         $maxmark = 2;
 
         $this->start_attempt_at_question($gapfill, 'interactive', $maxmark);
@@ -422,7 +422,7 @@ class walkthrough_test extends \qbehaviour_walkthrough_test_base {
         $options = [
             'disableregex' => 1,
         ];
-        $gapfill = helper::make_question($questiontext, $options);
+        $gapfill = helper::make_question('gapfill', $questiontext, $options);
         $gapstofill = count($gapfill->answers);
         $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
 
@@ -467,7 +467,7 @@ What are the colors of the Olympic medals?
         /* answer with duplicate values, only one of each duplicate should get a mark */
         $submission = array('-submit' => 1, 'p1' => 'gold', 'p2' => 'silver', 'p3' => 'silver');
 
-        $gapfill = helper::make_question( $questiontext, $options);
+        $gapfill = helper::make_question('gapfill',  $questiontext, $options);
         $gapstofill = count($gapfill->answers);
 
         $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
@@ -499,7 +499,7 @@ What are the colors of the Olympic medals?
      */
     public function test_no_duplicate_draggables() {
         $qtext = 'Bicycles have [wheels]. Cars have [wheels|engines].';
-        $gapfill = helper::make_question($qtext);
+        $gapfill = helper::make_question('gapfill', $qtext);
         $gapstofill = count($gapfill->answers);
 
         $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
@@ -512,7 +512,7 @@ What are the colors of the Olympic medals?
      * @covers ::no_idea()
      */
     public function test_get_letter_hints() {
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $gapstofill = count($gapfill->answers);
 
         $gapfill->hints = [
@@ -554,7 +554,7 @@ What are the colors of the Olympic medals?
         $questiontext = '
  [one] sat on the [two] [!!] ';
 
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $gapstofill = count($gapfill->answers);
 
         $this->start_attempt_at_question($gapfill, 'interactive', $gapstofill);
@@ -618,7 +618,7 @@ What are the colors of the Olympic medals?
     public function test_matching_divs() {
         $questiontext = "The [cat] sat on the [mat]";
         // Defaults to optionsaftertext being false.
-        $gapfill = helper::make_question($questiontext);
+        $gapfill = helper::make_question('gapfill', $questiontext);
         $this->start_attempt_at_question($gapfill, 'immediatefeedback');
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
         $divstarts = substr_count($html, "<div");
@@ -628,7 +628,7 @@ What are the colors of the Olympic medals?
             'disableregex' => 1,
             'optionsaftertext' => true,
         ];
-        $gapfill = helper::make_question($questiontext, $options);
+        $gapfill = helper::make_question('gapfill', $questiontext, $options);
         $this->start_attempt_at_question($gapfill, 'immediatefeedback');
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
         $divstarts = substr_count($html, "<div");
@@ -642,14 +642,14 @@ What are the colors of the Olympic medals?
      */
     public function test_get_aftergap_text() {
         $questiontext = "The [cat] sat on the [mat]";
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
         $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'dog'));
         $html = $this->quba->render_question($this->slot, $this->displayoptions);
         $this->assertStringContainsString("[mat]", $html );
 
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $maxmark = 2;
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
         $this->process_submission(array('-submit' => 1, 'p1' => 'cat', 'p2' => 'mat'));
@@ -675,7 +675,7 @@ What are the colors of the Olympic medals?
         $questiontext = '
  [one] sat on the [two] [!!] ';
 
-        $gapfill = helper::make_question( $questiontext);
+        $gapfill = helper::make_question('gapfill',  $questiontext);
         $gapstofill = count($gapfill->answers);
 
         $this->start_attempt_at_question($gapfill, 'deferredfeedback', $gapstofill);
@@ -709,7 +709,7 @@ What are the colors of the Olympic medals?
     public function test_immediatefeedback_with_correct() {
 
         // Create a gapfill question.
-        $gapfill = helper::make_question();
+        $gapfill = helper::make_question('gapfill');
         $maxmark = 2;
 
         $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
@@ -741,7 +741,7 @@ What are the colors of the Olympic medals?
      * @covers ::no_idea()
      */
     public function test_get_gapsize() {
-        $gapfill = helper::make_question( "");
+        $gapfill = helper::make_question('gapfill',  "");
         $this->assertEquals($gapfill->get_size("one"), 3);
         $this->assertEquals($gapfill->get_size("one|twleve"), 6);
     }

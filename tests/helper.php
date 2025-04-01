@@ -143,14 +143,15 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
         return $fromform;
     }
+
     /**
-     * Slight improvements over original make_question class
-     *
+     * Create an instance of the question for testing
+     * @param object $type
      * @param string $questiontext
-     * @param array $poptions
-     * @return qtype_gapfill
+     * @param array $options
+     * @return \qtype_gapfill_question
      */
-    public static function make_question($questiontext = "The [cat] sat on the [mat]", array $poptions =[]) {
+    public static function make_question($type, $questiontext = "The [cat] sat on the [mat]", array $poptions =[]) {
 
         $options = [
             'noduplicates' => $poptions['noduplicates'] ?? 0,
