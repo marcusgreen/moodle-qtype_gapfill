@@ -30,7 +30,7 @@ return new class extends phpunit_coverage_info {
      * @var array
      */
     protected $includelistfolders = [
-        '.'
+        '.',
     ];
 
     /**
@@ -40,7 +40,7 @@ return new class extends phpunit_coverage_info {
      */
     protected $includelistfiles = [
         'questiontype.php',
-        'qtype_gapfill'
+        'qtype_gapfill',
     ];
 
     /**
@@ -53,7 +53,7 @@ return new class extends phpunit_coverage_info {
     protected $excludelistfolders = [
         'db',
         'lang',
-        'tests'
+        'tests',
     ];
 
     /**
@@ -63,6 +63,6 @@ return new class extends phpunit_coverage_info {
      */
     protected $excludelistfiles = [
         'settings.php',
-        'version.php'
+        'version.php',
     ];
 };

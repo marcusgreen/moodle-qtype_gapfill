@@ -52,14 +52,14 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $id = 1;
         foreach ($answerwords as $key => $answer) {
             $id++;
-            $answers[$key] = (object) array(
+            $answers[$key] = (object) [
                 'question' => '163',
                 'answer' => $answer,
                 'fraction' => '1',
                 'feedback' => 'Feedback text',
                 'feedbackformat' => '1',
                 'id' => $id,
-            );
+            ];
         }
 
         $fromform = (object) [
@@ -159,7 +159,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'optionsaftertext' => $poptions['optionsaftertext'] ?? false,
             'delimitchars' => $poptions['delimitchars'] ?? '[]',
             'singleuse' => $poptions['singleuse'] ?? false,
-            'answerdisplay' => $poptions['answerdisplay'] ?? 'dragdrop'
+            'answerdisplay' => $poptions['answerdisplay'] ?? 'dragdrop',
         ];
 
         $type = 'gapfill';
@@ -171,20 +171,20 @@ class qtype_gapfill_test_helper extends question_test_helper {
         $question->qtype = question_bank::get_qtype('gapfill');
         $answerwords = $question->qtype->get_gaps($options['delimitchars'], $questiontext);
 
-        $question->places = array();
+        $question->places = [];
 
-        $answers = array();
+        $answers = [];
         $id = 1;
         foreach ($answerwords as $key => $answer) {
             $id++;
-            $answers[$key] = (object) array(
+            $answers[$key] = (object) [
                 'question' => '163',
                 'answer' => $answer,
                 'fraction' => '1',
                 'feedback' => 'Feedback text',
                 'feedbackformat' => '1',
                 'id' => $id,
-            );
+            ];
         }
         $questionoptions = (object) [
             'id' => '117',
@@ -233,7 +233,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'defaultmark' => '1.0000000',
             'penalty' => '0.3333333',
             'maxmark' => '1.00000',
-            'options' => $questionoptions
+            'options' => $questionoptions,
         ];
 
         $question = $question->qtype->make_question($questiondata);
