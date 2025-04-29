@@ -640,7 +640,7 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $answerparts = explode("|", $answer);
 
             foreach ($answerparts as $answer) {
-                // TODO Find why it was not checked earlier, plus strcasecmp would be more concise.
+                // NOTE Find why it was not checked earlier, plus strcasecmp would be more concise.
                 if (!$this->casesensitive == 1) {
                     $answergiven = core_text::strtolower($answergiven, 'UTF-8');
                     $answer = core_text::strtolower($answer, 'UTF-8');

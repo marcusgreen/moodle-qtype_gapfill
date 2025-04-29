@@ -262,10 +262,12 @@ final class question_test extends \advanced_testcase {
         $this->assertTrue($question->is_same_response($prevresponse, $newresponse));
     }
     public function setUp(): void {
+        parent::setUp();
         $this->qtype = \question_bank::get_qtype('gapfill');
     }
 
     protected function tearDown(): void {
+        parent::tearDown();
         $this->qtype = null;
     }
 }

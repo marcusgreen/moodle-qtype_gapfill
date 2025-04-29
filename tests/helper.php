@@ -116,10 +116,6 @@ class qtype_gapfill_test_helper extends question_test_helper {
                 'text' => 'Partially correct feedback',
                 'format' => FORMAT_HTML,
             ],
-            'generalfeedback' => [
-                'text' => 'General feedback',
-                'format' => FORMAT_HTML,
-            ],
             'incorrectfeedback' => [
                 'text' => 'Incorrect feedback',
                 'format' => FORMAT_HTML,
