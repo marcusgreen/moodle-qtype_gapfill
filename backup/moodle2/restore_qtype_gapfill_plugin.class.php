@@ -145,6 +145,8 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
             '/options/settings/gaptext',
             '/options/settings/correctfeedback',
             '/options/settings/incorrectfeedback',
+            '/options/question',
+            '/options/itemsettings',
         ];
     }
 
