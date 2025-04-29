@@ -57,10 +57,6 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
     }
 
 
-    public function convert_backup_to_questiondata($backupdata) {
-        $questiondata = parent::convert_backup_to_questiondata($backupdata);
-    }
-
      /**
       * Process the qtype/gapfill element
       *
