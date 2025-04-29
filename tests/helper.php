@@ -22,8 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-global $CFG;
-require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
+
 /**
  * utilities used by the other test classes
  *
@@ -142,9 +141,10 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
     /**
      * Create an instance of the question for testing
+     *
      * @param object $type
      * @param string $questiontext
-     * @param array $options
+     * @param array $poptions
      * @return \qtype_gapfill_question
      */
     public static function make_question($type, $questiontext = "The [cat] sat on the [mat]", array $poptions =[]) {

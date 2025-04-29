@@ -22,6 +22,13 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
+/**
+ * PHPUnit coverage configuration class
+ *
+ * This anonymous class defines which files and folders should be included or excluded
+ * when generating code coverage reports for the gapfill question type.
+ */
 return new class extends phpunit_coverage_info {
     /**
      * Default to cover code in all folders

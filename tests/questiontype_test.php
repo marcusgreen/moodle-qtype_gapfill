@@ -57,10 +57,12 @@ final class questiontype_test extends \advanced_testcase {
     ];
 
     protected function setUp(): void {
+        parent::setUp();
         $this->qtype = new \qtype_gapfill();
     }
 
     protected function tearDown(): void {
+        parent::tearDown();
         $this->qtype = null;
     }
     /**
