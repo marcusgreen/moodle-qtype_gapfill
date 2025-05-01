@@ -142,11 +142,11 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
      */
     protected function define_excluded_identity_hash_fields(): array {
         return [
+            '/options/question',
             '/options/settings/itemid',
             '/options/settings/gaptext',
             '/options/settings/correctfeedback',
             '/options/settings/incorrectfeedback',
-            '/options/question',
             '/options/itemsettings',
         ];
     }

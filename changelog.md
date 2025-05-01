@@ -1,3 +1,13 @@
+### Version 2.143 of the Moodle Gapfill question type May 2025
+Moodle 5 compatibility confirmed by running automated tests.
+
+Thanks to Tim Lock https://github.com/tlock of https://www.openlms.net/ for the following.
+
+Fix for issue https://github.com/marcusgreen/moodle-qtype_gapfill/issues/119
+Restore of mbz files now ensures that quesitons are not duplicated as documented
+https://moodledev.io/docs/5.0/apis/plugintypes/qtype/restore
+
+
 ### Version 2.142 of the Moodle Gapfill question type March 2025
 Fixed a bug in backup and restore where the feedback fields were not being backed up.
 Thanks to Mark Johnson for reporting this.
