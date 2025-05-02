@@ -107,7 +107,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
             'optionaftertext' => '',
             'letterhints' => '1',
             'generalfeedback' => [
-                'text' => '',
+                'text' => 'General feedback',
                 'format' => FORMAT_HTML,
             ],
             'correctfeedback' => [
