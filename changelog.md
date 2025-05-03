@@ -4,7 +4,7 @@ Moodle 5 compatibility confirmed by running automated tests.
 Thanks to Tim Lock https://github.com/tlock of https://www.openlms.net/ for the following.
 
 Fix for issue https://github.com/marcusgreen/moodle-qtype_gapfill/issues/119
-Restore of mbz files now ensures that quesitons are not duplicated as documented
+Restore of mbz files now ensures that questions are not duplicated as documented
 https://moodledev.io/docs/5.0/apis/plugintypes/qtype/restore
 
 
