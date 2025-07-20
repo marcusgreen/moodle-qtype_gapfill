@@ -36,9 +36,9 @@ require_once($CFG->dirroot . '/course/externallib.php');
  */
 final class backup_test extends \advanced_testcase {
     /**
-     * Duplicate quiz with a orderinging question, and check it worked.
+     * Duplicate quiz with a gapfill question, and check it worked.
      */
-    public function test_duplicate_ordering_question(): void {
+    public function test_duplicate_gapfill_question(): void {
         global $DB;
         $this->resetAfterTest();
         $this->setAdminUser();
@@ -56,7 +56,7 @@ final class backup_test extends \advanced_testcase {
 
         // Store some counts.
         $numquizzes = count(get_fast_modinfo($course)->instances['quiz']);
-        $numorderingquestions = $DB->count_records('question', ['qtype' => 'gapfill']);
+        $numgapfillquestions = $DB->count_records('question', ['qtype' => 'gapfill']);
 
         // Duplicate the page.
         duplicate_module($course, get_fast_modinfo($course)->get_cm($quiz->cmid));

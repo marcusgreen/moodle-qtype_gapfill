@@ -124,7 +124,16 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
         return $contents;
     }
 
-    #[\Override]
+    /**
+     * Convert the backup structure of this question type into a structure
+     * matching its question data
+     *
+     * When qtype only supports Moodle 5+ an override attribute should  go here.
+     *
+     *
+     * @param array $backupdata
+     * @return \stdClass
+     */
     public static function convert_backup_to_questiondata(array $backupdata): \stdClass {
         $questiondata = parent::convert_backup_to_questiondata($backupdata);
         $questiondata->options->answers = array_map(
