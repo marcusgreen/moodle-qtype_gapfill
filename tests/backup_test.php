@@ -63,6 +63,5 @@ final class backup_test extends \advanced_testcase {
 
         // Verify the copied quiz exists.
         $this->assertCount($numquizzes + 1, get_fast_modinfo($course)->instances['quiz']);
-
     }
 }

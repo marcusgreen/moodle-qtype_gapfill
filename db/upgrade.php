@@ -85,7 +85,6 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
         }
         // Gapfill savepoint reached.
         upgrade_plugin_savepoint(true, 2020091100, 'qtype', 'gapfill');
-
     }
     if ($oldversion < 2023072899) {
         if (!$dbman->field_exists('question_gapfill', 'letterhints')) {
@@ -94,7 +93,6 @@ function xmldb_qtype_gapfill_upgrade($oldversion = 0) {
             $dbman->add_field($table, $field);
         }
         upgrade_plugin_savepoint(true, 2023072899, 'qtype', 'gapfill');
-
     }
 
     return true;

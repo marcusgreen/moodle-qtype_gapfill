@@ -32,7 +32,6 @@ namespace qtype_gapfill\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mobile {
-
     /**
      * Returns the gapfill question type for the quiz in the mobile app.
      * @param array $args
@@ -42,7 +41,7 @@ class mobile {
         global $CFG;
         $args = (object) $args;
         $folder = $args->appversioncode >= 3950 ? 'latest' : 'ionic3';
-        $templatepath = $CFG->dirroot."/question/type/gapfill/mobile/$folder/addon-qtype-gapfill.html";
+        $templatepath = $CFG->dirroot . "/question/type/gapfill/mobile/$folder/addon-qtype-gapfill.html";
         return [
             'templates' => [
                 [

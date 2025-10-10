@@ -19,7 +19,7 @@
  *
  * @copyright &copy; 2012 Marcus Green
  * @author marcusavgreen@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package qtype_gapfill
  */
 defined('MOODLE_INTERNAL') || die();

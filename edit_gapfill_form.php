@@ -34,7 +34,6 @@ require_once($CFG->dirroot . '/question/type/edit_question_form.php');
  * about the Moodle forms library, which is based on the HTML Quickform PEAR library.
  */
 class qtype_gapfill_edit_form extends question_edit_form {
-
     /**
      * Doesn't seem to be used
      * @var string
@@ -67,19 +66,36 @@ class qtype_gapfill_edit_form extends question_edit_form {
         /* popup for entering feedback for individual words */
         $mform->addElement('html', '<div id="id_itemsettings_popup" title="' . get_string('additemsettings', 'qtype_gapfill')
                 . '" style="display:none;background-color:lightgrey" >');
-        $mform->addElement('editor', 'correct', get_string('correct', 'qtype_gapfill'),
-         ['size' => 70, 'rows' => 4],  ['autosave' => false]);
-        $mform->addElement('editor', 'incorrect', get_string('incorrect', 'qtype_gapfill'),
-         ['size' => 70, 'rows' => 4],  ['autosave' => false]);
+        $mform->addElement(
+            'editor',
+            'correct',
+            get_string('correct', 'qtype_gapfill'),
+            ['size' => 70, 'rows' => 4],
+            ['autosave' => false]
+        );
+        $mform->addElement(
+            'editor',
+            'incorrect',
+            get_string('incorrect', 'qtype_gapfill'),
+            ['size' => 70, 'rows' => 4],
+            ['autosave' => false]
+        );
         $mform->addElement('html', '</div>');
 
         /* presented for clicking on the gaps once they have been given numberical ids */
-        $mform->addElement('html',
-         '<div class="gapfill" id="id_itemsettings_canvas" style="display:none;background-color:lightgrey" ></div>');
+        $mform->addElement(
+            'html',
+            '<div class="gapfill" id="id_itemsettings_canvas" style="display:none;background-color:lightgrey" ></div>'
+        );
 
         $mform->addElement('html', '<div id="questiontext" >');
-        $mform->addElement('editor', 'questiontext', get_string('questiontext', 'question'), ['rows' => 10],
-                $this->editoroptions);
+        $mform->addElement(
+            'editor',
+            'questiontext',
+            get_string('questiontext', 'question'),
+            ['rows' => 10],
+            $this->editoroptions
+        );
         $mform->addElement('html', '</div>');
 
         $mform->setType('questiontext', PARAM_RAW);
@@ -93,8 +109,13 @@ class qtype_gapfill_edit_form extends question_edit_form {
         // Default mark will be set to 1 * number of fields.
         $mform->removeelement('defaultmark');
 
-        $mform->addElement('editor', 'wronganswers', get_string('wronganswers', 'qtype_gapfill'),
-                ['size' => 70, 'rows' => 1], $this->editoroptions);
+        $mform->addElement(
+            'editor',
+            'wronganswers',
+            get_string('wronganswers', 'qtype_gapfill'),
+            ['size' => 70, 'rows' => 1],
+            $this->editoroptions
+        );
         $mform->addHelpButton('wronganswers', 'wronganswers', 'qtype_gapfill');
 
         /* Only allow plain text in for the comma delimited set of wrong answer values
@@ -103,8 +124,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
          */
         $mform->setType('wronganswers', PARAM_TEXT);
 
-        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question')
-                , ['rows' => 10], $this->editoroptions);
+        $mform->addElement('editor', 'generalfeedback', get_string(
+            'generalfeedback',
+            'question'
+        ), ['rows' => 10], $this->editoroptions);
 
         $mform->setType('generalfeedback', PARAM_RAW);
         $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
@@ -193,7 +216,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setDefault('casesensitive', $config->casesensitive);
         $mform->addHelpButton('casesensitive', 'casesensitive', 'qtype_gapfill');
         $mform->setAdvanced('casesensitive');
-
     }
     /**
      * Setup form elements that are very unlikely to change
@@ -313,5 +335,4 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public function qtype() {
         return 'gapfill';
     }
-
 }

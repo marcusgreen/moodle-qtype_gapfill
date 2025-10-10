@@ -31,7 +31,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
-
     /**
      * returns the name of the plugin/question type
      *
@@ -74,11 +73,15 @@ class backup_qtype_gapfill_plugin extends backup_qtype_plugin {
         $gapsettings->add_child($gapsetting);
 
         // Set source to populate the data.
-        $gapfill->set_source_table('question_gapfill',
-                ['question' => backup::VAR_PARENTID]);
+        $gapfill->set_source_table(
+            'question_gapfill',
+            ['question' => backup::VAR_PARENTID]
+        );
          // Set source to populate the data.
-        $gapsetting->set_source_table('question_gapfill_settings',
-                ['question' => backup::VAR_PARENTID]);
+        $gapsetting->set_source_table(
+            'question_gapfill_settings',
+            ['question' => backup::VAR_PARENTID]
+        );
 
         // Don't need to annotate ids nor files.
 

@@ -33,7 +33,6 @@ require_once(__DIR__ . '/../../../../../lib/behat/behat_base.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_qtype_gapfill extends behat_base {
-
     /**
      * Get the xpath for a given gap
      * @param string $gapnumber the gap id number
@@ -62,8 +61,12 @@ class behat_qtype_gapfill extends behat_base {
      */
     public function i_drag_into_gap_in_the_gapfill_question($dragitem, $gapnumber) {
         $generalcontext = behat_context_helper::get('behat_general');
-        $generalcontext->i_drag_and_i_drop_it_in($this->drag_xpath($dragitem), 'xpath_element',
-                $this->drop_xpath($gapnumber), 'xpath_element');
+        $generalcontext->i_drag_and_i_drop_it_in(
+            $this->drag_xpath($dragitem),
+            'xpath_element',
+            $this->drop_xpath($gapnumber),
+            'xpath_element'
+        );
     }
 
     /**
@@ -78,5 +81,4 @@ class behat_qtype_gapfill extends behat_base {
         $xpath = $this->drop_xpath($gapnumber);
         $this->execute('behat_forms::i_set_the_field_with_xpath_to', [$xpath, $gapresponse]);
     }
-
 }

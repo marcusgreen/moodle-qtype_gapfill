@@ -110,7 +110,6 @@ class gapfill_import_form extends moodleform {
             return true;
         }
     }
-
 }
 
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
@@ -120,7 +119,7 @@ if ($fromform = $mform->get_data()) {
     $category->context = $categorycontext;
 
     $qformat = new qformat_xml();
-    $file = $CFG->dirroot . '/question/type/gapfill/examples/'.current_language().'/gapfill_examples.xml';
+    $file = $CFG->dirroot . '/question/type/gapfill/examples/' . current_language() . '/gapfill_examples.xml';
     $qformat->setFilename($file);
 
     $qformat->setCategory($category);
