@@ -1,3 +1,9 @@
+### Version 2.144 of the Moodle Gapfill question type Oct 2025
+Moodle 5.1 compatibility confirmed by running automated tests.
+Belated thanks to Diego Corti for reporting this issue https://github.com/marcusgreen/moodle-qtype_gapfill/issues/111
+Assorted mass linting using phpcs (no functional changes).
+
+
 ### Version 2.143 of the Moodle Gapfill question type May 2025
 Moodle 5 compatibility confirmed by running automated tests.
 
