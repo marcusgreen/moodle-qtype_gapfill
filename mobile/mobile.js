@@ -17,7 +17,6 @@
  * support for the mdl35+ mobile app. PHP calls this from within
  * classes/output/mobile.php
  */
-/* eslint-disable no-console */
 /* eslint-env es6 */
 var that = this;
 var result = {
