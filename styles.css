@@ -114,8 +114,11 @@ incorrec answer was entered */
     font-weight: bold;
 }
 
+.que.gapfill select {
+    display:inline;
+}
 
-/* styling the dropdowns*/
+/* legacy, evantually delete: styling the dropdowns*/
 .que.gapfill.qtext select {
     border: solid black thin;
     border-radius: 3px;
