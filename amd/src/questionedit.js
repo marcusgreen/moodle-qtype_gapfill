@@ -21,7 +21,7 @@
  */
 
 /* The data is stored in a hidden field */
-define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
+define(['qtype_gapfill/Item'], function(Item) {
   return {
     init: function() {
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
@@ -55,132 +55,157 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
 
       });
       /* A click on the itemsettings button */
-      $('#id_itemsettings_button').on('click', function() {
-        var attoIsLive = $('.editor_atto').length;
+      document.getElementById('id_itemsettings_button').addEventListener('click', function() {
+        var attoIsLive = document.querySelectorAll('.editor_atto').length;
         /* Show error if Atto is not loaded. It might be because the page has not finished loading
          * or because plain text elements are being used or (perhaps less likely as time goes on)
          * the HTMLarea editor is being used. It might be possible to work with those other editors
          * but limiting to Atto keeps things straightforward and maintainable.
          */
         if (attoIsLive < 1) {
-          $('#id_error_itemsettings_button').css({
-            display: 'inline',
-            color: 'red',
-          });
-          $('#id_error_itemsettings_button')[0].innerHTML = M.util.get_string(
+          var errorElement = document.getElementById('id_error_itemsettings_button');
+          errorElement.style.display = 'inline';
+          errorElement.style.color = 'red';
+          errorElement.innerHTML = M.util.get_string(
             'itemsettingserror',
             'qtype_gapfill'
           );
           return;
         }
-        $('#questiontext .atto_html_button').attr('disabled', 'true');
-        if ($('#id_questiontexteditable').get(0).isContentEditable) {
-          $('#id_questiontexteditable').attr('contenteditable', 'false');
-          $('#fitem_id_questiontext')
-            .find('button')
-            .attr('disabled', 'true');
-          var settingformheight = $('#id_questiontexteditable').css('height');
-          var settingformwidth = $('#id_questiontexteditable').css('width');
-          $('#id_questiontexteditable').css('display', 'none');
-          /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
-          $('#id_itemsettings_canvas').css(
-            copyStyles($('#id_questiontexteditable'))
-          );
-          var ed = $('#id_questiontexteditable').closest(
-            '.editor_atto_content_wrap'
-          );
-          $('#id_itemsettings_canvas')
-            .appendTo(ed)
-            .css('position', 'relative');
-          $('#id_itemsettings_canvas').css({
-            display: 'block',
-            background: 'lightgrey',
+
+        // Disable all atto_html_button buttons
+        var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
+        htmlButtons.forEach(function(button) {
+          button.setAttribute('disabled', 'true');
+        });
+
+        var questionTextEditable = document.getElementById('id_questiontexteditable');
+        if (questionTextEditable.isContentEditable) {
+          questionTextEditable.setAttribute('contenteditable', 'false');
+
+          // Disable all buttons in fitem_id_questiontext
+          var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
+          buttons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
           });
 
+          var settingformheight = window.getComputedStyle(questionTextEditable).height;
+          var settingformwidth = window.getComputedStyle(questionTextEditable).width;
+          questionTextEditable.style.display = 'none';
+
+          /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
+          var canvas = document.getElementById('id_itemsettings_canvas');
+          var styles = copyStyles(questionTextEditable);
+          Object.assign(canvas.style, styles);
+
+          var ed = questionTextEditable.closest('.editor_atto_content_wrap');
+          ed.appendChild(canvas);
+          canvas.style.position = 'relative';
+
+          canvas.style.display = 'block';
+          canvas.style.background = 'lightgrey';
+
           /* Copy the real html to the feedback editing html */
-          $('#id_itemsettings_canvas').html(
-            $('#id_questiontexteditable').prop('innerHTML')
-          );
-          $('#id_itemsettings_canvas').css({
-            height: settingformheight,
-            width: settingformwidth,
-          });
-          $('#id_itemsettings_canvas').css({height: '100%', width: '100%'});
-          $('#id_itemsettings_button').html(
-            M.util.get_string('editquestiontext', 'qtype_gapfill')
-          );
+          canvas.innerHTML = questionTextEditable.innerHTML;
+
+          canvas.style.height = settingformheight;
+          canvas.style.width = settingformwidth;
+
+          canvas.style.height = '100%';
+          canvas.style.width = '100%';
+
+          document.getElementById('id_itemsettings_button').innerHTML =
+            M.util.get_string('editquestiontext', 'qtype_gapfill');
+
           /* Setting the height by hand gets around a quirk of MSIE */
-          $('#id_itemsettings_canvas').height(
-            $('#id_questiontexteditable').height()
-          );
+          canvas.style.height = window.getComputedStyle(questionTextEditable).height;
+
           /* Disable the buttons on questiontext but not on the feedback form */
           /* wrapContent should be the last on this block as it sometimes falls over with an error */
-          wrapContent($('#id_itemsettings_canvas')[0]);
+          wrapContent(canvas);
         } else {
-          $('#id_questiontexteditable').css({
-            display: 'block',
-            backgroundColor: 'white',
+          questionTextEditable.style.display = 'block';
+          questionTextEditable.style.backgroundColor = 'white';
+          questionTextEditable.setAttribute('contenteditable', 'true');
+
+          document.getElementById('id_itemsettings_canvas').style.display = 'none';
+
+          // Enable all buttons in fitem_id_questiontext
+          var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
+          buttons.forEach(function(button) {
+            button.removeAttribute('disabled');
           });
-          $('#id_questiontexteditable').attr('contenteditable', 'true');
-          $('#id_itemsettings_canvas').css('display', 'none');
-          $('#fitem_id_questiontext')
-            .find('button')
-            .removeAttr('disabled');
-          $('#id_settings_popup').css('display', 'none');
-          $('#id_itemsettings_button').html(
-            M.util.get_string('additemsettings', 'qtype_gapfill')
-          );
-          $('[class^=atto_]').removeAttr('disabled');
+
+          document.getElementById('id_settings_popup').style.display = 'none';
+
+          document.getElementById('id_itemsettings_button').innerHTML =
+            M.util.get_string('additemsettings', 'qtype_gapfill');
+
+          // Enable all elements with class starting with atto_
+          var attoElements = document.querySelectorAll('[class^="atto_"]');
+          attoElements.forEach(function(element) {
+            element.removeAttribute('disabled');
+          });
         }
       });
 
       /* A click on the text */
-      $('#id_itemsettings_canvas').on('click', function(e) {
+      document.getElementById('id_itemsettings_canvas').addEventListener('click', function(e) {
         /*
          * Questiontext needs to be edditable and the target must start
          * with id followed by one or more digits and an underscore
          * */
         if (
-          !$('#id_questiontexteditable').get(0).isContentEditable &&
+          !document.getElementById('id_questiontexteditable').isContentEditable &&
           e.target.id.match(/^id[0-9]+_/)
         ) {
-          var delimitchars = $('#id_delimitchars').val();
+          var delimitchars = document.getElementById('id_delimitchars').value;
           var item = new Item(e.target.innerHTML, delimitchars);
 
           // Var item = new Item(e.target.innerHTML, delimitchars);
           var itemsettings = item.getItemSettings(e.target);
           if (itemsettings === null || itemsettings.length === 0) {
-            $('#id_correcteditable').html('');
-            $('#id_incorrecteditable').html('');
+            document.getElementById('id_correcteditable').innerHTML = '';
+            document.getElementById('id_incorrecteditable').innerHTML = '';
           } else {
-            $('#id_correcteditable').html(itemsettings.correctfeedback);
-            $('#id_incorrecteditable').html(itemsettings.incorrectfeedback);
+            document.getElementById('id_correcteditable').innerHTML = itemsettings.correctfeedback;
+            document.getElementById('id_incorrecteditable').innerHTML = itemsettings.incorrectfeedback;
           }
-          $("label[for*='id_correct']").text(
-            M.util.get_string('correct', 'qtype_gapfill')
-          );
-          $("label[for*='id_incorrect']").text(
-            M.util.get_string('incorrect', 'qtype_gapfill')
-          );
-          $('#id_itemsettings_popup .atto_image_button').attr(
-            'disabled',
-            'true'
-          );
-          $('#id_itemsettings_popup .atto_media_button').attr(
-            'disabled',
-            'true'
-          );
-          $('#id_itemsettings_popup .atto_managefiles_button').attr(
-            'disabled',
-            'true'
-          );
+
+          // Set label texts
+          var correctLabels = document.querySelectorAll("label[for*='id_correct']");
+          correctLabels.forEach(function(label) {
+            label.textContent = M.util.get_string('correct', 'qtype_gapfill');
+          });
+
+          var incorrectLabels = document.querySelectorAll("label[for*='id_incorrect']");
+          incorrectLabels.forEach(function(label) {
+            label.textContent = M.util.get_string('incorrect', 'qtype_gapfill');
+          });
+
+          // Disable specific atto buttons
+          var imageButtons = document.querySelectorAll('#id_itemsettings_popup .atto_image_button');
+          imageButtons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
+          });
+
+          var mediaButtons = document.querySelectorAll('#id_itemsettings_popup .atto_media_button');
+          mediaButtons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
+          });
+
+          var manageFilesButtons = document.querySelectorAll('#id_itemsettings_popup .atto_managefiles_button');
+          manageFilesButtons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
+          });
+
           var title = M.util.get_string('additemsettings', 'qtype_gapfill');
           /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
-          title +=
-            ': ' +
-            $('<div/>')
-              .html(item.stripdelim())
-              .text();
+          var tempDiv = document.createElement('div');
+          tempDiv.innerHTML = item.stripdelim();
+          title += ': ' + tempDiv.textContent;
+
+          // Use jQuery UI for dialog since it's already required
           require(['jquery', 'jqueryui'], function($) {
             $('#id_itemsettings_popup').dialog({
               position: {
@@ -198,15 +223,21 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
                   id: 'SaveItemFeedback',
                   click: function() {
                     var JSONstr = item.updateJson(e);
-                    $('[class^=atto_]').removeAttr('disabled');
-                    $("[name='itemsettings']").val(JSONstr);
+
+                    // Enable all atto elements
+                    var attoElements = document.querySelectorAll('[class^="atto_"]');
+                    attoElements.forEach(function(element) {
+                      element.removeAttribute('disabled');
+                    });
+
+                    document.querySelector("[name='itemsettings']").value = JSONstr;
                     $('.ui-dialog-content').dialog('close');
                     /* Set editable to true as it is checked at the start of click */
-                    $('#id_questiontexteditable').attr(
+                    document.getElementById('id_questiontexteditable').setAttribute(
                       'contenteditable',
                       'true'
                     );
-                    $('#id_itemsettings_button').click();
+                    document.getElementById('id_itemsettings_button').click();
                   },
                 },
               ],
@@ -244,7 +275,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
             count = 0;
           }
           var frag, text;
-          var delimitchars = $('#id_delimitchars').val();
+          var delimitchars = document.getElementById('id_delimitchars').value;
           var l = delimitchars.substring(0, 1);
           var r = delimitchars.substring(1, 2);
           var regex = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
@@ -294,7 +325,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
               sp = span.cloneNode(false);
               count++;
               sp.className = 'item';
-              var item = new Item(text[j], $('#id_delimitchars').val());
+              var item = new Item(text[j], document.getElementById('id_delimitchars').value);
               if (item.gaptext > '') {
                 var instance = 0;
                 for (var k = 0; k < gaps.length; ++k) {
