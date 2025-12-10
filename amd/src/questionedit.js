@@ -24,26 +24,32 @@
 define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
   return {
     init: function() {
-      $('#id_answerdisplay').change(function() {
-        var selected = $(this).val();
+      document.getElementById('id_answerdisplay').addEventListener('change', function() {
+        var selected = this.value;
         if (selected == 'gapfill') {
-          $('#id_fixedgapsize').prop('disabled', false);
-          $("#id_optionsaftertext").prop('disabled', true).prop('checked', false);
-          $('#id_singleuse').prop('disabled', true).prop('checked', false);
-          $('#id_disableregex').prop('disabled', false);
+          document.getElementById('id_fixedgapsize').disabled = false;
+          document.getElementById('id_optionsaftertext').disabled = true;
+          document.getElementById('id_optionsaftertext').checked = false;
+          document.getElementById('id_singleuse').disabled = true;
+          document.getElementById('id_singleuse').checked = false;
+          document.getElementById('id_disableregex').disabled = false;
 
         }
         if (selected == 'dragdrop') {
-          $('#id_optionsaftertext').prop('disabled', false);
-          $('#id_singleuse').prop('disabled', false);
-          $('#id_fixedgapsize').prop('disabled', false);
-          $('#id_disableregex').prop('disabled', false);
+          document.getElementById('id_optionsaftertext').disabled = false;
+          document.getElementById('id_singleuse').disabled = false;
+          document.getElementById('id_fixedgapsize').disabled = false;
+          document.getElementById('id_disableregex').disabled = false;
         }
         if (selected == 'dropdown') {
-          $('#id_fixedgapsize').prop('disabled', true).prop('checked', false);
-          $('#id_optionsaftertext').prop('disabled', true).prop('checked', false);
-          $('#id_singleuse').prop('disabled', true).prop('checked', false);
-          $('#id_disableregex').prop('disabled', true).prop('checked', false);
+          document.getElementById('id_fixedgapsize').disabled = true;
+          document.getElementById('id_fixedgapsize').checked = false;
+          document.getElementById('id_optionsaftertext').disabled = true;
+          document.getElementById('id_optionsaftertext').checked = false;
+          document.getElementById('id_singleuse').disabled = true;
+          document.getElementById('id_singleuse').checked = false;
+          document.getElementById('id_disableregex').disabled = true;
+          document.getElementById('id_disableregex').checked = false;
         }
 
 
