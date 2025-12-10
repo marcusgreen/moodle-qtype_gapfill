@@ -12,48 +12,55 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * JavaScript code for the gapfill question type.
  *
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 /* The data is stored in a hidden field */
 define(['qtype_gapfill/Item'], function(Item) {
   return {
     init: function() {
+      /**
+       * Helper function to set element properties by ID
+       * @param {string} id - Element ID
+       * @param {object} properties - Object containing property-value pairs to set
+       */
+      function setElementProps(id, properties) {
+        var element = document.getElementById(id);
+        if (element) {
+          Object.keys(properties).forEach(function(prop) {
+            element[prop] = properties[prop];
+          });
+        }
+      }
+
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
         var selected = this.value;
+
         if (selected == 'gapfill') {
-          document.getElementById('id_fixedgapsize').disabled = false;
-          document.getElementById('id_optionsaftertext').disabled = true;
-          document.getElementById('id_optionsaftertext').checked = false;
-          document.getElementById('id_singleuse').disabled = true;
-          document.getElementById('id_singleuse').checked = false;
-          document.getElementById('id_disableregex').disabled = false;
-
+          setElementProps('id_fixedgapsize', { disabled: false });
+          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
+          setElementProps('id_singleuse', { disabled: true, checked: false });
+          setElementProps('id_disableregex', { disabled: false });
         }
+
         if (selected == 'dragdrop') {
-          document.getElementById('id_optionsaftertext').disabled = false;
-          document.getElementById('id_singleuse').disabled = false;
-          document.getElementById('id_fixedgapsize').disabled = false;
-          document.getElementById('id_disableregex').disabled = false;
+          setElementProps('id_optionsaftertext', { disabled: false });
+          setElementProps('id_singleuse', { disabled: false });
+          setElementProps('id_fixedgapsize', { disabled: false });
+          setElementProps('id_disableregex', { disabled: false });
         }
+
         if (selected == 'dropdown') {
-          document.getElementById('id_fixedgapsize').disabled = true;
-          document.getElementById('id_fixedgapsize').checked = false;
-          document.getElementById('id_optionsaftertext').disabled = true;
-          document.getElementById('id_optionsaftertext').checked = false;
-          document.getElementById('id_singleuse').disabled = true;
-          document.getElementById('id_singleuse').checked = false;
-          document.getElementById('id_disableregex').disabled = true;
-          document.getElementById('id_disableregex').checked = false;
+          setElementProps('id_fixedgapsize', { disabled: true, checked: false });
+          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
+          setElementProps('id_singleuse', { disabled: true, checked: false });
+          setElementProps('id_disableregex', { disabled: true, checked: false });
         }
-
-
       });
+
       /* A click on the itemsettings button */
       document.getElementById('id_itemsettings_button').addEventListener('click', function() {
         var attoIsLive = document.querySelectorAll('.editor_atto').length;
@@ -72,54 +79,41 @@ define(['qtype_gapfill/Item'], function(Item) {
           );
           return;
         }
-
         // Disable all atto_html_button buttons
         var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
         htmlButtons.forEach(function(button) {
           button.setAttribute('disabled', 'true');
         });
-
         var questionTextEditable = document.getElementById('id_questiontexteditable');
         if (questionTextEditable.isContentEditable) {
           questionTextEditable.setAttribute('contenteditable', 'false');
-
           // Disable all buttons in fitem_id_questiontext
           var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
           buttons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-
           var settingformheight = window.getComputedStyle(questionTextEditable).height;
           var settingformwidth = window.getComputedStyle(questionTextEditable).width;
           questionTextEditable.style.display = 'none';
-
           /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
           var canvas = document.getElementById('id_itemsettings_canvas');
           var styles = copyStyles(questionTextEditable);
           Object.assign(canvas.style, styles);
-
           var ed = questionTextEditable.closest('.editor_atto_content_wrap');
           ed.appendChild(canvas);
           canvas.style.position = 'relative';
-
           canvas.style.display = 'block';
           canvas.style.background = 'lightgrey';
-
           /* Copy the real html to the feedback editing html */
           canvas.innerHTML = questionTextEditable.innerHTML;
-
           canvas.style.height = settingformheight;
           canvas.style.width = settingformwidth;
-
           canvas.style.height = '100%';
           canvas.style.width = '100%';
-
           document.getElementById('id_itemsettings_button').innerHTML =
             M.util.get_string('editquestiontext', 'qtype_gapfill');
-
           /* Setting the height by hand gets around a quirk of MSIE */
           canvas.style.height = window.getComputedStyle(questionTextEditable).height;
-
           /* Disable the buttons on questiontext but not on the feedback form */
           /* wrapContent should be the last on this block as it sometimes falls over with an error */
           wrapContent(canvas);
@@ -127,20 +121,15 @@ define(['qtype_gapfill/Item'], function(Item) {
           questionTextEditable.style.display = 'block';
           questionTextEditable.style.backgroundColor = 'white';
           questionTextEditable.setAttribute('contenteditable', 'true');
-
           document.getElementById('id_itemsettings_canvas').style.display = 'none';
-
           // Enable all buttons in fitem_id_questiontext
           var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
           buttons.forEach(function(button) {
             button.removeAttribute('disabled');
           });
-
           document.getElementById('id_settings_popup').style.display = 'none';
-
           document.getElementById('id_itemsettings_button').innerHTML =
             M.util.get_string('additemsettings', 'qtype_gapfill');
-
           // Enable all elements with class starting with atto_
           var attoElements = document.querySelectorAll('[class^="atto_"]');
           attoElements.forEach(function(element) {
@@ -161,7 +150,6 @@ define(['qtype_gapfill/Item'], function(Item) {
         ) {
           var delimitchars = document.getElementById('id_delimitchars').value;
           var item = new Item(e.target.innerHTML, delimitchars);
-
           // Var item = new Item(e.target.innerHTML, delimitchars);
           var itemsettings = item.getItemSettings(e.target);
           if (itemsettings === null || itemsettings.length === 0) {
@@ -171,40 +159,33 @@ define(['qtype_gapfill/Item'], function(Item) {
             document.getElementById('id_correcteditable').innerHTML = itemsettings.correctfeedback;
             document.getElementById('id_incorrecteditable').innerHTML = itemsettings.incorrectfeedback;
           }
-
           // Set label texts
           var correctLabels = document.querySelectorAll("label[for*='id_correct']");
           correctLabels.forEach(function(label) {
             label.textContent = M.util.get_string('correct', 'qtype_gapfill');
           });
-
           var incorrectLabels = document.querySelectorAll("label[for*='id_incorrect']");
           incorrectLabels.forEach(function(label) {
             label.textContent = M.util.get_string('incorrect', 'qtype_gapfill');
           });
-
           // Disable specific atto buttons
           var imageButtons = document.querySelectorAll('#id_itemsettings_popup .atto_image_button');
           imageButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-
           var mediaButtons = document.querySelectorAll('#id_itemsettings_popup .atto_media_button');
           mediaButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-
           var manageFilesButtons = document.querySelectorAll('#id_itemsettings_popup .atto_managefiles_button');
           manageFilesButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-
           var title = M.util.get_string('additemsettings', 'qtype_gapfill');
           /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
           var tempDiv = document.createElement('div');
           tempDiv.innerHTML = item.stripdelim();
           title += ': ' + tempDiv.textContent;
-
           // Use jQuery UI for dialog since it's already required
           require(['jquery', 'jqueryui'], function($) {
             $('#id_itemsettings_popup').dialog({
@@ -223,13 +204,11 @@ define(['qtype_gapfill/Item'], function(Item) {
                   id: 'SaveItemFeedback',
                   click: function() {
                     var JSONstr = item.updateJson(e);
-
                     // Enable all atto elements
                     var attoElements = document.querySelectorAll('[class^="atto_"]');
                     attoElements.forEach(function(element) {
                       element.removeAttribute('disabled');
                     });
-
                     document.querySelector("[name='itemsettings']").value = JSONstr;
                     $('.ui-dialog-content').dialog('close');
                     /* Set editable to true as it is checked at the start of click */
@@ -353,6 +332,7 @@ define(['qtype_gapfill/Item'], function(Item) {
           }
         };
       })();
+
       /**
        *
        * @param {array} source
@@ -399,6 +379,7 @@ define(['qtype_gapfill/Item'], function(Item) {
         }
         return false;
       }
+
       /**
        * TODO check if this function is needed
        * @param {string} style
