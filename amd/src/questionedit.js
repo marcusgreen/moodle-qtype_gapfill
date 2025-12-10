@@ -12,6 +12,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * JavaScript code for the gapfill question type.
  *
@@ -34,6 +35,26 @@ define(['qtype_gapfill/Item'], function(Item) {
             element[prop] = properties[prop];
           });
         }
+      }
+
+      /**
+       * Check which editor is active on the page
+       * @return {string|null} Returns 'tinymce', 'atto', or null if neither is active
+       */
+      function getActiveEditor() {
+        // Check if TinyMCE is active
+        if (document.querySelector('.tox-tinymce')) {
+          return 'tinymce';
+        }
+
+        // Check if Atto is active
+        var attoIsLive = document.querySelectorAll('.editor_atto').length;
+
+        if (attoIsLive > 0) {
+          return 'atto';
+        }
+
+        return null;
       }
 
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
@@ -63,13 +84,13 @@ define(['qtype_gapfill/Item'], function(Item) {
 
       /* A click on the itemsettings button */
       document.getElementById('id_itemsettings_button').addEventListener('click', function() {
-        var attoIsLive = document.querySelectorAll('.editor_atto').length;
-        /* Show error if Atto is not loaded. It might be because the page has not finished loading
+        var activeEditor = getActiveEditor();
+        /* Show error if no supported editor is active. It might be because the page has not finished loading
          * or because plain text elements are being used or (perhaps less likely as time goes on)
          * the HTMLarea editor is being used. It might be possible to work with those other editors
-         * but limiting to Atto keeps things straightforward and maintainable.
+         * but limiting to supported editors keeps things straightforward and maintainable.
          */
-        if (attoIsLive < 1) {
+        if (!activeEditor) {
           var errorElement = document.getElementById('id_error_itemsettings_button');
           errorElement.style.display = 'inline';
           errorElement.style.color = 'red';
@@ -79,11 +100,16 @@ define(['qtype_gapfill/Item'], function(Item) {
           );
           return;
         }
-        // Disable all atto_html_button buttons
-        var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
-        htmlButtons.forEach(function(button) {
-          button.setAttribute('disabled', 'true');
-        });
+        // Disable editor-specific buttons based on active editor
+        if (activeEditor === 'atto') {
+          var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
+          htmlButtons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
+          });
+        } else if (activeEditor === 'tinymce') {
+            alert('tinymce not implemented yet');
+          // Add TinyMCE-specific button disabling if needed
+        }
         var questionTextEditable = document.getElementById('id_questiontexteditable');
         if (questionTextEditable.isContentEditable) {
           questionTextEditable.setAttribute('contenteditable', 'false');
