@@ -280,11 +280,11 @@ define([
           // Var item = new Item(e.target.innerHTML, delimitchars);
           let itemsettings = item.getItemSettings(e.target);
           if (itemsettings === null || itemsettings.length === 0) {
-            document.getElementById('id_correcteditable').innerHTML = '';
-            document.getElementById('id_incorrecteditable').innerHTML = '';
+            document.getElementById('id_correct').innerHTML = '';
+            document.getElementById('id_incorrect').innerHTML = '';
           } else {
-            document.getElementById('id_correcteditable').innerHTML = itemsettings.correctfeedback;
-            document.getElementById('id_incorrecteditable').innerHTML = itemsettings.incorrectfeedback;
+            document.getElementById('id_correct').innerHTML = itemsettings.correctfeedback;
+            document.getElementById('id_incorrect').innerHTML = itemsettings.incorrectfeedback;
           }
           // Set label texts
           let correctLabels = document.querySelectorAll("label[for*='id_correct']");
