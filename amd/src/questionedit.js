@@ -20,7 +20,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /* The data is stored in a hidden field */
-define(['qtype_gapfill/Item'], function(Item) {
+define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], function(Item, ModalFactory, ModalEvents) {
   return {
     init: function() {
       /**
@@ -222,47 +222,93 @@ define(['qtype_gapfill/Item'], function(Item) {
           let tempDiv = document.createElement('div');
           tempDiv.innerHTML = item.stripdelim();
           title += ': ' + tempDiv.textContent;
-          // Use jQuery UI for dialog since it's already required
+          // Use Moodle ModalFactory instead of jQuery UI
           openItemSettingsDialog(item, e, title);
 
         }
       });
 
       const openItemSettingsDialog = (item, e, title) => {
-        require(['jquery', 'jqueryui'], function($) {
-          $('#id_itemsettings_popup').dialog({
-            position: {
-              my: 'right',
-              at: 'right',
-              of: '#id_itemsettings_canvas',
-            },
-            height: 500,
-            width: '70%',
-            modal: false,
-            title: title,
-            buttons: [
-              {
-                text: 'OK',
-                id: 'SaveItemFeedback',
-                click: function() {
-                  let JSONstr = item.updateJson(e);
-                  // Enable all atto elements
-                  let attoElements = document.querySelectorAll('[class^="atto_"]');
-                  attoElements.forEach(element => {
-                    element.removeAttribute('disabled');
-                  });
-                  document.querySelector("[name='itemsettings']").value = JSONstr;
-                  $('.ui-dialog-content').dialog('close');
-                  /* Set editable to true as it is checked at the start of click */
-                  document.getElementById('id_questiontexteditable').setAttribute(
-                    'contenteditable',
-                    'true'
-                  );
-                  document.getElementById('id_itemsettings_button').click();
-                },
-              },
-            ],
+        // Get the content from the popup element
+        let popupContent = document.getElementById('id_itemsettings_popup');
+
+        ModalFactory.create({
+          type: ModalFactory.types.SAVE_CANCEL,
+          title: title,
+          body: popupContent.innerHTML,
+          large: true
+        }).then(function(modal) {
+          // Show the modal
+          modal.show();
+
+          // Get the modal root element to manipulate content
+          const modalRoot = modal.getRoot()[0];
+
+          // After the modal is shown, we need to copy content from modal back to original elements
+          modal.getRoot().on(ModalEvents.shown, function() {
+            // Find the editable elements in the modal
+            let modalCorrect = modalRoot.querySelector('#id_correcteditable');
+            let modalIncorrect = modalRoot.querySelector('#id_incorrecteditable');
+
+            // Get the original elements
+            let originalCorrect = document.getElementById('id_correcteditable');
+            let originalIncorrect = document.getElementById('id_incorrecteditable');
+
+            // Copy content from original to modal
+            if (modalCorrect && originalCorrect) {
+              modalCorrect.innerHTML = originalCorrect.innerHTML;
+            }
+            if (modalIncorrect && originalIncorrect) {
+              modalIncorrect.innerHTML = originalIncorrect.innerHTML;
+            }
           });
+
+          // Handle the save event
+          modal.getRoot().on(ModalEvents.save, function() {
+            // Copy content from modal back to original elements before updating JSON
+            let modalCorrect = modalRoot.querySelector('#id_correcteditable');
+            let modalIncorrect = modalRoot.querySelector('#id_incorrecteditable');
+
+            let originalCorrect = document.getElementById('id_correcteditable');
+            let originalIncorrect = document.getElementById('id_incorrecteditable');
+
+            if (modalCorrect && originalCorrect) {
+              originalCorrect.innerHTML = modalCorrect.innerHTML;
+            }
+            if (modalIncorrect && originalIncorrect) {
+              originalIncorrect.innerHTML = modalIncorrect.innerHTML;
+            }
+
+            let JSONstr = item.updateJson(e);
+            // Enable all atto elements
+            let attoElements = document.querySelectorAll('[class^="atto_"]');
+            attoElements.forEach(element => {
+              element.removeAttribute('disabled');
+            });
+            document.querySelector("[name='itemsettings']").value = JSONstr;
+            /* Set editable to true as it is checked at the start of click */
+            document.getElementById('id_questiontexteditable').setAttribute(
+              'contenteditable',
+              'true'
+            );
+            document.getElementById('id_itemsettings_button').click();
+            modal.destroy();
+          });
+
+          // Handle the cancel event
+          modal.getRoot().on(ModalEvents.cancel, function() {
+            // Enable all atto elements
+            let attoElements = document.querySelectorAll('[class^="atto_"]');
+            attoElements.forEach(element => {
+              element.removeAttribute('disabled');
+            });
+            modal.destroy();
+          });
+
+          return modal;
+        }).catch(function(error) {
+          // Handle any errors in creating the modal
+          console.error('Error creating modal:', error);
         });
       };
 
