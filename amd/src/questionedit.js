@@ -29,7 +29,7 @@ define(['qtype_gapfill/Item'], function(Item) {
        * @param {object} properties - Object containing property-value pairs to set
        */
       function setElementProps(id, properties) {
-        var element = document.getElementById(id);
+        let element = document.getElementById(id);
         if (element) {
           Object.keys(properties).forEach(function(prop) {
             element[prop] = properties[prop];
@@ -48,7 +48,7 @@ define(['qtype_gapfill/Item'], function(Item) {
         }
 
         // Check if Atto is active
-        var attoIsLive = document.querySelectorAll('.editor_atto').length;
+        let attoIsLive = document.querySelectorAll('.editor_atto').length;
 
         if (attoIsLive > 0) {
           return 'atto';
@@ -61,22 +61,22 @@ define(['qtype_gapfill/Item'], function(Item) {
        * Handle Atto editor specific item settings functionality
        */
       function handleAttoItemSettings() {
-        var questionTextEditable = document.getElementById('id_questiontexteditable');
+        let questionTextEditable = document.getElementById('id_questiontexteditable');
         if (questionTextEditable.isContentEditable) {
           questionTextEditable.setAttribute('contenteditable', 'false');
           // Disable all buttons in fitem_id_questiontext
-          var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
+          let buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
           buttons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-          var settingformheight = window.getComputedStyle(questionTextEditable).height;
-          var settingformwidth = window.getComputedStyle(questionTextEditable).width;
+          let settingformheight = window.getComputedStyle(questionTextEditable).height;
+          let settingformwidth = window.getComputedStyle(questionTextEditable).width;
           questionTextEditable.style.display = 'none';
           /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
-          var canvas = document.getElementById('id_itemsettings_canvas');
-          var styles = copyStyles(questionTextEditable);
+          let canvas = document.getElementById('id_itemsettings_canvas');
+          let styles = copyStyles(questionTextEditable);
           Object.assign(canvas.style, styles);
-          var ed = questionTextEditable.closest('.editor_atto_content_wrap');
+          let ed = questionTextEditable.closest('.editor_atto_content_wrap');
           ed.appendChild(canvas);
           canvas.style.position = 'relative';
           canvas.style.display = 'block';
@@ -100,7 +100,7 @@ define(['qtype_gapfill/Item'], function(Item) {
           questionTextEditable.setAttribute('contenteditable', 'true');
           document.getElementById('id_itemsettings_canvas').style.display = 'none';
           // Enable all buttons in fitem_id_questiontext
-          var buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
+          let buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
           buttons.forEach(function(button) {
             button.removeAttribute('disabled');
           });
@@ -108,7 +108,7 @@ define(['qtype_gapfill/Item'], function(Item) {
           document.getElementById('id_itemsettings_button').innerHTML =
             M.util.get_string('additemsettings', 'qtype_gapfill');
           // Enable all elements with class starting with atto_
-          var attoElements = document.querySelectorAll('[class^="atto_"]');
+          let attoElements = document.querySelectorAll('[class^="atto_"]');
           attoElements.forEach(function(element) {
             element.removeAttribute('disabled');
           });
@@ -116,7 +116,7 @@ define(['qtype_gapfill/Item'], function(Item) {
       }
 
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
-        var selected = this.value;
+        let selected = this.value;
 
         if (selected == 'gapfill') {
           setElementProps('id_fixedgapsize', { disabled: false });
@@ -142,14 +142,14 @@ define(['qtype_gapfill/Item'], function(Item) {
 
       /* A click on the itemsettings button */
       document.getElementById('id_itemsettings_button').addEventListener('click', function() {
-        var activeEditor = getActiveEditor();
+        let activeEditor = getActiveEditor();
         /* Show error if no supported editor is active. It might be because the page has not finished loading
          * or because plain text elements are being used or (perhaps less likely as time goes on)
          * the HTMLarea editor is being used. It might be possible to work with those other editors
          * but limiting to supported editors keeps things straightforward and maintainable.
          */
         if (!activeEditor) {
-          var errorElement = document.getElementById('id_error_itemsettings_button');
+          let errorElement = document.getElementById('id_error_itemsettings_button');
           errorElement.style.display = 'inline';
           errorElement.style.color = 'red';
           errorElement.innerHTML = M.util.get_string(
@@ -160,7 +160,7 @@ define(['qtype_gapfill/Item'], function(Item) {
         }
         // Disable editor-specific buttons based on active editor
         if (activeEditor === 'atto') {
-          var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
+          let htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
           htmlButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
@@ -184,10 +184,10 @@ define(['qtype_gapfill/Item'], function(Item) {
           !document.getElementById('id_questiontexteditable').isContentEditable &&
           e.target.id.match(/^id[0-9]+_/)
         ) {
-          var delimitchars = document.getElementById('id_delimitchars').value;
-          var item = new Item(e.target.innerHTML, delimitchars);
+          let delimitchars = document.getElementById('id_delimitchars').value;
+          let item = new Item(e.target.innerHTML, delimitchars);
           // Var item = new Item(e.target.innerHTML, delimitchars);
-          var itemsettings = item.getItemSettings(e.target);
+          let itemsettings = item.getItemSettings(e.target);
           if (itemsettings === null || itemsettings.length === 0) {
             document.getElementById('id_correcteditable').innerHTML = '';
             document.getElementById('id_incorrecteditable').innerHTML = '';
@@ -196,30 +196,30 @@ define(['qtype_gapfill/Item'], function(Item) {
             document.getElementById('id_incorrecteditable').innerHTML = itemsettings.incorrectfeedback;
           }
           // Set label texts
-          var correctLabels = document.querySelectorAll("label[for*='id_correct']");
+          let correctLabels = document.querySelectorAll("label[for*='id_correct']");
           correctLabels.forEach(function(label) {
             label.textContent = M.util.get_string('correct', 'qtype_gapfill');
           });
-          var incorrectLabels = document.querySelectorAll("label[for*='id_incorrect']");
+          let incorrectLabels = document.querySelectorAll("label[for*='id_incorrect']");
           incorrectLabels.forEach(function(label) {
             label.textContent = M.util.get_string('incorrect', 'qtype_gapfill');
           });
           // Disable specific atto buttons
-          var imageButtons = document.querySelectorAll('#id_itemsettings_popup .atto_image_button');
+          let imageButtons = document.querySelectorAll('#id_itemsettings_popup .atto_image_button');
           imageButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-          var mediaButtons = document.querySelectorAll('#id_itemsettings_popup .atto_media_button');
+          let mediaButtons = document.querySelectorAll('#id_itemsettings_popup .atto_media_button');
           mediaButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-          var manageFilesButtons = document.querySelectorAll('#id_itemsettings_popup .atto_managefiles_button');
+          let manageFilesButtons = document.querySelectorAll('#id_itemsettings_popup .atto_managefiles_button');
           manageFilesButtons.forEach(function(button) {
             button.setAttribute('disabled', 'true');
           });
-          var title = M.util.get_string('additemsettings', 'qtype_gapfill');
+          let title = M.util.get_string('additemsettings', 'qtype_gapfill');
           /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
-          var tempDiv = document.createElement('div');
+          let tempDiv = document.createElement('div');
           tempDiv.innerHTML = item.stripdelim();
           title += ': ' + tempDiv.textContent;
           // Use jQuery UI for dialog since it's already required
@@ -239,9 +239,9 @@ define(['qtype_gapfill/Item'], function(Item) {
                   text: 'OK',
                   id: 'SaveItemFeedback',
                   click: function() {
-                    var JSONstr = item.updateJson(e);
+                    let JSONstr = item.updateJson(e);
                     // Enable all atto elements
-                    var attoElements = document.querySelectorAll('[class^="atto_"]');
+                    let attoElements = document.querySelectorAll('[class^="atto_"]');
                     attoElements.forEach(function(element) {
                       element.removeAttribute('disabled');
                     });
@@ -267,8 +267,8 @@ define(['qtype_gapfill/Item'], function(Item) {
        * @return {array}
        */
       function toArray(obj) {
-        var arr = [];
-        for (var i = 0, iLen = obj.length; i < iLen; i++) {
+        let arr = [];
+        for (let i = 0, iLen = obj.length; i < iLen; i++) {
           arr.push(obj[i]);
         }
         return arr;
@@ -277,27 +277,27 @@ define(['qtype_gapfill/Item'], function(Item) {
       // Wrap the words of an element and child elements in a span.
       // Recurs over child elements, add an ID and class to the wrapping span.
       // Does not affect elements with no content, or those to be excluded.
-      var wrapContent = (function() {
+      const wrapContent = (function() {
         return function(el) {
-          var count = 0;
-          var gaps = [];
+          let count = 0;
+          let gaps = [];
           // If element provided, start there, otherwise use the body.
           el = el && el.parentNode ? el : document.body;
           // Get all child nodes as a static array.
-          var node,
+          let node,
             nodes = toArray(el.childNodes);
           if (el.id === 'id_questiontextfeedback' && count > 0) {
             count = 0;
           }
-          var frag, text;
-          var delimitchars = document.getElementById('id_delimitchars').value;
-          var l = delimitchars.substring(0, 1);
-          var r = delimitchars.substring(1, 2);
-          var regex = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
-          var sp,
+          let frag, text;
+          let delimitchars = document.getElementById('id_delimitchars').value;
+          let l = delimitchars.substring(0, 1);
+          let r = delimitchars.substring(1, 2);
+          let regex = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
+          let sp,
             span = document.createElement('span');
           // Tag names of elements to skip, there are more to add.
-          var skip = {
+          const skip = {
             script: '',
             button: '',
             input: '',
@@ -306,19 +306,19 @@ define(['qtype_gapfill/Item'], function(Item) {
             option: '',
           };
           // For each child node...
-          for (var i = 0, iLen = nodes.length; i < iLen; i++) {
+          for (let i = 0, iLen = nodes.length; i < iLen; i++) {
             node = nodes[i];
             // If it's an element, call wrapContent.
             if (node.nodeType === 1 && !(node.tagName.toLowerCase() in skip)) {
               wrapContent(node);
               // If it's a text node, wrap words.
             } else if (node.nodeType === 3) {
-              var textsplit = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
+              let textsplit = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
               text = node.data.split(textsplit);
               if (text) {
                 // Create a fragment, handy suckers these.
                 frag = document.createDocumentFragment();
-                for (var j = 0, jLen = text.length; j < jLen; j++) {
+                for (let j = 0, jLen = text.length; j < jLen; j++) {
                   // If not whitespace, wrap it and append to the fragment.
                   doGap(text, span, j);
                 }
@@ -340,17 +340,17 @@ define(['qtype_gapfill/Item'], function(Item) {
               sp = span.cloneNode(false);
               count++;
               sp.className = 'item';
-              var item = new Item(text[j], document.getElementById('id_delimitchars').value);
+              let item = new Item(text[j], document.getElementById('id_delimitchars').value);
               if (item.gaptext > '') {
-                var instance = 0;
-                for (var k = 0; k < gaps.length; ++k) {
+                let instance = 0;
+                for (let k = 0; k < gaps.length; ++k) {
                   if (gaps[k] === item.text) {
                     instance++;
                   }
                 }
                 item.id = 'id' + count + '_' + instance;
                 sp.id = item.id;
-                var is = item.getItemSettings(item);
+                let is = item.getItemSettings(item);
                 if (item.striptags(is.correctfeedback) > '') {
                   sp.className = 'hascorrect';
                 }
@@ -376,28 +376,28 @@ define(['qtype_gapfill/Item'], function(Item) {
        */
       function copyStyles(source) {
         // The map to return with requested styles and values as KVP.
-        var product = {};
+        let product = {};
         // The style object from the DOM element we need to iterate through.
-        var style;
+        let style;
         // Recycle the name of the style attribute.
-        var name;
+        let name;
         // Prevent from empty selector.
         if (source.length) {
           // Otherwise, we need to get everything.
-          var dom = source.get(0);
+          let dom = source.get(0);
           if (window.getComputedStyle) {
             // Convenience methods to turn css case ('background-image') to camel ('backgroundImage').
-            var pattern = /-([a-z])/g;
-            var uc = function(a, b) {
+            const pattern = /-([a-z])/g;
+            const uc = function(a, b) {
               return b.toUpperCase();
             };
-            var camelize = function(string) {
+            const camelize = function(string) {
               return string.replace(pattern, uc);
             };
             // Make sure we're getting a good reference.
             if ((style = window.getComputedStyle(dom, null))) {
-              var camel, value;
-              for (var i = 0, l = style.length; i < l; i++) {
+              let camel, value;
+              for (let i = 0, l = style.length; i < l; i++) {
                 name = style[i];
                 camel = camelize(name);
                 value = style.getPropertyValue(name);
