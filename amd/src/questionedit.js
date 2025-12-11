@@ -223,43 +223,48 @@ define(['qtype_gapfill/Item'], function(Item) {
           tempDiv.innerHTML = item.stripdelim();
           title += ': ' + tempDiv.textContent;
           // Use jQuery UI for dialog since it's already required
-          require(['jquery', 'jqueryui'], function($) {
-            $('#id_itemsettings_popup').dialog({
-              position: {
-                my: 'right',
-                at: 'right',
-                of: '#id_itemsettings_canvas',
-              },
-              height: 500,
-              width: '70%',
-              modal: false,
-              title: title,
-              buttons: [
-                {
-                  text: 'OK',
-                  id: 'SaveItemFeedback',
-                  click: function() {
-                    let JSONstr = item.updateJson(e);
-                    // Enable all atto elements
-                    let attoElements = document.querySelectorAll('[class^="atto_"]');
-                    attoElements.forEach(element => {
-                      element.removeAttribute('disabled');
-                    });
-                    document.querySelector("[name='itemsettings']").value = JSONstr;
-                    $('.ui-dialog-content').dialog('close');
-                    /* Set editable to true as it is checked at the start of click */
-                    document.getElementById('id_questiontexteditable').setAttribute(
-                      'contenteditable',
-                      'true'
-                    );
-                    document.getElementById('id_itemsettings_button').click();
-                  },
-                },
-              ],
-            });
-          });
+          openItemSettingsDialog(item, e, title);
+
         }
       });
+
+      const openItemSettingsDialog = (item, e, title) => {
+        require(['jquery', 'jqueryui'], function($) {
+          $('#id_itemsettings_popup').dialog({
+            position: {
+              my: 'right',
+              at: 'right',
+              of: '#id_itemsettings_canvas',
+            },
+            height: 500,
+            width: '70%',
+            modal: false,
+            title: title,
+            buttons: [
+              {
+                text: 'OK',
+                id: 'SaveItemFeedback',
+                click: function() {
+                  let JSONstr = item.updateJson(e);
+                  // Enable all atto elements
+                  let attoElements = document.querySelectorAll('[class^="atto_"]');
+                  attoElements.forEach(element => {
+                    element.removeAttribute('disabled');
+                  });
+                  document.querySelector("[name='itemsettings']").value = JSONstr;
+                  $('.ui-dialog-content').dialog('close');
+                  /* Set editable to true as it is checked at the start of click */
+                  document.getElementById('id_questiontexteditable').setAttribute(
+                    'contenteditable',
+                    'true'
+                  );
+                  document.getElementById('id_itemsettings_button').click();
+                },
+              },
+            ],
+          });
+        });
+      };
 
       /**
        * Convert an object to an array
