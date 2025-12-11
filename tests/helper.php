@@ -34,7 +34,6 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_test_helper extends question_test_helper {
-
     /**
      *  must be implemented or class made abstract
      *
@@ -150,7 +149,7 @@ class qtype_gapfill_test_helper extends question_test_helper {
      * @param array $poptions
      * @return \qtype_gapfill_question
      */
-    public static function make_question($type, $questiontext = "The [cat] sat on the [mat]", array $poptions =[]) {
+    public static function make_question($type, $questiontext = "The [cat] sat on the [mat]", array $poptions = []) {
 
         $options = [
             'noduplicates' => $poptions['noduplicates'] ?? 0,
@@ -268,5 +267,4 @@ class qtype_gapfill_test_helper extends question_test_helper {
 
         return $qdata;
     }
-
 }

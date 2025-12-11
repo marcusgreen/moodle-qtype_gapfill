@@ -29,7 +29,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill_question extends question_graded_automatically_with_countback {
-
     /**
      * Apparently not used
      *
@@ -604,8 +603,10 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * @return bool true if the user can access this file.
      */
     public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
-        if ($component == 'question' && in_array($filearea, ['correctfeedback',
-                    'partiallycorrectfeedback', 'incorrectfeedback'])) {
+        if (
+            $component == 'question' && in_array($filearea, ['correctfeedback',
+                    'partiallycorrectfeedback', 'incorrectfeedback'])
+        ) {
             return $this->check_combined_feedback_file_access($qa, $options, $filearea);
         } else if ($component == 'question' && $filearea == 'hint') {
             return $this->check_hint_file_access($qa, $options, $args);

@@ -43,7 +43,6 @@ require_once($CFG->dirroot . '/question/type/gapfill/question.php');
  * @coversDefaultClass \question\type\gapfill\question
  */
 final class question_test extends \advanced_testcase {
-
     /**
      *
      * @var qtype_gapfill $gapfill
@@ -111,14 +110,14 @@ final class question_test extends \advanced_testcase {
         $question = helper::make_question('gapfill');
 
         $response = ['p1' => 'cat', 'p2' => 'dog'];
-        list($fraction, $state) = $question->grade_response($response);
+        [$fraction, $state] = $question->grade_response($response);
 
         /* with two fields, if you have one wrong the score (fraction)
         will be .5. Fraction is always a a fractional part of one.*/
         $this->assertEquals($fraction, .5);
 
         $response = ['p1' => 'cat', 'p2' => 'mat'];
-        list($fraction, $state) = $question->grade_response($response);
+        [$fraction, $state] = $question->grade_response($response);
 
         // If you have all correct score (fraction)
         // will be 1. Fraction is always a a fractional part of one.

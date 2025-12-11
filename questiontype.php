@@ -38,7 +38,6 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_gapfill extends question_type {
-
     /**
      * Whether the quiz statistics report can analyse
      * all the student responses. See questiontypebase for more
@@ -68,7 +67,6 @@ class qtype_gapfill extends question_type {
         $question->options = $DB->get_record('question_gapfill', ['question' => $question->id], '*', MUST_EXIST);
         $question->options->itemsettings = $this->get_itemsettings($question);
         parent::get_question_options($question);
-
     }
 
 
@@ -102,8 +100,13 @@ class qtype_gapfill extends question_type {
             /* answer in this context means correct answers, i.e. where
              * fraction contains a 1 */
             if (strpos($a->fraction, '1') !== false) {
-                $question->answers[$a->id] = new question_answer($a->id, $a->answer, $a->fraction,
-                        $a->feedback, $a->feedbackformat);
+                $question->answers[$a->id] = new question_answer(
+                    $a->id,
+                    $a->answer,
+                    $a->fraction,
+                    $a->feedback,
+                    $a->feedbackformat
+                );
                 $question->gapcount++;
                 if (!$forceplaintextanswers) {
                     $question->answers[$a->id]->answerformat = $a->answerformat;
@@ -372,8 +375,12 @@ class qtype_gapfill extends question_type {
                 /* split by commas and trim white space */
                 $wronganswers = array_map('trim', explode(',', $question->wronganswers['text']));
                 $regex = '/(.*?[^\\\\](\\\\\\\\)*?),/';
-                $wronganswers = preg_split($regex, $question->wronganswers['text'],
-                        -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                $wronganswers = preg_split(
+                    $regex,
+                    $question->wronganswers['text'],
+                    -1,
+                    PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+                );
                 $wronganswerfields = [];
                 foreach ($wronganswers as $key => $word) {
                     $wronganswerfields[$key]['value'] = $word;
@@ -485,14 +492,21 @@ class qtype_gapfill extends question_type {
                 $question->itemsettings[$key]['gaptext'] = $format->getpath($setxml, ['#', 'gaptext', 0, '#'], 0);
                 $question->itemsettings[$key]['question'] = $format->getpath($setxml, ['#', 'question', 0, '#'], '', true);
                 $question->itemsettings[$key]['itemid'] = $format->getpath($setxml, ['#', 'itemid', 0, '#'], '', true);
-                $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, ['#', 'correctfeedback', 0, '#'],
-                        '', true);
-                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml,
-                        ['#', 'incorrectfeedback', 0, '#'], '', true);
+                $question->itemsettings[$key]['correctfeedback'] = $format->getpath(
+                    $setxml,
+                    ['#', 'correctfeedback', 0, '#'],
+                    '',
+                    true
+                );
+                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath(
+                    $setxml,
+                    ['#', 'incorrectfeedback', 0, '#'],
+                    '',
+                    true
+                );
             }
         }
         return $question;
-
     }
 
     /**
@@ -543,5 +557,4 @@ class qtype_gapfill extends question_type {
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
-
 }

@@ -38,7 +38,6 @@ require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class questiontype_test extends \advanced_testcase {
-
     /**
      *
      * @var qtype_gapfill $gapfill
@@ -122,8 +121,10 @@ final class questiontype_test extends \advanced_testcase {
         $this->assertEquals($DB->get_field('question', 'questiontext', ['id' => $question->id]), $question->questiontext);
 
         $this->qtype->save_question_options($fromform);
-        $this->assertEquals($DB->get_field('question_gapfill', 'correctfeedback', ['question' => $question->id]),
-         $fromform->correctfeedback['text']);
+        $this->assertEquals(
+            $DB->get_field('question_gapfill', 'correctfeedback', ['question' => $question->id]),
+            $fromform->correctfeedback['text']
+        );
 
         $gaps = $this->qtype->get_gaps("[]", $question->questiontext);
 
