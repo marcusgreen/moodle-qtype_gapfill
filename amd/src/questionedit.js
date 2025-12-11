@@ -7,20 +7,24 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 /**
  * JavaScript code for the gapfill question type.
  *
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+/* globals tinyMCE */
 /* The data is stored in a hidden field */
-define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], function(Item, ModalFactory, ModalEvents) {
+define([
+    'qtype_gapfill/Item',
+    'core/modal_factory',
+    'core/modal_events'
+], function(Item, ModalFactory, ModalEvents) {
   return {
     init: function() {
       /**
@@ -36,7 +40,6 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           });
         }
       };
-
       /**
        * Check which editor is active on the page
        * @return {string|null} Returns 'tinymce', 'atto', or null if neither is active
@@ -46,17 +49,108 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
         if (document.querySelector('.tox-tinymce')) {
           return 'tinymce';
         }
-
         // Check if Atto is active
         let attoIsLive = document.querySelectorAll('.editor_atto').length;
-
         if (attoIsLive > 0) {
           return 'atto';
         }
-
         return null;
       };
+      /**
+       * Handle TinyMCE editor specific item settings functionality
+       */
+      const handleTinyItemSettings = () => {
+        // Access TinyMCE through the global tinyMCE object
+        if (typeof tinyMCE === 'undefined') {
+          console.error('TinyMCE global object not available');
+          return;
+        }
 
+        // Find the TinyMCE editor instance for questiontext
+        // Try common TinyMCE editor IDs used in Moodle
+        let possibleIds = ['id_questiontext_editor', 'id_questiontexteditable', 'id_questiontext'];
+        let editor = null;
+        for (let id of possibleIds) {
+          editor = tinyMCE.get(id);
+          if (editor) {
+            break;
+          }
+        }
+        // If still not found, try to find any TinyMCE editor in the questiontext area
+        if (!editor && tinyMCE.editors && tinyMCE.editors.length > 0) {
+          // Look for an editor whose container is within the questiontext area
+          for (let ed of tinyMCE.editors) {
+            let container = ed.getContainer();
+            if (container && container.closest('#fitem_id_questiontext')) {
+              editor = ed;
+              break;
+            }
+          }
+        }
+        if (!editor) {
+          console.error('TinyMCE editor not found. Available editors:', tinyMCE.editors);
+          console.error('Tried IDs:', possibleIds);
+          return;
+        }
+        let canvas = document.getElementById('id_itemsettings_canvas');
+        let isCanvasVisible = canvas.style.display === 'block';
+        if (!isCanvasVisible) {
+          // Switch to canvas mode (disable editing)
+          // Get the content from TinyMCE
+          let editorContent = editor.getContent();
+          // Get the editor container dimensions
+          let editorContainer = editor.getContainer();
+          let settingformheight = window.getComputedStyle(editorContainer).height;
+          let settingformwidth = window.getComputedStyle(editorContainer).width;
+          // Disable TinyMCE editor
+          editor.mode.set('readonly');
+          // Disable all toolbar buttons
+          let toolbarButtons = editorContainer.querySelectorAll('button');
+          toolbarButtons.forEach(button => {
+            button.setAttribute('disabled', 'true');
+          });
+          // Hide the editor container
+          editorContainer.style.display = 'none';
+          // Setup the canvas
+          canvas.style.position = 'relative';
+          canvas.style.display = 'block';
+          canvas.style.background = 'lightgrey';
+          canvas.style.padding = '10px';
+          canvas.style.border = '1px solid #ccc';
+          canvas.style.minHeight = settingformheight;
+          canvas.style.width = settingformwidth;
+          canvas.innerHTML = editorContent;
+          // Insert canvas after the editor container
+          editorContainer.parentNode.insertBefore(canvas, editorContainer.nextSibling);
+          // Update button text
+          document.getElementById('id_itemsettings_button').innerHTML =
+            M.util.get_string('editquestiontext', 'qtype_gapfill');
+          // Wrap content should be last as it sometimes falls over with an error
+          wrapContent(canvas);
+        } else {
+          // Switch back to edit mode (enable editing)
+          // Show the editor container
+          let editorContainer = editor.getContainer();
+          editorContainer.style.display = 'block';
+          // Enable TinyMCE editor
+          editor.mode.set('design');
+          // Enable all toolbar buttons
+          let toolbarButtons = editorContainer.querySelectorAll('button');
+          toolbarButtons.forEach(button => {
+            button.removeAttribute('disabled');
+          });
+          // Hide the canvas
+          canvas.style.display = 'none';
+          // Hide settings popup if it exists
+          let settingsPopup = document.getElementById('id_settings_popup');
+          if (settingsPopup) {
+            settingsPopup.style.display = 'none';
+          }
+          // Update button text
+          document.getElementById('id_itemsettings_button').innerHTML =
+            M.util.get_string('additemsettings', 'qtype_gapfill');
+        }
+      };
       /**
        * Handle Atto editor specific item settings functionality
        */
@@ -114,24 +208,20 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           });
         }
       };
-
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
         let selected = this.value;
-
         if (selected == 'gapfill') {
           setElementProps('id_fixedgapsize', { disabled: false });
           setElementProps('id_optionsaftertext', { disabled: true, checked: false });
           setElementProps('id_singleuse', { disabled: true, checked: false });
           setElementProps('id_disableregex', { disabled: false });
         }
-
         if (selected == 'dragdrop') {
           setElementProps('id_optionsaftertext', { disabled: false });
           setElementProps('id_singleuse', { disabled: false });
           setElementProps('id_fixedgapsize', { disabled: false });
           setElementProps('id_disableregex', { disabled: false });
         }
-
         if (selected == 'dropdown') {
           setElementProps('id_fixedgapsize', { disabled: true, checked: false });
           setElementProps('id_optionsaftertext', { disabled: true, checked: false });
@@ -139,7 +229,6 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           setElementProps('id_disableregex', { disabled: true, checked: false });
         }
       });
-
       /* A click on the itemsettings button */
       document.getElementById('id_itemsettings_button').addEventListener('click', function() {
         let activeEditor = getActiveEditor();
@@ -164,24 +253,26 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           htmlButtons.forEach(button => {
             button.setAttribute('disabled', 'true');
           });
-
           // Invoke the Atto-specific function
           handleAttoItemSettings();
         } else if (activeEditor === 'tinymce') {
-            alert('tinymce not implemented yet');
-            return;
-          // Add TinyMCE-specific button disabling if needed
+            handleTinyItemSettings();
         }
       });
-
       /* A click on the text */
       document.getElementById('id_itemsettings_canvas').addEventListener('click', function(e) {
         /*
-         * Questiontext needs to be edditable and the target must start
+         * Questiontext needs to be editable and the target must start
          * with id followed by one or more digits and an underscore
+         *
+         * For TinyMCE, id_questiontexteditable doesn't exist, so we check if it exists first.
+         * If it doesn't exist (TinyMCE), we proceed. If it does exist (Atto), we check if it's NOT editable.
          * */
+        let questionTextEditable = document.getElementById('id_questiontexteditable');
+        let canProceed = !questionTextEditable || !questionTextEditable.isContentEditable;
+
         if (
-          !document.getElementById('id_questiontexteditable').isContentEditable &&
+          canProceed &&
           e.target.id.match(/^id[0-9]+_/)
         ) {
           let delimitchars = document.getElementById('id_delimitchars').value;
@@ -224,14 +315,11 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           title += ': ' + tempDiv.textContent;
           // Use Moodle ModalFactory instead of jQuery UI
           openItemSettingsDialog(item, e, title);
-
         }
       });
-
       const openItemSettingsDialog = (item, e, title) => {
         // Get the content from the popup element
         let popupContent = document.getElementById('id_itemsettings_popup');
-
         ModalFactory.create({
           type: ModalFactory.types.SAVE_CANCEL,
           title: title,
@@ -240,26 +328,21 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
         }).then(function(modal) {
           // Show the modal
           modal.show();
-
           // Make the modal wider by adjusting the max-width
           const modalRoot = modal.getRoot()[0];
           const modalDialog = modalRoot.querySelector('.modal-dialog');
           if (modalDialog) {
             modalDialog.style.maxWidth = '90%';
           }
-
           // Get the modal root element to manipulate content
-
           // After the modal is shown, we need to copy content from modal back to original elements
           modal.getRoot().on(ModalEvents.shown, function() {
             // Find the editable elements in the modal
             let modalCorrect = modalRoot.querySelector('#id_correcteditable');
             let modalIncorrect = modalRoot.querySelector('#id_incorrecteditable');
-
             // Get the original elements
             let originalCorrect = document.getElementById('id_correcteditable');
             let originalIncorrect = document.getElementById('id_incorrecteditable');
-
             // Copy content from original to modal
             if (modalCorrect && originalCorrect) {
               modalCorrect.innerHTML = originalCorrect.innerHTML;
@@ -268,23 +351,19 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
               modalIncorrect.innerHTML = originalIncorrect.innerHTML;
             }
           });
-
           // Handle the save event
           modal.getRoot().on(ModalEvents.save, function() {
             // Copy content from modal back to original elements before updating JSON
             let modalCorrect = modalRoot.querySelector('#id_correcteditable');
             let modalIncorrect = modalRoot.querySelector('#id_incorrecteditable');
-
             let originalCorrect = document.getElementById('id_correcteditable');
             let originalIncorrect = document.getElementById('id_incorrecteditable');
-
             if (modalCorrect && originalCorrect) {
               originalCorrect.innerHTML = modalCorrect.innerHTML;
             }
             if (modalIncorrect && originalIncorrect) {
               originalIncorrect.innerHTML = modalIncorrect.innerHTML;
             }
-
             let JSONstr = item.updateJson(e);
             // Enable all atto elements
             let attoElements = document.querySelectorAll('[class^="atto_"]');
@@ -293,14 +372,13 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
             });
             document.querySelector("[name='itemsettings']").value = JSONstr;
             /* Set editable to true as it is checked at the start of click */
-            document.getElementById('id_questiontexteditable').setAttribute(
-              'contenteditable',
-              'true'
-            );
+            let questionTextEditable = document.getElementById('id_questiontexteditable');
+            if (questionTextEditable) {
+              questionTextEditable.setAttribute('contenteditable', 'true');
+            }
             document.getElementById('id_itemsettings_button').click();
             modal.destroy();
           });
-
           // Handle the cancel event
           modal.getRoot().on(ModalEvents.cancel, function() {
             // Enable all atto elements
@@ -310,14 +388,12 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
             });
             modal.destroy();
           });
-
           return modal;
         }).catch(function(error) {
           // Handle any errors in creating the modal
           console.error('Error creating modal:', error);
         });
       };
-
       /**
        * Convert an object to an array
        * @param {object} obj
@@ -330,7 +406,6 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
         }
         return arr;
       };
-
       // Wrap the words of an element and child elements in a span.
       // Recurs over child elements, add an ID and class to the wrapping span.
       // Does not affect elements with no content, or those to be excluded.
@@ -425,7 +500,6 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           }
         };
       })();
-
       /**
        *
        * @param {array} source
@@ -468,7 +542,6 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
         }
         return false;
       };
-
       /**
        * TODO check if this function is needed
        * @param {string} style
