@@ -57,59 +57,10 @@ define(['qtype_gapfill/Item'], function(Item) {
         return null;
       }
 
-      document.getElementById('id_answerdisplay').addEventListener('change', function() {
-        var selected = this.value;
-
-        if (selected == 'gapfill') {
-          setElementProps('id_fixedgapsize', { disabled: false });
-          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
-          setElementProps('id_singleuse', { disabled: true, checked: false });
-          setElementProps('id_disableregex', { disabled: false });
-        }
-
-        if (selected == 'dragdrop') {
-          setElementProps('id_optionsaftertext', { disabled: false });
-          setElementProps('id_singleuse', { disabled: false });
-          setElementProps('id_fixedgapsize', { disabled: false });
-          setElementProps('id_disableregex', { disabled: false });
-        }
-
-        if (selected == 'dropdown') {
-          setElementProps('id_fixedgapsize', { disabled: true, checked: false });
-          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
-          setElementProps('id_singleuse', { disabled: true, checked: false });
-          setElementProps('id_disableregex', { disabled: true, checked: false });
-        }
-      });
-
-      /* A click on the itemsettings button */
-      document.getElementById('id_itemsettings_button').addEventListener('click', function() {
-        var activeEditor = getActiveEditor();
-        /* Show error if no supported editor is active. It might be because the page has not finished loading
-         * or because plain text elements are being used or (perhaps less likely as time goes on)
-         * the HTMLarea editor is being used. It might be possible to work with those other editors
-         * but limiting to supported editors keeps things straightforward and maintainable.
-         */
-        if (!activeEditor) {
-          var errorElement = document.getElementById('id_error_itemsettings_button');
-          errorElement.style.display = 'inline';
-          errorElement.style.color = 'red';
-          errorElement.innerHTML = M.util.get_string(
-            'itemsettingserror',
-            'qtype_gapfill'
-          );
-          return;
-        }
-        // Disable editor-specific buttons based on active editor
-        if (activeEditor === 'atto') {
-          var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
-          htmlButtons.forEach(function(button) {
-            button.setAttribute('disabled', 'true');
-          });
-        } else if (activeEditor === 'tinymce') {
-            alert('tinymce not implemented yet');
-          // Add TinyMCE-specific button disabling if needed
-        }
+      /**
+       * Handle Atto editor specific item settings functionality
+       */
+      function handleAttoItemSettings() {
         var questionTextEditable = document.getElementById('id_questiontexteditable');
         if (questionTextEditable.isContentEditable) {
           questionTextEditable.setAttribute('contenteditable', 'false');
@@ -161,6 +112,65 @@ define(['qtype_gapfill/Item'], function(Item) {
           attoElements.forEach(function(element) {
             element.removeAttribute('disabled');
           });
+        }
+      }
+
+      document.getElementById('id_answerdisplay').addEventListener('change', function() {
+        var selected = this.value;
+
+        if (selected == 'gapfill') {
+          setElementProps('id_fixedgapsize', { disabled: false });
+          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
+          setElementProps('id_singleuse', { disabled: true, checked: false });
+          setElementProps('id_disableregex', { disabled: false });
+        }
+
+        if (selected == 'dragdrop') {
+          setElementProps('id_optionsaftertext', { disabled: false });
+          setElementProps('id_singleuse', { disabled: false });
+          setElementProps('id_fixedgapsize', { disabled: false });
+          setElementProps('id_disableregex', { disabled: false });
+        }
+
+        if (selected == 'dropdown') {
+          setElementProps('id_fixedgapsize', { disabled: true, checked: false });
+          setElementProps('id_optionsaftertext', { disabled: true, checked: false });
+          setElementProps('id_singleuse', { disabled: true, checked: false });
+          setElementProps('id_disableregex', { disabled: true, checked: false });
+        }
+      });
+
+      /* A click on the itemsettings button */
+      document.getElementById('id_itemsettings_button').addEventListener('click', function() {
+        var activeEditor = getActiveEditor();
+        /* Show error if no supported editor is active. It might be because the page has not finished loading
+         * or because plain text elements are being used or (perhaps less likely as time goes on)
+         * the HTMLarea editor is being used. It might be possible to work with those other editors
+         * but limiting to supported editors keeps things straightforward and maintainable.
+         */
+        if (!activeEditor) {
+          var errorElement = document.getElementById('id_error_itemsettings_button');
+          errorElement.style.display = 'inline';
+          errorElement.style.color = 'red';
+          errorElement.innerHTML = M.util.get_string(
+            'itemsettingserror',
+            'qtype_gapfill'
+          );
+          return;
+        }
+        // Disable editor-specific buttons based on active editor
+        if (activeEditor === 'atto') {
+          var htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
+          htmlButtons.forEach(function(button) {
+            button.setAttribute('disabled', 'true');
+          });
+
+          // Invoke the Atto-specific function
+          handleAttoItemSettings();
+        } else if (activeEditor === 'tinymce') {
+            alert('tinymce not implemented yet');
+            return;
+          // Add TinyMCE-specific button disabling if needed
         }
       });
 
