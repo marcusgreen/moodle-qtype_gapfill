@@ -22,9 +22,9 @@
 /* The data is stored in a hidden field */
 define([
     'qtype_gapfill/Item',
-    'core/modal_factory',
+    'core/modal_save_cancel',  // Updated import - use specific modal type
     'core/modal_events'
-], function(Item, ModalFactory, ModalEvents) {
+], function(Item, ModalSaveCancel, ModalEvents) {
   return {
     init: function() {
       /**
@@ -313,27 +313,30 @@ define([
           let tempDiv = document.createElement('div');
           tempDiv.innerHTML = item.stripdelim();
           title += ': ' + tempDiv.textContent;
-          // Use Moodle ModalFactory instead of jQuery UI
           openItemSettingsDialog(item, e, title);
         }
       });
       const openItemSettingsDialog = (item, e, title) => {
         // Get the content from the popup element
         let popupContent = document.getElementById('id_itemsettings_popup');
-        ModalFactory.create({
-          type: ModalFactory.types.SAVE_CANCEL,
+
+        // Updated approach: Use ModalSaveCancel.create() directly instead of ModalFactory
+        ModalSaveCancel.create({
           title: title,
           body: popupContent.innerHTML,
-          large: true
+          large: true,
+          removeOnClose: true
         }).then(function(modal) {
           // Show the modal
           modal.show();
+
           // Make the modal wider by adjusting the max-width
           const modalRoot = modal.getRoot()[0];
           const modalDialog = modalRoot.querySelector('.modal-dialog');
           if (modalDialog) {
             modalDialog.style.maxWidth = '90%';
           }
+
           // Get the modal root element to manipulate content
           // After the modal is shown, we need to copy content from modal back to original elements
           modal.getRoot().on(ModalEvents.shown, function() {
@@ -351,6 +354,7 @@ define([
               modalIncorrect.innerHTML = originalIncorrect.innerHTML;
             }
           });
+
           // Handle the save event
           modal.getRoot().on(ModalEvents.save, function() {
             // Copy content from modal back to original elements before updating JSON
@@ -379,6 +383,7 @@ define([
             document.getElementById('id_itemsettings_button').click();
             modal.destroy();
           });
+
           // Handle the cancel event
           modal.getRoot().on(ModalEvents.cancel, function() {
             // Enable all atto elements
@@ -388,6 +393,7 @@ define([
             });
             modal.destroy();
           });
+
           return modal;
         }).catch(function(error) {
           // Handle any errors in creating the modal
