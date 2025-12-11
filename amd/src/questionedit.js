@@ -241,8 +241,14 @@ define(['qtype_gapfill/Item', 'core/modal_factory', 'core/modal_events'], functi
           // Show the modal
           modal.show();
 
-          // Get the modal root element to manipulate content
+          // Make the modal wider by adjusting the max-width
           const modalRoot = modal.getRoot()[0];
+          const modalDialog = modalRoot.querySelector('.modal-dialog');
+          if (modalDialog) {
+            modalDialog.style.maxWidth = '90%';
+          }
+
+          // Get the modal root element to manipulate content
 
           // After the modal is shown, we need to copy content from modal back to original elements
           modal.getRoot().on(ModalEvents.shown, function() {
