@@ -42,17 +42,12 @@ define([
       };
       /**
        * Check which editor is active on the page
-       * @return {string|null} Returns 'tinymce', 'atto', or null if neither is active
+       * @return {string|null} Returns 'tinymce' or null if not active
        */
       const getActiveEditor = () => {
         // Check if TinyMCE is active
         if (document.querySelector('.tox-tinymce')) {
           return 'tinymce';
-        }
-        // Check if Atto is active
-        let attoIsLive = document.querySelectorAll('.editor_atto').length;
-        if (attoIsLive > 0) {
-          return 'atto';
         }
         return null;
       };
@@ -151,63 +146,7 @@ define([
             M.util.get_string('additemsettings', 'qtype_gapfill');
         }
       };
-      /**
-       * Handle Atto editor specific item settings functionality
-       */
-      const handleAttoItemSettings = () => {
-        let questionTextEditable = document.getElementById('id_questiontexteditable');
-        if (questionTextEditable.isContentEditable) {
-          questionTextEditable.setAttribute('contenteditable', 'false');
-          // Disable all buttons in fitem_id_questiontext
-          let buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
-          buttons.forEach(button => {
-            button.setAttribute('disabled', 'true');
-          });
-          let settingformheight = window.getComputedStyle(questionTextEditable).height;
-          let settingformwidth = window.getComputedStyle(questionTextEditable).width;
-          questionTextEditable.style.display = 'none';
-          /* Copy the styles from attos editable area so the canvas looks the same (except gray) */
-          let canvas = document.getElementById('id_itemsettings_canvas');
-          let styles = copyStyles(questionTextEditable);
-          Object.assign(canvas.style, styles);
-          let ed = questionTextEditable.closest('.editor_atto_content_wrap');
-          ed.appendChild(canvas);
-          canvas.style.position = 'relative';
-          canvas.style.display = 'block';
-          canvas.style.background = 'lightgrey';
-          /* Copy the real html to the feedback editing html */
-          canvas.innerHTML = questionTextEditable.innerHTML;
-          canvas.style.height = settingformheight;
-          canvas.style.width = settingformwidth;
-          canvas.style.height = '100%';
-          canvas.style.width = '100%';
-          document.getElementById('id_itemsettings_button').innerHTML =
-            M.util.get_string('editquestiontext', 'qtype_gapfill');
-          /* Setting the height by hand gets around a quirk of MSIE */
-          canvas.style.height = window.getComputedStyle(questionTextEditable).height;
-          /* Disable the buttons on questiontext but not on the feedback form */
-          /* wrapContent should be the last on this block as it sometimes falls over with an error */
-          wrapContent(canvas);
-        } else {
-          questionTextEditable.style.display = 'block';
-          questionTextEditable.style.backgroundColor = 'white';
-          questionTextEditable.setAttribute('contenteditable', 'true');
-          document.getElementById('id_itemsettings_canvas').style.display = 'none';
-          // Enable all buttons in fitem_id_questiontext
-          let buttons = document.getElementById('fitem_id_questiontext').querySelectorAll('button');
-          buttons.forEach(button => {
-            button.removeAttribute('disabled');
-          });
-          document.getElementById('id_settings_popup').style.display = 'none';
-          document.getElementById('id_itemsettings_button').innerHTML =
-            M.util.get_string('additemsettings', 'qtype_gapfill');
-          // Enable all elements with class starting with atto_
-          let attoElements = document.querySelectorAll('[class^="atto_"]');
-          attoElements.forEach(element => {
-            element.removeAttribute('disabled');
-          });
-        }
-      };
+
       document.getElementById('id_answerdisplay').addEventListener('change', function() {
         let selected = this.value;
         if (selected == 'gapfill') {
@@ -247,29 +186,17 @@ define([
           );
           return;
         }
-        // Disable editor-specific buttons based on active editor
-        if (activeEditor === 'atto') {
-          let htmlButtons = document.querySelectorAll('#questiontext .atto_html_button');
-          htmlButtons.forEach(button => {
-            button.setAttribute('disabled', 'true');
-          });
-          // Invoke the Atto-specific function
-          handleAttoItemSettings();
-        } else if (activeEditor === 'tinymce') {
+        // Handle editor-specific functionality
+        if (activeEditor === 'tinymce') {
             handleTinyItemSettings();
         }
       });
       /* A click on the text */
       document.getElementById('id_itemsettings_canvas').addEventListener('click', function(e) {
         /*
-         * Questiontext needs to be editable and the target must start
-         * with id followed by one or more digits and an underscore
-         *
-         * For TinyMCE, id_questiontexteditable doesn't exist, so we check if it exists first.
-         * If it doesn't exist (TinyMCE), we proceed. If it does exist (Atto), we check if it's NOT editable.
-         * */
-        let questionTextEditable = document.getElementById('id_questiontexteditable');
-        let canProceed = !questionTextEditable || !questionTextEditable.isContentEditable;
+         * The target must start with id followed by one or more digits and an underscore
+         */
+        let canProceed = true;
 
         if (
           canProceed &&
@@ -295,19 +222,7 @@ define([
           incorrectLabels.forEach(label => {
             label.textContent = M.util.get_string('incorrect', 'qtype_gapfill');
           });
-          // Disable specific atto buttons
-          let imageButtons = document.querySelectorAll('#id_itemsettings_popup .atto_image_button');
-          imageButtons.forEach(button => {
-            button.setAttribute('disabled', 'true');
-          });
-          let mediaButtons = document.querySelectorAll('#id_itemsettings_popup .atto_media_button');
-          mediaButtons.forEach(button => {
-            button.setAttribute('disabled', 'true');
-          });
-          let manageFilesButtons = document.querySelectorAll('#id_itemsettings_popup .atto_managefiles_button');
-          manageFilesButtons.forEach(button => {
-            button.setAttribute('disabled', 'true');
-          });
+
           let title = M.util.get_string('additemsettings', 'qtype_gapfill');
           /* The html jquery call will turn any encoded entities such as &gt; to html, i.e. > */
           let tempDiv = document.createElement('div');
@@ -369,17 +284,10 @@ define([
               originalIncorrect.innerHTML = modalIncorrect.innerHTML;
             }
             let JSONstr = item.updateJson(e);
-            // Enable all atto elements
-            let attoElements = document.querySelectorAll('[class^="atto_"]');
-            attoElements.forEach(element => {
-              element.removeAttribute('disabled');
-            });
+
             document.querySelector("[name='itemsettings']").value = JSONstr;
             /* Set editable to true as it is checked at the start of click */
-            let questionTextEditable = document.getElementById('id_questiontexteditable');
-            if (questionTextEditable) {
-              questionTextEditable.setAttribute('contenteditable', 'true');
-            }
+
             document.getElementById('id_itemsettings_button').click();
             modal.destroy();
           });
