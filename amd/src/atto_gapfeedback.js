@@ -16,7 +16,6 @@
 /**
  * JavaScript code for the gapfill question type.
  *
- * @module     qtype_gapfill/atto_gapfeedback
  * @copyright  2017 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -113,7 +112,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
          * */
         if (
           !$('#id_questiontexteditable').get(0).isContentEditable &&
-          e.target.id.match(/^id[0-9]+_/) 
+          e.target.id.match(/^id[0-9]+_/)
         ) {
           var delimitchars = $('#id_delimitchars').val();
           var item = new Item(e.target.innerHTML, delimitchars);
@@ -218,7 +217,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
           var delimitchars = $('#id_delimitchars').val();
           var l = delimitchars.substring(0, 1);
           var r = delimitchars.substring(1, 2);
-          var regex = new RegExp('(\' + l + '.*?\' + r + ')', 'g');
+          var regex = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
           var sp,
             span = document.createElement('span');
           // Tag names of elements to skip, there are more to add.
@@ -238,7 +237,7 @@ define(['jquery', 'qtype_gapfill/Item'], function($, Item) {
               wrapContent(node);
               // If it's a text node, wrap words.
             } else if (node.nodeType === 3) {
-              var textsplit = new RegExp('(\' + l + '.*?\' + r + ')', 'g');
+              var textsplit = new RegExp('(\\' + l + '.*?\\' + r + ')', 'g');
               text = node.data.split(textsplit);
               if (text) {
                 // Create a fragment, handy suckers these.

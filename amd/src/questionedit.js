@@ -20,39 +20,68 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/* The data is stored in a hidden field */
-define([], function() {
-  return {
-    init: function() {
-      document.getElementById('id_answerdisplay').addEventListener('change', function() {
-        var selected = this.value;
-        if (selected == 'gapfill') {
-          document.getElementById('id_fixedgapsize').disabled = false;
-          document.getElementById("id_optionsaftertext").disabled = true;
-          document.getElementById("id_optionsaftertext").checked = false;
-          document.getElementById('id_singleuse').disabled = true;
-          document.getElementById('id_singleuse').checked = false;
-          document.getElementById('id_disableregex').disabled = false;
+/**
+ * Module for setting up the quesiton editing page
+ *
+ * @module     qtype_gapfill/questionedit
+ */
+import Log from 'core/log';
 
-        }
-        if (selected == 'dragdrop') {
-          document.getElementById('id_optionsaftertext').disabled = false;
-          document.getElementById('id_singleuse').disabled = false;
-          document.getElementById('id_fixedgapsize').disabled = false;
-          document.getElementById('id_disableregex').disabled = false;
-        }
-        if (selected == 'dropdown') {
-          document.getElementById('id_fixedgapsize').disabled = true;
-          document.getElementById('id_fixedgapsize').checked = false;
-          document.getElementById('id_optionsaftertext').disabled = true;
-          document.getElementById('id_optionsaftertext').checked = false;
-          document.getElementById('id_singleuse').disabled = true;
-          document.getElementById('id_singleuse').checked = false;
-          document.getElementById('id_disableregex').disabled = true;
-          document.getElementById('id_disableregex').checked = false;
-        }
+/**
+ * Initialize the question edit functionality.
+ *
+ * @method init
+ */
+export const init = () => {
+  document.getElementById('id_answerdisplay').addEventListener('change', function() {
+    var selected = this.value;
+    if (selected == 'gapfill') {
+      document.getElementById('id_fixedgapsize').disabled = false;
+      document.getElementById("id_optionsaftertext").disabled = true;
+      document.getElementById("id_optionsaftertext").checked = false;
+      document.getElementById('id_singleuse').disabled = true;
+      document.getElementById('id_singleuse').checked = false;
+      document.getElementById('id_disableregex').disabled = false;
 
-      });
-    },
-  };
-});
+    }
+    if (selected == 'dragdrop') {
+      document.getElementById('id_optionsaftertext').disabled = false;
+      document.getElementById('id_singleuse').disabled = false;
+      document.getElementById('id_fixedgapsize').disabled = false;
+      document.getElementById('id_disableregex').disabled = false;
+    }
+    if (selected == 'dropdown') {
+      document.getElementById('id_fixedgapsize').disabled = true;
+      document.getElementById('id_fixedgapsize').checked = false;
+      document.getElementById('id_optionsaftertext').disabled = true;
+      document.getElementById('id_optionsaftertext').checked = false;
+      document.getElementById('id_singleuse').disabled = true;
+      document.getElementById('id_singleuse').checked = false;
+      document.getElementById('id_disableregex').disabled = true;
+      document.getElementById('id_disableregex').checked = false;
+    }
+
+  });
+
+// Check if Atto editor is loaded
+var attoIsLive = document.querySelectorAll('.editor_atto').length;
+
+if (attoIsLive > 0) {
+  import('qtype_gapfill/atto_gapfeedback').then(function(module) {
+    return module.init();
+  }).catch(function(error) {
+    Log.error('qtype_gapfill: Error loading atto_gapfeedback module');
+    Log.debug(error);
+    throw error;
+  });
+} else {
+  import('qtype_gapfill/tiny_gapfeedback').then(function(module) {
+    return module.init();
+  }).catch(function(error) {
+    Log.error('qtype_gapfill: Error loading tiny_gapfeedback module');
+    Log.debug(error);
+    throw error;
+  });
+}
+
+};
