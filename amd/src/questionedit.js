@@ -63,10 +63,9 @@ export const init = () => {
 
   });
 
-// Check if Atto editor is loaded
-var attoIsLive = document.querySelectorAll('.editor_atto').length;
+var activeEditor = getActiveEditor();
 
-if (attoIsLive > 0) {
+if (activeEditor == 'atto') {
   import('qtype_gapfill/atto_gapfeedback').then(function(module) {
     return module.init();
   }).catch(function(error) {
@@ -74,7 +73,7 @@ if (attoIsLive > 0) {
     Log.debug(error);
     throw error;
   });
-} else {
+} else if (activeEditor == 'tinymce') {
   import('qtype_gapfill/tiny_gapfeedback').then(function(module) {
     return module.init();
   }).catch(function(error) {
@@ -82,6 +81,19 @@ if (attoIsLive > 0) {
     Log.debug(error);
     throw error;
   });
-}
+} else {
 
+}
+const getActiveEditor = () => {
+        const configuredEditor = window.M.cfg.editor;
+        // Use includes() for a clean ES6 string check
+        if (configuredEditor.includes('tinymce')) {
+            return 'tinymce';
+        }
+        if (configuredEditor.includes('atto')) {
+            return 'atto';
+        }
+    };
+    return null;
 };
+
