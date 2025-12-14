@@ -60,7 +60,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform = $this->form_setup($mform);
 
         /*for storing the json containing the settings data */
-        $mform->addElement('hidden', 'itemsettings', '', ['size' => '80']);
+        $mform->addElement('textarea', 'itemsettings', '', ['size' => '80']);
         $mform->setType('itemsettings', PARAM_RAW);
 
         /* popup for entering feedback for individual words */
@@ -233,7 +233,14 @@ class qtype_gapfill_edit_form extends question_edit_form {
             'correct', 'incorrect'], 'qtype_gapfill');
             xdebug_break();
         $preferrededitor = get_user_preferences('htmleditor');
-        $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init', [$preferrededitor]);
+        if ($preferrededitor == 'atto') {
+             $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
+        } else if ($pregferrededitor == 'tiny') {
+            $PAGE->requires->js_call_amd('qtype_gapfill/tiny_gapfeedback', 'init', [$preferrededitor]);
+        }
+        $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
+
+
 
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);

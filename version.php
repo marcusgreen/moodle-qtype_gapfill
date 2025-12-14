@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_gapfill';
 $plugin->version = 2025101000; // YYYYMMDDHH (year, month, day, 24-hr time).
-$plugin->requires = 2025031400;  // Moodle 5.0.
+$plugin->requires = 2022040100;  // Moodle 4.0.
 $plugin->release = '2.144';
-$plugin->supported = [405,501];
+$plugin->supported = [400, 500];
 $plugin->maturity = MATURITY_STABLE;
