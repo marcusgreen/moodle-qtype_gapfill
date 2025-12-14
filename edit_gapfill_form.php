@@ -235,7 +235,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $preferrededitor = get_user_preferences('htmleditor');
         if ($preferrededitor == 'atto') {
              $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
-        } else if ($pregferrededitor == 'tiny') {
+        } else if ($preferrededitor == 'tiny') {
             $PAGE->requires->js_call_amd('qtype_gapfill/tiny_gapfeedback', 'init', [$preferrededitor]);
         }
         $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');

@@ -1,16 +1,8 @@
-.gap_select_area {
+.select_area {
     background: lightgrey;
     border-radius: .25rem;
     border: 1px solid rgba(0, 0, 0, .15);
     color: #55595c;
-    display: block;
-    height: 100%;
-    left: 0;
-    line-height: 1.25;
-    padding: .5rem .75rem;
-    position: absolute;
-    top: 0;
-    width: 100%;
 }
 
 /* classes without the que prefix are used in the

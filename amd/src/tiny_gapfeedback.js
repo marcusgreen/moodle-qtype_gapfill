@@ -3,54 +3,35 @@
  *
  * @module qtype_gapfill/tiny_gapfeedback
  */
-import {getTinyMCE} from 'editor_tiny/loader';
-import Log from 'core/log';
-
 /**
  * Creates an editable div called gap_select_area and replaces the TinyMCE instance
  */
 const createGapSelectArea = () => {
-    try {
-        // Get the TinyMCE instance for questiontext using the Moodle loader
+    /* global tinyMCE */
+    const editor = tinyMCE.get('id_questiontext');
+    const container = editor.getContainer();
+    const tox = container.querySelector('.tox-edit-area');
 
-        const editor = tinyMCE.get('id_questiontext');
 
-        if (!editor) {
-            alert('TinyMCE instance for id_questiontext not found');
-            return;
-        }
+    // Get the actual editor dimensions from the edit area
+    const editorElement = tox.querySelector('.tox-edit-area');
+    const editorWidth = editorElement ? editorElement.offsetWidth : container.offsetWidth;
+    const editorHeight = editorElement ? editorElement.offsetHeight : container.offsetHeight;
 
-        // Get the TinyMCE editor container element using the correct API
-        const editorContainer = editor.getContainer ? editor.getContainer() : editor.container;
+    // Create the gap_select_area div
+    const gapSelectArea = document.createElement('div');
+    gapSelectArea.id = 'gap_select_area';
+    gapSelectArea.className = 'select_area';
+    gapSelectArea.contentEditable = 'true';
+    gapSelectArea.innerHTML = editor.getContent();
 
-        if (!editorContainer) {
-            alert('TinyMCE instance for id_questiontext not found');
-            return;
-        }
-        // Get dimensions of the TinyMCE instance
-        const editorElement = editorContainer.querySelector('.tox-edit-area');
-        const editorWidth = editorElement ? editorElement.offsetWidth : editorContainer.offsetWidth;
-        const editorHeight = editorElement ? editorElement.offsetHeight : editorContainer.offsetHeight;
+    // Apply dimensions
+    gapSelectArea.style.width = editorWidth + 'px';
+    gapSelectArea.style.height = editorHeight + 'px';
 
-        // Hide the TinyMCE instance
-        editorContainer.style.display = 'none';
-
-        // Create the gap_select_area div
-        const gapSelectArea = document.createElement('div');
-        gapSelectArea.id = 'gap_select_area';
-        gapSelectArea.className = 'gap_select_area';
-        gapSelectArea.contentEditable = 'true';
-        gapSelectArea.innerHTML = editor.getContent();
-
-        // Apply dimensions
-        gapSelectArea.style.width = editorWidth + 'px';
-        gapSelectArea.style.height = editorHeight + 'px';
-
-        // Insert the gap_select_area where the TinyMCE instance was
-        editorContainer.parentNode.insertBefore(gapSelectArea, editorContainer.nextSibling);
-    } catch (error) {
-        Log.error('Error creating gap select area:', error);
-    }
+    // Insert the gap_select_area where the TinyMCE instance was
+    container.parentNode.insertBefore(gapSelectArea, container.nextSibling);
+    container.style.display = 'none';
 };
 
 /**
@@ -59,23 +40,28 @@ const createGapSelectArea = () => {
  */
 const getItemSettings = () => {
     const settingsElement = document.getElementById('id_itemsettings');
-    const parsed = JSON.parse(settingsElement.value);
-    return parsed || {};
+    if (!settingsElement || !settingsElement.value) {
+        return {};
+    }
+    try {
+        const parsed = JSON.parse(settingsElement.value);
+        return parsed || {};
+    } catch (e) {
+        console.error('Error parsing item settings:', e);
+        return {};
+    }
 };
 
 /**
  * Initialize the gap feedback functionality
  */
-export const init = async() => {createGapSelectArea
-    alert('init');
-    // 1. Get the item settings (runs immediately)
-    //const itemSettings = getItemSettings();
-
-    // // 2. Wait for the button element to be ready in the DOM
-    const button = document.getElementById('id_itemsettings_button')
-
+export const init = async() => {
+    // Wait for the button element to be ready in the DOM
+    const button = document.getElementById('id_itemsettings_button');
+    if (button) {
         button.addEventListener('click', (event) => {
+            event.preventDefault();
             createGapSelectArea();
         });
-
+    }
 };
