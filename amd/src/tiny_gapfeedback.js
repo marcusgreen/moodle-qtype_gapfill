@@ -4,8 +4,8 @@
  * @module qtype_gapfill/tiny_gapfeedback
  */
 
-// Import the parseQuestionText function from gaps.js using ES6 import
-import gaps from 'qtype_gapfill/gaps';
+// Import functions from gaps.js using ES6 import
+import { parseQuestionText, get_gap } from 'qtype_gapfill/gaps';
 
 /**
  * Retrieves and parses JSON from id_itemsettings hidden field
@@ -48,7 +48,7 @@ const createGapSelectArea = () => {
     // Get the text content from TinyMCE
     const questionText = editor.getContent();
     // Process the text with parseQuestionText to wrap gaps in spans
-    const processedText = gaps.parseQuestionText(questionText);
+    const processedText = parseQuestionText(questionText);
     // Create the select_area div
     const selectArea = document.createElement('div');
     selectArea.id = 'select_area';
@@ -65,7 +65,7 @@ const createGapSelectArea = () => {
     // Add click event listener to the select area
     selectArea.addEventListener('click', (clickEvent) => {
         // Use get_gap to check if the click was within a gap
-        const gapInfo = gaps.get_gap(clickEvent);
+        const gapInfo = get_gap(clickEvent);
 
         if (gapInfo) {
             // If it's a gap click, show an alert with the gap text

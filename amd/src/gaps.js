@@ -16,111 +16,111 @@
 /**
  * JavaScript code for parsing gapfill question text.
  *
+ * @module qtype_gapfill/gaps
  * @copyright  2025 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define([], function() {
-  /**
-   * Escape special regex characters in a string
-   * @param {string} str - String to escape
-   * @returns {string} - Escaped string
-   */
-  var escapeRegex = function(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  };
 
-  /**
-   * Get the value from an input element by its ID
-   * @param {string} id - Element ID
-   * @returns {string|null} - Element value or null if not found
-   */
-  var getElementValue = function(id) {
-    var element = document.getElementById(id);
-    return element ? element.value : null;
-  };
+/**
+ * Escape special regex characters in a string
+ * @param {string} str - String to escape
+ * @returns {string} - Escaped string
+ */
+const escapeRegex = (str) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
 
-  /**
-   * Parse question text and wrap gaps in spans with unique IDs
-   *
-   * The function generates IDs based on two factors:
-   * 1. Position in text (first number): id1, id2, id3, etc.
-   * 2. Occurrence count of each unique gap content (second number): _0, _1, _2, etc.
-   *
-   * Example:
-   * Input:  "The big [cat] met the small [cat]"
-   * Output: "The big <span id="id1_0">[cat]</span> met the small <span id="id2_1">[cat]</span>"
-   *
-   * Explanation:
-   * - First [cat]: id1_0 (position 1, first occurrence of "cat")
-   * - Second [cat]: id2_1 (position 2, second occurrence of "cat")
-   *
-   * @param {string} questionText - Raw question text containing gaps
-   * @returns {string} - Processed HTML string with gaps wrapped in spans
-   */
-  var parseQuestionText = function(questionText) {
-    var delimitchars = getElementValue('id_delimitchars');
+/**
+ * Get the value from an input element by its ID
+ * @param {string} id - Element ID
+ * @returns {string|null} - Element value or null if not found
+ */
+const getElementValue = (id) => {
+  const element = document.getElementById(id);
+  return element ? element.value : null;
+};
 
-    if (!delimitchars || delimitchars.length !== 2) {
-      return questionText;
-    }
+/**
+ * Parse question text and wrap gaps in spans with unique IDs
+ *
+ * The function generates IDs based on two factors:
+ * 1. Position in text (first number): id1, id2, id3, etc.
+ * 2. Occurrence count of each unique gap content (second number): _0, _1, _2, etc.
+ *
+ * Example:
+ * Input:  "The big [cat] met the small [cat]"
+ * Output: "The big <span id=\"id1_0\">[cat]</span> met the small <span id=\"id2_1\">[cat]</span>"
+ *
+ * Explanation:
+ * - First [cat]: id1_0 (position 1, first occurrence of "cat")
+ * - Second [cat]: id2_1 (position 2, second occurrence of "cat")
+ *
+ * @param {string} questionText - Raw question text containing gaps
+ * @returns {string} - Processed HTML string with gaps wrapped in spans
+ */
+const parseQuestionText = (questionText) => {
+  const delimitchars = getElementValue('id_delimitchars');
 
-    var leftDelim = delimitchars.charAt(0);
-    var rightDelim = delimitchars.charAt(1);
-    var processedText = questionText;
-    var gapCounter = 0;
-    var gapContentCounts = new Map();
+  if (!delimitchars || delimitchars.length !== 2) {
+    return questionText;
+  }
 
-    // Find all occurrences of text within delimiters
-    var regex = new RegExp(
-      escapeRegex(leftDelim) + '(.*?)' + escapeRegex(rightDelim),
-      'g'
-    );
+  const leftDelim = delimitchars.charAt(0);
+  const rightDelim = delimitchars.charAt(1);
+  let processedText = questionText;
+  let gapCounter = 0;
+  const gapContentCounts = new Map();
 
-    processedText = processedText.replace(regex, function(match, gapContent) {
-      gapCounter++;
+  // Find all occurrences of text within delimiters
+  const regex = new RegExp(
+    escapeRegex(leftDelim) + '(.*?)' + escapeRegex(rightDelim),
+    'g'
+  );
 
-      // Track occurrence count for this specific gap content
-      var currentCount = gapContentCounts.get(gapContent) || 0;
-      gapContentCounts.set(gapContent, currentCount + 1);
+  processedText = processedText.replace(regex, (match, gapContent) => {
+    gapCounter++;
 
-      // Create ID: position_counter (e.g., id1_0, id2_1)
-      var spanId = 'id' + gapCounter + '_' + currentCount;
-      return '<span id="' + spanId + '">' + match + '</span>';
-    });
+    // Track occurrence count for this specific gap content
+    const currentCount = gapContentCounts.get(gapContent) || 0;
+    gapContentCounts.set(gapContent, currentCount + 1);
 
-    return processedText;
-  };
+    // Create ID: position_counter (e.g., id1_0, id2_1)
+    const spanId = 'id' + gapCounter + '_' + currentCount;
+    return '<span id="' + spanId + '">' + match + '</span>';
+  });
 
-  /**
-   * Determines if click was within a gap span and extracts gap information
-   *
-   * @param {Event} clickEvent - The click event to analyze
-   * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
-   */
-  var get_gap = function(clickEvent) {
-    // Get the target element from the click event
-    var target = clickEvent.target;
+  return processedText;
+};
 
-    // Check if the target or any of its parents is a gap span
-    var gapSpan = target;
-    while (gapSpan && gapSpan.tagName !== 'SPAN') {
-      gapSpan = gapSpan.parentNode;
-    }
+/**
+ * Determines if click was within a gap span and extracts gap information
+ *
+ * @param {Event} clickEvent - The click event to analyze
+ * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
+ */
+const get_gap = (clickEvent) => {
+  // Get the target element from the click event
+  let target = clickEvent.target;
 
-    // If we found a span, check if it has an id attribute starting with 'id'
-    if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
-      return {
-        gapId: gapSpan.id,
-        gapText: gapSpan.textContent || gapSpan.innerText
-      };
-    }
+  // Check if the target or any of its parents is a gap span
+  let gapSpan = target;
+  while (gapSpan && gapSpan.tagName !== 'SPAN') {
+    gapSpan = gapSpan.parentNode;
+  }
 
-    // Not a gap click
-    return null;
-  };
+  // If we found a span, check if it has an id attribute starting with 'id'
+  if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
+    return {
+      gapId: gapSpan.id,
+      gapText: gapSpan.textContent || gapSpan.innerText
+    };
+  }
 
-  return {
-    parseQuestionText: parseQuestionText,
-    get_gap: get_gap
-  };
-});
+  // Not a gap click
+  return null;
+};
+
+export {
+  parseQuestionText,
+  get_gap
+};
