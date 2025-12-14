@@ -57,7 +57,10 @@ const showGapSettingsModal = async(gapText) => {
 
     // Show the modal
     modal.show();
+    modal.getRoot().on(ModalEvents.save, (e) => {
+        e.preventDefault();
 
+    });
 
     // After modal is shown, initialize TinyMCE editors for the feedback fields
     modal.getRoot().on(ModalEvents.shown, async() => {
