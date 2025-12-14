@@ -20,6 +20,113 @@
  * @copyright  2025 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+/**
+ * Show gap settings modal for a specific gap
+ * @param {string} gapText - The text content of the gap
+ */
+import ModalFactory from 'core/modal_factory';
+import ModalEvents from 'core/modal_events';
+
+const showGapSettingsModal = async(gapText) => {
+    const bodyContent = `
+        <div class="container-fluid">
+            <div class="form-group row mb-3">
+                <label for="gapfill-feedback-correct" class="col-md-12 col-form-label font-weight-bold">Feedback
+                    for correct.</label>
+                <div class="col-md-12">
+                    <textarea id="gapfill-feedback-correct" class="form-control" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="gapfill-feedback-incorrect" class="col-md-12 col-form-label font-weight-bold">Feedback
+                    for incorrect.</label>
+                <div class="col-md-12">
+                    <textarea id="gapfill-feedback-incorrect" class="form-control" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Create and show modal using ModalFactory
+    const modal = await ModalFactory.create({
+        type: ModalFactory.types.SAVE_CANCEL,
+        title: `Add Gap settings: ${gapText}`,
+        body: bodyContent,
+        large: true,
+    });
+
+    // Show the modal
+    modal.show();
+
+
+    // After modal is shown, initialize TinyMCE editors for the feedback fields
+    modal.getRoot().on(ModalEvents.shown, async() => {
+        // Wait a moment for DOM to be ready
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+            // Get the TinyMCE instance from the global scope
+            const tinyMCE = window.tinymce || tinymce;
+
+            // Clean up any existing TinyMCE instances for these elements
+            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
+            if (correctEditor) {
+                correctEditor.remove();
+            }
+
+            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+            if (incorrectEditor) {
+                incorrectEditor.remove();
+            }
+
+            // const settings = getItemSettings();
+            // const firstKey = Object.keys(settings)[0];
+            // const correctfeedback = settings[firstKey].correctfeedback;
+
+            // Initialize TinyMCE for feedback correct - this creates a new instance
+            await tinyMCE.init({
+                selector: '#gapfill-feedback-correct',
+                menubar: false,
+                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
+                plugins: 'lists link',
+                setup: (ed) => {
+                    ed.on('init', () => {
+                        ed.setContent('correct');
+                    });
+                }
+            });
+
+            // Initialize TinyMCE for feedback incorrect - this creates another new instance
+            await tinyMCE.init({
+                selector: '#gapfill-feedback-incorrect',
+                menubar: false,
+                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
+                plugins: 'lists link',
+                setup: (ed) => {
+                    ed.on('init', () => {
+                        ed.setContent('Not Correct');
+                    });
+                }
+            });
+
+    });
+
+    // Clean up TinyMCE instances when modal is hidden
+    modal.getRoot().on(ModalEvents.hidden, () => {
+        const tinyMCE = window.tinymce || tinymce;
+        if (tinyMCE) {
+            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
+            if (correctEditor) {
+                correctEditor.remove();
+            }
+
+            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+            if (incorrectEditor) {
+                incorrectEditor.remove();
+            }
+        }
+    });
+};
+
 
 /**
  * Escape special regex characters in a string
