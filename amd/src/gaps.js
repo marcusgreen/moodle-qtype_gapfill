@@ -229,5 +229,6 @@ const get_gap = (clickEvent) => {
 
 export {
   parseQuestionText,
-  get_gap
+  get_gap,
+  showGapSettingsModal
 };

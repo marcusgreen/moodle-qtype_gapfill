@@ -5,7 +5,7 @@
  */
 
 // Import functions from gaps.js using ES6 import
-import { parseQuestionText, get_gap } from 'qtype_gapfill/gaps';
+import { parseQuestionText, get_gap, showGapSettingsModal } from 'qtype_gapfill/gaps';
 
 /**
  * Retrieves and parses JSON from id_itemsettings hidden field
@@ -68,8 +68,8 @@ const createGapSelectArea = () => {
         const gapInfo = get_gap(clickEvent);
 
         if (gapInfo) {
-            // If it's a gap click, show an alert with the gap text
-            alert('Gap clicked: ' + gapInfo.gapText);
+            // If it's a gap click, show the gap settings modal
+            showGapSettingsModal(gapInfo.gapText);
         }
     });
 };
