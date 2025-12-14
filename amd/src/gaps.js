@@ -65,8 +65,7 @@ const showGapSettingsModal = async(gapText) => {
         await new Promise(resolve => setTimeout(resolve, 200));
 
             // Get the TinyMCE instance from the global scope
-            const tinyMCE = window.tinymce || tinymce;
-
+             /* global tinyMCE */
             // Clean up any existing TinyMCE instances for these elements
             const correctEditor = tinyMCE.get('gapfill-feedback-correct');
             if (correctEditor) {
@@ -78,9 +77,11 @@ const showGapSettingsModal = async(gapText) => {
                 incorrectEditor.remove();
             }
 
-            // const settings = getItemSettings();
-            // const firstKey = Object.keys(settings)[0];
-            // const correctfeedback = settings[firstKey].correctfeedback;
+            const settings = getItemSettings();
+            const firstKey = Object.keys(settings)[0];
+            const correctFeedback = settings[firstKey].correctfeedback;
+            const incorrectFeedback = settings[firstKey].incorrectfeedback;
+
 
             // Initialize TinyMCE for feedback correct - this creates a new instance
             await tinyMCE.init({
@@ -90,7 +91,7 @@ const showGapSettingsModal = async(gapText) => {
                 plugins: 'lists link',
                 setup: (ed) => {
                     ed.on('init', () => {
-                        ed.setContent('correct');
+                        ed.setContent(correctFeedback);
                     });
                 }
             });
@@ -103,7 +104,7 @@ const showGapSettingsModal = async(gapText) => {
                 plugins: 'lists link',
                 setup: (ed) => {
                     ed.on('init', () => {
-                        ed.setContent('Not Correct');
+                        ed.setContent(incorrectFeedback);
                     });
                 }
             });
@@ -112,7 +113,7 @@ const showGapSettingsModal = async(gapText) => {
 
     // Clean up TinyMCE instances when modal is hidden
     modal.getRoot().on(ModalEvents.hidden, () => {
-        const tinyMCE = window.tinymce || tinymce;
+        /* global tinyMCE */
         if (tinyMCE) {
             const correctEditor = tinyMCE.get('gapfill-feedback-correct');
             if (correctEditor) {
@@ -145,6 +146,24 @@ const escapeRegex = (str) => {
 const getElementValue = (id) => {
   const element = document.getElementById(id);
   return element ? element.value : null;
+};
+
+/**
+ * Read existing itemsettings from the hidden field
+ * @returns {Object} The parsed item settings object
+ */
+const getItemSettings = () => {
+    const itemSettingsField = document.querySelector('#id_itemsettings');
+    let existingSettings = {};
+    if (itemSettingsField && itemSettingsField.value) {
+        try {
+            existingSettings = JSON.parse(itemSettingsField.value);
+        } catch (e) {
+            // If parsing fails, start with empty object
+            existingSettings = {};
+        }
+    }
+    return existingSettings;
 };
 
 /**
