@@ -91,7 +91,36 @@ define([], function() {
     return processedText;
   };
 
+  /**
+   * Determines if click was within a gap span and extracts gap information
+   *
+   * @param {Event} clickEvent - The click event to analyze
+   * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
+   */
+  var get_gap = function(clickEvent) {
+    // Get the target element from the click event
+    var target = clickEvent.target;
+
+    // Check if the target or any of its parents is a gap span
+    var gapSpan = target;
+    while (gapSpan && gapSpan.tagName !== 'SPAN') {
+      gapSpan = gapSpan.parentNode;
+    }
+
+    // If we found a span, check if it has an id attribute starting with 'id'
+    if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
+      return {
+        gapId: gapSpan.id,
+        gapText: gapSpan.textContent || gapSpan.innerText
+      };
+    }
+
+    // Not a gap click
+    return null;
+  };
+
   return {
-    parseQuestionText: parseQuestionText
+    parseQuestionText: parseQuestionText,
+    get_gap: get_gap
   };
 });

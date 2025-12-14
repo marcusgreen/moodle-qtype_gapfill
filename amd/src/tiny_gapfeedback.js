@@ -61,6 +61,17 @@ const createGapSelectArea = () => {
     // Insert the select_area where the TinyMCE instance was
     container.parentNode.insertBefore(selectArea, container.nextSibling);
     container.style.display = 'none';
+
+    // Add click event listener to the select area
+    selectArea.addEventListener('click', (clickEvent) => {
+        // Use get_gap to check if the click was within a gap
+        const gapInfo = gaps.get_gap(clickEvent);
+
+        if (gapInfo) {
+            // If it's a gap click, show an alert with the gap text
+            alert('Gap clicked: ' + gapInfo.gapText);
+        }
+    });
 };
 
 /**
