@@ -3,54 +3,14 @@
  *
  * @module qtype_gapfill/tiny_gapfeedback
  */
-import * as Log from 'core/log';
 
 // Import functions from gaps.js using ES6 import
 import { parseQuestionText, get_gap, showGapSettingsModal } from 'qtype_gapfill/gaps';
-/**
- * Retrieves and parses item settings, returning the specific feedback
- * (correctfeedback and incorrectfeedback) for a given itemid.
- *
- * @param {object} gapInfo - Object containing the search criteria.
- * @param {string} gapInfo.itemid - The unique ID of the item to find (e.g., "id2_0").
- * @returns {?{correctfeedback: string, incorrectfeedback: string}} Feedback object, or null on error/not found.
- */
-const getItemSettings = (gapInfo) => {
-    const settingsElement = document.getElementById('id_itemsettings');
-    if (!settingsElement || !settingsElement.value) {
-        return null;
-    }
-
-    let parsedSettings = {};
-
-    parsedSettings = JSON.parse(settingsElement.value) || {};
-
-    const searchId = gapInfo && gapInfo.gapId;
-    if (!searchId) {
-        return null;
-    }
-
-    const innerObjects = Object.values(parsedSettings);
-
-    const foundObject = innerObjects.find(
-        item => item.itemid === searchId
-    );
-
-    if (foundObject) {
-        return {
-            correctFeedback: foundObject.correctfeedback,
-            incorrectFeedback: foundObject.incorrectfeedback
-        };
-    } else {
-        return null;
-    }
-};
 
 
 /**
  * Handle click events on the select area
  * @param {Event} event - The click event
- * @param {HTMLElement} selectArea - The select area element
  */
 const handleSelectAreaClick = (event) => {
 

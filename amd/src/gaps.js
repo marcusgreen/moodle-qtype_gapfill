@@ -27,6 +27,61 @@
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
 
+/**
+ * Update JSON settings with new feedback data
+ * @param {Object} gapInfo - Object containing gapId and gapText
+ * @param {string} correctFeedback - HTML content for correct feedback
+ * @param {string} incorrectFeedback - HTML content for incorrect feedback
+ * @returns {string} - Updated JSON string
+ */
+const updateJson = (gapInfo, correctFeedback, incorrectFeedback) => {
+  // Get the current JSON data from the hidden field
+  const settingsdata = document.querySelector("[name='itemsettings']");
+  let parsedSettings = {};
+
+  if (settingsdata && settingsdata.value) {
+    try {
+      parsedSettings = JSON.parse(settingsdata.value);
+    } catch (e) {
+      parsedSettings = {};
+    }
+  }
+
+  let found = false;
+
+  // Get delimiter characters
+  const delimitcharsElement = document.getElementById('id_delimitchars');
+  const delimitchars = delimitcharsElement ? delimitcharsElement.value : '';
+
+  // Check if we already have settings for this gap ID
+  for (const key in parsedSettings) {
+    if (parsedSettings[key].itemid === gapInfo.gapId) {
+      parsedSettings[key].correctfeedback = correctFeedback;
+      parsedSettings[key].incorrectfeedback = incorrectFeedback;
+      found = true;
+      break;
+    }
+  }
+
+  // If not found, add new settings
+  if (!found) {
+    const questionId = document.querySelector("input[name='id']");
+    const itemsettings = {
+      itemid: gapInfo.gapId,
+      questionid: questionId ? questionId.value : "",
+      correctfeedback: correctFeedback,
+      incorrectfeedback: incorrectFeedback,
+      gaptext: stripdelim(gapInfo.gapText, delimitchars)
+    };
+
+    // Add to parsedSettings object with a unique key
+    // Use the itemid as the key to ensure uniqueness
+    parsedSettings[gapInfo.gapId] = itemsettings;
+  }
+
+  return JSON.stringify(parsedSettings);
+};
+
 const showGapSettingsModal = async(gapInfo) => {
     const bodyContent = `
         <div class="container-fluid">
@@ -60,6 +115,26 @@ const showGapSettingsModal = async(gapInfo) => {
     modal.getRoot().on(ModalEvents.save, (e) => {
         e.preventDefault();
 
+        // Get the TinyMCE editor instances
+        /* global tinyMCE */
+        const correctEditor = tinyMCE.get('gapfill-feedback-correct');
+        const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+
+        // Get the content from editors
+        const correctFeedback = correctEditor ? correctEditor.getContent() : '';
+        const incorrectFeedback = incorrectEditor ? incorrectEditor.getContent() : '';
+
+        // Update the JSON data
+        const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
+
+        // Save to the hidden field
+        const itemSettingsField = document.querySelector("[name='itemsettings']");
+        if (itemSettingsField) {
+            itemSettingsField.value = JSONstr;
+        }
+
+        // Close the modal
+        modal.hide();
     });
 
     // After modal is shown, initialize TinyMCE editors for the feedback fields
@@ -75,39 +150,40 @@ const showGapSettingsModal = async(gapInfo) => {
                 correctEditor.remove();
             }
 
-            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-            if (incorrectEditor) {
-                incorrectEditor.remove();
-            }
+const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+             if (incorrectEditor) {
+                 incorrectEditor.remove();
+             }
 
+             const feedback = getItemSettings(gapInfo);
 
-            // Initialize TinyMCE for feedback correct - this creates a new instance
-            await tinyMCE.init({
-                selector: '#gapfill-feedback-correct',
-                menubar: false,
-                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                plugins: 'lists link',
-                setup: (ed) => {
-                    ed.on('init', () => {
-                        ed.setContent(gapInfo.correctFeedback || '');
-                    });
-                }
-            });
+             // Initialize TinyMCE for feedback correct - this creates a new instance
+             await tinyMCE.init({
+                 selector: '#gapfill-feedback-correct',
+                 menubar: false,
+                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
+                 plugins: 'lists link',
+                 setup: (ed) => {
+                     ed.on('init', () => {
+                         ed.setContent(feedback.correctFeedback || '');
+                     });
+                 }
+             });
 
-            // Initialize TinyMCE for feedback incorrect - this creates another new instance
-            await tinyMCE.init({
-                selector: '#gapfill-feedback-incorrect',
-                menubar: false,
-                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                plugins: 'lists link',
-                setup: (ed) => {
-                    ed.on('init', () => {
-                        ed.setContent(gapInfo.incorrectFeedback || '');
-                    });
-                }
-            });
+// Initialize TinyMCE for feedback incorrect - this creates another new instance
+             await tinyMCE.init({
+                 selector: '#gapfill-feedback-incorrect',
+                 menubar: false,
+                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
+                 plugins: 'lists link',
+                 setup: (ed) => {
+                     ed.on('init', () => {
+                         ed.setContent(feedback.incorrectFeedback || '');
+                     });
+                 }
+             });
 
-    });
+     });
 
     // Clean up TinyMCE instances when modal is hidden
     modal.getRoot().on(ModalEvents.hidden, () => {
@@ -126,6 +202,34 @@ const showGapSettingsModal = async(gapInfo) => {
     });
 };
 
+
+/**
+ * Strip delimiter characters from gap text
+ * @param {string} gapText - The gap text with delimiters
+ * @param {string} delimitchars - The delimiter characters (e.g., '[]')
+ * @returns {string} - Gap text without delimiters
+ */
+const stripdelim = (gapText, delimitchars) => {
+  if (!gapText || !delimitchars || delimitchars.length < 2) {
+    return gapText;
+  }
+
+  const leftDelim = delimitchars.charAt(0);
+  const rightDelim = delimitchars.charAt(1);
+  let gaptextNodelim = gapText;
+
+  // Remove left delimiter if present
+  if (gapText.charAt(0) === leftDelim) {
+    gaptextNodelim = gapText.substring(1);
+  }
+
+  // Remove right delimiter if present
+  if (gaptextNodelim.charAt(gaptextNodelim.length - 1) === rightDelim) {
+    gaptextNodelim = gaptextNodelim.substring(0, gaptextNodelim.length - 1);
+  }
+
+  return gaptextNodelim;
+};
 
 /**
  * Escape special regex characters in a string
@@ -148,9 +252,10 @@ const getElementValue = (id) => {
 
 /**
  * Read existing itemsettings from the hidden field
- * @returns {Object} The parsed item settings object
+ * @param {Object} gapInfo - Object containing gapId and gapText
+ * @returns {{correctFeedback: string, incorrectFeedback: string}|null} Feedback object, or null on error/not found.
  */
-const getItemSettings = () => {
+const getItemSettings = (gapInfo) => {
     const itemSettingsField = document.querySelector('#id_itemsettings');
     let existingSettings = {};
     if (itemSettingsField && itemSettingsField.value) {
@@ -161,7 +266,26 @@ const getItemSettings = () => {
             existingSettings = {};
         }
     }
-    return existingSettings;
+
+    const searchId = gapInfo && gapInfo.gapId;
+    if (!searchId) {
+        return null;
+    }
+
+    const innerObjects = Object.values(existingSettings);
+
+    const foundObject = innerObjects.find(
+        item => item.itemid === searchId
+    );
+
+    if (foundObject) {
+        return {
+            correctFeedback: foundObject.correctfeedback,
+            incorrectFeedback: foundObject.incorrectfeedback
+        };
+    } else {
+        return null;
+    }
 };
 
 /**
@@ -247,5 +371,8 @@ const get_gap = (clickEvent) => {
 export {
   parseQuestionText,
   get_gap,
-  showGapSettingsModal
+  showGapSettingsModal,
+  updateJson,
+  getItemSettings,
+  stripdelim
 };

@@ -60,7 +60,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform = $this->form_setup($mform);
 
         /*for storing the json containing the settings data */
-        $mform->addElement('textarea', 'itemsettings', '', ['size' => '80']);
+        $mform->addElement('textarea', 'itemsettings', '', ['size' => '80', 'rows' => 5]);
         $mform->setType('itemsettings', PARAM_RAW);
 
         /* popup for entering feedback for individual words */
