@@ -41,7 +41,19 @@ const updateJson = (gapInfo, correctFeedback, incorrectFeedback) => {
 
   if (settingsdata && settingsdata.value) {
     try {
-      parsedSettings = JSON.parse(settingsdata.value);
+      const parsedData = JSON.parse(settingsdata.value);
+      // Handle both array and object formats for backward compatibility
+      if (Array.isArray(parsedData)) {
+        // Convert array to object format for consistency
+        parsedSettings = {};
+        parsedData.forEach(item => {
+          if (item.itemid) {
+            parsedSettings[item.itemid] = item;
+          }
+        });
+      } else {
+        parsedSettings = parsedData;
+      }
     } catch (e) {
       parsedSettings = {};
     }
@@ -79,7 +91,9 @@ const updateJson = (gapInfo, correctFeedback, incorrectFeedback) => {
     parsedSettings[gapInfo.gapId] = itemsettings;
   }
 
-  return JSON.stringify(parsedSettings);
+  // Convert to array format for consistency
+  const settingsArray = Object.values(parsedSettings);
+  return JSON.stringify(settingsArray);
 };
 
 const showGapSettingsModal = async(gapInfo) => {
@@ -261,7 +275,19 @@ const getItemSettings = (gapInfo) => {
     let existingSettings = {};
     if (itemSettingsField && itemSettingsField.value) {
         try {
-            existingSettings = JSON.parse(itemSettingsField.value);
+            const parsedData = JSON.parse(itemSettingsField.value);
+            // Handle both array and object formats for backward compatibility
+            if (Array.isArray(parsedData)) {
+                // Convert array to object format for consistency
+                existingSettings = {};
+                parsedData.forEach(item => {
+                    if (item.itemid) {
+                        existingSettings[item.itemid] = item;
+                    }
+                });
+            } else {
+                existingSettings = parsedData;
+            }
         } catch (e) {
             // If parsing fails, start with empty object
             existingSettings = {};

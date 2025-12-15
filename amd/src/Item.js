@@ -59,8 +59,13 @@ define(["jquery"], function($) {
       var settingsdata = $("[name='itemsettings']").val();
       if (settingsdata > "") {
         var obj = JSON.parse(settingsdata);
-        for (var o in obj) {
-          settings.push(obj[o]);
+        // Handle both array and object formats for backward compatibility
+        if (Array.isArray(obj)) {
+          settings = obj;
+        } else {
+          for (var o in obj) {
+            settings.push(obj[o]);
+          }
         }
       }
       return settings;
