@@ -124,6 +124,11 @@ const showGapSettingsModal = async(gapInfo) => {
         large: true,
     });
 
+    // ** FIX: Local variables to hold the TinyMCE instances **
+    let correctEditorInstance = null;
+    let incorrectEditorInstance = null;
+    // ** END FIX **
+
     // Show the modal
     modal.show();
 
@@ -164,6 +169,13 @@ const showGapSettingsModal = async(gapInfo) => {
                         const content = editorId === 'gapfill-feedback-correct'
                             ? (feedback && feedback.correctFeedback) || ''
                             : (feedback && feedback.incorrectFeedback) || '';
+                        // ** FIX: Store the initialized instance **
+                        if (editorId === 'gapfill-feedback-correct') {
+                            correctEditorInstance = ed;
+                        } else {
+                            incorrectEditorInstance = ed;
+                        }
+                        // ** END FIX **
                         ed.setContent(content);
                     });
                 }
@@ -176,14 +188,10 @@ const showGapSettingsModal = async(gapInfo) => {
         modal.getRoot().on(ModalEvents.save, (e) => {
             e.preventDefault();
 
-            // Get the TinyMCE editor instances
-            /* global tinyMCE */
-            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-
-            // Get the content from editors
-            const correctFeedback = correctEditor ? correctEditor.getContent() : '';
-            const incorrectFeedback = incorrectEditor ? incorrectEditor.getContent() : '';
+            // ** FIX: Use the stored instances instead of tinyMCE.get() **
+            const correctFeedback = correctEditorInstance ? correctEditorInstance.getContent() : '';
+            const incorrectFeedback = incorrectEditorInstance ? incorrectEditorInstance.getContent() : '';
+            // ** END FIX **
 
             // Update the JSON data
             const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
