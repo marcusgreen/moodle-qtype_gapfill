@@ -102,7 +102,7 @@ const showGapSettingsModal = async(gapInfo) => {
         </div>
     `;
 
-    // Create modal using ModalFactory (don't show yet)
+    // Create modal using ModalFactory
     const modal = await ModalFactory.create({
         type: ModalFactory.types.SAVE_CANCEL,
         title: `Add Gap settings: ${gapInfo.gapText}`,
@@ -110,33 +110,7 @@ const showGapSettingsModal = async(gapInfo) => {
         large: true,
     });
 
-    // Set up event handlers before showing the modal
-    modal.getRoot().on(ModalEvents.save, (e) => {
-        e.preventDefault();
-
-        // Get the TinyMCE editor instances
-        /* global tinyMCE */
-        const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-        const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-
-        // Get the content from editors
-        const correctFeedback = correctEditor ? correctEditor.getContent() : '';
-        const incorrectFeedback = incorrectEditor ? incorrectEditor.getContent() : '';
-
-        // Update the JSON data
-        const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
-
-        // Save to the hidden field
-        const itemSettingsField = document.querySelector("[name='itemsettings']");
-        if (itemSettingsField) {
-            itemSettingsField.value = JSONstr;
-        }
-
-        // Close the modal
-        modal.hide();
-    });
-
-    // Now show the modal
+    // Show the modal
     modal.show();
 
     // After modal is shown, initialize TinyMCE editors for the feedback fields
@@ -173,8 +147,8 @@ const showGapSettingsModal = async(gapInfo) => {
                 setup: (ed) => {
                     ed.on('init', () => {
                         const editorId = ed.id;
-                        const content = editorId === 'gapfill-feedback-correct' 
-                            ? (feedback && feedback.correctFeedback) || '' 
+                        const content = editorId === 'gapfill-feedback-correct'
+                            ? (feedback && feedback.correctFeedback) || ''
                             : (feedback && feedback.incorrectFeedback) || '';
                         ed.setContent(content);
                     });
@@ -184,8 +158,31 @@ const showGapSettingsModal = async(gapInfo) => {
             console.error('Failed to initialize TinyMCE:', error);
         }
 
-        // Now show the modal after TinyMCE is initialized
-        modal.show();
+        // Set up save event handler after TinyMCE is ready
+        modal.getRoot().on(ModalEvents.save, (e) => {
+            e.preventDefault();
+
+            // Get the TinyMCE editor instances
+            /* global tinyMCE */
+            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
+            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+
+            // Get the content from editors
+            const correctFeedback = correctEditor ? correctEditor.getContent() : '';
+            const incorrectFeedback = incorrectEditor ? incorrectEditor.getContent() : '';
+
+            // Update the JSON data
+            const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
+
+            // Save to the hidden field
+            const itemSettingsField = document.querySelector("[name='itemsettings']");
+            if (itemSettingsField) {
+                itemSettingsField.value = JSONstr;
+            }
+
+            // Close the modal
+            modal.hide();
+        });
 
     });
 
@@ -351,17 +348,21 @@ const parseQuestionText = (questionText) => {
  * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
  */
 const get_gap = (clickEvent) => {
+  console.log('get_gap called');
   // Get the target element from the click event
   let target = clickEvent.target;
+  console.log('Target:', target);
 
   // Check if the target or any of its parents is a gap span
   let gapSpan = target;
   while (gapSpan && gapSpan.tagName !== 'SPAN') {
     gapSpan = gapSpan.parentNode;
   }
+  console.log('Found span:', gapSpan);
 
   // If we found a span, check if it has an id attribute starting with 'id'
   if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
+    console.log('Gap found with ID:', gapSpan.id);
     return {
       gapId: gapSpan.id,
       gapText: gapSpan.textContent || gapSpan.innerText
@@ -369,6 +370,7 @@ const get_gap = (clickEvent) => {
   }
 
   // Not a gap click
+  console.log('No gap found');
   return null;
 };
 
