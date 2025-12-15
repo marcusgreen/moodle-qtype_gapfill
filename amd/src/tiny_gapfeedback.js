@@ -6,7 +6,6 @@
 
 // Import functions from gaps.js using ES6 import
 import { parseQuestionText, get_gap, showGapSettingsModal } from 'qtype_gapfill/gaps';
-
 /**
  * Retrieves and parses JSON from id_itemsettings hidden field
  * @returns {Object} Object with all gap feedback data, handles empty/missing data gracefully
@@ -20,10 +19,42 @@ const getItemSettings = () => {
         const parsed = JSON.parse(settingsElement.value);
         return parsed || {};
     } catch (e) {
-        console.error('Error parsing item settings:', e);
         return {};
     }
 };
+
+
+/**
+ * Handle click events on the select area
+ * @param {Event} event - The click event
+ * @param {HTMLElement} selectArea - The select area element
+ */
+const handleSelectAreaClick = (event) => {
+
+        // Use get_gap to check if the click was within a gap
+        const gapInfo = get_gap(event);
+
+        if (gapInfo) {
+
+            // Get the current item settings from the hidden field
+            const settings = getItemSettings();
+
+            // Find the specific settings for this gap using its ID
+            let gapSettings = null;
+            if (settings && settings[gapInfo.gapId]) {
+                gapSettings = settings[gapInfo.gapId];
+            }
+
+            // Extract feedback data safely
+            const correctFeedback = gapSettings ? gapSettings.correctfeedback : '';
+            const incorrectFeedback = gapSettings ? gapSettings.incorrectfeedback : '';
+
+            // If it's a gap click, show the gap settings modal with the current feedback
+            showGapSettingsModal(gapInfo.gapText, correctFeedback, incorrectFeedback, gapInfo.gapId);
+        }
+
+};
+
 
 /**
  * Creates an editable div called select_area and replaces the TinyMCE instance
@@ -62,17 +93,10 @@ const createGapSelectArea = () => {
     container.parentNode.insertBefore(selectArea, container.nextSibling);
     container.style.display = 'none';
 
-    // Add click event listener to the select area
-    selectArea.addEventListener('click', (clickEvent) => {
-        // Use get_gap to check if the click was within a gap
-        const gapInfo = get_gap(clickEvent);
-
-        if (gapInfo) {
-            // If it's a gap click, show the gap settings modal
-            showGapSettingsModal(gapInfo.gapText);
-        }
-    });
+    // Attach event handler to the select area
+    selectArea.addEventListener('click', (event) => handleSelectAreaClick(event));
 };
+
 
 /**
  * Initialize the gap feedback functionality

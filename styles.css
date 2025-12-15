@@ -35,6 +35,44 @@ question editing form
     width: 100%;
 }
 
+/* Visual feedback for gap select area */
+#select_area {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+}
+
+#select_area span[id^="id"] {
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 3px;
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 2px;
+    display: inline-block;
+}
+
+#select_area span[id^="id"]:hover {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
+    transform: translateY(-1px);
+}
+
+#select_area .gap-clicked {
+    animation: gap-pulse 0.3s ease;
+    background-color: #fff3e0 !important;
+    border-color: #ffb74d !important;
+    transform: scale(1.05);
+}
+
+@keyframes gap-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 
 .gapfill .item {
     background: white;
