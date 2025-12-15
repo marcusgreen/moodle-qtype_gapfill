@@ -102,7 +102,7 @@ const showGapSettingsModal = async(gapInfo) => {
         </div>
     `;
 
-    // Create and show modal using ModalFactory
+    // Create modal using ModalFactory (don't show yet)
     const modal = await ModalFactory.create({
         type: ModalFactory.types.SAVE_CANCEL,
         title: `Add Gap settings: ${gapInfo.gapText}`,
@@ -110,8 +110,7 @@ const showGapSettingsModal = async(gapInfo) => {
         large: true,
     });
 
-    // Show the modal
-    modal.show();
+    // Set up event handlers before showing the modal
     modal.getRoot().on(ModalEvents.save, (e) => {
         e.preventDefault();
 
@@ -137,53 +136,58 @@ const showGapSettingsModal = async(gapInfo) => {
         modal.hide();
     });
 
+    // Now show the modal
+    modal.show();
+
     // After modal is shown, initialize TinyMCE editors for the feedback fields
     modal.getRoot().on(ModalEvents.shown, async() => {
         // Wait a moment for DOM to be ready
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 300));
 
-            // Get the TinyMCE instance from the global scope
-             /* global tinyMCE */
-            // Clean up any existing TinyMCE instances for these elements
-            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-            if (correctEditor) {
-                correctEditor.remove();
-            }
+        // Get the TinyMCE instance from the global scope
+        /* global tinyMCE */
+        if (!tinyMCE) {
+            console.error('TinyMCE is not available');
+            return;
+        }
 
-const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-             if (incorrectEditor) {
-                 incorrectEditor.remove();
-             }
+        // Clean up any existing TinyMCE instances for these elements
+        const correctEditor = tinyMCE.get('gapfill-feedback-correct');
+        if (correctEditor) {
+            correctEditor.remove();
+        }
+        const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
+        if (incorrectEditor) {
+            incorrectEditor.remove();
+        }
 
-             const feedback = getItemSettings(gapInfo);
+        const feedback = getItemSettings(gapInfo);
 
-             // Initialize TinyMCE for feedback correct - this creates a new instance
-             await tinyMCE.init({
-                 selector: '#gapfill-feedback-correct',
-                 menubar: false,
-                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                 plugins: 'lists link',
-                 setup: (ed) => {
-                     ed.on('init', () => {
-                         ed.setContent(feedback.correctFeedback || '');
-                     });
-                 }
-             });
+        // Initialize TinyMCE for both feedback fields with a single init call
+        try {
+            await tinyMCE.init({
+                selector: '#gapfill-feedback-correct, #gapfill-feedback-incorrect',
+                menubar: false,
+                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
+                plugins: 'lists link',
+                setup: (ed) => {
+                    ed.on('init', () => {
+                        const editorId = ed.id;
+                        const content = editorId === 'gapfill-feedback-correct' 
+                            ? (feedback && feedback.correctFeedback) || '' 
+                            : (feedback && feedback.incorrectFeedback) || '';
+                        ed.setContent(content);
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('Failed to initialize TinyMCE:', error);
+        }
 
-// Initialize TinyMCE for feedback incorrect - this creates another new instance
-             await tinyMCE.init({
-                 selector: '#gapfill-feedback-incorrect',
-                 menubar: false,
-                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                 plugins: 'lists link',
-                 setup: (ed) => {
-                     ed.on('init', () => {
-                         ed.setContent(feedback.incorrectFeedback || '');
-                     });
-                 }
-             });
+        // Now show the modal after TinyMCE is initialized
+        modal.show();
 
-     });
+    });
 
     // Clean up TinyMCE instances when modal is hidden
     modal.getRoot().on(ModalEvents.hidden, () => {
