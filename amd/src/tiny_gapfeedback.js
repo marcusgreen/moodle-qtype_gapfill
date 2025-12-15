@@ -3,23 +3,46 @@
  *
  * @module qtype_gapfill/tiny_gapfeedback
  */
+import * as Log from 'core/log';
 
 // Import functions from gaps.js using ES6 import
 import { parseQuestionText, get_gap, showGapSettingsModal } from 'qtype_gapfill/gaps';
 /**
- * Retrieves and parses JSON from id_itemsettings hidden field
- * @returns {Object} Object with all gap feedback data, handles empty/missing data gracefully
+ * Retrieves and parses item settings, returning the specific feedback
+ * (correctfeedback and incorrectfeedback) for a given itemid.
+ *
+ * @param {object} gapInfo - Object containing the search criteria.
+ * @param {string} gapInfo.itemid - The unique ID of the item to find (e.g., "id2_0").
+ * @returns {?{correctfeedback: string, incorrectfeedback: string}} Feedback object, or null on error/not found.
  */
-const getItemSettings = () => {
+const getItemSettings = (gapInfo) => {
     const settingsElement = document.getElementById('id_itemsettings');
     if (!settingsElement || !settingsElement.value) {
-        return {};
+        return null;
     }
-    try {
-        const parsed = JSON.parse(settingsElement.value);
-        return parsed || {};
-    } catch (e) {
-        return {};
+
+    let parsedSettings = {};
+
+    parsedSettings = JSON.parse(settingsElement.value) || {};
+
+    const searchId = gapInfo && gapInfo.gapId;
+    if (!searchId) {
+        return null;
+    }
+
+    const innerObjects = Object.values(parsedSettings);
+
+    const foundObject = innerObjects.find(
+        item => item.itemid === searchId
+    );
+
+    if (foundObject) {
+        return {
+            correctFeedback: foundObject.correctfeedback,
+            incorrectFeedback: foundObject.incorrectfeedback
+        };
+    } else {
+        return null;
     }
 };
 
@@ -35,24 +58,11 @@ const handleSelectAreaClick = (event) => {
         const gapInfo = get_gap(event);
 
         if (gapInfo) {
-
             // Get the current item settings from the hidden field
-            const settings = getItemSettings();
-
-            // Find the specific settings for this gap using its ID
-            let gapSettings = null;
-            if (settings && settings[gapInfo.gapId]) {
-                gapSettings = settings[gapInfo.gapId];
-            }
-
-            // Extract feedback data safely
-            const correctFeedback = gapSettings ? gapSettings.correctfeedback : '';
-            const incorrectFeedback = gapSettings ? gapSettings.incorrectfeedback : '';
-
+            const settings = getItemSettings(gapInfo);
             // If it's a gap click, show the gap settings modal with the current feedback
-            showGapSettingsModal(gapInfo.gapText, correctFeedback, incorrectFeedback, gapInfo.gapId);
+            showGapSettingsModal(gapInfo.gapText, settings.correctFeedback, settings.incorrectFeedback, gapInfo.gapId);
         }
-
 };
 
 

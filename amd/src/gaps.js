@@ -27,7 +27,7 @@
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
 
-const showGapSettingsModal = async(gapText) => {
+const showGapSettingsModal = async(gapText,correctFeedback, incorrectFeedback, gapId) => {
     const bodyContent = `
         <div class="container-fluid">
             <div class="form-group row mb-3">
@@ -79,11 +79,6 @@ const showGapSettingsModal = async(gapText) => {
             if (incorrectEditor) {
                 incorrectEditor.remove();
             }
-
-            const settings = getItemSettings();
-            const firstKey = Object.keys(settings)[0];
-            const correctFeedback = settings[firstKey].correctfeedback;
-            const incorrectFeedback = settings[firstKey].incorrectfeedback;
 
 
             // Initialize TinyMCE for feedback correct - this creates a new instance
