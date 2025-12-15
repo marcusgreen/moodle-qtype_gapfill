@@ -27,7 +27,7 @@
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
 
-const showGapSettingsModal = async(gapText,correctFeedback, incorrectFeedback, gapId) => {
+const showGapSettingsModal = async(gapInfo) => {
     const bodyContent = `
         <div class="container-fluid">
             <div class="form-group row mb-3">
@@ -50,7 +50,7 @@ const showGapSettingsModal = async(gapText,correctFeedback, incorrectFeedback, g
     // Create and show modal using ModalFactory
     const modal = await ModalFactory.create({
         type: ModalFactory.types.SAVE_CANCEL,
-        title: `Add Gap settings: ${gapText}`,
+        title: `Add Gap settings: ${gapInfo.gapText}`,
         body: bodyContent,
         large: true,
     });
@@ -89,7 +89,7 @@ const showGapSettingsModal = async(gapText,correctFeedback, incorrectFeedback, g
                 plugins: 'lists link',
                 setup: (ed) => {
                     ed.on('init', () => {
-                        ed.setContent(correctFeedback);
+                        ed.setContent(gapInfo.correctFeedback || '');
                     });
                 }
             });
@@ -102,7 +102,7 @@ const showGapSettingsModal = async(gapText,correctFeedback, incorrectFeedback, g
                 plugins: 'lists link',
                 setup: (ed) => {
                     ed.on('init', () => {
-                        ed.setContent(incorrectFeedback);
+                        ed.setContent(gapInfo.incorrectFeedback || '');
                     });
                 }
             });

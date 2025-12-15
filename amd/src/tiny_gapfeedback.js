@@ -58,10 +58,7 @@ const handleSelectAreaClick = (event) => {
         const gapInfo = get_gap(event);
 
         if (gapInfo) {
-            // Get the current item settings from the hidden field
-            const settings = getItemSettings(gapInfo);
-            // If it's a gap click, show the gap settings modal with the current feedback
-            showGapSettingsModal(gapInfo.gapText, settings.correctFeedback, settings.incorrectFeedback, gapInfo.gapId);
+            showGapSettingsModal(gapInfo);
         }
 };
 
