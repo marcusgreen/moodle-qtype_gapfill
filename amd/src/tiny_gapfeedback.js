@@ -5,7 +5,7 @@
  */
 
 // Import functions from gaps.js using ES6 import
-import { parseQuestionText, get_gap, showGapSettingsModal } from 'qtype_gapfill/gaps';
+import { parseQuestionText, getGap, showGapSettingsModal } from 'qtype_gapfill/gaps';
 
 
 /**
@@ -16,17 +16,12 @@ const handleSelectAreaClick = (event) => {
     // Prevent default behavior to avoid focusing the contenteditable div
     event.preventDefault();
     event.stopPropagation();
-    console.log('Select area clicked, handling event');
 
     // Use get_gap to check if the click was within a gap
-    const gapInfo = get_gap(event);
-    console.log('Gap info:', gapInfo);
+    const gapInfo = getGap(event);
 
     if (gapInfo) {
-        console.log('Gap found, showing modal');
         showGapSettingsModal(gapInfo);
-    } else {
-        console.log('No gap found');
     }
 };
 
@@ -53,24 +48,20 @@ const createGapSelectArea = () => {
     const editorHeight = editorElement ? editorElement.offsetHeight : container.offsetHeight;
     // Get the text content from TinyMCE
     const questionText = editor.getContent();
-    console.log('Question text:', questionText);
     // Process the text with parseQuestionText to wrap gaps in spans
     const processedText = parseQuestionText(questionText);
-    console.log('Processed text:', processedText);
     // Create the select_area div
     const selectArea = document.createElement('div');
     selectArea.id = 'select_area';
     selectArea.className = 'select_area';
     selectArea.contentEditable = 'true';
     selectArea.innerHTML = processedText;
-    console.log('Select area created with HTML:', selectArea.innerHTML);
     // Apply dimensions
     selectArea.style.width = editorWidth + 'px';
     selectArea.style.height = editorHeight + 'px';
     // Insert the select_area where the TinyMCE instance was
     container.parentNode.insertBefore(selectArea, container.nextSibling);
     container.style.display = 'none';
-    console.log('Select area inserted into DOM');
 
     // Attach event handler to the select area
     // Use capture phase to ensure we get the event before contenteditable tries to focus

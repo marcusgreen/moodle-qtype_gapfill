@@ -139,11 +139,6 @@ const showGapSettingsModal = async(gapInfo) => {
 
         // Get the TinyMCE instance from the global scope
         /* global tinyMCE */
-        if (!tinyMCE) {
-            console.error('TinyMCE is not available');
-            return;
-        }
-
         // Clean up any existing TinyMCE instances for these elements
         const correctEditor = tinyMCE.get('gapfill-feedback-correct');
         if (correctEditor) {
@@ -381,22 +376,18 @@ const parseQuestionText = (questionText) => {
  * @param {Event} clickEvent - The click event to analyze
  * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
  */
-const get_gap = (clickEvent) => {
-  console.log('get_gap called');
+const getGap = (clickEvent) => {
   // Get the target element from the click event
   let target = clickEvent.target;
-  console.log('Target:', target);
 
   // Check if the target or any of its parents is a gap span
   let gapSpan = target;
   while (gapSpan && gapSpan.tagName !== 'SPAN') {
     gapSpan = gapSpan.parentNode;
   }
-  console.log('Found span:', gapSpan);
 
   // If we found a span, check if it has an id attribute starting with 'id'
   if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
-    console.log('Gap found with ID:', gapSpan.id);
     return {
       gapId: gapSpan.id,
       gapText: gapSpan.textContent || gapSpan.innerText
@@ -404,13 +395,12 @@ const get_gap = (clickEvent) => {
   }
 
   // Not a gap click
-  console.log('No gap found');
   return null;
 };
 
 export {
   parseQuestionText,
-  get_gap,
+  getGap,
   showGapSettingsModal,
   updateJson,
   getItemSettings,
