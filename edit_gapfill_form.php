@@ -231,7 +231,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
 
         $PAGE->requires->strings_for_js(['itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'], 'qtype_gapfill');
-            xdebug_break();
         $preferrededitor = get_user_preferences('htmleditor');
         if ($preferrededitor == 'atto') {
              $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
@@ -239,8 +238,6 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $PAGE->requires->js_call_amd('qtype_gapfill/tiny_gapfeedback', 'init', [$preferrededitor]);
         }
         $PAGE->requires->js_call_amd('qtype_gapfill/questionedit', 'init');
-
-
 
         $mform->addElement('hidden', 'reload', 1);
         $mform->setType('reload', PARAM_RAW);
