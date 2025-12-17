@@ -22,11 +22,13 @@
  */
 /**
  * Show gap settings modal for a specific gap
- * @param {string} gapText - The text content of the gap
+ * @param {Object} gapInfo - Object containing gap information
+ * @param {string} gapInfo.gapId - Unique identifier for the gap
+ * @param {string} gapInfo.gapText - The text content of the gap
  */
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
-
+import Log from 'core/log';
 /**
  * Update JSON settings with new feedback data
  * @param {Object} gapInfo - Object containing gapId and gapText
@@ -124,10 +126,8 @@ const showGapSettingsModal = async(gapInfo) => {
         large: true,
     });
 
-    // ** FIX: Local variables to hold the TinyMCE instances **
     let correctEditorInstance = null;
     let incorrectEditorInstance = null;
-    // ** END FIX **
 
     // Show the modal
     modal.show();
@@ -170,13 +170,12 @@ const showGapSettingsModal = async(gapInfo) => {
                         } else {
                             incorrectEditorInstance = ed;
                         }
-                        // ** END FIX **
                         ed.setContent(content);
                     });
                 }
             });
         } catch (error) {
-            console.error('Failed to initialize TinyMCE:', error);
+            Log.debug('Failed to initialize TinyMCE:', error);
         }
 
         // Set up save event handler after TinyMCE is ready
@@ -205,7 +204,6 @@ const showGapSettingsModal = async(gapInfo) => {
 
     // Clean up TinyMCE instances when modal is hidden
     modal.getRoot().on(ModalEvents.hidden, () => {
-        /* global tinyMCE */
         if (tinyMCE) {
             const correctEditor = tinyMCE.get('gapfill-feedback-correct');
             if (correctEditor) {

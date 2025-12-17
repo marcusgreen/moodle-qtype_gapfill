@@ -43,4 +43,3 @@ Feature: Testing backup_and_restore in qtype_gapfill
     And the field "For any correct response" matches value "Correct feedback"
     And the field "For any incorrect response" matches value "Incorrect feedback"
     And the field "General feedback" matches value "General feedback"
-
