@@ -232,8 +232,16 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $PAGE->requires->strings_for_js(['itemsettingserror', 'editquestiontext', 'additemsettings',
             'correct', 'incorrect'], 'qtype_gapfill');
         $preferrededitor = get_user_preferences('htmleditor');
+
+        // Get system default editor if user has no preference set
+        if (empty($preferrededitor)) {
+            $enabled_editors = editors_get_enabled();
+            $system_default_editor = key($enabled_editors); // Gets first enabled editor
+            $preferrededitor = $system_default_editor;
+        }
+
         if ($preferrededitor == 'atto') {
-             $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
+            $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
         } else if ($preferrededitor == 'tiny') {
             $PAGE->requires->js_call_amd('qtype_gapfill/tiny_gapfeedback', 'init', [$preferrededitor]);
         }
