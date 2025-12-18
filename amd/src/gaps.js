@@ -29,6 +29,7 @@
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
 import Log from 'core/log';
+import Templates from 'core/templates';
 /**
  * Update JSON settings with new feedback data
  * @param {Object} gapInfo - Object containing gapId and gapText
@@ -99,24 +100,16 @@ const updateJson = (gapInfo, correctFeedback, incorrectFeedback) => {
 };
 
 const showGapSettingsModal = async(gapInfo) => {
-    const bodyContent = `
-        <div class="container-fluid">
-            <div class="form-group row mb-3">
-                <label for="gapfill-feedback-correct" class="col-md-12 col-form-label font-weight-bold">Feedback
-                    for correct.</label>
-                <div class="col-md-12">
-                    <textarea id="gapfill-feedback-correct" class="form-control" rows="6"></textarea>
-                </div>
-            </div>
-            <div class="form-group row mb-3">
-                <label for="gapfill-feedback-incorrect" class="col-md-12 col-form-label font-weight-bold">Feedback
-                    for incorrect.</label>
-                <div class="col-md-12">
-                    <textarea id="gapfill-feedback-incorrect" class="form-control" rows="6"></textarea>
-                </div>
-            </div>
-        </div>
-    `;
+    // Get language strings
+    const correctLabel = M.util.get_string('correct', 'qtype_gapfill');
+    const incorrectLabel = M.util.get_string('incorrect', 'qtype_gapfill');
+
+    // Render the Mustache template with language strings
+    const templateContext = {
+        correct: correctLabel,
+        incorrect: incorrectLabel
+    };
+    const bodyContent = await Templates.render('qtype_gapfill/gapfeedback_modal', templateContext);
 
     // Create modal using ModalFactory
     const modal = await ModalFactory.create({
