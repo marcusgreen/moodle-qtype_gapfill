@@ -103,7 +103,12 @@ const showGapSettingsModal = async(gapInfo) => {
     // Get language strings
     const correctLabel = M.util.get_string('correct', 'qtype_gapfill');
     const incorrectLabel = M.util.get_string('incorrect', 'qtype_gapfill');
-    const titleString = M.util.get_string('additemsettings', 'qtype_gapfill');
+
+    // Get delimiter characters and strip them from gap text for cleaner display
+    const delimitcharsElement = document.getElementById('id_delimitchars');
+    const delimitchars = delimitcharsElement ? delimitcharsElement.value : '[]';
+    const cleanGapText = stripdelim(gapInfo.gapText, delimitchars);
+    const titleString = M.util.get_string('additemsettings', 'qtype_gapfill') + ': ' + cleanGapText;
 
     // Render the Mustache template with language strings
     const templateContext = {
@@ -152,6 +157,7 @@ const showGapSettingsModal = async(gapInfo) => {
                 menubar: false,
                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
                 plugins: 'lists link',
+                height: 150, // Set height to approximately 4 rows
                 setup: (ed) => {
                     ed.on('init', () => {
                         const editorId = ed.id;
