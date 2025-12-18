@@ -103,6 +103,7 @@ const showGapSettingsModal = async(gapInfo) => {
     // Get language strings
     const correctLabel = M.util.get_string('correct', 'qtype_gapfill');
     const incorrectLabel = M.util.get_string('incorrect', 'qtype_gapfill');
+    const titleString = M.util.get_string('additemsettings', 'qtype_gapfill');
 
     // Render the Mustache template with language strings
     const templateContext = {
@@ -114,7 +115,7 @@ const showGapSettingsModal = async(gapInfo) => {
     // Create modal using ModalFactory
     const modal = await ModalFactory.create({
         type: ModalFactory.types.SAVE_CANCEL,
-        title: `Add Gap settings: ${gapInfo.gapText}`,
+        title: titleString,
         body: bodyContent,
         large: true,
     });
@@ -157,7 +158,6 @@ const showGapSettingsModal = async(gapInfo) => {
                         const content = editorId === 'gapfill-feedback-correct'
                             ? (feedback && feedback.correctFeedback) || ''
                             : (feedback && feedback.incorrectFeedback) || '';
-                        // ** FIX: Store the initialized instance **
                         if (editorId === 'gapfill-feedback-correct') {
                             correctEditorInstance = ed;
                         } else {
@@ -175,10 +175,8 @@ const showGapSettingsModal = async(gapInfo) => {
         modal.getRoot().on(ModalEvents.save, (e) => {
             e.preventDefault();
 
-            // ** FIX: Use the stored instances instead of tinyMCE.get() **
             const correctFeedback = correctEditorInstance ? correctEditorInstance.getContent() : '';
             const incorrectFeedback = incorrectEditorInstance ? incorrectEditorInstance.getContent() : '';
-            // ** END FIX **
 
             // Update the JSON data
             const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
