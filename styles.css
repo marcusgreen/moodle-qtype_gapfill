@@ -1,8 +1,9 @@
-.select_area {
+.tiny_select_area {
     background: lightgrey;
     border-radius: .25rem;
     border: 1px solid rgba(0, 0, 0, .15);
     color: #55595c;
+    padding: .5rem .75rem;
 }
 
 /* classes without the que prefix are used in the
@@ -35,32 +36,30 @@ question editing form
     width: 100%;
 }
 
-/* Visual feedback for gap select area */
-#select_area {
+Visual feedback for gap select area
+#tiny_select_area {
     border: 2px dashed #ccc;
     padding: 10px;
     background-color: #f9f9f9;
     min-height: 100px;
 }
 
-#select_area span[id^="id"] {
-    background-color: #e3f2fd;
-    border: 1px solid #90caf9;
+#tiny_select_area span[id^="id"] {
+    background-color: white;
     border-radius: 3px;
     padding: 2px 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin: 2px;
     display: inline-block;
 }
 
-#select_area span[id^="id"]:hover {
+#tiny_select_area span[id^="id"]:hover {
     background-color: #bbdefb;
     border-color: #64b5f6;
     transform: translateY(-1px);
 }
 
-#select_area .gap-clicked {
+#tiny_select_area .gap-clicked {
     animation: gap-pulse 0.3s ease;
     background-color: #fff3e0 !important;
     border-color: #ffb74d !important;

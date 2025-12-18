@@ -27,17 +27,17 @@ const handleSelectAreaClick = (event) => {
 
 
 /**
- * Creates an editable div called select_area and replaces the TinyMCE instance
+ * Creates an editable div called tiny_select_area and replaces the TinyMCE instance
  */
 const createGapSelectArea = () => {
     /* global tinyMCE */
     const editor = tinyMCE.get('id_questiontext');
     const container = editor.getContainer();
     const tox = container.querySelector('.tox-edit-area');
-    // Check if select_area already exists (toggle back to TinyMCE)
-    const existingSelectArea = document.getElementById('select_area');
+    // Check if tiny_select_area already exists (toggle back to TinyMCE)
+    const existingSelectArea = document.getElementById('tiny_select_area');
     if (existingSelectArea) {
-        // Toggle back: remove select_area and show TinyMCE
+        // Toggle back: remove tiny_select_area and show TinyMCE
         existingSelectArea.remove();
         container.style.display = 'block';
         return;
@@ -50,16 +50,16 @@ const createGapSelectArea = () => {
     const questionText = editor.getContent();
     // Process the text with parseQuestionText to wrap gaps in spans
     const processedText = parseQuestionText(questionText);
-    // Create the select_area div
+    // Create the tiny_select_area div
     const selectArea = document.createElement('div');
-    selectArea.id = 'select_area';
-    selectArea.className = 'select_area';
+    selectArea.id = 'tiny_select_area';
+    selectArea.className = 'tiny_select_area';
     selectArea.contentEditable = 'true';
     selectArea.innerHTML = processedText;
     // Apply dimensions
     selectArea.style.width = editorWidth + 'px';
     selectArea.style.height = editorHeight + 'px';
-    // Insert the select_area where the TinyMCE instance was
+    // Insert the tiny_select_area where the TinyMCE instance was
     container.parentNode.insertBefore(selectArea, container.nextSibling);
     container.style.display = 'none';
 
