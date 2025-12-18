@@ -263,7 +263,7 @@ const getElementValue = (id) => {
  * @returns {{correctFeedback: string, incorrectFeedback: string}|null} Feedback object, or null on error/not found.
  */
 const getItemSettings = (gapInfo) => {
-    const itemSettingsField = document.querySelector('#id_itemsettings');
+    const itemSettingsField = document.querySelector("[name='itemsettings']");
     let existingSettings = {};
     if (itemSettingsField && itemSettingsField.value) {
         try {
