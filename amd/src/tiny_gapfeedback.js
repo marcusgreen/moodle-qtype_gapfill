@@ -5,7 +5,8 @@
  */
 
 // Import functions from gaps.js using ES6 import
-import { parseQuestionText, getGap, showGapSettingsModal } from 'qtype_gapfill/gaps';
+import {parseQuestionText, getGap, initializeAllGapClasses} from 'qtype_gapfill/gaps';
+import {showGapSettingsModal} from 'qtype_gapfill/modal';
 
 
 /**
@@ -66,6 +67,12 @@ const createGapSelectArea = () => {
     // Attach event handler to the select area
     // Use capture phase to ensure we get the event before contenteditable tries to focus
     selectArea.addEventListener('click', (event) => handleSelectAreaClick(event), true);
+
+    // Initialize gap classes for all gaps in the select area
+    // We need a small delay to ensure the DOM is fully updated
+    setTimeout(() => {
+        initializeAllGapClasses();
+    }, 100);
 };
 
 

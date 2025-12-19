@@ -6,6 +6,12 @@
     padding: .5rem .75rem;
 }
 
+/* Remove the TinyMCE/Moodle "widget" icon from gaps */
+/* #tiny_select_area span::after {
+    display: none !important;
+    content: none !important;
+} */
+
 /* classes without the que prefix are used in the
 question editing form
 */
@@ -15,11 +21,26 @@ question editing form
     border: solid thin black;
 }
 
-.gapfill .hasnocorrect {
+.gapfill .hasincorrect {
+    background-color: red;
     border: solid thin black;
     box-shadow: 3px 3px #7bc1f7;
     font-style: italic;
 }
+
+/* Styles for gap spans with feedback */
+#tiny_select_area span[id^="id"].hascorrect {
+    background: lightblue;
+    border: solid thin black;
+
+}
+
+#tiny_select_area span[id^="id"].hasnocorrect {
+    border: solid thin black;
+    box-shadow: 3px 3px #7bc1f7;
+    font-style: italic;
+}
+
 
 .gapfill .attobackground {
     background: lightgrey;
@@ -61,8 +82,8 @@ Visual feedback for gap select area
 
 #tiny_select_area .gap-clicked {
     animation: gap-pulse 0.3s ease;
-    background-color: #fff3e0 !important;
-    border-color: #ffb74d !important;
+    background-color: #fff3e0;
+    border-color: #ffb74d;
     transform: scale(1.05);
 }
 

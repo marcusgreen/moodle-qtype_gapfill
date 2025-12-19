@@ -21,16 +21,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /**
- * Show gap settings modal for a specific gap
- * @param {Object} gapInfo - Object containing gap information
- * @param {string} gapInfo.gapId - Unique identifier for the gap
- * @param {string} gapInfo.gapText - The text content of the gap
- */
-import ModalFactory from 'core/modal_factory';
-import ModalEvents from 'core/modal_events';
-import Log from 'core/log';
-import Templates from 'core/templates';
-/**
  * Update JSON settings with new feedback data
  * @param {Object} gapInfo - Object containing gapId and gapText
  * @param {string} correctFeedback - HTML content for correct feedback
@@ -97,122 +87,6 @@ const updateJson = (gapInfo, correctFeedback, incorrectFeedback) => {
   // Convert to array format for consistency
   const settingsArray = Object.values(parsedSettings);
   return JSON.stringify(settingsArray);
-};
-
-const showGapSettingsModal = async(gapInfo) => {
-    // Get language strings
-    const correctLabel = M.util.get_string('correct', 'qtype_gapfill');
-    const incorrectLabel = M.util.get_string('incorrect', 'qtype_gapfill');
-
-    // Get delimiter characters and strip them from gap text for cleaner display
-    const delimitcharsElement = document.getElementById('id_delimitchars');
-    const delimitchars = delimitcharsElement ? delimitcharsElement.value : '[]';
-    const cleanGapText = stripdelim(gapInfo.gapText, delimitchars);
-    const titleString = M.util.get_string('additemsettings', 'qtype_gapfill') + ': ' + cleanGapText;
-
-    // Render the Mustache template with language strings
-    const templateContext = {
-        correct: correctLabel,
-        incorrect: incorrectLabel
-    };
-    const bodyContent = await Templates.render('qtype_gapfill/gapfeedback_modal', templateContext);
-
-    // Create modal using ModalFactory
-    const modal = await ModalFactory.create({
-        type: ModalFactory.types.SAVE_CANCEL,
-        title: titleString,
-        body: bodyContent,
-        large: true,
-    });
-
-    let correctEditorInstance = null;
-    let incorrectEditorInstance = null;
-
-    // Show the modal
-    modal.show();
-
-    // After modal is shown, initialize TinyMCE editors for the feedback fields
-    modal.getRoot().on(ModalEvents.shown, async() => {
-        // Wait a moment for DOM to be ready
-        await new Promise(resolve => setTimeout(resolve, 300));
-
-        // Get the TinyMCE instance from the global scope
-        /* global tinyMCE */
-        // Clean up any existing TinyMCE instances for these elements
-        const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-        if (correctEditor) {
-            correctEditor.remove();
-        }
-        const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-        if (incorrectEditor) {
-            incorrectEditor.remove();
-        }
-
-        const feedback = getItemSettings(gapInfo);
-
-        // Initialize TinyMCE for both feedback fields with a single init call
-        try {
-            await tinyMCE.init({
-                selector: '#gapfill-feedback-correct, #gapfill-feedback-incorrect',
-                menubar: false,
-                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                plugins: 'lists link',
-                height: 150, // Set height to approximately 4 rows
-                setup: (ed) => {
-                    ed.on('init', () => {
-                        const editorId = ed.id;
-                        const content = editorId === 'gapfill-feedback-correct'
-                            ? (feedback && feedback.correctFeedback) || ''
-                            : (feedback && feedback.incorrectFeedback) || '';
-                        if (editorId === 'gapfill-feedback-correct') {
-                            correctEditorInstance = ed;
-                        } else {
-                            incorrectEditorInstance = ed;
-                        }
-                        ed.setContent(content);
-                    });
-                }
-            });
-        } catch (error) {
-            Log.debug('Failed to initialize TinyMCE:', error);
-        }
-
-        // Set up save event handler after TinyMCE is ready
-        modal.getRoot().on(ModalEvents.save, (e) => {
-            e.preventDefault();
-
-            const correctFeedback = correctEditorInstance ? correctEditorInstance.getContent() : '';
-            const incorrectFeedback = incorrectEditorInstance ? incorrectEditorInstance.getContent() : '';
-
-            // Update the JSON data
-            const JSONstr = updateJson(gapInfo, correctFeedback, incorrectFeedback);
-
-            // Save to the hidden field
-            const itemSettingsField = document.querySelector("[name='itemsettings']");
-            if (itemSettingsField) {
-                itemSettingsField.value = JSONstr;
-            }
-
-            // Close the modal
-            modal.hide();
-        });
-
-    });
-
-    // Clean up TinyMCE instances when modal is hidden
-    modal.getRoot().on(ModalEvents.hidden, () => {
-        if (tinyMCE) {
-            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-            if (correctEditor) {
-                correctEditor.remove();
-            }
-
-            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-            if (incorrectEditor) {
-                incorrectEditor.remove();
-            }
-        }
-    });
 };
 
 
@@ -358,8 +232,17 @@ const parseQuestionText = (questionText) => {
     gapContentCounts.set(gapContent, currentCount + 1);
 
     // Create ID: position_counter (e.g., id1_0, id2_1)
-    const spanId = 'id' + gapCounter + '_' + currentCount;
-    return '<span id="' + spanId + '">' + match + '</span>';
+      const spanId = 'id' + gapCounter + '_' + currentCount;
+      const settings = getItemSettings({ gapId: spanId }) || {};
+      const classes = [];
+      if (settings.correctFeedback?.trim()) {
+        classes.push('hascorrect');
+      }
+      if (settings.incorrectFeedback?.trim()) {
+        classes.push('hasnocorrect');
+      }
+      const classAttr = classes.length ? ` class="${classes.join(' ')}"` : '';
+      return `<span id="${spanId}"${classAttr}>${match}</span>`;
   });
 
   return processedText;
@@ -369,7 +252,7 @@ const parseQuestionText = (questionText) => {
  * Determines if click was within a gap span and extracts gap information
  *
  * @param {Event} clickEvent - The click event to analyze
- * @returns {Object|null} - Object with gapId and gapText, or null if not a gap click
+ * @returns {Object|null} - Object with gapId, gapText, hascorrect, and hasincorrect, or null if not a gap click
  */
 const getGap = (clickEvent) => {
   // Get the target element from the click event
@@ -385,7 +268,7 @@ const getGap = (clickEvent) => {
   if (gapSpan && gapSpan.id && gapSpan.id.startsWith('id')) {
     return {
       gapId: gapSpan.id,
-      gapText: gapSpan.textContent || gapSpan.innerText
+      gapText: gapSpan.textContent || gapSpan.innerText,
     };
   }
 
@@ -393,11 +276,104 @@ const getGap = (clickEvent) => {
   return null;
 };
 
+/**
+ * Update gap classes based on feedback content
+ * @param {Object} gapInfo - Object containing gapId
+ * @param {string} correctFeedback - HTML content for correct feedback
+ * @param {string} incorrectFeedback - HTML content for incorrect feedback
+ */
+const updateGapClasses = (gapInfo, correctFeedback, incorrectFeedback) => {
+  const gapSpan = document.getElementById(gapInfo.gapId);
+  if (!gapSpan) {
+    return;
+  }
+
+  // Remove existing classes
+  gapSpan.classList.remove('hascorrect', 'hasnocorrect');
+
+  // Add classes based on feedback content
+  if (correctFeedback && correctFeedback.trim() !== '') {
+    gapSpan.classList.add('hascorrect');
+  }
+  if (incorrectFeedback && incorrectFeedback.trim() !== '') {
+    gapSpan.classList.add('hasnocorrect');
+  }
+};
+
+/**
+ * Update gap classes from existing settings
+ * @param {Object} gapInfo - Object containing gapId and gapText
+ */
+const updateGapClassesFromSettings = (gapInfo) => {
+  const settings = getItemSettings(gapInfo);
+  if (settings) {
+    updateGapClasses(gapInfo, settings.correctFeedback, settings.incorrectFeedback);
+  }
+};
+
+/**
+ * Initialize gap classes for all gaps in the document
+ */
+const initializeAllGapClasses = () => {
+  // Get all gap spans in the document
+  const gapSpans = document.querySelectorAll('span[id^="id"]');
+
+  if (gapSpans.length === 0) {
+    return;
+  }
+
+  // Get the current itemsettings
+  const itemSettingsField = document.querySelector("[name='itemsettings']");
+  if (!itemSettingsField || !itemSettingsField.value) {
+    return;
+  }
+
+  try {
+    const parsedData = JSON.parse(itemSettingsField.value);
+    let existingSettings = {};
+
+    // Handle both array and object formats
+    if (Array.isArray(parsedData)) {
+      parsedData.forEach(item => {
+        if (item.itemid) {
+          existingSettings[item.itemid] = item;
+        }
+      });
+    } else {
+      existingSettings = parsedData;
+    }
+
+    // Apply classes to each gap
+    gapSpans.forEach(gapSpan => {
+      const gapId = gapSpan.id;
+      const settings = existingSettings[gapId];
+
+      if (settings) {
+        // Remove existing classes
+        gapSpan.classList.remove('hascorrect', 'hasincorrect');
+
+        // Add classes based on feedback content
+        if (settings.correctfeedback && settings.correctfeedback.trim() !== '') {
+          gapSpan.classList.add('hascorrect');
+        }
+        if (settings.incorrectfeedback && settings.incorrectfeedback.trim() !== '') {
+          gapSpan.classList.add('hasincorrect');
+        }
+      }
+    });
+  } catch (e) {
+    // Debug logging for initialization failures
+    // console.debug('Failed to initialize gap classes:', e);
+  }
+};
+
 export {
   parseQuestionText,
   getGap,
-  showGapSettingsModal,
   updateJson,
   getItemSettings,
-  stripdelim
+  stripdelim,
+  updateGapClasses,
+  updateGapClassesFromSettings,
+  initializeAllGapClasses
 };
