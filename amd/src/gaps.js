@@ -22,7 +22,7 @@
  */
 /**
  * Update JSON settings with new feedback data
- * @param {Object} gapInfo - Object containing gapId and gapText
+ * @param {GapInfo} gapInfo - Object containing gapId and gapText
  * @param {string} correctFeedback - HTML content for correct feedback
  * @param {string} incorrectFeedback - HTML content for incorrect feedback
  * @returns {string} - Updated JSON string

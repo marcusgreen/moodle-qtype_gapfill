@@ -55,7 +55,7 @@ const createGapSelectArea = () => {
     const selectArea = document.createElement('div');
     selectArea.id = 'tiny_select_area';
     selectArea.className = 'tiny_select_area';
-    selectArea.contentEditable = 'true';
+    selectArea.contentEditable = 'false';
     selectArea.innerHTML = processedText;
     // Apply dimensions
     selectArea.style.width = editorWidth + 'px';
