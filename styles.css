@@ -4,13 +4,9 @@
     border: 1px solid rgba(0, 0, 0, .15);
     color: #55595c;
     padding: .5rem .75rem;
+    overflow: auto;
 }
 
-/* Remove the TinyMCE/Moodle "widget" icon from gaps */
-/* #tiny_select_area span::after {
-    display: none !important;
-    content: none !important;
-} */
 
 /* classes without the que prefix are used in the
 question editing form
