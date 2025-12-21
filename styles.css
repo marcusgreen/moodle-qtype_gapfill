@@ -1,3 +1,17 @@
+.tiny_select_area {
+    background: lightgrey;
+    border-radius: .25rem;
+    border: 1px solid rgba(0, 0, 0, .15);
+    color: #55595c;
+    padding: .5rem .75rem;
+}
+
+/* Remove the TinyMCE/Moodle "widget" icon from gaps */
+/* #tiny_select_area span::after {
+    display: none !important;
+    content: none !important;
+} */
+
 /* classes without the que prefix are used in the
 question editing form
 */
@@ -7,11 +21,31 @@ question editing form
     border: solid thin black;
 }
 
-.gapfill .hasnocorrect {
+.gapfill .hasincorrect {
+    background-color: red;
     border: solid thin black;
     box-shadow: 3px 3px #7bc1f7;
     font-style: italic;
 }
+
+/* Styles for gap spans with feedback */
+#tiny_select_area span[id^="id"].hascorrect {
+    background: lightblue;
+    border: solid thin black;
+
+}
+
+#tiny_select_area span[id^="id"].hasnocorrect {
+    border: solid thin black;
+    box-shadow: 3px 3px #7bc1f7;
+    font-style: italic;
+}
+
+/** remove any padding from gaps */
+#tiny_select_area span[id^="id"].item {
+        padding:0;
+}
+
 
 .gapfill .attobackground {
     background: lightgrey;
@@ -27,6 +61,43 @@ question editing form
     top: 0;
     width: 100%;
 }
+
+Visual feedback for gap select area
+#tiny_select_area {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+}
+
+#tiny_select_area span[id^="id"] {
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#tiny_select_area span[id^="id"]:hover {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
+    transform: translateY(-1px);
+}
+
+#tiny_select_area .gap-clicked {
+    animation: gap-pulse 0.3s ease;
+    background-color: #fff3e0;
+    border-color: #ffb74d;
+    transform: scale(1.05);
+}
+
+@keyframes gap-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 
 .gapfill .item {
     background: white;
@@ -114,11 +185,8 @@ incorrec answer was entered */
     font-weight: bold;
 }
 
-.que.gapfill select {
-    display:inline;
-}
 
-/* legacy, evantually delete: styling the dropdowns*/
+/* styling the dropdowns*/
 .que.gapfill.qtext select {
     border: solid black thin;
     border-radius: 3px;

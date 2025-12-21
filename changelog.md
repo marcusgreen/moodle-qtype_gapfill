@@ -1,3 +1,14 @@
+
+### Version 2.2 of the Moodle Gapfill question type Dec 2025
+Thanks to  Dragos and Alistair from UCL for help with helping with fix
+to allow per gap feedback to be added with the default TinyMCE
+editor.https://github.com/marcusgreen/moodle-qtype_gapfill/issues/128
+
+Fixed issue where if dropdowns were selected each one had a carriage return
+after it. Thanks to Andrew Obermeier for reporting
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/130
+Fixed in CSS.
+
 ### Version 2.144 of the Moodle Gapfill question type Oct 2025
 Moodle 5.1 compatibility confirmed by running automated tests.
 Belated thanks to Diego Corti for reporting this issue https://github.com/marcusgreen/moodle-qtype_gapfill/issues/111
