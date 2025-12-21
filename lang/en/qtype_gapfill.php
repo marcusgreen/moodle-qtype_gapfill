@@ -103,7 +103,3 @@ $string['visitquestions'] = 'Click <a href={$a}>here</a> to visit the questions'
 $string['wronganswers'] = 'Distractors.';
 $string['wronganswers_help'] = 'List of incorrect words designed to distract from the correct answers. Each word is separated by commas, only applies in dragdrop/dropdowns mode';
 $string['yougotnrightcount'] = 'You completed {$a->num} {$a->gaporgaps} correctly out of {$a->outof}.';
-
-$string['gapfeedbackheading'] = 'Gap feedback settings';
-$string['gapfeedbackinstructions'] = 'Enter feedback for correct and incorrect answers. This feedback will be shown to students when they submit their answers.';
-$string['feedbackhelptext'] = 'Provide specific feedback to help students understand why their answer was correct or incorrect.';
