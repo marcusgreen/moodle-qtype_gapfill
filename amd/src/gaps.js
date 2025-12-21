@@ -241,8 +241,8 @@ const parseQuestionText = (questionText) => {
       if (settings.incorrectFeedback?.trim()) {
         classes.push('hasnocorrect');
       }
-      const classAttr = classes.length ? ` class="${classes.join(' ')}"` : '';
-      return `<span id="${spanId}"${classAttr}>${match}</span>`;
+      const classAttr = classes.length ? ' class="' + classes.join(' ') + ' item"' : ' class="item"';
+      return '<span id="' + spanId + '"' + classAttr + '>' + match + '</span>';
   });
 
   return processedText;

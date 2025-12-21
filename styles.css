@@ -41,6 +41,11 @@ question editing form
     font-style: italic;
 }
 
+/** remove any padding from gaps */
+#tiny_select_area span[id^="id"].item {
+        padding:0;
+}
+
 
 .gapfill .attobackground {
     background: lightgrey;
