@@ -1,7 +1,5 @@
 {{!
-    Gap feedback modal template for gapfill question type.
-
-    This template renders the modal content for configuring gap-specific feedback.
+    Gap feedback modal template for gapfill question type with ARIA enhancements.
 
     @package    qtype_gapfill
     @copyright  2025 Marcus Green
@@ -17,17 +15,56 @@
     }
 }}
 
-<div class="container-fluid">
-    <div class="form-group row mb-3">
-        <label for="gapfill-feedback-correct" class="col-md-12 col-form-label font-weight-bold">{{correct}}</label>
+<div class="container-fluid"
+     role="dialog"
+     aria-labelledby="gap-feedback-heading"
+     aria-describedby="gap-feedback-instructions">
+
+    {{! Hidden heading for screen readers }}
+    <h2 id="gap-feedback-heading" class="sr-only">
+        {{#str}}gapfeedbackheading, qtype_gapfill{{/str}}
+    </h2>
+
+    {{! Instructions for screen reader users }}
+    <div id="gap-feedback-instructions" class="sr-only">
+        {{#str}}gapfeedbackinstructions, qtype_gapfill{{/str}}
+    </div>
+
+    {{! Correct feedback section }}
+    <div class="form-group row mb-4">
+        <label for="gapfill-feedback-correct"
+               class="col-md-12 col-form-label font-weight-bold">
+            {{correct}}
+        </label>
         <div class="col-md-12">
-            <textarea id="gapfill-feedback-correct" class="form-control" rows="6"></textarea>
+            <textarea id="gapfill-feedback-correct"
+                      class="form-control"
+                      rows="6"
+                      aria-label="{{correct}}"
+                      aria-describedby="gap-feedback-instructions correct-feedback-help"
+                      aria-required="false"></textarea>
+            <div id="correct-feedback-help" class="form-text text-muted">
+                {{#str}}feedbackhelptext, qtype_gapfill{{/str}}
+            </div>
         </div>
     </div>
+
+    {{! Incorrect feedback section }}
     <div class="form-group row mb-3">
-        <label for="gapfill-feedback-incorrect" class="col-md-12 col-form-label font-weight-bold">{{incorrect}}</label>
+        <label for="gapfill-feedback-incorrect"
+               class="col-md-12 col-form-label font-weight-bold">
+            {{incorrect}}
+        </label>
         <div class="col-md-12">
-            <textarea id="gapfill-feedback-incorrect" class="form-control" rows="6"></textarea>
+            <textarea id="gapfill-feedback-incorrect"
+                      class="form-control"
+                      rows="6"
+                      aria-label="{{incorrect}}"
+                      aria-describedby="gap-feedback-instructions incorrect-feedback-help"
+                      aria-required="false"></textarea>
+            <div id="incorrect-feedback-help" class="form-text text-muted">
+                {{#str}}feedbackhelptext, qtype_gapfill{{/str}}
+            </div>
         </div>
     </div>
 </div>
