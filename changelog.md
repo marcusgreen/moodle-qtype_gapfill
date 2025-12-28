@@ -1,5 +1,5 @@
 
-### Version 2.2 of the Moodle Gapfill question type Dec 2025
+### Version 2.15 of the Moodle Gapfill question type Dec 2025
 Thanks to  Dragos and Alistair from UCL for help with helping with fix
 to allow per gap feedback to be added with the default TinyMCE
 editor.https://github.com/marcusgreen/moodle-qtype_gapfill/issues/128
