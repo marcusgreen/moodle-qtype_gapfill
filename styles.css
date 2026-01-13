@@ -187,7 +187,8 @@ incorrec answer was entered */
 
 
 /* styling the dropdowns*/
-.que.gapfill.qtext select {
+.que.gapfill .qtext select {
+    display: inline;
     border: solid black thin;
     border-radius: 3px;
     color: black;
