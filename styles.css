@@ -43,7 +43,7 @@ question editing form
 
 /** remove any padding from gaps */
 #tiny_select_area span[id^="id"].item {
-        padding:0;
+    padding: 0;
 }
 
 
@@ -62,7 +62,7 @@ question editing form
     width: 100%;
 }
 
-Visual feedback for gap select area
+/* Visual feedback for gap select area */
 #tiny_select_area {
     border: 2px dashed #ccc;
     padding: 10px;
@@ -93,9 +93,15 @@ Visual feedback for gap select area
 }
 
 @keyframes gap-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 
