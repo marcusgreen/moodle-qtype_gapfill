@@ -52,6 +52,12 @@ class qtype_gapfill_edit_form extends question_edit_form {
     public $delimitchars;
 
     /**
+     * Preferred editor for the current user
+     * @var string
+     */
+    public $preferrededitor;
+
+    /**
      * Add gapfill specific form fields.
      *
      * @param object $mform the form being built.
@@ -101,8 +107,10 @@ class qtype_gapfill_edit_form extends question_edit_form {
         $mform->setType('questiontext', PARAM_RAW);
         $mform->addHelpButton('questiontext', 'questiontext', 'qtype_gapfill');
 
-        $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton', 'qtype_gapfill'));
-        $mform->addHelpButton('itemsettings_button', 'itemsettings_button', 'qtype_gapfill');
+        if ($this->preferrededitor === 'tiny' || $this->preferrededitor === 'atto') {
+            $mform->addElement('button', 'itemsettings_button', get_string('itemsettingsbutton', 'qtype_gapfill'));
+            $mform->addHelpButton('itemsettings_button', 'itemsettings_button', 'qtype_gapfill');
+        }
 
         $mform->removeelement('generalfeedback');
 
@@ -239,7 +247,7 @@ class qtype_gapfill_edit_form extends question_edit_form {
             $systemdefaulteditor = key($enablededitors); // Gets first enabled editor.
             $preferrededitor = $systemdefaulteditor;
         }
-
+        $this->preferrededitor = $preferrededitor;
         if ($preferrededitor == 'atto') {
             $PAGE->requires->js_call_amd('qtype_gapfill/atto_gapfeedback', 'init', [$preferrededitor]);
         } else if ($preferrededitor == 'tiny') {

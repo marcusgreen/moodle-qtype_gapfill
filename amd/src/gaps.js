@@ -233,7 +233,7 @@ const parseQuestionText = (questionText) => {
 
     // Create ID: position_counter (e.g., id1_0, id2_1)
       const spanId = 'id' + gapCounter + '_' + currentCount;
-      const settings = getItemSettings({ gapId: spanId }) || {};
+      const settings = getItemSettings({gapId: spanId}) || {};
       const classes = [];
       if (settings.correctFeedback?.trim()) {
         classes.push('hascorrect');
