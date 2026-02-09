@@ -1,9 +1,14 @@
+### Version 2.3 of the Moodle Gapfill question type Feb 2026
+
+Ensure the Gap settings button can only ever appear when the user
+editor preference is set to either Tiny or Atto.
+
 ### Version 2.2 of the Moodle Gapfill question type Jan 2026
 
-Thanks to Adam Jenkins for a CSS  reversionFix. https://github.com/marcusgreen/moodle-qtype_gapfill/pull/131
+Thanks to Adam Jenkins for a CSS  reversion Fix.
+https://github.com/marcusgreen/moodle-qtype_gapfill/pull/131
 
 Linting of CSS
-
 
 ### Version 2.15 of the Moodle Gapfill question type Dec 2025
 Thanks to  Dragos and Alistair from UCL for help with helping with fix
