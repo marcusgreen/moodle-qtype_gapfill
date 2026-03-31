@@ -2,7 +2,7 @@
 
 Feature: Add a Gapfill quiz
     In order to evaluate students as a teacher
-  Scenario: Add a small quiz with gapfill questions and make an attempt
+
   Background:
     Given the following "users" exist:
         | username | firstname | lastname | email                |
@@ -43,7 +43,8 @@ Feature: Add a Gapfill quiz
 #with an early bug
 ##############################################################################
 
-    And I log in as "student1"
+  Scenario: Add a small quiz with gapfill questions and make an attempt
+    Given I log in as "student1"
     And I am on "Course 1" course homepage
 
     And I follow "Gapfill single page quiz"
