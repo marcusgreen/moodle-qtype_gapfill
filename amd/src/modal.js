@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import ModalFactory from 'core/modal_factory';
+import ModalSaveCancel from 'core/modal_save_cancel';
 import ModalEvents from 'core/modal_events';
 import Log from 'core/log';
 import Templates from 'core/templates';
@@ -60,8 +60,7 @@ const showGapSettingsModal = async(gapInfo) => {
     const bodyContent = await Templates.render('qtype_gapfill/gapfeedback_modal', templateContext);
 
     // Create modal using ModalFactory
-    const modal = await ModalFactory.create({
-        type: ModalFactory.types.SAVE_CANCEL,
+    const modal = await ModalSaveCancel.create({
         title: titleString,
         body: bodyContent,
         large: true,
