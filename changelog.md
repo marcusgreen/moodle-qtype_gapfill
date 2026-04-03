@@ -1,3 +1,8 @@
+
+### Version 2.31 of the Moodle Gapfill question type April 2026
+Confirmed compatibility with Moodle 5.2
+Minor tweak to behat to run with Moodle 5.2
+
 ### Version 2.3 of the Moodle Gapfill question type Feb 2026
 
 Ensure the Gap settings button can only ever appear when the user
