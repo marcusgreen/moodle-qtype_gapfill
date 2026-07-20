@@ -1,0 +1,109 @@
+{
+  "$schema": "https://ateeducacion.github.io/moodle-playground/assets/blueprints/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "moodle": "5.0"
+  },
+  "landingPage": "/mod/quiz/view.php?id=2",
+  "constants": {
+    "ADMIN_USER": "admin",
+    "ADMIN_PASS": "test",
+    "ADMIN_EMAIL": "admin@example.com"
+  },
+  "steps": [
+    {
+      "step": "installMoodle",
+      "options": {
+        "adminUser": "{{ADMIN_USER}}",
+        "adminPass": "{{ADMIN_PASS}}",
+        "adminEmail": "{{ADMIN_EMAIL}}",
+        "siteName": "Gapfill Question Type Demo",
+        "locale": "en",
+        "timezone": "Europe/Madrid"
+      }
+    },
+    {
+      "step": "login",
+      "username": "{{ADMIN_USER}}"
+    },
+    {
+      "step": "installMoodlePlugin",
+      "pluginType": "qtype",
+      "pluginName": "gapfill",
+      "url": "https://github.com/marcusgreen/moodle-qtype_gapfill/archive/refs/heads/main.zip"
+    },
+    {
+      "step": "createCategory",
+      "name": "Test Courses"
+    },
+    {
+      "step": "createCourse",
+      "fullname": "Gapfill Demo Course",
+      "shortname": "GAPFILL01",
+      "category": "Test Courses",
+      "summary": "Demo course with a preconfigured Gapfill quiz that showcases the drag-and-drop, dropdown and text-entry display modes, ready for interactive testing."
+    },
+    {
+      "step": "createUser",
+      "username": "student",
+      "password": "test",
+      "email": "student@example.com",
+      "firstname": "Demo",
+      "lastname": "Student"
+    },
+    {
+      "step": "enrolUser",
+      "username": "{{ADMIN_USER}}",
+      "course": "GAPFILL01",
+      "role": "editingteacher"
+    },
+    {
+      "step": "enrolUser",
+      "username": "student",
+      "course": "GAPFILL01",
+      "role": "student"
+    },
+    {
+      "step": "addModule",
+      "module": "qbank",
+      "course": "GAPFILL01",
+      "section": 0,
+      "name": "Gapfill Question Bank",
+      "intro": "<p>Question bank for the preconfigured Gapfill demo.</p>",
+      "type": "system",
+      "visible": 0
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "GAPFILL01",
+      "section": 1,
+      "name": "Testing Gapfill!",
+      "intro": "<p>This quiz contains three preconfigured Gapfill questions (drag-and-drop, dropdown and text entry) for interactive testing.</p>",
+      "preferredbehaviour": "interactive",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 6,
+      "questionsperpage": 1,
+      "attempts": 0,
+      "shuffleanswers": 0,
+      "reviewattempt": 69904,
+      "reviewcorrectness": 69904,
+      "reviewmaxmarks": 69904,
+      "reviewmarks": 69904,
+      "reviewspecificfeedback": 69904,
+      "reviewgeneralfeedback": 69904,
+      "reviewrightanswer": 69904,
+      "reviewoverallfeedback": 4368
+    },
+    {
+      "step": "runPhpCode",
+      "code": "if (!defined('CLI_SCRIPT')) { define('CLI_SCRIPT', true); }\nrequire('/www/moodle/config.php');\nrequire_once($CFG->dirroot . '/lib/questionlib.php');\nrequire_once($CFG->dirroot . '/question/format/xml/format.php');\nrequire_once($CFG->dirroot . '/mod/quiz/lib.php');\nrequire_once($CFG->dirroot . '/mod/quiz/locallib.php');\ntry {\n    global $DB, $USER;\n    $USER = get_admin();\n\n    $course = $DB->get_record('course', ['shortname' => 'GAPFILL01']);\n    if (!$course) {\n        throw new \\RuntimeException(\"Course 'GAPFILL01' was not found.\");\n    }\n\n    $questionbanks = $DB->get_records('qbank', ['course' => $course->id]);\n    if (count($questionbanks) !== 1) {\n        throw new \\RuntimeException(\"Expected one question bank for course 'GAPFILL01'; found \" . count($questionbanks) . '.');\n    }\n    $questionbank = reset($questionbanks);\n    $questionbankcm = get_coursemodule_from_instance('qbank', $questionbank->id, $course->id);\n    if (!$questionbankcm) {\n        throw new \\RuntimeException(\"The course-module record for the 'GAPFILL01' question bank was not found.\");\n    }\n    $questionbankcontext = context_module::instance($questionbankcm->id);\n    $category = question_get_default_category($questionbankcontext->id, true);\n    if (!$category) {\n        throw new \\RuntimeException(\"The default question category for course 'GAPFILL01' was not found or created.\");\n    }\n\n    $findquestion = static function (string $name) use ($DB, $category) {\n        $sql = \"SELECT q.*\n                  FROM {question} q\n                  JOIN {question_versions} qv ON qv.questionid = q.id\n                  JOIN {question_bank_entries} qbe ON qbe.id = qv.questionbankentryid\n                 WHERE qbe.questioncategoryid = :categoryid\n                   AND q.qtype = :qtype\n                   AND q.name = :name\n              ORDER BY qv.version DESC, q.id DESC\";\n        $questions = $DB->get_records_sql($sql, [\n            'categoryid' => $category->id,\n            'qtype' => 'gapfill',\n            'name' => $name,\n        ], 0, 2);\n        if (count($questions) > 1) {\n            throw new \\RuntimeException(\"More than one '{$name}' Gapfill question exists in the target category.\");\n        }\n        return $questions ? reset($questions) : false;\n    };\n\n    $importquestion = static function (string $xml) use ($category, $questionbankcontext, $course) {\n        $tmpdir = make_request_directory();\n        $tmpfile = $tmpdir . '/gapfill.xml';\n        if (file_put_contents($tmpfile, $xml) === false) {\n            throw new \\RuntimeException('Could not write the temporary Gapfill question import file.');\n        }\n        $qformat = new qformat_xml();\n        $qformat->setCategory($category);\n        $qformat->setContexts([$questionbankcontext]);\n        $qformat->setCourse($course);\n        $qformat->setFilename($tmpfile);\n        $qformat->setMatchgrades('error');\n        $qformat->setCatfromfile(false);\n        $qformat->setContextfromfile(false);\n        $qformat->setStoponerror(true);\n        $qformat->set_display_progress(false);\n        ob_start();\n        try {\n            $imported = $qformat->importpreprocess()\n                && $qformat->importprocess()\n                && $qformat->importpostprocess();\n        } finally {\n            ob_end_clean();\n        }\n        if (!$imported || count($qformat->questionids) !== 1) {\n            throw new \\RuntimeException('Moodle XML import did not create exactly one Gapfill question.');\n        }\n        return (int) reset($qformat->questionids);\n    };\n\n    // Three demo questions, one per Gapfill display mode. Each has two gaps => 2 marks.\n    $questiondefs = [\n        'gapfill-001' => <<<'GAPFILLXML'\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<quiz>\n  <question type=\"gapfill\">\n    <name><text>gapfill-001</text></name>\n    <questiontext format=\"html\">\n      <text><![CDATA[<p>Drag-and-drop mode: drag each word into the correct gap.</p><p>The [cat] sat on the [mat].</p>]]></text>\n    </questiontext>\n    <generalfeedback format=\"html\">\n      <text><![CDATA[<p>Well done!</p>]]></text>\n    </generalfeedback>\n    <defaultgrade>2.0000000</defaultgrade>\n    <penalty>0.3333333</penalty>\n    <hidden>0</hidden>\n    <idnumber></idnumber>\n    <answerdisplay>dragdrop</answerdisplay>\n    <delimitchars>[]</delimitchars>\n    <casesensitive>0</casesensitive>\n    <noduplicates>0</noduplicates>\n    <disableregex>0</disableregex>\n    <fixedgapsize>0</fixedgapsize>\n    <optionsaftertext>0</optionsaftertext>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>cat</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>mat</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"0\" format=\"moodle_auto_format\"><text>dog</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"0\" format=\"moodle_auto_format\"><text>rug</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n  </question>\n</quiz>\nGAPFILLXML,\n        'gapfill-002' => <<<'GAPFILLXML'\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<quiz>\n  <question type=\"gapfill\">\n    <name><text>gapfill-002</text></name>\n    <questiontext format=\"html\">\n      <text><![CDATA[<p>Dropdown mode: choose each answer from the list.</p><p>The sun rises in the [east] and sets in the [west].</p>]]></text>\n    </questiontext>\n    <generalfeedback format=\"html\">\n      <text><![CDATA[<p>Well done!</p>]]></text>\n    </generalfeedback>\n    <defaultgrade>2.0000000</defaultgrade>\n    <penalty>0.3333333</penalty>\n    <hidden>0</hidden>\n    <idnumber></idnumber>\n    <answerdisplay>dropdown</answerdisplay>\n    <delimitchars>[]</delimitchars>\n    <casesensitive>0</casesensitive>\n    <noduplicates>0</noduplicates>\n    <disableregex>0</disableregex>\n    <fixedgapsize>0</fixedgapsize>\n    <optionsaftertext>0</optionsaftertext>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>east</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>west</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"0\" format=\"moodle_auto_format\"><text>north</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"0\" format=\"moodle_auto_format\"><text>south</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n  </question>\n</quiz>\nGAPFILLXML,\n        'gapfill-003' => <<<'GAPFILLXML'\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<quiz>\n  <question type=\"gapfill\">\n    <name><text>gapfill-003</text></name>\n    <questiontext format=\"html\">\n      <text><![CDATA[<p>Text-entry mode: type each answer.</p><p>Water is made of [hydrogen] and [oxygen].</p>]]></text>\n    </questiontext>\n    <generalfeedback format=\"html\">\n      <text><![CDATA[<p>Well done!</p>]]></text>\n    </generalfeedback>\n    <defaultgrade>2.0000000</defaultgrade>\n    <penalty>0.3333333</penalty>\n    <hidden>0</hidden>\n    <idnumber></idnumber>\n    <answerdisplay>gapfill</answerdisplay>\n    <delimitchars>[]</delimitchars>\n    <casesensitive>0</casesensitive>\n    <noduplicates>0</noduplicates>\n    <disableregex>0</disableregex>\n    <fixedgapsize>0</fixedgapsize>\n    <optionsaftertext>0</optionsaftertext>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>hydrogen</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n    <answer fraction=\"100\" format=\"moodle_auto_format\"><text>oxygen</text><feedback format=\"moodle_auto_format\"><text></text></feedback></answer>\n  </question>\n</quiz>\nGAPFILLXML,\n    ];\n\n    $questionids = [];\n    foreach ($questiondefs as $name => $xml) {\n        $question = $findquestion($name);\n        if (!$question) {\n            $newid = $importquestion($xml);\n            $question = $findquestion($name);\n            if (!$question || (int) $question->id !== $newid) {\n                throw new \\RuntimeException(\"The imported '{$name}' question could not be retrieved from its category.\");\n            }\n        }\n        $questionids[$name] = (int) $question->id;\n    }\n\n    $quizzes = $DB->get_records('quiz', ['course' => $course->id, 'name' => 'Testing Gapfill!']);\n    if (count($quizzes) !== 1) {\n        throw new \\RuntimeException(\"Expected one quiz named 'Testing Gapfill!' in course 'GAPFILL01'; found \" . count($quizzes) . '.');\n    }\n    $quiz = reset($quizzes);\n    $quizcm = get_coursemodule_from_instance('quiz', $quiz->id, $course->id);\n    if (!$quizcm) {\n        throw new \\RuntimeException(\"The course-module record for quiz 'Testing Gapfill!' was not found.\");\n    }\n    $quiz->cmid = $quizcm->id;\n    $quiz->cmidnumber = $quizcm->idnumber ?? '';\n\n    if ((int) $quiz->cmid !== 2) {\n        throw new \\RuntimeException(\"Quiz 'Testing Gapfill!' must have course-module ID 2 for the configured landing page; found {$quiz->cmid}.\");\n    }\n\n    // The declarative addModule step inserts the quiz record directly and never\n    // creates the initial quiz_sections row that quiz_add_instance() provides;\n    // quiz_start_new_attempt() requires it to build the attempt layout.\n    if (!$DB->record_exists('quiz_sections', ['quizid' => $quiz->id])) {\n        $DB->insert_record('quiz_sections', (object) ['quizid' => $quiz->id, 'firstslot' => 1, 'heading' => '', 'shufflequestions' => 0]);\n    }\n\n    foreach ($questionids as $name => $qid) {\n        $questionbankentry = get_question_bank_entry($qid);\n        $assignedcount = $DB->count_records_sql(\n            \"SELECT COUNT(1)\n               FROM {quiz_slots} slot\n               JOIN {question_references} qr ON qr.itemid = slot.id\n              WHERE slot.quizid = :quizid\n                AND qr.component = :component\n                AND qr.questionarea = :questionarea\n                AND qr.questionbankentryid = :questionbankentryid\",\n            [\n                'quizid' => $quiz->id,\n                'component' => 'mod_quiz',\n                'questionarea' => 'slot',\n                'questionbankentryid' => $questionbankentry->id,\n            ]\n        );\n        if ($assignedcount > 1) {\n            throw new \\RuntimeException(\"The '{$name}' question is assigned to the quiz more than once.\");\n        }\n        if ($assignedcount === 0) {\n            quiz_add_quiz_question($qid, $quiz, 0, 2);\n        }\n    }\n\n    $quizsettings = \\mod_quiz\\quiz_settings::create($quiz->id);\n    $quizsettings->get_grade_calculator()->recompute_quiz_sumgrades();\n    $quiz = $DB->get_record('quiz', ['id' => $quiz->id]);\n    if (!$quiz || (float) $quiz->sumgrades !== 6.0 || (float) $quiz->grade !== 6.0) {\n        throw new \\RuntimeException('Quiz grade and sum-of-grades must both equal 6.');\n    }\n    $quiz->cmid = $quizcm->id;\n    $quiz->cmidnumber = $quizcm->idnumber ?? '';\n    quiz_update_grades($quiz);\n\n    echo \"Provisioned quiz 'Testing Gapfill!' with 3 Gapfill questions at cmid={$quiz->cmid}.\\n\";\n} catch (\\Throwable $e) {\n    fwrite(STDERR, 'Gapfill quiz provisioning failed: ' . $e->getMessage() . \"\\n\");\n}\n"
+    },
+    {
+      "step": "setLandingPage",
+      "path": "/mod/quiz/view.php?id=2"
+    }
+  ]
+}
