@@ -137,9 +137,15 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
                  $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
                 /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
-                $answeroptions .= '<span draggable="true" id="pa:_' . $question->id . '_' . $potentialanswerid++
-                    . '" class= "' . $cssclasses . '">' .
-                    $potentialanswer . " </span>";
+                $answeroptions .= html_writer::tag(
+                    'span',
+                    s(htmlspecialchars_decode($potentialanswer, ENT_QUOTES)),
+                    [
+                        'draggable' => 'true',
+                        'id' => 'pa:_' . $question->id . '_' . $potentialanswerid++,
+                        'class' => $cssclasses,
+                    ]
+                );
             }
         }
         $answeroptions = html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
@@ -288,9 +294,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* set background to red and image to cross if fraction is 0 (an incorrect response
              * was given */
             $aftergaptext = $this->feedback_image($fraction);
-            $aftergaptext .= "<span class='aftergapfeedback' title='" .
-            get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
-                $rightanswerdisplay . $delim["r"] . "</span>";
+            $aftergaptext .= html_writer::tag(
+                'span',
+                $delim['l'] . s($rightanswerdisplay) . $delim['r'],
+                ['class' => 'aftergapfeedback', 'title' => get_string('correctanswer', 'qtype_gapfill')]
+            );
             $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >"
             . $this->get_feedback($itemsettings, false) . "</span>";
         } else {
@@ -335,14 +343,14 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         if (!$this->displayoptions->correctness) {
             return "";
         }
-        /*The atto editor tends to inject various tags that will not look good
-         * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
-         */
-        $stripexcptions = "<hr><a><b><i><u><strike><font>";
+        // Use format_text (HTML Purifier) to sanitise feedback. strip_tags() was previously used
+        // but it cannot strip event-handler attributes (e.g. onmouseover) or javascript: hrefs
+        // from allowed tags such as <a>, making it bypassable for stored XSS.
+        $formatopts = ['context' => $this->page->context, 'para' => false];
         if ($correctness) {
-            return strip_tags($settings->correctfeedback, $stripexcptions);
+            return format_text($settings->correctfeedback, FORMAT_HTML, $formatopts);
         } else {
-            return strip_tags($settings->incorrectfeedback, $stripexcptions);
+            return format_text($settings->incorrectfeedback, FORMAT_HTML, $formatopts);
         }
     }
     /**
