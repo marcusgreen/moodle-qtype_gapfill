@@ -2,6 +2,17 @@
 [![Moodle Plugin CI](https://github.com/marcusgreen/moodle-qtype_gapfill/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/marcusgreen/moodle-qtype_gapfill/actions/workflows/moodle-ci.yml) [![GitHub Release](https://img.shields.io/github/release/marcusgreen/moodle-qtype_gapfill.svg)](https://github.com/marcusgreen//moodle-qtype_gapfill/releases)
 [![Moodle Support](https://img.shields.io/badge/Moodle-%3E%3D%204.5-blue)](https://github.com/marcusgreen/moodle-qtype_gapfill/actions)
 
+
+## Try in Moodle Playground
+
+Click the badge below to open this plugin instantly in
+[Moodle Playground](https://moodle-playground.com) — a full Moodle site
+running in the browser, with no local install. The demo boots into a
+ready-to-play quiz, "Testing Gapfill!", with all three answer modes
+(drag & drop, dropdown and text entry) and sample questions already imported.
+
+<a href="https://moodle-playground.com/?blueprint-url=https://raw.githubusercontent.com/marcusgreen/moodle-qtype_gapfill/refs/heads/main/blueprint.json" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/ateeducacion/action-moodle-playground-pr-preview/refs/heads/main/assets/playground-preview-button.svg" alt="Preview in Moodle Playground" width="200"></a>
+
 A very easy to use Cloze question type that supports drag/drop answers that work on mobile devices and the mobile app. For custom development and consultancy contact Moodle Partner Catalyst EU (https://www.catalyst-eu.net/).
 
 Teachers can define the question with square braces to define the missing words. For example The [cat] sat on the [mat].
