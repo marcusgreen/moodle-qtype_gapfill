@@ -754,4 +754,50 @@ What are the colors of the Olympic medals?
         $this->assertEquals($gapfill->get_size("one"), 3);
         $this->assertEquals($gapfill->get_size("one|twleve"), 6);
     }
+    /**
+     * Regression test for stored XSS in the draggable answer list.
+     * Teacher-authored gap content must be html-escaped by setup_answeroptions()
+     * before it is emitted into the draggable <span>, otherwise a payload such as
+     * [<img src=x onerror=...>] executes in the student's browser on question display.
+     *
+     * @covers ::setup_answeroptions()
+     */
+    public function test_xss_escaped_in_draggable(): void {
+        $payload = '<img src=x onerror=alert(1)>';
+        $questiontext = "The [{$payload}] sat on the [mat]";
+        $options = [
+            'disableregex' => 1,
+            'answerdisplay' => 'dragdrop',
+        ];
+        $gapfill = helper::make_question('gapfill', $questiontext, $options);
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback');
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        // The raw payload must never reach the browser.
+        $this->assertStringNotContainsString('<img src=x onerror', $html);
+        // The escaped form must be present in the draggable list.
+        $this->assertStringContainsString(s($payload), $html);
+    }
+    /**
+     * Regression test for stored XSS in the after-gap right-answer display.
+     * When an incorrect response is marked, get_aftergap_text() shows the correct
+     * answer and must html-escape it rather than emitting raw teacher HTML.
+     *
+     * @covers ::get_aftergap_text()
+     */
+    public function test_xss_escaped_in_aftergap(): void {
+        $payload = '<img src=x onerror=alert(2)>';
+        $questiontext = "The [{$payload}] sat on the [mat]";
+        $options = [
+            'disableregex' => 1,
+            'answerdisplay' => 'gapfill',
+        ];
+        $gapfill = helper::make_question('gapfill', $questiontext, $options);
+        $maxmark = 2;
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback', $maxmark);
+        // Submit a wrong answer to the first gap so the right answer is displayed.
+        $this->process_submission(['-submit' => 1, 'p1' => 'wrong', 'p2' => 'mat']);
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringNotContainsString('<img src=x onerror', $html);
+        $this->assertStringContainsString(s($payload), $html);
+    }
 }

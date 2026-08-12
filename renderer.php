@@ -137,9 +137,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
                  $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
                 /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
-                $answeroptions .= '<span draggable="true" id="pa:_' . $question->id . '_' . $potentialanswerid++
-                    . '" class= "' . $cssclasses . '">' .
-                    $potentialanswer . " </span>";
+                $answeroptions .= html_writer::tag('span', s($potentialanswer) . ' ', [
+                    'draggable' => 'true',
+                    'id' => 'pa:_' . $question->id . '_' . $potentialanswerid++,
+                    'class' => trim($cssclasses),
+                ]);
             }
         }
         $answeroptions = html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
@@ -288,9 +290,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* set background to red and image to cross if fraction is 0 (an incorrect response
              * was given */
             $aftergaptext = $this->feedback_image($fraction);
-            $aftergaptext .= "<span class='aftergapfeedback' title='" .
-            get_string("correctanswer", "qtype_gapfill") . "'>" . $delim["l"] .
-                $rightanswerdisplay . $delim["r"] . "</span>";
+            $aftergaptext .= html_writer::tag(
+                'span',
+                s($delim["l"] . $rightanswerdisplay . $delim["r"]),
+                ['class' => 'aftergapfeedback', 'title' => get_string("correctanswer", "qtype_gapfill")]
+            );
             $aftergaptext .= " <span class='gapfeedbackincorrect' title='feedback' >"
             . $this->get_feedback($itemsettings, false) . "</span>";
         } else {
@@ -339,11 +343,11 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
          * in feedback (e.g. <p> or <br/> so this strips all but the strip exceptions out)
          */
         $stripexcptions = "<hr><a><b><i><u><strike><font>";
-        if ($correctness) {
-            return strip_tags($settings->correctfeedback, $stripexcptions);
-        } else {
-            return strip_tags($settings->incorrectfeedback, $stripexcptions);
-        }
+        $feedback = $correctness ? $settings->correctfeedback : $settings->incorrectfeedback;
+        /* strip_tags removes the unwanted structural tags but leaves attributes (e.g. onclick,
+         * onmouseover, javascript: hrefs) on allowed tags intact, so run the result through
+         * clean_text() which strips event-handler attributes and script URLs. */
+        return clean_text(strip_tags($feedback, $stripexcptions), FORMAT_HTML);
     }
     /**
      * Get the item settings for this gap based on the gap text
