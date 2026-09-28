@@ -98,7 +98,7 @@ class gapfill_import_form extends moodleform {
             $errors['courseshortname'] = get_string('coursenotfound', 'qtype_gapfill');
         } else {
             $this->questioncategory = $this->get_question_category($fromform['courseshortname']);
-            if (count($this->questioncategory) == 0) {
+            if (empty($this->questioncategory)) {
                 $url = new moodle_url('/question/edit.php?courseid=' . $this->course->id);
                 $errors['courseshortname'] = get_string('questioncatnotfound', 'qtype_gapfill', $url->out());
             }
