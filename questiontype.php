@@ -543,11 +543,11 @@ class qtype_gapfill extends question_type {
                 "</letterhints>\n";
         foreach ($question->options->itemsettings as $set) {
             $output .= "      <gapsetting>\n";
-            $output .= '        <question>' . $set->question . "</question>\n";
-            $output .= '        <gaptext>' . $set->gaptext . "</gaptext>\n";
-            $output .= '        <itemid>' . $set->itemid . "</itemid>\n";
-            $output .= '        <correctfeedback><![CDATA[' . $set->correctfeedback . "]]></correctfeedback>\n";
-            $output .= '        <incorrectfeedback><![CDATA[' . $set->incorrectfeedback . "]]></incorrectfeedback>\n";
+            $output .= '        <question>' . $format->xml_escape($set->question) . "</question>\n";
+            $output .= '        <gaptext>' . $format->xml_escape($set->gaptext) . "</gaptext>\n";
+            $output .= '        <itemid>' . $format->xml_escape($set->itemid) . "</itemid>\n";
+            $output .= '        <correctfeedback>' . $format->xml_escape($set->correctfeedback) . "</correctfeedback>\n";
+            $output .= '        <incorrectfeedback>' . $format->xml_escape($set->incorrectfeedback) . "</incorrectfeedback>\n";
             $output .= "     </gapsetting>\n";
         }
         $output .= '    <!-- Gapfill release:'

@@ -29,6 +29,7 @@ global $CFG;
 
 require_once($CFG->dirroot . '/question/type/gapfill/questiontype.php');
 require_once($CFG->dirroot . '/question/type/gapfill/tests/helper.php');
+require_once($CFG->dirroot . '/question/format/xml/format.php');
 
 
 /**
@@ -174,5 +175,58 @@ final class questiontype_test extends \advanced_testcase {
         $extraquestionfields = ['question_gapfill', 'answerdisplay', 'delimitchars',
             'casesensitive', 'noduplicates', 'disableregex', 'fixedgapsize', 'optionsaftertext', 'letterhints', 'singleuse'];
         $this->assertEquals($this->qtype->extra_question_fields(), $extraquestionfields);
+    }
+
+    /**
+     * Gap settings containing XML-significant characters must survive an
+     * export/import round trip, see issue #136.
+     *
+     * @covers ::export_to_xml
+     * @covers ::import_from_xml
+     */
+    public function test_xml_export_import_escapes_gapsettings(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator()->get_plugin_generator('core_question');
+        $category = $generator->create_question_category();
+        $question = $generator->create_question('gapfill', 'catmat', ['category' => $category->id]);
+
+        $settings = [
+            'id1_0' => [
+                'gaptext' => 'R&D',
+                'correctfeedback' => 'Right ]]> done',
+                'incorrectfeedback' => '<b>No</b> & try again',
+            ],
+            'id2_0' => [
+                'gaptext' => 'x<y',
+                'correctfeedback' => '"double" and \'single\' quotes',
+                'incorrectfeedback' => 'a > b',
+            ],
+        ];
+        $DB->delete_records('question_gapfill_settings', ['question' => $question->id]);
+        foreach ($settings as $itemid => $values) {
+            $record = ['question' => $question->id, 'itemid' => $itemid] + $values;
+            $DB->insert_record('question_gapfill_settings', (object) $record);
+        }
+
+        $questiondata = \question_bank::load_question_data($question->id);
+        $exporter = new \qformat_xml();
+        $xml = $exporter->writequestion($questiondata);
+
+        $dom = new \DOMDocument();
+        $this->assertTrue(@$dom->loadXML('<quiz>' . $xml . '</quiz>'), 'Exported XML is not well-formed');
+
+        $xmldata = (new \core\xml_parser())->parse($xml);
+        $importer = new \qformat_xml();
+        $imported = $importer->try_importing_using_qtypes($xmldata['question'], null, null, 'gapfill');
+
+        $this->assertCount(count($settings), $imported->itemsettings);
+        foreach ($imported->itemsettings as $set) {
+            $this->assertArrayHasKey($set['itemid'], $settings);
+            $expected = $settings[$set['itemid']];
+            $this->assertSame($expected['gaptext'], $set['gaptext']);
+            $this->assertSame($expected['correctfeedback'], $set['correctfeedback']);
+            $this->assertSame($expected['incorrectfeedback'], $set['incorrectfeedback']);
+        }
     }
 }
