@@ -30,11 +30,8 @@ jobs:
       matrix:
         include:
           - php: '8.3'
-            moodle-branch: 'main'
+            moodle-branch: 'MOODLE_503_STABLE'
             database: 'mariadb'
-          # - php: '8.3'
-          #   moodle-branch: 'main'
-          #   database: 'pgsql'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
