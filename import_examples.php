@@ -29,6 +29,8 @@ require_once($CFG->libdir . '/xmlize.php');
 require_once($CFG->libdir . '/questionlib.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 
+use core_question\local\bank\question_bank_helper;
+
 admin_externalpage_setup('qtype_gapfill_import');
 
 /**
@@ -42,12 +44,7 @@ admin_externalpage_setup('qtype_gapfill_import');
 class gapfill_import_form extends moodleform {
     /**
      *
-     * @var number
-     */
-    public $questioncategory;
-    /**
-     *
-     * @var number
+     * @var stdClass
      */
     public $course;
     /**
@@ -55,68 +52,54 @@ class gapfill_import_form extends moodleform {
      */
     protected function definition() {
         $mform = $this->_form;
-        $mform->addElement('text', 'courseshortname', get_string('course'));
-        $mform->setType('courseshortname', PARAM_RAW);
+        $mform->addElement('course', 'courseid', get_string('course'));
+        $mform->addRule('courseid', null, 'required', null, 'client');
         $mform->addElement('submit', 'submitbutton', get_string('import'));
     }
 
     /**
-     * Get the category to insert the questions. Can be tricky if the course
-     * has never been used previously as the category may not exist
+     * Get the default question category of the course to import into,
+     * creating it (and on Moodle 5.0+ the course question bank) if needed.
      *
-     * @param string $courseshortname
-     * @return array
+     * @param stdClass $course
+     * @return stdClass question category with ->context set
      */
-    public function get_question_category($courseshortname) {
-        global $DB;
-        /* parent=0 means where you have multiple categories it is at the top */
-        $sql = 'Select qcat.id id, c.id courseid,c.shortname,ctx.id contextid from {course} c
-        join {context} ctx on ctx.instanceid=c.id
-        join {question_categories} qcat on qcat.contextid=ctx.id
-        and ctx.contextlevel=50 and qcat.parent=0 and c.shortname =?';
-        $category = $DB->get_records_sql($sql, [$courseshortname]);
-        $category = array_shift($category);
+    public function get_question_category(stdClass $course): stdClass {
+        if (method_exists(question_bank_helper::class, 'get_default_open_instance_system_type')) {
+            // Moodle 5.0+: questions live in the course's mod_qbank system bank.
+            $cm = question_bank_helper::get_default_open_instance_system_type($course, true);
+            $context = context_module::instance($cm->id);
+            $category = question_get_default_category($context->id, true);
+        } else {
+            // Moodle 4.5: questions live in the course context.
+            $context = context_course::instance($course->id);
+            $category = question_make_default_categories([$context]);
+        }
+        $category->context = $context;
         return $category;
     }
 
     /**
-     * Check that the course exists and that it has a top level question category
-     * If if does not have the category prompt the user to visit the course which
-     * will create the category. TODO improve this bit.
+     * Check that the course exists.
      *
      * @param array $fromform
      * @param array $data
-     * @return boolean
+     * @return array
      */
     public function validation($fromform, $data) {
-        $errors = [];
         global $DB;
-        $sql = 'select id from {course} where shortname =?';
-        $this->course = $DB->get_records_sql($sql, [$fromform['courseshortname']]);
-        $this->course = array_shift($this->course);
-        if ($this->course == null) {
-            $errors['courseshortname'] = get_string('coursenotfound', 'qtype_gapfill');
-        } else {
-            $this->questioncategory = $this->get_question_category($fromform['courseshortname']);
-            if (empty($this->questioncategory)) {
-                $url = new moodle_url('/question/edit.php?courseid=' . $this->course->id);
-                $errors['courseshortname'] = get_string('questioncatnotfound', 'qtype_gapfill', $url->out());
-            }
+        $errors = [];
+        $this->course = $DB->get_record('course', ['id' => $fromform['courseid']]);
+        if (!$this->course) {
+            $errors['courseid'] = get_string('coursenotfound', 'qtype_gapfill');
         }
-
-        if ($errors) {
-            return $errors;
-        } else {
-            return true;
-        }
+        return $errors;
     }
 }
 
 $mform = new gapfill_import_form(new moodle_url('/question/type/gapfill/import_examples.php/'));
 if ($fromform = $mform->get_data()) {
-    $category = $mform->questioncategory;
-    $categorycontext = context::instance_by_id($category->contextid);
-    $category->context = $categorycontext;
+    $category = $mform->get_question_category($mform->course);
 
     $qformat = new qformat_xml();
     $file = $CFG->dirroot . '/question/type/gapfill/examples/' . current_language() . '/gapfill_examples.xml';
@@ -133,7 +116,11 @@ if ($fromform = $mform->get_data()) {
         throw new \moodle_exception(get_string('cannotimport', ''), '', $PAGE->url);
     } else {
         /* after the import offer a link to go to the course and view the questions */
-        $visitquestions = new moodle_url('/question/edit.php?courseid=' . $mform->course->id);
+        if ($category->context->contextlevel == CONTEXT_MODULE) {
+            $visitquestions = new moodle_url('/question/edit.php', ['cmid' => $category->context->instanceid]);
+        } else {
+            $visitquestions = new moodle_url('/question/edit.php', ['courseid' => $mform->course->id]);
+        }
         echo $OUTPUT->notification(get_string('visitquestions', 'qtype_gapfill', $visitquestions->out()), 'notifysuccess');
         echo $OUTPUT->continue_button(new moodle_url('import_examples.php'));
         echo $OUTPUT->footer();
