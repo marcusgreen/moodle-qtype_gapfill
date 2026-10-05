@@ -1,4 +1,27 @@
 
+### Version 2.32 of the Moodle Gapfill question type Oct 2026
+Thanks to Vlad Kidanovas of Catalyst EU for general fixes to the renderer.
+https://github.com/marcusgreen/moodle-qtype_gapfill/pull/135
+Per-gap feedback now goes through format_text (HTML Purifier) instead of
+strip_tags, closing a possible stored XSS vector. Draggable answer options and
+the correct answer display are now escaped.
+
+Gap settings (gap text, feedback) are now escaped in XML export. Gap text
+such as "x<y" or "R&D", or feedback containing "]]>", previously produced
+malformed XML that failed to import. Thanks to @cmassoglia for reporting
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/136
+
+Fixed a TypeError in import validation on PHP 8.1+.
+https://github.com/marcusgreen/moodle-qtype_gapfill/pull/140
+
+Fixed import of example questions with Moodle 5.x question banks.
+
+Thanks to erseco for adding a Moodle Playground demo (blueprint and README badge).
+https://github.com/marcusgreen/moodle-qtype_gapfill/pull/134
+
+Thanks to Michael Aherne for refreshing the install.xml format.
+CI now uses MariaDB 11.4 for Moodle 5.x.
+
 ### Version 2.31 of the Moodle Gapfill question type April 2026
 Confirmed compatibility with Moodle 5.2
 Minor tweak to behat to run with Moodle 5.2
