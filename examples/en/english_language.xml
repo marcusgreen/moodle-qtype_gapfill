@@ -3326,7 +3326,7 @@
       <text>WokeUp</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>He had slept for 8 hours and was exited when he [woke] up.</p>]]></text>
+      <text><![CDATA[<p>He had slept for 8 hours and was excited when he [woke] up.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -4083,7 +4083,7 @@
       <text>Baby Human</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>A baby bird is called a [baby]</p>]]></text>
+      <text><![CDATA[<p>A baby human is called a [baby]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -4171,7 +4171,7 @@
       <text>Baby Kangaroo</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>A baby bird is called a [joe]</p>]]></text>
+      <text><![CDATA[<p>A baby kangaroo is called a [joey]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -4190,7 +4190,7 @@
     <letterhints>0</letterhints>
     <singleuse>0</singleuse>
     <answer fraction="100" format="moodle_auto_format">
-      <text>joe</text>
+      <text>joey</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -4259,7 +4259,7 @@
       <text>Baby Lion</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>A baby bird is called a [cub]</p>]]></text>
+      <text><![CDATA[<p>A baby lion is called a [cub]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -4347,7 +4347,7 @@
       <text>Baby Lion, Pig, Horse</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>A baby lion is called a [cub], a baby Pig is called a [piglet] and a baby Horse is called a [foal]</p>]]></text>
+      <text><![CDATA[<p>A baby lion is called a [cub], a baby pig is called a [piglet] and a baby horse is called a [foal]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -5037,7 +5037,7 @@
       <text>AustraliaSize</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Australian is the [largest] island in the world</p>]]></text>
+      <text><![CDATA[<p>Australia is the [largest] country in Oceania.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -9693,7 +9693,7 @@
       <text>HalfHalves</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>When they came home from school I chopped the Melon into [halves] and gave them to the [children]<br></p>]]></text>
+      <text><![CDATA[<p>When they came home from school I chopped the melon into [halves] and gave them to the [children]<br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -10623,7 +10623,7 @@
       <text>PluralOfChildren</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>The plural of children is [children]<br></p>]]></text>
+      <text><![CDATA[<p>The plural of child is [children]<br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -13033,7 +13033,7 @@
       <text>WhilePeterWashedUp</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>I wrote an email [while] peter was washing up.</p>]]></text>
+      <text><![CDATA[<p>I wrote an email [while] Peter was washing up.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -14774,7 +14774,7 @@
       <text>AnElephant</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>I saw [an] Elephant at the zoo.<br></p>]]></text>
+      <text><![CDATA[<p>I saw [an] elephant at the zoo.<br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -15314,7 +15314,7 @@
       <text>TheOrNoThe</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p><p>To get full marks, one or more gaps must be left blank.<br></p><p>[!!] William Shakespeare wrote plays&nbsp;</p><p>[The] Amazon river is in south America&nbsp;</p><p>[The] River Thames flows through London&nbsp;</p><p><span style="font-size: 0.9375rem; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;">[!!] English is widely spoken in the Netherlands</span></p></p>]]></text>
+      <text><![CDATA[<p><p>To get full marks, one or more gaps must be left blank.<br></p><p>[!!] William Shakespeare wrote plays&nbsp;</p><p>[The] Amazon river is in South America&nbsp;</p><p>[The] River Thames flows through London&nbsp;</p><p><span style="font-size: 0.9375rem; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;">[!!] English is widely spoken in the Netherlands</span></p></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -20325,7 +20325,7 @@
       <text>time</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Prepositions are short words (on, in, to) that usually stand in front of nouns (sometimes also in front of gerund verbs).</p><p>Add the correct prepositions to the following text.</p><p>I will go to work [on] monday.</p><p>I hope to go to France [in] two months.</p><p>I have been studying English [for] three years</p><p><br></p>]]></text>
+      <text><![CDATA[<p>Prepositions are short words (on, in, to) that usually stand in front of nouns (sometimes also in front of gerund verbs).</p><p>Add the correct prepositions to the following text.</p><p>I will go to work [on] Monday.</p><p>I hope to go to France [in] two months.</p><p>I have been studying English [for] three years</p><p><br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -24662,7 +24662,7 @@
       <text>DeathOfQueenVictoria</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>[When] [did] [queen] [Victoria] [die] ?</p>]]></text>
+      <text><![CDATA[<p>[When] [did] [Queen] [Victoria] [die] ?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -24693,7 +24693,7 @@
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text>queen</text>
+      <text>Queen</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -27879,7 +27879,7 @@
       <text>BringBrough</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>He [brought] some Wine to the party<br></p>]]></text>
+      <text><![CDATA[<p>He [brought] some wine to the party<br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -28329,7 +28329,7 @@
       <text>FutureWill</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Did you remember to buy Milk this morning?</p><p>Sorry I forgot, I [will] buy it on the way home.<br></p>]]></text>
+      <text><![CDATA[<p>Did you remember to buy milk this morning?</p><p>Sorry I forgot, I [will] buy it on the way home.<br></p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -34209,7 +34209,7 @@
       <text>LastWeekAtAirport</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[Complete this sentences about the past using the right form of the verb in brackets. Use the past perfect tense.<br>I (see) [saw] him last week, after he&nbsp; (arrive) [arrived] at the airport.<br>]]></text>
+      <text><![CDATA[Complete this sentence about the past using the right form of the verb in brackets. Use the past perfect tense.<br>I (see) [saw] him last week, after he (arrive) [had arrived] at the airport.<br>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -34234,7 +34234,7 @@
       </feedback>
     </answer>
     <answer fraction="100" format="moodle_auto_format">
-      <text>arrived</text>
+      <text>had arrived</text>
       <feedback format="moodle_auto_format">
         <text></text>
       </feedback>
@@ -39874,7 +39874,7 @@
       <text>A/An Gapfill 9</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[it is [a] uniform. <br>]]></text>
+      <text><![CDATA[It is [a] uniform. <br>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<p>We use "a" because the next word starts with a consonant. In this example U it's pronounced with "ˌjuː" a consonant. <br></p>]]></text>
@@ -51656,7 +51656,7 @@
       <text>UKTourists</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p dir="ltr" style="text-align: left;">One [of] the [most] popular [holiday] destinations for British [tourists] is spain.</p>]]></text>
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">One [of] the [most] popular [holiday] destinations for British [tourists] is Spain.</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
