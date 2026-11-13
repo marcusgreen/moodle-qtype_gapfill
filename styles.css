@@ -173,8 +173,11 @@ question editing form
     border-radius: 4px;
     width: max-content;
 }
+/* Placed options keep their space so the other options and the question text do
+   not move, and an empty list is still somewhere to drag a gap back to. Hidden
+   options are also out of the tab order and hidden from screen readers. */
 .que.gapfill span.draggable.answers.hide {
-    display: none;
+    visibility: hidden;
 }
 
 
@@ -241,4 +244,64 @@ incorrec answer was entered */
 }
 .que.gapfill input.incorrect {
     background-color: #faa;
+}
+
+/* The copy of an option or gap that follows the pointer while dragging */
+.gapfill-dragproxy {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+}
+span.gapfill-dragproxy {
+    background: white;
+    border: solid 1px;
+    border-radius: 4px;
+    box-shadow: 3px 3px 4px #000;
+    padding: 0 4px;
+}
+input.gapfill-dragproxy {
+    text-align: center;
+}
+
+/* Options and filled gaps can be picked with a click or the keyboard then placed.
+   Focus, picked and drop target states use #0f6cbf, which has over 3:1 contrast
+   with white, and differ by more than colour. */
+/* "How to answer", collapsed so it is not read as part of the question.
+   #4a5259 keeps over 4.5:1 contrast on the question background. */
+.que.gapfill .gapfill-instructions {
+    font-size: 0.85em;
+    margin-bottom: 6px;
+}
+.que.gapfill .gapfill-instructions summary {
+    width: max-content;
+    color: #0f6cbf;
+    cursor: pointer;
+}
+.que.gapfill .gapfill-instructions summary .icon {
+    margin-right: 2px;
+}
+.que.gapfill .gapfill-instructions-text {
+    font-style: italic;
+    color: #4a5259;
+    border-left: 3px solid #c8d3d8;
+    padding-left: 6px;
+    margin: 2px 0 4px;
+}
+.que.gapfill span.draggable.answers:focus-visible,
+.que.gapfill input.droptarget:focus-visible {
+    outline: 2px solid #0f6cbf;
+    outline-offset: 2px;
+}
+.que.gapfill span.draggable.answers.picked,
+.que.gapfill input.droptarget.picked {
+    background: #e7f1fb;
+    outline: 3px solid #0f6cbf;
+    outline-offset: 0;
+}
+.que.gapfill span.draggable.answers.picked {
+    box-shadow: -1px -1px 1px rgba(119, 119, 119, 0.75);
+}
+.que.gapfill input.droptarget.dragover {
+    outline: 2px dashed #0f6cbf;
+    outline-offset: 2px;
 }

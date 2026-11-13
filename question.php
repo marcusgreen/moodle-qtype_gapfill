@@ -431,11 +431,15 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
      * tell it if singleuse of draggables is
      * enabled
      * @param int $singleuse
+     * @param string $containerid id of the outer div of this question
      * @return void
      */
-    public function initjs($singleuse = 0) {
+    public function initjs($singleuse = 0, string $containerid = '') {
         global $PAGE;
-        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init', ['singleuse' => $singleuse ?? 0]);
+        $PAGE->requires->js_call_amd('qtype_gapfill/dragdrop', 'init', [
+            'singleuse' => $singleuse ?? 0,
+            'containerid' => $containerid,
+        ]);
     }
 
     /**
