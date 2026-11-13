@@ -66,7 +66,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         $this->displayoptions = $options;
         $question = $qa->get_question();
         if (!$options->readonly) {
-            $question->initjs((bool) $question->singleuse);
+            $question->initjs((bool) $question->singleuse, $qa->get_outer_question_div_unique_id());
         }
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
@@ -137,19 +137,53 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
                 }
                  $cssclasses = $question->is_used($potentialanswer, $qa, $cssclasses);
                 /* the question->id is necessary to make a draggable potential answer unique for multi question quiz pages */
+                $attributes = [
+                    'id' => 'pa:_' . $question->id . '_' . $potentialanswerid++,
+                    'class' => $cssclasses,
+                ];
+                if (!$this->displayoptions->readonly) {
+                    // Options can be picked with a click or the keyboard, then placed in a gap.
+                    $attributes['role'] = 'button';
+                    $attributes['tabindex'] = '0';
+                    $attributes['aria-pressed'] = 'false';
+                    $attributes['aria-describedby'] = $this->instructions_id($qa);
+                }
                 $answeroptions .= html_writer::tag(
                     'span',
                     s(htmlspecialchars_decode($potentialanswer, ENT_QUOTES)),
-                    [
-                        'draggable' => 'true',
-                        'id' => 'pa:_' . $question->id . '_' . $potentialanswerid++,
-                        'class' => $cssclasses,
-                    ]
+                    $attributes
                 );
             }
         }
-        $answeroptions = html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
+        if ($this->displayoptions->readonly) {
+            return html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
+        }
+        // A collapsed "How to answer" link, so it is not mistaken for part of the question.
+        $instructionstext = get_string('keyboardinstructions', 'qtype_gapfill');
+        $instructions = html_writer::tag(
+            'details',
+            html_writer::tag('summary', $this->output->pix_icon('i/info', '') . get_string('howtoanswer', 'qtype_gapfill')) .
+                html_writer::div($instructionstext, 'gapfill-instructions-text'),
+            ['class' => 'gapfill-instructions']
+        );
+        // Options and gaps are described by this hidden copy, browsers ignore text in a closed details
+        // element for descriptions, so screen readers would otherwise lose it. Hidden text is still
+        // used as a description but not read twice when browsing the page.
+        $instructions .= html_writer::span($instructionstext, '', ['id' => $this->instructions_id($qa), 'hidden' => 'hidden']);
+        $answeroptions = $instructions . html_writer::tag('div', $answeroptions, ['class' => 'answeroptions']);
+        // Picking and placing options is announced here for screen readers.
+        $answeroptions .= html_writer::div('', 'gapfill-status sr-only', ['aria-live' => 'polite']);
         return $answeroptions;
+    }
+
+    /**
+     * Id of the element explaining how to place options, so options and gaps can refer to it
+     *
+     * @param question_attempt $qa
+     * @return string
+     */
+    protected function instructions_id(question_attempt $qa): string {
+        return $qa->get_outer_question_div_unique_id() . '_instructions';
     }
     /**
      * Set divs that are inspected by the mobile app
@@ -232,6 +266,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             'value' => $currentanswer,
             'id' => $inputname,
             'size' => $size,
+            'aria-label' => get_string('gapnumber', 'qtype_gapfill', $place),
         ];
         /* When previewing after a quiz is complete */
         if ($options->readonly) {
@@ -260,6 +295,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         } else {
             /* it is a drag/drop quesiton type */
             $inputattributes['class'] = 'droptarget ' . $inputclass;
+            if (!$options->readonly) {
+                $inputattributes['aria-describedby'] = $this->instructions_id($qa);
+            }
             if ($question->letterhints) {
                 $inputattributes = $question->get_letter_hints($qa, $inputattributes, $rightanswer, $currentanswer);
             }

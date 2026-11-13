@@ -99,6 +99,32 @@ final class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     }
 
     /**
+     * Options can be picked by click or keyboard, gaps are labelled and
+     * instructions and a live region are present, except when read only
+     *
+     * @covers \qtype_gapfill_renderer::setup_answeroptions
+     */
+    public function test_keyboard_accessibility(): void {
+        $gapfill = helper::make_question('gapfill', "The [cat] sat on the [mat]");
+        $this->start_attempt_at_question($gapfill, 'immediatefeedback');
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('role="button"', $html);
+        $this->assertStringContainsString('tabindex="0"', $html);
+        $this->assertStringContainsString('aria-pressed="false"', $html);
+        $this->assertStringContainsString('aria-label="Gap 1"', $html);
+        $this->assertStringContainsString('aria-live="polite"', $html);
+        $this->assertStringContainsString('aria-describedby="' . $this->quba->get_question_attempt($this->slot)
+            ->get_outer_question_div_unique_id() . '_instructions"', $html);
+        $this->assertStringContainsString(get_string('keyboardinstructions', 'qtype_gapfill'), $html);
+
+        // Options are not interactive once the attempt is read only.
+        $this->displayoptions->readonly = true;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringNotContainsString('role="button"', $html);
+        $this->assertStringNotContainsString('aria-live', $html);
+    }
+
+    /**
      * Deferred feedback q behaviour
      *
      * @covers ::not_entirely_sure()

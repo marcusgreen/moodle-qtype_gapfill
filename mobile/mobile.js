@@ -41,12 +41,14 @@ var result = {
             }
             event.currentTarget.classList.toggle('picked');
             for (var i = 0; i < draggables.length; i++) {
-                if (draggables[i].id == event.currentTarget.id) {
-                    /* Continue if this is just picked draggable */
-                    continue;
+                if (draggables[i].id != event.currentTarget.id) {
+                    /* Remove picked class from everything else*/
+                    draggables[i].classList.remove('picked');
                 }
-                /* Remove picked class from everything else*/
-                draggables[i].classList.remove('picked');
+                /* Keep the button state screen readers report in step with picked */
+                if (draggables[i].hasAttribute('aria-pressed')) {
+                    draggables[i].setAttribute('aria-pressed', draggables[i].classList.contains('picked') ? 'true' : 'false');
+                }
             }
             return event.currentTarget.innerHTML;
         }
