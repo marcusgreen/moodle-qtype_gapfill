@@ -2,20 +2,31 @@
 ### Version 2.33 of the Moodle Gapfill question type Nov 2026
 Drag and drop now uses Moodle core/dragdrop (mouse and touch events) instead
 of HTML5 drag and drop, so it works on touch devices and text can no longer be
-dragged out of a gap (#123).
+dragged out of a gap.
+Thanks to Jay Braker for reporting this.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/123
 
 Text in a filled gap can be dragged to another gap, if that gap is filled the
 two swap. Dragging a gap onto the answer options clears it.
 
 As well as dragging, an option or filled gap can be selected with a click, tap,
 Enter or Space and placed by clicking a gap or pressing Enter in it. Escape
-cancels. Instructions are shown above the options, gaps are labelled for
-screen readers and each change is announced. Enter in a gap no longer submits
-the quiz page.
+cancels. After a mouse placement focus moves to the gap that received the
+text. Instructions are in a collapsed "How to answer" section above the
+options, gaps are labelled for screen readers and each change is announced.
+Enter in a gap no longer submits the quiz page. In the mobile app selected
+options report their pressed state to screen readers.
+
+With single use on, placed options keep their space so the layout no longer
+jumps.
 
 Answers placed by dragging now fire change events so quiz autosave sees them.
 Multiple gapfill questions on one page no longer share listeners or the single
 use setting.
+
+Question options (delimit characters, answer display etc) are no longer
+written a second time, unescaped, in XML export. A follow up to
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/136
 
 ### Version 2.32 of the Moodle Gapfill question type Oct 2026
 Thanks to Vlad Kidanovas of Catalyst EU for general fixes to the renderer.
