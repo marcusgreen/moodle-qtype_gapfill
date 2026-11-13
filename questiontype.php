@@ -525,22 +525,6 @@ class qtype_gapfill extends question_type {
         $question->options->itemsettings = json_decode($question->options->itemsettings);
 
         $output = parent::export_to_xml($question, $format);
-        $output .= '    <delimitchars>' . $question->options->delimitchars .
-                "</delimitchars>\n";
-        $output .= '    <answerdisplay>' . $question->options->answerdisplay .
-                "</answerdisplay>\n";
-        $output .= '    <casesensitive>' . $question->options->casesensitive .
-                "</casesensitive>\n";
-        $output .= '    <noduplicates>' . $question->options->noduplicates .
-                "</noduplicates>\n";
-        $output .= '    <disableregex>' . $question->options->disableregex .
-                "</disableregex>\n";
-        $output .= '    <fixedgapsize>' . $question->options->fixedgapsize .
-                "</fixedgapsize>\n";
-        $output .= '    <optionsaftertext>' . $question->options->optionsaftertext .
-                "</optionsaftertext>\n";
-        $output .= '    <letterhints>' . $question->options->letterhints .
-                "</letterhints>\n";
         foreach ($question->options->itemsettings as $set) {
             $output .= "      <gapsetting>\n";
             $output .= '        <question>' . $format->xml_escape($set->question) . "</question>\n";

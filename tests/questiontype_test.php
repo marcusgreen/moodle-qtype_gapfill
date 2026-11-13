@@ -209,17 +209,21 @@ final class questiontype_test extends \advanced_testcase {
             $DB->insert_record('question_gapfill_settings', (object) $record);
         }
 
+        $DB->set_field('question_gapfill', 'delimitchars', '<>', ['question' => $question->id]);
+
         $questiondata = \question_bank::load_question_data($question->id);
         $exporter = new \qformat_xml();
         $xml = $exporter->writequestion($questiondata);
 
         $dom = new \DOMDocument();
         $this->assertTrue(@$dom->loadXML('<quiz>' . $xml . '</quiz>'), 'Exported XML is not well-formed');
+        $this->assertSame(1, substr_count($xml, '<delimitchars>'), 'Options must be exported once');
 
         $xmldata = (new \core\xml_parser())->parse($xml);
         $importer = new \qformat_xml();
         $imported = $importer->try_importing_using_qtypes($xmldata['question'], null, null, 'gapfill');
 
+        $this->assertSame('<>', $imported->delimitchars);
         $this->assertCount(count($settings), $imported->itemsettings);
         foreach ($imported->itemsettings as $set) {
             $this->assertArrayHasKey($set['itemid'], $settings);
