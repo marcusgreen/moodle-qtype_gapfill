@@ -28,6 +28,13 @@ Question options (delimit characters, answer display etc) are no longer
 written a second time, unescaped, in XML export. A follow up to
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/136
 
+The review now shows the right answers for gapfill questions on quiz pages
+the student never visited. Previously only questions on pages that had been
+displayed showed them, so finishing an attempt early hid the answers for the
+rest of the quiz. Thanks to Matthias Giger for reporting this and for the
+detailed follow up that found the cause.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/118
+
 ### Version 2.32 of the Moodle Gapfill question type Oct 2026
 Thanks to Vlad Kidanovas of Catalyst EU for general fixes to the renderer.
 https://github.com/marcusgreen/moodle-qtype_gapfill/pull/135

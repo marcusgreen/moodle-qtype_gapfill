@@ -708,16 +708,16 @@ class qtype_gapfill_question extends question_graded_automatically_with_countbac
             $rightanswer = $question->get_right_choice_for($place);
             if (($options->correctness) || ( $options->numpartscorrect)) {
                 $response = $qa->get_last_qt_data();
-
-                if (array_key_exists($fieldname, $response)) {
-                    if ($question->is_correct_response($response[$fieldname], $rightanswer)) {
-                        $markedgaps[$fieldname]['value'] = $response[$fieldname];
-                        $markedgaps[$fieldname]['fraction'] = 1;
-                        $correctgaps[] = $response[$fieldname];
-                    } else {
-                        $markedgaps[$fieldname]['value'] = $response[$fieldname];
-                        $markedgaps[$fieldname]['fraction'] = 0;
-                    }
+                // A gap with no saved response (e.g. on a quiz page that was never
+                // visited) is marked as an empty answer so its right answer is shown.
+                $answergiven = $response[$fieldname] ?? '';
+                if ($question->is_correct_response($answergiven, $rightanswer)) {
+                    $markedgaps[$fieldname]['value'] = $answergiven;
+                    $markedgaps[$fieldname]['fraction'] = 1;
+                    $correctgaps[] = $answergiven;
+                } else {
+                    $markedgaps[$fieldname]['value'] = $answergiven;
+                    $markedgaps[$fieldname]['fraction'] = 0;
                 }
             }
         }

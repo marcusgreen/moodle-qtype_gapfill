@@ -160,6 +160,66 @@ final class walkthrough_test extends \qbehaviour_walkthrough_test_base {
         $this->check_current_mark(null);
     }
     /**
+     * Right answers are shown in review even when the question was never
+     * submitted, e.g. it was on a quiz page the student never visited.
+     * See https://github.com/marcusgreen/moodle-qtype_gapfill/issues/118
+     *
+     * @covers \qtype_gapfill_question::get_markedgaps
+     */
+    public function test_review_unvisited_shows_right_answers(): void {
+        $gapfill = helper::make_question('gapfill');
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', 2);
+
+        // Finish without any submission, as for an unvisited quiz page.
+        $this->quba->finish_all_questions();
+
+        $this->displayoptions->rightanswer = \question_display_options::VISIBLE;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('aftergapfeedback', $html);
+        $this->assertStringContainsString('[cat]', $html);
+        $this->assertStringContainsString('[mat]', $html);
+    }
+
+    /**
+     * A blank (!!) gap with no saved response is marked correct in review
+     * without raising an undefined array key warning.
+     *
+     * @covers \qtype_gapfill_renderer::embedded_element
+     */
+    public function test_review_unvisited_blank_gap(): void {
+        $gapfill = helper::make_question('gapfill', 'The [cat] sat on the [!!]');
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', 2);
+
+        $this->quba->finish_all_questions();
+
+        $this->displayoptions->rightanswer = \question_display_options::VISIBLE;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('[cat]', $html);
+        $this->assertStringNotContainsString('[blank]', $html);
+    }
+
+    /**
+     * Right answers are shown in review when empty gaps were submitted,
+     * e.g. the student visited the quiz page but left it blank.
+     *
+     * @covers \qtype_gapfill_question::get_markedgaps
+     */
+    public function test_review_empty_submission_shows_right_answers(): void {
+        $gapfill = helper::make_question('gapfill');
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', 2);
+
+        $this->process_submission(['p1' => '', 'p2' => '']);
+        $this->quba->finish_all_questions();
+        $this->check_current_state(\question_state::$gaveup);
+
+        $this->displayoptions->rightanswer = \question_display_options::VISIBLE;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('aftergapfeedback', $html);
+        $this->assertStringContainsString('[cat]', $html);
+        $this->assertStringContainsString('[mat]', $html);
+    }
+
+    /**
      * Deferred q behaviour with correct response
      *
      * @covers ::no_idea()
