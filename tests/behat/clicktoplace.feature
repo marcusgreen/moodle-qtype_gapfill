@@ -88,3 +88,20 @@ Feature: Click to place answer options in a gapfill question
     And I press the enter key
     And I press "Submit and finish"
     And I should see "Your answer is correct."
+
+  @javascript
+  Scenario: Clear a gap by selecting it then choosing the options
+    When I am on the "Gapfill-click" "core_question > preview" page logged in as teacher
+    And I click "mat" then gap "1" in the gapfill question
+    And I click gap "1" then the options in the gapfill question
+    Then the field with xpath "//input[contains(@id, '_p1')]" matches value ""
+    And "//span[contains(@class, 'draggable') and contains(@class, 'hide') and text()='mat']" "xpath_element" should not exist
+    # Choosing an option while a gap is selected clears the gap, it does not select the option.
+    And I click "cat" then gap "1" in the gapfill question
+    And I focus gap "1" in the gapfill question
+    And I press the enter key
+    And I focus option "mat" in the gapfill question
+    And I press the enter key
+    And the field with xpath "//input[contains(@id, '_p1')]" matches value ""
+    And "//span[contains(@class, 'draggable') and @aria-pressed='true']" "xpath_element" should not exist
+    And "//span[contains(@class, 'draggable') and contains(@class, 'hide') and text()='cat']" "xpath_element" should not exist

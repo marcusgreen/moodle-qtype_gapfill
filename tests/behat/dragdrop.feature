@@ -43,3 +43,12 @@ Feature: Drag and drop answer options into gapfill gaps
     And I drag "mat" into gap "2" in the gapfill question
     And I press "Submit and finish"
     And I should see "Your answer is correct."
+
+  @javascript
+  Scenario: Drag the text in a gap out of the gap to clear it
+    When I am on the "Gapfill-drag" "core_question > preview" page logged in as teacher
+    And I drag "mat" into gap "1" in the gapfill question
+    And the field with xpath "//input[contains(@id, '_p1')]" matches value "mat"
+    And I drag gap "1" out of the gap in the gapfill question
+    Then the field with xpath "//input[contains(@id, '_p1')]" matches value ""
+    And "//span[contains(@class, 'draggable') and contains(@class, 'hide') and text()='mat']" "xpath_element" should not exist

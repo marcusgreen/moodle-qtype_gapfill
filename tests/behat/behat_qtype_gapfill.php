@@ -93,6 +93,40 @@ class behat_qtype_gapfill extends behat_base {
     }
 
     /**
+     * Drag the text in a gap out of the gap, onto part of the question that
+     * is neither a gap nor the answer options, which clears the gap.
+     *
+     * @param int $gapnumber the number of the gap to drag from.
+     *
+     * @When I drag gap :gapnumber out of the gap in the gapfill question
+     */
+    public function i_drag_gap_out_of_the_gap_in_the_gapfill_question($gapnumber) {
+        $generalcontext = behat_context_helper::get('behat_general');
+        $generalcontext->i_drag_and_i_drop_it_in(
+            $this->drop_xpath($gapnumber),
+            'xpath_element',
+            '//div[contains(concat(" ", normalize-space(@class), " "), " que ")]' .
+                '//div[contains(concat(" ", normalize-space(@class), " "), " info ")]',
+            'xpath_element'
+        );
+    }
+
+    /**
+     * Click a filled gap then the answer options, which clears the gap.
+     *
+     * @param int $gapnumber the number of the gap.
+     *
+     * @When I click gap :gapnumber then the options in the gapfill question
+     */
+    public function i_click_gap_then_the_options_in_the_gapfill_question($gapnumber) {
+        $this->execute('behat_general::i_click_on', [$this->drop_xpath($gapnumber), 'xpath_element']);
+        $this->execute('behat_general::i_click_on', [
+            '//div[contains(concat(" ", normalize-space(@class), " "), " answeroptions ")]',
+            'xpath_element',
+        ]);
+    }
+
+    /**
      * Click an answer option then click a gap to place it.
      *
      * @param string $dragitem  a potential answer

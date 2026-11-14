@@ -22,7 +22,9 @@
  *
  * As an alternative to dragging, an option or filled gap can be picked
  * with a click, tap, Enter or Space, then placed by clicking a gap or
- * pressing Enter in it. Each change is announced to screen readers.
+ * pressing Enter in it. A filled gap is cleared by dragging its text out
+ * of the gap, or by picking it and then choosing the options. Each change
+ * is announced to screen readers.
  *
  * @copyright  2020 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -57,12 +59,21 @@ export const init = (singleuse, containerid) => {
     e.addEventListener('keydown', function(ev) {
       if (ev.key === 'Enter' || ev.key === ' ') {
         ev.preventDefault();
-        pick(this);
+        optionActivated(this);
       } else if (ev.key === 'Escape') {
         unpick();
       }
     });
   });
+  if (options) {
+    // With a gap's text picked, a click or tap on a space in the options
+    // returns it. Clicks on an option are handled by optionActivated.
+    options.addEventListener('click', function(ev) {
+      if (picked && picked.tagName === 'INPUT' && !ev.target.closest('span.draggable')) {
+        clearGap(picked);
+      }
+    });
+  }
   gaps.forEach(function(e) {
     // A filled gap can be dragged to another gap, an empty one can be typed in.
     e.addEventListener('mousedown', dragStart);
@@ -202,7 +213,8 @@ export const init = (singleuse, containerid) => {
       if (target && target !== options) {
         placeInGap(target, source);
       }
-    } else if (target === options) {
+    } else if (!target || target === options) {
+      // Dragging a gap's text out of the gap, or back to the options, clears it.
       clearGap(source);
     } else if (target && target !== source) {
       moveBetweenGaps(source, target);
@@ -218,13 +230,27 @@ export const init = (singleuse, containerid) => {
    */
   function clicked(source, bymouse) {
     if (source.tagName !== 'INPUT') {
-      pick(source);
+      optionActivated(source);
       return;
     }
     gapActivated(source);
     if (bymouse) {
       source.focus();
     }
+  }
+
+  /**
+   * An option was clicked, tapped or Enter or Space pressed on it. If a gap's
+   * text is picked, return it to the options, otherwise pick this option.
+   *
+   * @param {HTMLElement} option
+   */
+  function optionActivated(option) {
+    if (picked && picked.tagName === 'INPUT') {
+      clearGap(picked);
+      return;
+    }
+    pick(option);
   }
 
   /**
