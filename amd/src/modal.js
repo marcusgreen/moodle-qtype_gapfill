@@ -25,6 +25,8 @@ import ModalSaveCancel from 'core/modal_save_cancel';
 import ModalEvents from 'core/modal_events';
 import Log from 'core/log';
 import Templates from 'core/templates';
+import {getInstanceForElementId, setupForTarget} from 'editor_tiny/editor';
+import {getContextId, getCurrentLanguage, getMoodleLang} from 'editor_tiny/options';
 
 // Import functions from gaps.js that are needed
 import {
@@ -34,6 +36,35 @@ import {
     updateGapClasses,
     updateGapClassesFromSettings
 } from 'qtype_gapfill/gaps';
+
+/**
+ * Build editor_tiny options for the feedback editors.
+ *
+ * Settings that core normally supplies from PHP are copied from the question text editor.
+ * Only the TinyMCE lists and link plugins are loaded: the feedback is stored as JSON in the
+ * itemsettings field, so file and media plugins could not save their files.
+ *
+ * @returns {Object} options for editor_tiny/editor setupForTarget
+ */
+const getEditorOptions = () => {
+    const source = getInstanceForElementId('id_questiontext');
+    if (!source) {
+        return {plugins: {lists: {}, link: {}}};
+    }
+    return {
+        css: source.options.get('content_css')[0],
+        context: getContextId(source),
+        currentLanguage: getCurrentLanguage(source),
+        language: getMoodleLang(source),
+        branding: source.options.get('branding'),
+        // eslint-disable-next-line camelcase
+        extended_valid_elements: source.options.get('extended_valid_elements'),
+        filepicker: {},
+        draftitemid: 0,
+        placeholderSelectors: [],
+        plugins: {lists: {}, link: {}},
+    };
+};
 
 /**
  * Show gap settings modal for a specific gap
@@ -77,46 +108,22 @@ const showGapSettingsModal = async(gapInfo) => {
 
     // After modal is shown, initialize TinyMCE editors for the feedback fields
     modal.getRoot().on(ModalEvents.shown, async() => {
-        // Wait a moment for DOM to be ready
-        await new Promise(resolve => setTimeout(resolve, 300));
-
-        // Get the TinyMCE instance from the global scope
-        /* global tinyMCE */
-        // Clean up any existing TinyMCE instances for these elements
-        const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-        if (correctEditor) {
-            correctEditor.remove();
-        }
-        const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-        if (incorrectEditor) {
-            incorrectEditor.remove();
-        }
-
         const feedback = getItemSettings(gapInfo);
+        // Look inside this modal: the ids are fixed, so a document lookup could find another copy.
+        const root = modal.getRoot()[0];
+        const correctField = root.querySelector('#gapfill-feedback-correct');
+        const incorrectField = root.querySelector('#gapfill-feedback-incorrect');
+        correctField.value = (feedback && feedback.correctFeedback) || '';
+        incorrectField.value = (feedback && feedback.incorrectFeedback) || '';
 
-        // Initialize TinyMCE for both feedback fields with a single init call
+        // Create the editors through core editor_tiny so they get its configuration (licence key,
+        // language, content CSS, modal handling) rather than calling tinyMCE.init() directly.
         try {
-            await tinyMCE.init({
-                selector: '#gapfill-feedback-correct, #gapfill-feedback-incorrect',
-                menubar: false,
-                toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
-                plugins: 'lists link',
-                height: 150, // Set height to approximately 4 rows
-                setup: (ed) => {
-                    ed.on('init', () => {
-                        const editorId = ed.id;
-                        const content = editorId === 'gapfill-feedback-correct'
-                            ? (feedback && feedback.correctFeedback) || ''
-                            : (feedback && feedback.incorrectFeedback) || '';
-                        if (editorId === 'gapfill-feedback-correct') {
-                            correctEditorInstance = ed;
-                        } else {
-                            incorrectEditorInstance = ed;
-                        }
-                        ed.setContent(content);
-                    });
-                }
-            });
+            const options = getEditorOptions();
+            [correctEditorInstance, incorrectEditorInstance] = await Promise.all([
+                setupForTarget(correctField, options),
+                setupForTarget(incorrectField, options),
+            ]);
         } catch (error) {
             Log.debug('Failed to initialize TinyMCE:', error);
         }
@@ -148,17 +155,15 @@ const showGapSettingsModal = async(gapInfo) => {
 
     // Clean up TinyMCE instances when modal is hidden
     modal.getRoot().on(ModalEvents.hidden, () => {
-        if (tinyMCE) {
-            const correctEditor = tinyMCE.get('gapfill-feedback-correct');
-            if (correctEditor) {
-                correctEditor.remove();
+        [correctEditorInstance, incorrectEditorInstance].forEach((editor) => {
+            if (editor) {
+                editor.remove();
             }
-
-            const incorrectEditor = tinyMCE.get('gapfill-feedback-incorrect');
-            if (incorrectEditor) {
-                incorrectEditor.remove();
-            }
-        }
+        });
+        correctEditorInstance = null;
+        incorrectEditorInstance = null;
+        // A new modal is created each time, so remove this one rather than leaving it hidden in the page.
+        modal.destroy();
     });
 };
 
