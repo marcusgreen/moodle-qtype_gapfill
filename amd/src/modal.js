@@ -97,7 +97,10 @@ const showGapSettingsModal = async(gapInfo) => {
         // Initialize TinyMCE for both feedback fields with a single init call
         try {
             await tinyMCE.init({
-                selector: '#gapfill-feedback-correct, #gapfill-feedback-incorrect',
+                // TinyMCE 7+ disables the editor unless a licence key is given; core editor_tiny uses 'gpl' too.
+                // eslint-disable-next-line camelcase
+                license_key: 'gpl',
+                selector:'#gapfill-feedback-correct, #gapfill-feedback-incorrect',
                 menubar: false,
                 toolbar: 'undo redo | formatselect | bold italic | bullist numlist | link unlink',
                 plugins: 'lists link',
