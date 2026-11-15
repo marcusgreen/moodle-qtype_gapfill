@@ -1,3 +1,5 @@
+<img src="../pix/icon.svg" alt="Gapfill logo" width="64">
+
 # Gapfill question type – user documentation
 
 Applies to Gapfill 2.33 (Moodle 4.5 and later, including Moodle 5.x).
