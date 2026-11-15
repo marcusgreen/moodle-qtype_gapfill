@@ -1,13 +1,14 @@
 
 ### Version 2.33 of the Moodle Gapfill question type Nov 2026
 Drag and drop now uses Moodle core/dragdrop (mouse and touch events) instead
-of HTML5 drag and drop, so it works on touch devices and text can no longer be
-dragged out of a gap.
+of HTML5 drag and drop, so it works on touch devices.
+
 Thanks to Jay Braker for reporting this.
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/123
 
 Text in a filled gap can be dragged to another gap, if that gap is filled the
-two swap. Dragging a gap onto the answer options clears it.
+two swap. Dragging a filled gap onto the answer options, or dropping it
+anywhere outside a gap, clears it.
 
 As well as dragging, an option or filled gap can be selected with a click, tap,
 Enter or Space and placed by clicking a gap or pressing Enter in it. Escape
