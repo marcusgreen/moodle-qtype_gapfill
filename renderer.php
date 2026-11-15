@@ -244,9 +244,9 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
             /* fraction is always either 1 or 0 for correct or incorrect response */
             if ($fraction == 1) {
-                array_push($this->correctresponses, $response[$fieldname]);
+                array_push($this->correctresponses, $response[$fieldname] ?? '');
                 /* if the gap contains !! or  the response is (a correct) non blank */
-                if (!preg_match($question->blankregex, $rightanswer) || ($response[$fieldname] != '')) {
+                if (!preg_match($question->blankregex, $rightanswer) || (($response[$fieldname] ?? '') != '')) {
                     $aftergaptext = $this->get_aftergap_text($qa, $fraction, $itemsettings);
                     /* sets the field background to green or yellow if fraction is 1 */
                     $inputclass = $this->get_input_class($markedgaps, $qa, $fraction, $fieldname);
@@ -423,7 +423,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
 
         $inputclass = $this->feedback_class($fraction);
         foreach ($markedgaps as $gap) {
-            if ($response[$fieldname] == $gap['value']) {
+            if (($response[$fieldname] ?? '') == $gap['value']) {
                 if ($gap['duplicate'] == 'true') {
                     if ($question->noduplicates == 1) {
                         $inputclass = ' correctduplicate';
