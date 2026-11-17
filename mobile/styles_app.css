@@ -24,6 +24,7 @@
     box-shadow: 3px 3px 4px #000;
     cursor: pointer;
     display: inline-block;
+    line-height: 1.2;
     margin: 1px;
     padding-left: 4px;
     padding-right: 4px;
