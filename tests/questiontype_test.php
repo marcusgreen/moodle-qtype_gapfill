@@ -185,7 +185,7 @@ final class questiontype_test extends \advanced_testcase {
      * @covers ::import_from_xml
      */
     public function test_xml_export_import_escapes_gapsettings(): void {
-        global $DB;
+        global $CFG, $DB;
         $this->resetAfterTest();
         $generator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $generator->create_question_category();
@@ -219,7 +219,13 @@ final class questiontype_test extends \advanced_testcase {
         $this->assertTrue(@$dom->loadXML('<quiz>' . $xml . '</quiz>'), 'Exported XML is not well-formed');
         $this->assertSame(1, substr_count($xml, '<delimitchars>'), 'Options must be exported once');
 
-        $xmldata = (new \core\xml_parser())->parse($xml);
+        // The core\xml_parser class replaced xmlize() in Moodle 5.1.
+        if (class_exists('\core\xml_parser')) {
+            $xmldata = (new \core\xml_parser())->parse($xml);
+        } else {
+            require_once($CFG->libdir . '/xmlize.php');
+            $xmldata = xmlize($xml);
+        }
         $importer = new \qformat_xml();
         $imported = $importer->try_importing_using_qtypes($xmldata['question'], null, null, 'gapfill');
 
