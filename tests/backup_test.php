@@ -64,4 +64,44 @@ final class backup_test extends \advanced_testcase {
         // Verify the copied quiz exists.
         $this->assertCount($numquizzes + 1, get_fast_modinfo($course)->instances['quiz']);
     }
+
+    /**
+     * Restoring onto an existing question maps answers to the existing answer ids.
+     *
+     * The answer text only matches after line endings are normalised, so this
+     * exercises the fallback lookup in process_question_answer().
+     */
+    public function test_restore_maps_existing_answer_after_cleaning(): void {
+        global $CFG, $DB;
+        require_once($CFG->dirroot . '/question/type/gapfill/backup/moodle2/restore_qtype_gapfill_plugin.class.php');
+        $this->resetAfterTest();
+
+        $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
+        $cat = $questiongenerator->create_question_category();
+        $question = $questiongenerator->create_question('gapfill', 'catmat', ['category' => $cat->id]);
+        $answer = $DB->get_records('question_answers', ['question' => $question->id], 'id', '*', 0, 1);
+        $answer = reset($answer);
+        $DB->set_field('question_answers', 'answer', "two\r\nlines", ['id' => $answer->id]);
+
+        $plugin = $this->getMockBuilder(\restore_qtype_gapfill_plugin::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['get_old_parentid', 'get_new_parentid', 'get_mappingid', 'set_mapping'])
+            ->getMock();
+        $plugin->method('get_old_parentid')->willReturn(12345);
+        $plugin->method('get_new_parentid')->willReturn($question->id);
+        // The question already exists on the site, so it was not created by the restore.
+        $plugin->method('get_mappingid')->willReturn(false);
+
+        // The answer id in the backup file differs from the id of the existing answer.
+        $backupanswerid = $answer->id + 1000;
+        $plugin->expects($this->once())
+            ->method('set_mapping')
+            ->with('question_answer', $backupanswerid, $answer->id);
+
+        $plugin->process_question_answer([
+            'id' => $backupanswerid,
+            'answertext' => "two\nlines",
+            'fraction' => '1.0000000',
+        ]);
+    }
 }

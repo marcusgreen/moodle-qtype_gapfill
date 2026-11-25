@@ -226,7 +226,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
                     $clean = preg_replace('/[\x-\x8\xb-\xc\xe-\x1f\x7f]/is', '', $answer->answer); // Clean CTRL chars.
                     $clean = preg_replace("/\r\n|\r/", "\n", $clean); // Normalize line ending.
                     if ($clean === $data->answertext) {
-                        $newitemid = $data->id;
+                        $newitemid = $answer->id;
                     }
                 }
             }
