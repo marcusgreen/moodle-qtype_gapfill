@@ -21,6 +21,7 @@
  * @copyright  2012 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace qtype_gapfill;
 
 defined('MOODLE_INTERNAL') || die();

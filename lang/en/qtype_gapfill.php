@@ -22,6 +22,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package qtype_gapfill
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 $string['addhinttext'] = 'Add hint text to editing form';

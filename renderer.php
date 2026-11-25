@@ -70,7 +70,7 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
         }
         $this->itemsettings = json_decode($question->itemsettings);
         $seranswers = $qa->get_step(0)->get_qt_var('_allanswers');
-        $this->allanswers = unserialize($seranswers);
+        $this->allanswers = unserialize_array($seranswers);
         $output = "";
         $answeroptions = '';
         if ($question->answerdisplay == "dragdrop") {
