@@ -1,4 +1,16 @@
 
+### Unreleased version
+Fixed restoring a backup onto a site where the same gapfill question already
+exists. If an answer only matched after its line endings or hidden control
+characters were cleaned up, it was linked to the answer id from the backup
+file instead of the answer already on the site, which could connect it to the
+wrong answer or to none.
+
+The restore code now clears the id from each record before inserting it, in
+the same way as Moodle's core question types. This does not change how
+restore behaves, as Moodle already ignores the id when inserting a record.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/124
+
 ### Version 2.33 of the Moodle Gapfill question type Nov 2026
 Drag and drop now uses Moodle core/dragdrop (mouse and touch events) instead
 of HTML5 drag and drop, so it works on touch devices.

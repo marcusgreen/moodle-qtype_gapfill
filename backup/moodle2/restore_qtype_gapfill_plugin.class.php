@@ -74,6 +74,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
         // If the question has been created by restore, we need to create its question_gapfill too.
         if ($questioncreated) {
+            unset($data->id);
             // Adjust value to link back to the questions table.
             $data->question = $newquestionid;
             // Insert record.
@@ -101,6 +102,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
         // If the question has been created by restore, we need to create its question_gapfill too.
         if ($questioncreated) {
+            unset($data->id);
             // Adjust value to link back to the questions table.
             $data->question = $newquestionid;
             // Insert record.
@@ -201,6 +203,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
 
         // If the question has been created by restore, we need to create its question_answers too.
         if ($questioncreated) {
+            unset($data->id);
             // Adjust some columns.
             $data->question = $newquestionid;
             $data->answer = $data->answertext;
