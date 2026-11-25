@@ -221,6 +221,44 @@ final class walkthrough_test extends \qbehaviour_walkthrough_test_base {
     }
 
     /**
+     * Escaped regex characters are shown as plain text in the right answer feedback.
+     *
+     * @covers \qtype_gapfill_renderer::get_aftergap_text
+     */
+    public function test_review_right_answer_unescaped(): void {
+        $gapfill = helper::make_question('gapfill', 'Pick [\(A\)|B] and [x\.y]', ['answerdisplay' => 'gapfill']);
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', 2);
+
+        $this->process_submission(['p1' => 'A', 'p2' => 'z']);
+        $this->quba->finish_all_questions();
+        $this->check_current_state(\question_state::$gradedwrong);
+
+        $this->displayoptions->rightanswer = \question_display_options::VISIBLE;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('[(A) or B]', $html);
+        $this->assertStringContainsString('[x.y]', $html);
+        $this->assertStringNotContainsString('\(A\)', $html);
+    }
+
+    /**
+     * Backslashes are left alone in the right answer feedback when regex is disabled.
+     *
+     * @covers \qtype_gapfill_renderer::get_aftergap_text
+     */
+    public function test_review_right_answer_disableregex_keeps_backslashes(): void {
+        $gapfill = helper::make_question('gapfill', 'Path is [C:\temp]', ['disableregex' => 1, 'answerdisplay' => 'gapfill']);
+        $this->start_attempt_at_question($gapfill, 'deferredfeedback', 1);
+
+        $this->process_submission(['p1' => 'C:temp']);
+        $this->quba->finish_all_questions();
+        $this->check_current_state(\question_state::$gradedwrong);
+
+        $this->displayoptions->rightanswer = \question_display_options::VISIBLE;
+        $html = $this->quba->render_question($this->slot, $this->displayoptions);
+        $this->assertStringContainsString('[C:\temp]', $html);
+    }
+
+    /**
      * Deferred q behaviour with correct response
      *
      * @covers ::no_idea()

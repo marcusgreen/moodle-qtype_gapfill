@@ -328,6 +328,10 @@ class qtype_gapfill_renderer extends qtype_with_combined_feedback_renderer {
             /* replace !! with the 'blank' */
             $rightanswerdisplay = preg_replace("/\!!/", get_string("blank", "qtype_gapfill"), $rightanswerdisplay);
             $question = $qa->get_question();
+            if (!$question->disableregex) {
+                /* show escaped regex characters such as \( as plain text */
+                $rightanswerdisplay = preg_replace('/\\\\([\\\\.^$|?*+()\[\]{}\/])/', '$1', $rightanswerdisplay);
+            }
             $delim = qtype_gapfill::get_delimit_array($question->delimitchars);
             /* set background to red and image to cross if fraction is 0 (an incorrect response
              * was given */
