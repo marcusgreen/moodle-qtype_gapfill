@@ -11,6 +11,13 @@ the same way as Moodle's core question types. This does not change how
 restore behaves, as Moodle already ignores the id when inserting a record.
 https://github.com/marcusgreen/moodle-qtype_gapfill/issues/124
 
+The correct answer shown after a wrong answer no longer includes regex escape
+characters, so [\(A\)|B] is shown as [(A) or B]. Backslashes are kept when
+regex is disabled.
+
+Thanks to Ludger A. Rinsche for reporting this.
+https://github.com/marcusgreen/moodle-qtype_gapfill/issues/90
+
 ### Version 2.33 of the Moodle Gapfill question type Nov 2026
 Drag and drop now uses Moodle core/dragdrop (mouse and touch events) instead
 of HTML5 drag and drop, so it works on touch devices.
