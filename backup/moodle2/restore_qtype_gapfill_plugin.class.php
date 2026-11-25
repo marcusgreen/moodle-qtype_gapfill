@@ -226,7 +226,7 @@ class restore_qtype_gapfill_plugin extends restore_qtype_plugin {
                 $params = ['question' => $newquestionid];
                 $answers = $DB->get_records('question_answers', $params, '', 'id, answer');
                 foreach ($answers as $answer) {
-                    $clean = preg_replace('/[\x-\x8\xb-\xc\xe-\x1f\x7f]/is', '', $answer->answer); // Clean CTRL chars.
+                    $clean = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i', '', $answer->answer); // Clean CTRL chars.
                     $clean = preg_replace("/\r\n|\r/", "\n", $clean); // Normalize line ending.
                     if ($clean === $data->answertext) {
                         $newitemid = $answer->id;
